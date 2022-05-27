@@ -6,3 +6,16 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+@import 'FixedLog';
+@import 'FixedLogSpace';
+@import 'FixedMenuBar';
+@import 'FixedAccount';
+@import 'BulletinList';
+@import 'BulletinSubmenu';
+@import 'BulletinSorting';
+@import 'SkillSearch';
+
+body{
+    background-color: #c4c4c4;
+}
