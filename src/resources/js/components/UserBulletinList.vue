@@ -1,7 +1,8 @@
+<!-- アカウント情報 -->
   <template>
   <div>
       <div class="bulletin-container">
-            <BulletinSubmenu1></BulletinSubmenu1>
+            <UserBulletinSpace1></UserBulletinSpace1>
             <BulletinSorting1></BulletinSorting1>
             <div class="bulletin">
                 <div class="bulletin-list">
@@ -17,7 +18,7 @@
                         <span class="skill">スキルの画像(仮)</span>
                     </div>
                     <div class="readmore-container">
-                        <router-link to="/bulletin-detail-your">
+                        <router-link to="/bulletin-detail-me">
                             <button class="readmore-detail">Read More</button>
                         </router-link>
                     </div>
@@ -35,7 +36,9 @@
                         <span class="skill">スキルの画像(仮)</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-me">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
                 <div class="bulletin-list">
@@ -51,7 +54,9 @@
                         <span class="skill">スキルの画像(仮)</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-me">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
                     <div class="bulletin-list">
@@ -67,7 +72,9 @@
                         <span class="skill">スキルの画像(仮)</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-me">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
                     <div class="bulletin-list">
@@ -83,7 +90,9 @@
                         <span class="skill">スキルの画像(仮)</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-me">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
                     <div class="bulletin-list">
@@ -99,12 +108,14 @@
                         <span class="skill">スキルの画像(仮)</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-me">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
             </div>
       </div>
-      <SkillSearch1></SkillSearch1>
+      <UserInformation1></UserInformation1>
   </div>
 
         
@@ -112,15 +123,16 @@
   </template>
   
   <script>
-    import SkillSearch1 from './SkillSearch.vue'
-    import BulletinSubmenu1 from './BulletinSubmenu.vue'
     import BulletinSorting1 from './BulletinSorting.vue'
+    import UserInformation1 from './UserInformation.vue'
+    import UserBulletinSpace1 from './UserBulletinSpace.vue'
 
-      export default {
+    export default {
         components: {
-            SkillSearch1,
-            BulletinSubmenu1,
-            BulletinSorting1
+            BulletinSorting1,
+            UserInformation1,
+            UserBulletinSpace1,
         }
-      }
+	}
   </script>
+

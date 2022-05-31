@@ -23,15 +23,6 @@ Route::get('/login', function () {
     // デフォのファイル
     return view('login');
 });
-// 下記使わないかも
-// Route::get('/signup', function () {
-//     return view('signup');
-// });
-// // 値渡しを行っている
-// Route::post('/signupConfirmation', [SignupConfirmation::class, 'write'])->name('signupConfirmation.write');
-// // ユーザー登録
-// Route::post('/signupComp', [SignupConfirmation::class, 'userSave'])->name('signupComp.userSave');
-
 Route::get('/register', function () {
     // デフォのファイル
     return view('register');

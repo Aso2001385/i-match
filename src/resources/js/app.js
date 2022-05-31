@@ -8,8 +8,17 @@
  import FixedLog from "./components/FixedLog";
  import FixedAccount from "./components/FixedAccount";
  import FixedLogSpace from './components/FixedLogSpace';
- import FixedMenuBar from "./components/FixedMenuBar.vue";
-  import BulletinList from "./components/BulletinList";
+ import FixedMenuBar from "./components/FixedMenuBar";
+ import BulletinList from "./components/BulletinList";
+ import UserBulletinList from "./components/UserBulletinList";
+//  import UserInformation from "./components/UserInformation";
+ import UserSkillDetail from "./components/UserSkillDetails";
+ import SkillSignup from "./components/SkillSignup";
+ import SkillSignupDetail from "./components/SkillSignupDetail";
+ import CreateBulletin from "./components/CreateBulletin";
+ import AddSkill from "./components/AddSkill";
+ import BulletinDetailYour from "./components/BulletinDetailYour";
+ import BulletinDetailMe from "./components/BulletinDetailMe";
 
 
 require('./bootstrap');
@@ -25,6 +34,47 @@ const router = new VueRouter({
             path: '/bulletin-list',
             name: 'bulletin.list',
             component: BulletinList
+        },
+        {
+            path: '/user-bulletin-list',
+            name: 'userbulletin.list',
+            component: UserBulletinList
+        },
+        {
+            path: '/user-skill-detail',
+            name: 'usrskill.detail',
+            component: UserSkillDetail
+        },
+        {
+            path: '/skill-signup',
+            name: 'skill.signup',
+            component: SkillSignup
+        },
+        {
+            path: '/skill-signup-detail',
+            name: 'skillsignup.detail',
+            component: SkillSignupDetail
+        },
+        {
+            path: '/create-bulletin',
+            name: 'create.bulletin',
+            component: CreateBulletin
+        },
+        {
+            path: '/add-skill',
+            name: 'add.skill',
+            component: AddSkill
+        },
+        {
+            path: '/bulletin-detail-your',
+            name: 'bulletin.detail.your',
+            component: BulletinDetailYour,
+            props: true
+        },
+        {
+            path: '/bulletin-detail-me',
+            name: 'bulletin.detail.me',
+            component: BulletinDetailMe
         },
     ]
 });
