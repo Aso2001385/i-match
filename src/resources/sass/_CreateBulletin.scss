@@ -1,0 +1,46 @@
+.create-bulletin{
+    width: 50%;
+    margin-left: 35%;
+    padding-top: 8rem;
+}
+.create-bulletin-container{
+    border: 1px solid #000;
+}
+#content-title{
+    border-bottom: 2px solid #000;
+}
+#content-title,#createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#cratebulletin-skill{
+    font-size: 1.5rem;
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+    padding-left: 2%;
+}
+#createbulletin-title-text,#createbulletin-title-textarea,.rec-number,.category,#add-url{
+    margin-left: 2.5%;
+}
+#createbulletin-title-text,#createbulletin-title-textarea{
+    width: 90%;
+}
+#add-url,#create-bulletin-url{
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    background-color: #ffffff;
+    padding: 10px 20px;
+}
+#add-url:hover,#create-bulletin-url:hover{
+    background-color: #db9006;
+    color: #ffffff;
+}
+#cratebulletin-skill{
+    margin-bottom: 2.5%;
+}
+.add-skills{
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+}
+.create-bulletin-url-con{
+    text-align: center;
+    margin-top: 2.5%;
+    margin-bottom: 5%;
+}
