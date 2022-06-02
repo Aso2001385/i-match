@@ -1,0 +1,59 @@
+.skillsignup-detail-container{
+    margin-left: 30%;
+    padding-top: 8rem;
+}
+#skill-signup-detail{
+    font-size: 3rem;
+    border-bottom: 2px solid #000;
+    width: 90%;
+    margin-bottom: 5%;
+}
+#skillimage-detail{
+    font-size: 15rem;
+    float: left;
+    margin-bottom: 20%;
+    margin-right: 15%;
+}
+#skill-title{
+    font-size: 4rem;
+    margin-bottom: 10%;
+}
+.about-skill{
+    font-size: 2.5rem;
+}
+.level-sorting,.exp-sorting{
+    margin-top: 2.5%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+
+}
+#skillsignupdetail-url{
+    float: right;
+    margin-right: 15%;
+    background-color: #ffffff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+#skillsignupdetail-url:hover{
+    background-color: #db9006;
+    color: #ffffff;
+}
+#skillsignupdetail-back-url{
+    float: right;
+    background-color: #ffffff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-right: 50%;
+    padding: 10px 20px;
+}
+#skillsignupdetail-back-url:hover{
+    background-color: #db9006;
+    color: #ffffff;
+}
+.skill-signup-con{
+    float: left;
+    width: 80%;
+}

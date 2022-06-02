@@ -1,0 +1,70 @@
+.userskill-detail{
+    background-color: #c4c4c4;
+    position: fixed;
+    top: 6rem;
+    width: 15%;
+    margin-top: 3%;
+    margin-left: 82%;   
+    z-index: 2;
+}
+#image-scss{
+    font-size: 6rem;
+    float: left;
+    margin-left: 5%;
+    margin-right: 15%;
+}
+#useraccount-edit-url{
+    margin-top: 25%;
+}
+#useraccount-edit{
+    text-decoration: none;
+    color: #000;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+#useraccount-edit:hover{
+    color: #ffffff;
+    background-color: #db9006;
+}
+#basicinfo-container,#skillinfo-container{
+    border: 1px solid #000;
+}
+#skillinfo-container{
+    margin-top: 10%;
+    padding-left: 5%;
+}
+.skill-information{
+    color: #000;
+}
+.skill-url{
+    background-color: transparent;
+    color: #000;
+    border: 1px solid transparent;
+    margin-top: 1%;
+    padding: 0;
+    
+}
+#basicinfo-container{
+    margin-top: 55%;
+    padding-left: 5%;
+}
+#skillinfo-container{
+    float: left;
+}
+.pop-con{
+    position: fixed;
+    top: 22%;
+    z-index: 5;
+    margin-left: 41%;
+}
+.pop-clo{
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 2px solid transparent;
+}
+.pop-clo:hover{
+    background-color: #db9006;
+    color: #ffffff;
+
+}
