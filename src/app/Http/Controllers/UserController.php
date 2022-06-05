@@ -80,7 +80,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request)
     {
         $user=User::find($request->id);
 
@@ -89,6 +89,7 @@ class UserController extends Controller
 
         $user->save();
     }
+
     public function passEdit($id)
     {
         $user=User::find($id);
