@@ -89,7 +89,6 @@ class UserController extends Controller
 
         $user->save();
     }
-
     public function passEdit($id)
     {
         $user=User::find($id);
