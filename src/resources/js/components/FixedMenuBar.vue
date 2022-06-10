@@ -4,7 +4,7 @@
             <div class="menu_bar">
                 <div class="menubar-container">
                     <span class="menu-image">⚪️</span>
-                    <a href="/bulletin-list" class="menu-list" id="menu-news">お知らせ</a>
+                    <a href="/news-list" class="menu-list" id="menu-news">お知らせ</a>
                 </div>
                 <div class="menubar-container">
                     <span class="menu-image">⚪️</span>
@@ -12,7 +12,7 @@
                 </div>
                 <div class="menubar-container">
                     <span class="menu-image">⚪️</span>
-                    <a href="/bulletin-list" class="menu-list" id="menu-chat">チャット</a>
+                    <a href="/chat-list" class="menu-list" id="menu-chat">チャット</a>
                 </div>
                 <div class="menubar-container">
                     <span class="menu-image">⚪️</span>

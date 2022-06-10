@@ -9,9 +9,13 @@
  import FixedAccount from "./components/FixedAccount";
  import FixedLogSpace from './components/FixedLogSpace';
  import FixedMenuBar from "./components/FixedMenuBar";
+ import TopDevTit from "./components/TopDevTit";
  import BulletinList from "./components/BulletinList";
+ import NewsList from "./components/NewsList";
+ import ChatList from "./components/ChatList";
+//  import BulletinList from "./components/BulletinList";
+//  import BulletinList from "./components/BulletinList";
  import UserBulletinList from "./components/UserBulletinList";
-//  import UserInformation from "./components/UserInformation";
  import UserSkillDetail from "./components/UserSkillDetails";
  import SkillSignup from "./components/SkillSignup";
  import SkillSignupDetail from "./components/SkillSignupDetail";
@@ -19,6 +23,9 @@
  import AddSkill from "./components/AddSkill";
  import BulletinDetailYour from "./components/BulletinDetailYour";
  import BulletinDetailMe from "./components/BulletinDetailMe";
+ import BulletinEdit from "./components/BulletinEdit";
+ import UserInformationDetail from "./components/UserInformationDetail";
+ import PassUpdate from "./components/PassUpdate";
 
 
 require('./bootstrap');
@@ -31,9 +38,24 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         {
+            path: '/top-dev-tit',
+            name: 'top.dev.tit',
+            component: TopDevTit
+        },
+        {
+            path: '/news-list',
+            name: 'news.list',
+            component: NewsList
+        },
+        {
             path: '/bulletin-list',
             name: 'bulletin.list',
             component: BulletinList
+        },
+        {
+            path: '/chat-list',
+            name: 'chat.list',
+            component: ChatList
         },
         {
             path: '/user-bulletin-list',
@@ -42,8 +64,19 @@ const router = new VueRouter({
         },
         {
             path: '/user-skill-detail',
-            name: 'usrskill.detail',
+            name: 'userskill.detail',
             component: UserSkillDetail
+        },
+        {
+            path: '/user-info-detail',
+            name: 'user.info.detail',
+            component: UserInformationDetail,
+            props: true
+        },
+        {
+            path: '/pass-update',
+            name: 'pass.update',
+            component: PassUpdate,
         },
         {
             path: '/skill-signup',
@@ -75,6 +108,11 @@ const router = new VueRouter({
             path: '/bulletin-detail-me',
             name: 'bulletin.detail.me',
             component: BulletinDetailMe
+        },
+        {
+            path: '/bulletin-edit',
+            name: 'bulletin.edit',
+            component: BulletinEdit
         },
     ]
 });

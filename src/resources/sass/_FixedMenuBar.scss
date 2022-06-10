@@ -8,7 +8,6 @@
     top: 10%;
     z-index: 1;
     margin-bottom: 0;
-    // padding-top: 4%;
     padding-top: 3.4%;
 
 }
@@ -18,7 +17,7 @@
     height:36rem;
   }
   .scroll{
-    overflow:scroll;
+    overflow:auto;
   }
   .scrolly{
     overflow:hidden;
@@ -27,8 +26,6 @@
   .menu-list{
    white-space:nowrap; 
   }
-  // ここまで
-  // クリックされたらボタンの色を変える予定
 .menu-list,.menu-image{
     color: #ffffff;
 }

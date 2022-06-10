@@ -1,4 +1,3 @@
-<!-- 掲示板詳細(自分側)編集用 -->
 <template>
     <div class="bulletin-detail">
         <div class="bulletin-detail-your-container">
@@ -14,8 +13,11 @@
             <p id="bulletin-day-con">6月30日まで</p>
             <h3 class="bulletin-skill-title">●スキル</h3>
             <p class="bulletin-skill-con">・PHP・Laravel</p>
-            <router-link to="/bulletin-edit">
-                <div class="bulletin-detail-btn-con"><button class="bulletin-detail-button">編集</button></div>
+            <router-link to="/user-bulletin-list">
+                <div class="bulletin-upd-btn-con"><button class="bulletin-update-button">更新</button></div>
+            </router-link>
+            <router-link to="/user-bulletin-list">
+                <div class="bulletin-del-btn-con"><button class="bulletin-delete-button">削除</button></div>
             </router-link>
         </div>
     </div>

@@ -1,25 +1,32 @@
 .userskill-detail{
-    background-color: #c4c4c4;
+    background-color: #ffffff;
     position: fixed;
-    top: 6rem;
-    width: 15%;
+    top: 4rem;
     margin-top: 3%;
-    margin-left: 82%;   
+    margin-left: 84rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
     z-index: 2;
 }
 #image-scss{
     font-size: 6rem;
-    float: left;
-    margin-left: 5%;
-    margin-right: 15%;
+    text-align: center;
+}
+.user-information{
+    text-align: center;
+}
+#user-info-text{
+    color: #c4c4c4;
 }
 #useraccount-edit-url{
-    margin-top: 25%;
+    text-align: center;
+    margin-bottom: 10%;
+
 }
 #useraccount-edit{
-    text-decoration: none;
     color: #000;
     background-color: #ffffff;
+    border: 1px solid #000;
     border-radius: 5px;
     padding: 10px 20px;
 }
@@ -32,7 +39,12 @@
 }
 #skillinfo-container{
     margin-top: 10%;
+    margin-bottom: 10%;
     padding-left: 5%;
+}
+#skillinfo-title{
+    margin-top: 2.5%;
+    text-align: center;
 }
 .skill-information{
     color: #000;
@@ -46,8 +58,7 @@
     
 }
 #basicinfo-container{
-    margin-top: 55%;
-    padding-left: 5%;
+    margin-top: 10%;
 }
 #skillinfo-container{
     float: left;
@@ -68,3 +79,16 @@
     color: #ffffff;
 
 }
+.user-skill-box{
+    height:20rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }

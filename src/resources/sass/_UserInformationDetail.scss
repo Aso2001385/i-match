@@ -1,0 +1,108 @@
+.user-information-pro{
+    position: fixed;
+    top: 6rem;
+    margin-left: 25rem;
+}
+.user-information-detail{
+    position: fixed;
+    top: 8rem;
+    width: 50%;
+    margin-left: 40%;
+}
+.user-information-pro{
+    background-color: #c4c4c4;
+    width: 100%;
+    border-bottom: 1px solid transparent;
+}
+#user-info-title{
+    padding-top: 1rem;
+    padding-left: 2.5rem;
+    font-size: 2rem;
+}
+#image-info-con{
+    height: 240px;
+}
+#image-info-detail{
+    font-size: 10rem;
+    float: left;
+    margin-right: 20%;
+}
+#image-update-con{
+    height: 250px;
+    padding-top: 6rem;
+}
+#image-update-btn,.info-update-btn,.user-account-btn{
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+}
+#image-update-btn:hover,.info-update-btn:hover,.user-account-btn:hover{
+    color: #ffffff;
+    background-color: #db9006;
+}
+.user-account-con{
+    margin-top: 1rem;
+    margin-left: 20rem;
+}
+#basic-info-con,#skill-info-con{
+    background-color: #c4c4c4;
+    border: 1px solid #000;
+    width: 700px;
+    height: 250px;
+}
+#skill-info-con{
+    margin-top: 0.5rem;
+}
+.info-update{
+    height: 50px;
+    margin-top: 1.5rem;
+}
+#basic-info-tit,#skill-info-tit{
+    margin-left: 1.5rem;
+    float: left;
+    margin-right: 60%;
+}
+#basic-info{
+    float: left;
+    width: 250px;
+    height: 150px;
+    margin-right: 2rem;
+    
+}
+#basic-info-url{
+    margin-top: 1%;
+}
+.basic-info{
+    margin-bottom: 3%;
+}
+.basic-info,.skill-info{
+    padding-left: 2.5rem;
+}
+.basic-info-text{
+    width: 100%;
+    height: 2rem;// 場合によって変わる
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+#info-pro-text{
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+.skill-info-box{
+    height:10rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }
+
+
