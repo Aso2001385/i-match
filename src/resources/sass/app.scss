@@ -11,6 +11,10 @@
 @import 'FixedLogSpace';
 @import 'FixedMenuBar';
 @import 'FixedAccount';
+@import 'TopTitle';
+@import 'TopBulletinList';
+@import 'TopNewsTit';
+@import 'TopNewsList';
 @import 'BulletinList';
 @import 'BulletinSubmenu';
 @import 'BulletinSorting';
@@ -21,8 +25,15 @@
 @import 'SkillSignup';
 @import 'SkillSignupDetail';
 @import 'CreateBulletin';
+@import 'AddSkill';
 @import 'BulletinDetail';
+@import 'BulletinEdit';
+@import 'UserInformationDetail';
+@import 'PassUpdate';
+@import 'NewsList';
+@import 'ChatList';
+
 
 body{
-    background-color: #c4c4c4;
+    background-color: #8c8c8c;
 }

@@ -4,18 +4,28 @@
     padding-top: 8rem;
 }
 .create-bulletin-container{
-    border: 1px solid #000;
+    background-color: #c4c4c4;
+    border: 1px solid transparent;
 }
 #content-title{
     border-bottom: 2px solid #000;
 }
-#content-title,#createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#cratebulletin-skill{
+#content-title,#createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#createbulletin-day,#cratebulletin-skill{
     font-size: 1.5rem;
     margin-top: 2.5%;
-    margin-left: 2.5%;
-    padding-left: 2%;
+    padding-left: 4.5%;
 }
-#createbulletin-title-text,#createbulletin-title-textarea,.rec-number,.category,#add-url{
+#createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#createbulletin-day,#cratebulletin-skill{
+    background-color: #d4d4d4;
+}
+#createbulletin-title-text,#createbulletin-title-textarea,.category,.rec-number{
+    margin-left: 2.5%;
+    height: 2.2rem;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+#createbulletin-day-con,#add-url{
     margin-left: 2.5%;
 }
 #createbulletin-title-text,#createbulletin-title-textarea{

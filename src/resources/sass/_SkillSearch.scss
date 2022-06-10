@@ -1,19 +1,26 @@
 .skillsearch-container{
     background-color: #c4c4c4;
-    color: #ffffff;
     position: fixed;
     top: 6rem;
     width: 15%;
     margin-top: 1%;
-    margin-left: 80%;
+    margin-left: 82%;
 }
 .search-title{
-    margin-left: 10%;
+    margin-top: 2%;
+    margin-left: 5%;
 }
 #serch-text{
-    border: 1px solid #000;
-    border-radius: 4px;
     width: 80%;
+    margin-left: 10%;
+    height: 2rem;// 場合によって変わる
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+.serch-btn-con{
+    text-align: center;
+    margin-bottom: 10%;
 }
 .serch-button{
     margin-top: 20%;
@@ -21,14 +28,23 @@
     background-color: #ffffff;
     border: 1px solid #000;
     border-radius: 5px;
+    
 }
 .serch-button:hover{
     background-color: #db9006;
     color: #ffffff;
     border-radius: 5px;
 }
+.skill-checkbox,.frame-contqiner,.db-container,.infra-container,.oth-container{
+    float: left;
+    width: 100%;
+}
+.oth-container{
+    width: 100%;
+}
 .skill-genle{
     border-bottom: #c4c4c4;
+    padding-top: 2.5%;
 }
 .skill-contailer{
     margin-left: 10%;
@@ -36,3 +52,16 @@
 .skill-checkbox{
     width: 100%;
 }
+.skill-search-box{
+    height:30rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }

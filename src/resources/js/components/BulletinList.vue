@@ -3,7 +3,7 @@
       <div class="bulletin-container">
             <BulletinSubmenu1></BulletinSubmenu1>
             <BulletinSorting1></BulletinSorting1>
-            <div class="bulletin">
+            <div class="bulletin bulletin-box scroll">
                 <div class="bulletin-list">
                     <p>
                         <span id="deadline">募集締め切り：</span>
