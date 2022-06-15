@@ -8,19 +8,29 @@ use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\PasswordUpdateUserRequest;
 use App\Http\Controllers\StatusController;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    public function access(){
+        return response()->json(['result' => true],Response::HTTP_OK);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function list()
     {
-        $users=User::all();
+            $result = [
+                'users' => User::all()->toArray()
+            ];
+            $status='HTTP_OK;';
+            return response()->json($result,Response::$status);
+        
     }
 
     /**
@@ -30,7 +40,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $status='HTTP_OK';
+        return response()->json(Response::$status);
     }
 
     /**
@@ -41,14 +52,24 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        $user=User::create([
-            'number' => $request->number,
-            'class'=>$request->class,
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+            // $user=User::create([
+            //     'number' => $request->number,
+            //     'class'=>$request->class,
+            //     'name' => $request->name,
+            //     'email' => $request->email,
+            //     'password' => Hash::make($request->password),
+            // ]);
+
+            $user->fill(array_merge($request->all(),
+                ['password' => Hash::make($request->password)]
+             ))->save();
+            $result = [
+                'users'=>$user->toArray(),
+            ];
+            $status='HTTP_OK';
+            return response()->json($result,Response::$status);
     }
+
 
     /**
      * Display the specified resource.
@@ -58,9 +79,14 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $check=new StatusController;
-        list($view,$user,$status) = $check::show($id);
-        return response()->view($view,compact('user'),$status);
+        // $check=new StatusController;
+        // list($view,$user,$status) = $check::show($id);
+
+        $result =[
+            'users'=>$user=User::find($id)->toArray(),
+        ];
+        $status='HTTP_OK';
+        return response()->json($result,Response::$status);
     }
 
     /**
@@ -71,7 +97,11 @@ class UserController extends Controller
      */
     public function edit(Request $request)
     {
-        $user=User::find($request->id);
+        $result=[
+            'users'=>User::find($request->id)->toArray(),
+        ];
+        $status='HTTP_OK';
+        return response()->json($result,Response::$status);
     }
 
     /**
@@ -89,13 +119,23 @@ class UserController extends Controller
         $user->name = $request->input('name');
 
         $user->save();
+
+        $result=[
+            'users' => $user->toArray(),
+        ];
+        $status='HTTP_OK';
+        return response()->json($result,Response::$status);
     }
 
     public function passEdit(Request $request)
     {
         $user=User::find($request->id);
 
-        return view('user/passEdit',compact('user'));
+        $result=[
+            'users' => User::find($request->id)->toArray,
+        ];
+        $status='HTTP_OK';
+        return response()->json($result,Response::$status);
     }
 
 
@@ -112,8 +152,11 @@ class UserController extends Controller
         $user->password=Hash::make($request->password);
 
         $user->save();
-
-        return view('user.editComplete');
+        $result=[
+            'users' => User::find($request->id)->toArray,
+        ];
+        $status='HTTP_OK';
+        return response()->json($result,Response::$status);
     }
 
     /**
@@ -125,5 +168,9 @@ class UserController extends Controller
     public function delete(Request $request)
     {
         $user=User::find($request->id)->delete();
+        $result=[];
+        $status='HTTP_OK';
+        return response()->json($result,Response::$status);
+
     }
 }
