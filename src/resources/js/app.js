@@ -11,6 +11,7 @@
  import FixedMenuBar from "./components/FixedMenuBar";
  import TopDevTit from "./components/TopDevTit";
  import BulletinList from "./components/BulletinList";
+ import EventList from "./components/EventList";
  import NewsList from "./components/NewsList";
  import ChatList from "./components/ChatList";
 //  import BulletinList from "./components/BulletinList";
@@ -26,6 +27,7 @@
  import BulletinEdit from "./components/BulletinEdit";
  import UserInformationDetail from "./components/UserInformationDetail";
  import PassUpdate from "./components/PassUpdate";
+ import NewsDetail from "./components/NewsDetail";
 
 
 require('./bootstrap');
@@ -42,6 +44,12 @@ const router = new VueRouter({
             name: 'top.dev.tit',
             component: TopDevTit
         },
+        // useridを取得する
+        // {
+        //     path: '/top-dev-tit/:userId',
+        //     name: 'top.dev.tit',
+        //     component: TopDevTit
+        // },
         {
             path: '/news-list',
             name: 'news.list',
@@ -53,6 +61,11 @@ const router = new VueRouter({
             component: BulletinList
         },
         {
+            path: '/event-list',
+            name: 'event.list',
+            component: EventList
+        },
+        {
             path: '/chat-list',
             name: 'chat.list',
             component: ChatList
@@ -62,6 +75,13 @@ const router = new VueRouter({
             name: 'userbulletin.list',
             component: UserBulletinList
         },
+        // APIでユーザー情報取得(後で下記のに書き換える)
+        // {
+        //     path: '/user-bulletin-list/:userId',
+        //     name: 'userbulletin.list',
+        //     component: UserBulletinList,
+        //     props: true
+        // },
         {
             path: '/user-skill-detail',
             name: 'userskill.detail',
@@ -113,6 +133,11 @@ const router = new VueRouter({
             path: '/bulletin-edit',
             name: 'bulletin.edit',
             component: BulletinEdit
+        },
+        {
+            path: '/news-detail',
+            name: 'news.detail',
+            component: NewsDetail
         },
     ]
 });

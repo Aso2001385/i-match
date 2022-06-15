@@ -128,6 +128,10 @@
     import UserBulletinSpace1 from './UserBulletinSpace.vue'
 
     export default {
+        props: {
+            // 型は間違ってたらかえる
+            userId: String
+        },
         components: {
             BulletinSorting1,
             UserInformation1,
