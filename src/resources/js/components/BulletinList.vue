@@ -13,8 +13,8 @@
                     </p>
                     <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <router-link to="/bulletin-detail-your">
@@ -31,8 +31,8 @@
                     </p>
                     <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <button class="readmore-detail">Read More</button>
@@ -47,8 +47,8 @@
                     </p>
                     <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <button class="readmore-detail">Read More</button>
@@ -63,8 +63,8 @@
                     </p>
                     <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <button class="readmore-detail">Read More</button>
@@ -79,8 +79,8 @@
                     </p>
                     <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <button class="readmore-detail">Read More</button>
@@ -95,8 +95,8 @@
                     </p>
                     <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <button class="readmore-detail">Read More</button>

@@ -17,40 +17,15 @@
         <div class="about-skill-con" id="about-skill-exp">
             <p class="about-skill">開発経験</p>
             <select name="exp-sorting" class="exp-sorting">
-                <option value="0">YES</option>
-                <option value="1">NO</option>
+                <option value="0">あり</option>
+                <option value="1">なし</option>
             </select>
         </div>
         <div class="skill-signup-con">
             <router-link to="/bulletin-list"><button id="skillsignupdetail-url">登録</button></router-link>
             <router-link to="/skill-signup"><button id="skillsignupdetail-back-url">戻る</button></router-link>
         </div>
-<!-- 
-    <p>{{this.info.id}}</p>
-    <p>{{this.info.name}}</p>
-    <p>{{this.info.age}}</p> -->
     </div>
 
 </template>
-<script>
-    // export default {
-    // data() {
-    //     return {
-    //     info: {}
-    //     }
-    // },
-    // mounted() {
-    //     this.info = JSON.parse(localStorage.getItem('obj'))
-    // },
-    // methods: {
-    //     set() {
-    //     localStorage.setItem('obj', JSON.stringify({
-    //         id: 1,
-    //         name: 'tanaka',
-    //         age: 20
-    //     }))
-    //     }
-    // }
-    // }
-</script>
 

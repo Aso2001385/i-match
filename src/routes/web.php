@@ -27,6 +27,8 @@ Route::get('/register', function () {
     // デフォのファイル
     return view('register');
 });
+
+
 Route::get('/{any}', function() {
     return view('app');
 })->where('any', '.*');

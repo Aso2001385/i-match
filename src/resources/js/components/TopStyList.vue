@@ -10,8 +10,8 @@
                     </p>
                     <p id="top-title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="top-skill-container">
-                        <span class="top-skill">スキルの画像(仮)</span>
-                        <span class="top-skill">スキルの画像(仮)</span>
+                        <span class="top-skill">◯</span>
+                        <span class="top-skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <router-link to="/bulletin-detail-your">
@@ -28,8 +28,8 @@
                     </p>
                     <p id="top-title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="top-skill-container">
-                        <span class="top-skill">スキルの画像(仮)</span>
-                        <span class="top-skill">スキルの画像(仮)</span>
+                        <span class="top-skill">◯</span>
+                        <span class="top-skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <button class="readmore-detail">Read More</button>
@@ -44,8 +44,8 @@
                     </p>
                     <p id="top-title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="top-skill-container">
-                        <span class="top-skill">スキルの画像(仮)</span>
-                        <span class="top-skill">スキルの画像(仮)</span>
+                        <span class="top-skill">◯</span>
+                        <span class="top-skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <button class="readmore-detail">Read More</button>
