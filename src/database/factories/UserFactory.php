@@ -18,7 +18,7 @@ class UserFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => sprintf("%07d",rand(0,9999999)).'@s.asojuku.ac.jp',
-            'class' => sprintf("%04d",rand(0,9999)),
+            'class' => rand(0,9).Str::random(1).sprintf("%02d",rand(0,99)),
             'password' =>Hash::make($this->faker->password()),
         ];
     }
