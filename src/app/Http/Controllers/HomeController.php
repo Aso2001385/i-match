@@ -25,4 +25,5 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    // ここの書き換え
 }

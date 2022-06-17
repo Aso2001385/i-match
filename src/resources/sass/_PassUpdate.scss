@@ -1,0 +1,26 @@
+.pass-update{
+    position: fixed;
+    top: 14rem;
+    margin-left: 45%;
+}
+.pass-text{
+    font-size: 1.5rem;
+}
+#now-pass-text,#new-pass-text,#new-pass-text-conf{
+    width: 150%;
+    margin-bottom: 20%;
+    height: 2.2rem;// 場合によって変わる
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+#new-pass-text-conf{
+    margin-bottom: 10%;
+}
+.pass-update-con{
+    margin-top: 25%;
+    margin-left: 60%;
+}
+.pass-error-text{
+    color: #f2b100;
+}

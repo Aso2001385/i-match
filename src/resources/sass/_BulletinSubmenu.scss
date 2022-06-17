@@ -1,0 +1,33 @@
+.submenu-bulletin{
+    color: #ffffff;
+    background-color: #3f3f3f;
+    position: fixed;
+    top: 9%;
+    z-index: 2;
+    width: 55%;
+    margin-bottom: 3rem;
+    margin-top: 0;
+    padding-top: 1%;
+}
+#submenu-event,#submenu-recruitment{
+    float: left;
+}
+#submenu-event{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+#submenu-recruitment{
+    margin-right: 10%;
+}
+.submenu-button{
+    padding: 5% 10px;
+    background-color: #ffffff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    
+}
+.submenu-button:hover{
+    background-color: #db9006;
+    color: #ffffff;
+    border-radius: 5px;
+}

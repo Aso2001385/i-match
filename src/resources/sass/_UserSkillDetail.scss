@@ -1,0 +1,32 @@
+.userskill-detail-container{
+    background-color: #ffffff;
+    position: fixed;
+    top: 20%;
+    border: 2px solid #000;
+    border-radius: 50px;
+    margin-left: 40%;
+    padding: 10%;
+    z-index: 4;
+}
+#skillimage-scss{
+    font-size: 6rem;
+}
+#subskillimage-scss{
+    font-size: 4rem;
+    text-align: right;
+}
+#skillimage-container{
+    float: left;
+    height: 20rem;
+    margin-right: 10%;
+}
+#skillname{
+    font-size: 2rem;
+}
+#skilldetail-container{
+    margin-left: 5%;
+}
+.skill-exp{
+    margin-top: 5%;
+}
+

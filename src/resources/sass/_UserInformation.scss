@@ -1,0 +1,94 @@
+.userskill-detail{
+    background-color: #ffffff;
+    position: fixed;
+    top: 4rem;
+    margin-top: 3%;
+    margin-left: 84rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    z-index: 2;
+}
+#image-scss{
+    font-size: 6rem;
+    text-align: center;
+}
+.user-information{
+    text-align: center;
+}
+#user-info-text{
+    color: #c4c4c4;
+}
+#useraccount-edit-url{
+    text-align: center;
+    margin-bottom: 10%;
+
+}
+#useraccount-edit{
+    color: #000;
+    background-color: #ffffff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+#useraccount-edit:hover{
+    color: #ffffff;
+    background-color: #db9006;
+}
+#basicinfo-container,#skillinfo-container{
+    border: 1px solid #000;
+}
+#skillinfo-container{
+    margin-top: 10%;
+    margin-bottom: 10%;
+    padding-left: 5%;
+}
+#skillinfo-title{
+    margin-top: 2.5%;
+    text-align: center;
+}
+.skill-information{
+    color: #000;
+}
+.skill-url{
+    background-color: transparent;
+    color: #000;
+    border: 1px solid transparent;
+    margin-top: 1%;
+    padding: 0;
+    
+}
+#basicinfo-container{
+    margin-top: 10%;
+}
+#skillinfo-container{
+    float: left;
+}
+.pop-con{
+    position: fixed;
+    top: 22%;
+    z-index: 5;
+    margin-left: 41%;
+}
+.pop-clo{
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 2px solid transparent;
+}
+.pop-clo:hover{
+    background-color: #db9006;
+    color: #ffffff;
+
+}
+.user-skill-box{
+    height:20rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }
