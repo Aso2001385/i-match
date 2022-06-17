@@ -41,7 +41,8 @@ class UserController extends Controller
     public function create()
     {
         $status='HTTP_OK';
-        return response()->json(Response::$status);
+        $result=[];
+        return response()->json($result,Response::$status);
     }
 
     /**
