@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Recruit;
+use App\Models\Recruits\Recruit;
+use App\Http\Requests\Recruits\CreateRecruitsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
