@@ -3,28 +3,44 @@
         <div class="menu-box scrolly">
             <div class="menu_bar">
                 <div class="menubar-container">
-                    <span class="menu-image">⚪️</span>
-                    <a href="/news-list" class="menu-list" id="menu-news">お知らせ</a>
+                    <router-link to="/news-list">
+                        <button class="menu-list" id="menu-news"><span class="menu-image">⚪️</span>お知らせ</button> 
+                    </router-link>
+                    <!-- <span class="menu-image">⚪️</span>
+                    <a href="/news-list" class="menu-list" id="menu-news">お知らせ</a> -->
                 </div>
                 <div class="menubar-container">
-                    <span class="menu-image">⚪️</span>
-                    <a href="/bulletin-list" class="menu-list" id="menu-bulletin">掲示板</a>
+                    <router-link to="/bulletin-list">
+                        <button class="menu-list" id="menu-bulletin"><span class="menu-image">⚪️</span>掲示板</button>
+                    </router-link>
+                    <!-- <span class="menu-image">⚪️</span>
+                    <a href="/bulletin-list" class="menu-list" id="menu-bulletin">掲示板</a> -->
                 </div>
                 <div class="menubar-container">
-                    <span class="menu-image">⚪️</span>
-                    <a href="/chat-list" class="menu-list" id="menu-chat">チャット</a>
+                    <router-link to="/chat-list">
+                        <button class="menu-list" id="menu-chat"><span class="menu-image">⚪️</span>チャット</button>
+                    </router-link>
+                    <!-- <span class="menu-image">⚪️</span>
+                    <a href="/chat-list" class="menu-list" id="menu-chat">チャット</a> -->
                 </div>
                 <div class="menubar-container">
-                    <span class="menu-image">⚪️</span>
-                    <a href="/bulletin-list" class="menu-list" id="menu-user">ユーザーリスト</a>
+                    <router-link to="/user-list">
+                        <button class="menu-list" id="menu-user"><span class="menu-image">⚪️</span>ユーザーリスト</button>
+                    </router-link>
+                    <!-- <span class="menu-image">⚪️</span>
+                    <a href="/bulletin-list" class="menu-list" id="menu-user">ユーザーリスト</a> -->
                 </div>
                 <div class="menubar-container">
-                    <span class="menu-image">⚪️</span>
-                    <a href="/bulletin-list" class="menu-list" id="menu-history">参加履歴</a>
+                    <router-link to="/history-list">
+                        <button class="menu-list" id="menu-history"><span class="menu-image">⚪️</span>参加履歴</button>
+                    </router-link>
+                    <!-- <span class="menu-image">⚪️</span>
+                    <a href="/bulletin-list" class="menu-list" id="menu-history">参加履歴</a> -->
                 </div>
                 <div class="menubar-container">
-                    <router-link v-bind:to="{name: userbulletin.list, params: {userId: userId}}">
-                        <butten class="menu-list" id="menu-account"><span class="menu-image">⚪️</span>アカウント名(仮)</butten>
+                    <!-- <router-link v-bind:to="{name: userbulletin.list, params: {userId: userId}}"> -->
+                    <router-link to="/user-bulletin-list">
+                        <button class="menu-list" id="menu-account"><span class="menu-image">⚪️</span>アカウント名(仮)</button>
                     </router-link>
                     
                     <!-- <a href="/user-bulletin-list" class="menu-list" id="menu-account"></a> -->
@@ -37,24 +53,6 @@
 <!-- ユーザー情報取得 -->
 <script>
     export default {
-        data: function () {
-            return {
-                // 初期にuseridを何かしら入れておく
-                userId: 9999
-            }
-        },
-        methods: {
-            getUser() {
-                // どんなurlを叩いたらユーザーのidを取得できるのか、福元くんと話し合う
-                axios.get('/api/user')
-                    .then((res) => {
-                        this.userId = res.data;
-                    });
-            }
-        },
-        mounted() {
-            this.getUser();
-        }
     }
 
 </script>

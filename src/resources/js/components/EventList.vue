@@ -11,7 +11,7 @@
                         <span id="people">１チーム：</span>
                         <span id="people-count">5人まで</span>
                     </p>
-                    <p id="title-sentence">自作WebAPI作成ハッカソン</p>
+                    <p class="title-sentence">自作WebAPI作成ハッカソン</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
@@ -29,7 +29,7 @@
                         <span id="people">１チーム：</span>
                         <span id="people-count">5人まで</span>
                     </p>
-                    <p id="title-sentence">自作WebAPI作成ハッカソン</p>
+                    <p class="title-sentence">自作WebAPI作成ハッカソン</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
@@ -47,7 +47,7 @@
                         <span id="people">１チーム：</span>
                         <span id="people-count">5人まで</span>
                     </p>
-                    <p id="title-sentence">自作WebAPI作成ハッカソン</p>
+                    <p class="title-sentence">自作WebAPI作成ハッカソン</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
@@ -65,7 +65,7 @@
                         <span id="people">１チーム：</span>
                         <span id="people-count">5人まで</span>
                     </p>
-                    <p id="title-sentence">自作WebAPI作成ハッカソン</p>
+                    <p class="title-sentence">自作WebAPI作成ハッカソン</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
@@ -83,7 +83,7 @@
                         <span id="people">１チーム：</span>
                         <span id="people-count">5人まで</span>
                     </p>
-                    <p id="title-sentence">自作WebAPI作成ハッカソン</p>
+                    <p class="title-sentence">自作WebAPI作成ハッカソン</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>

@@ -3,6 +3,8 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+ import VueCookies from 'vue-cookies'
+
  import Vue from 'vue';
  import VueRouter from 'vue-router';
  import FixedLog from "./components/FixedLog";
@@ -14,8 +16,10 @@
  import EventList from "./components/EventList";
  import NewsList from "./components/NewsList";
  import ChatList from "./components/ChatList";
-//  import BulletinList from "./components/BulletinList";
-//  import BulletinList from "./components/BulletinList";
+ import HistoryList from "./components/HistoryList";
+ import UserList from "./components/UserList";
+ import ChatRoomTit from "./components/ChatRoomTit";
+ import PartnerUserDetail from "./components/PartnerUserDetail";
  import UserBulletinList from "./components/UserBulletinList";
  import UserSkillDetail from "./components/UserSkillDetails";
  import SkillSignup from "./components/SkillSignup";
@@ -34,22 +38,28 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
+Vue.use(VueCookies);
+
 Vue.use(VueRouter);
   
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
+            path: '/',
+            name: 'top.dev.tit',
+            component: TopDevTit
+        },
+        {
+            path: '/home',
+            name: 'top.dev.tit',
+            component: TopDevTit
+        },
+        {
             path: '/top-dev-tit',
             name: 'top.dev.tit',
             component: TopDevTit
         },
-        // useridを取得する
-        // {
-        //     path: '/top-dev-tit/:userId',
-        //     name: 'top.dev.tit',
-        //     component: TopDevTit
-        // },
         {
             path: '/news-list',
             name: 'news.list',
@@ -71,17 +81,30 @@ const router = new VueRouter({
             component: ChatList
         },
         {
+            path: '/user-list',
+            name: 'user.list',
+            component: UserList
+        },
+        {
+            path: '/history-list',
+            name: 'history.list',
+            component: HistoryList
+        },
+        {
+            path: '/chat-room-tit',
+            name: 'chat.room.tit',
+            component: ChatRoomTit
+        },
+        {
+            path: '/partner-user-detail',
+            name: 'partner.user.detail',
+            component: PartnerUserDetail,
+        },
+        {
             path: '/user-bulletin-list',
             name: 'userbulletin.list',
             component: UserBulletinList
         },
-        // APIでユーザー情報取得(後で下記のに書き換える)
-        // {
-        //     path: '/user-bulletin-list/:userId',
-        //     name: 'userbulletin.list',
-        //     component: UserBulletinList,
-        //     props: true
-        // },
         {
             path: '/user-skill-detail',
             name: 'userskill.detail',

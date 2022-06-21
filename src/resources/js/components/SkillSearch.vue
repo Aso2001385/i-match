@@ -6,7 +6,7 @@
         <div class="serch-btn-con"><button class="serch-button" id="serch-button1">検索</button></div>
         <div class="skill-contailer skill-search-box scroll">
             <div class="lan-container">
-                <div class="skill-genle" id="lan-subtitle"><b>言語</b></div>
+                <div class="skill-genle" id="lan-subtitle"><b>▶︎言語</b></div>
                     <div class="skill-check-image">
                     <div class="skill-checkcon" v-for="(value,key) in LangBox" :key="key">
                         <!-- <router-link :to="{ name: 'skill.search.detail', params: {id: value.id,name: value.name} }"> -->
@@ -17,7 +17,7 @@
 
             </div>
             <div class="frame-container">
-                <div class="skill-genle" id="frame-subtitle"><b>フレームワーク</b></div>
+                <div class="skill-genle" id="frame-subtitle"><b>▶︎フレームワーク</b></div>
                     <div class="skill-check-image">
                     <div class="skill-checkcon" v-for="(value,key) in FrameBox" :key="key">
                         <!-- <router-link :to="{ name: 'skill.search.detail', params: {id: value.id,name: value.name} }"> -->
@@ -28,7 +28,7 @@
             </div>
 
             <div class="db-container">
-                <div class="skill-genle" id="db-subtitle"><b>DB</b></div>
+                <div class="skill-genle" id="db-subtitle"><b>▶︎DB</b></div>
                 <div class="skill-check-image">
                     <div class="skill-checkcon" v-for="(value,key) in DbBox" :key="key">
                         <!-- <router-link :to="{ name: 'skill.search.detail', params: {id: value.id,name: value.name} }"> -->
@@ -39,7 +39,7 @@
             </div>
             
             <div class="infra-container">
-                <div class="skill-genle" id="infra-subtitle"><b>インフラ</b></div>
+                <div class="skill-genle" id="infra-subtitle"><b>▶︎インフラ</b></div>
                 <div class="skill-check-image">
                     <div class="skill-checkcon" v-for="(value,key) in InfraBox" :key="key">
                         <!-- <router-link :to="{ name: 'skill.search.detail', params: {id: value.id,name: value.name} }"> -->
@@ -50,7 +50,7 @@
             </div>
             
             <div class="oth-container">
-                <div class="skill-genle" id="oth-subtitle"><b>その他</b></div>
+                <div class="skill-genle" id="oth-subtitle"><b>▶︎その他</b></div>
                 <div class="skill-check-image">
                     <div class="skill-checkcon" v-for="(value,key) in OftenBox" :key="key">
                         <!-- <router-link :to="{ name: 'skill.search.detail', params: {id: value.id,name: value.name} }"> -->

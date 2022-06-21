@@ -25,6 +25,7 @@
         "webpack": "^5.72.1"
     },
     "dependencies": {
+        "vue-cookies": "^1.8.1",
         "vue-router": "^3.5.4"
     }
 }

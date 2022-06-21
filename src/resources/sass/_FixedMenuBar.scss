@@ -11,6 +11,9 @@
     padding-top: 3.4%;
 
 }
+.menu-list:hover,.menu-image:hover{
+  color: #ffa500;
+}
 // スクロール処理
 .menu-box{
     width:25rem;
@@ -30,7 +33,7 @@
     color: #ffffff;
 }
 .menubar-container{
-  margin-bottom: 20%;
+  margin-bottom: 5%;
 }
 .menu-list{
     font-size: 1.5rem;

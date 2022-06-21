@@ -1,11 +1,22 @@
 .news-detail{
+    position: fixed;
+    top: 13rem;
+    width: 55%;
     margin-left: 35rem;
-    padding-top: 8rem;
+    padding-bottom: 5%;
+    border: 1px solid transparent;
+    background-color: #ffffff;
+}
+#name-cate{
+    font-size: 1.5rem;
+    margin-top: 5%;
+    margin-left: 2.5%;
 }
 .news-detail-con,.news-detail-content{
     float: left;
     width: 70%;
     margin-top: 5%;
+    margin-left: 15%;
 }
 #news-detail-tit{
     float: left;
