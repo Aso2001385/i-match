@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Http\Requests\Users\CreateUserRequest;
+use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\PasswordUpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -39,14 +40,8 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-            $user=User::create([
-                'class'=>$request->class,
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ]);
 
-            $user->fill(array_merge($request->all(),
+            $user = User::fill(array_merge($request->all(),
                 ['password' => Hash::make($request->password)]
              ))->save();
             $result = [
@@ -83,7 +78,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateUserRequest $request)
     {
         $user=User::find($request->id);
 
