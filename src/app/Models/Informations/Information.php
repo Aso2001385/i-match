@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Informations;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Recruit extends Model
+class Information extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'user_id',
         'title',
         'contents',
-        'purpose_id',
-        'persons',
-        'due',
+        'read',
+        'category_id',
+        'url',
     ];
 }
