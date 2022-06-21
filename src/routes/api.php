@@ -21,10 +21,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/ac',[UserController::class,'access']); //T
-Route::get('/users', [UserController::class, 'list']); //R
+Route::get('/users', [UserController::class, 'index']); //R
 Route::post('/users', [UserController::class, 'store']); //C 
-Route::get('/user/{id}',[UserController::class, 'show']); //R
-Route::put('/user',[UserController::class, 'update']); // U
-Route::delete('/user',[UserController::class, 'delete']); // D
+Route::get('/users/{id}',[UserController::class, 'show']); //R
+Route::put('/users/{id}',[UserController::class, 'update']); // U
+Route::delete('/users/{id}',[UserController::class, 'delete']); // D
 
 Route::put('/user/password',[UserController::class, 'passwordUpdate']); // U
+
+Route::resource('skills','SkillController');
+
+Route::resource('userSkill','UserSkillController', ['only' => ['store','update','destroy']]);
