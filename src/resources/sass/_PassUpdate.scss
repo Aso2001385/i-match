@@ -7,7 +7,6 @@
     font-size: 1.5rem;
 }
 #now-pass-text,#new-pass-text,#new-pass-text-conf{
-    width: 150%;
     margin-bottom: 20%;
     height: 2.2rem;// 場合によって変わる
     background-color: #f8f9fa;
@@ -23,4 +22,8 @@
 }
 .pass-error-text{
     color: #f2b100;
+}
+.pass-input-wid{
+    border: 1px solid #000;
+    width: 200%;
 }

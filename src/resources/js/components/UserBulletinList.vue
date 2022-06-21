@@ -3,7 +3,6 @@
   <div>
       <div class="bulletin-container">
             <UserBulletinSpace1></UserBulletinSpace1>
-            <BulletinSorting1></BulletinSorting1>
             <div class="bulletin bulletin-box scroll">
                 <div class="bulletin-list">
                     <p>
@@ -12,10 +11,10 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <router-link to="/bulletin-detail-me">
@@ -30,10 +29,10 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <router-link to="/bulletin-detail-me">
@@ -48,10 +47,10 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <router-link to="/bulletin-detail-me">
@@ -66,10 +65,10 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <router-link to="/bulletin-detail-me">
@@ -84,10 +83,10 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <router-link to="/bulletin-detail-me">
@@ -102,10 +101,10 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
-                        <span class="skill">スキルの画像(仮)</span>
-                        <span class="skill">スキルの画像(仮)</span>
+                        <span class="skill">◯</span>
+                        <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
                         <router-link to="/bulletin-detail-me">
@@ -123,17 +122,13 @@
   </template>
   
   <script>
-    import BulletinSorting1 from './BulletinSorting.vue'
+    // import BulletinSorting1 from './BulletinSorting.vue'
     import UserInformation1 from './UserInformation.vue'
     import UserBulletinSpace1 from './UserBulletinSpace.vue'
 
     export default {
-        props: {
-            // 型は間違ってたらかえる
-            userId: String
-        },
         components: {
-            BulletinSorting1,
+            // BulletinSorting1,
             UserInformation1,
             UserBulletinSpace1,
         }

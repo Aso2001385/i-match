@@ -6,7 +6,6 @@
             <p id="skillimage-scss">◯</p>
             <p id="subskillimage-scss">◯</p>
         </div>
-        <!-- <h2 id="skillname">{{ id }}</h2> -->
         <h2 id="skillname">{{ name }}</h2>
         <div id="skilldetail-container">
             <p class="search-about-skill">レベル</p>
@@ -19,8 +18,8 @@
             </select>
             <p class="search-about-skill">開発経験</p>
             <select name="search-exp-sorting" class="search-exp-sorting" v-model="exp">
-                <option value="0">YES</option>
-                <option value="1">NO</option>
+                <option value="0">あり</option>
+                <option value="1">なし</option>
             </select>
         </div>
         <div class="skilldel-save-con"><button @click="skill_save" class="skilldel-save-btn">保存</button></div>

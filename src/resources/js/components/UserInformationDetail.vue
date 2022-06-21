@@ -16,14 +16,14 @@
                 <!-- </router-link> -->
             </div>
             <div id="basic-info">
-                <p class="basic-info">ニックネーム：</p>
+                <p class="basic-info">▶︎ニックネーム：</p>
                 <div class="basic-info"><input type="text" value="テスト" class="basic-info-text form-control"></div>
-                <p class="basic-info">メールアドレス：</p>
+                <p class="basic-info">▶︎メールアドレス：</p>
                 <div class="basic-info"><input type="text"  value="test@asojuku.ac.jp" class="basic-info-text form-control"></div>
                 <p class="basic-info" id="basic-info-url"><a href="/pass-update">パスワード変更</a></p>
             </div>
             <div id="basic-info-pro">
-                <p id="info-pro-tit">プロフィール文：</p>
+                <p id="info-pro-tit">▶︎プロフィール文：</p>
                 <div><textarea rows="5" cols="50" value="テストテスト" id="info-pro-text"></textarea></div>
             </div>
         </div>
@@ -35,11 +35,11 @@
                 </router-link>
             </div>
             <div class="skill-info-box scroll">
-                <p class="skill-info">言語：PHP・Java</p>
-                <p class="skill-info">フレームワーク：Laravel・Spring</p>
-                <p class="skill-info">DB：PostgreSQL・MySQL</p>
-                <p class="skill-info">インフラ：Linux・AWS・Azure</p>
-                <p class="skill-info">その他：figma・github</p>
+                <p class="skill-info">▶︎言語：PHP・Java</p>
+                <p class="skill-info">▶︎フレームワーク：Laravel・Spring</p>
+                <p class="skill-info">▶︎DB：PostgreSQL・MySQL</p>
+                <p class="skill-info">▶︎インフラ：Linux・AWS・Azure</p>
+                <p class="skill-info">▶︎その他：figma・github</p>
             </div>
         </div>
         <!-- 削除完了画面を出す場合はルートの値を変える -->

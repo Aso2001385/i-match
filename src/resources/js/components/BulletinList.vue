@@ -2,7 +2,7 @@
   <div>
       <div class="bulletin-container">
             <BulletinSubmenu1></BulletinSubmenu1>
-            <BulletinSorting1></BulletinSorting1>
+            <!-- <BulletinSorting1></BulletinSorting1> -->
             <div class="bulletin bulletin-box scroll">
                 <div class="bulletin-list">
                     <p>
@@ -11,7 +11,7 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
@@ -29,13 +29,15 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-your">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
                 <div class="bulletin-list">
@@ -45,13 +47,15 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-your">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
                     <div class="bulletin-list">
@@ -61,13 +65,15 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-your">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
                     <div class="bulletin-list">
@@ -77,13 +83,15 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-your">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
                     <div class="bulletin-list">
@@ -93,13 +101,15 @@
                         <span id="people">募集人数：</span>
                         <span id="people-count">3/6人(仮)</span>
                     </p>
-                    <p id="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
+                    <p class="title-sentence">Flaskの勉強会をしませんか？(仮)</p>
                     <div class="skill-container">
                         <span class="skill">◯</span>
                         <span class="skill">◯</span>
                     </div>
                     <div class="readmore-container">
-                        <button class="readmore-detail">Read More</button>
+                        <router-link to="/bulletin-detail-your">
+                            <button class="readmore-detail">Read More</button>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -114,13 +124,13 @@
   <script>
     import SkillSearch1 from './SkillSearch.vue'
     import BulletinSubmenu1 from './BulletinSubmenu.vue'
-    import BulletinSorting1 from './BulletinSorting.vue'
+    // import BulletinSorting1 from './BulletinSorting.vue'
 
       export default {
         components: {
             SkillSearch1,
             BulletinSubmenu1,
-            BulletinSorting1
+            // BulletinSorting1
         }
       }
   </script>

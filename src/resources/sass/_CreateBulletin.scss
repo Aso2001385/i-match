@@ -10,17 +10,28 @@
 #content-title{
     border-bottom: 2px solid #000;
 }
-#content-title,#createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#createbulletin-day,#cratebulletin-skill{
+#content-title{
     font-size: 1.5rem;
     margin-top: 2.5%;
     padding-left: 4.5%;
 }
 #createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#createbulletin-day,#cratebulletin-skill{
-    background-color: #d4d4d4;
+    font-size: 1.5rem;
+    margin-top: 2.5%;
+    padding-left: 2.5%;
 }
-#createbulletin-title-text,#createbulletin-title-textarea,.category,.rec-number{
+#createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#createbulletin-day,#cratebulletin-skill{
+    border-bottom: 2px solid #a3a3a3;
+}
+#createbulletin-title-text,.category,.rec-number{
     margin-left: 2.5%;
     height: 2.2rem;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+#createbulletin-title-textarea{
+    margin-left: 2.5%;
     background-color: #f8f9fa;
     border-radius: 5px;
     border: 1px solid transparent;

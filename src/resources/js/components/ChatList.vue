@@ -3,7 +3,7 @@
     <div class="chat-list">
         <UserChatTit1></UserChatTit1>
         <div class="chat-list-con chat-list-box scroll">
-            <router-link to="/chat-room">
+            <router-link to="/chat-room-tit">
                 <button class="chat-con-btn">
                     <div class="chat-con">
                         <p class="partner-name">相手のニックネーム</p>

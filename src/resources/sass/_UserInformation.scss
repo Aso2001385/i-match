@@ -1,7 +1,7 @@
 .userskill-detail{
-    background-color: #ffffff;
+    // background-color: #ffffff;
     position: fixed;
-    top: 4rem;
+    top: 6rem;
     margin-top: 3%;
     margin-left: 84rem;
     padding-left: 0.5rem;
@@ -35,6 +35,7 @@
     background-color: #db9006;
 }
 #basicinfo-container,#skillinfo-container{
+    background-color: #ffffff;
     border: 1px solid #000;
 }
 #skillinfo-container{
@@ -71,7 +72,7 @@
 }
 .pop-clo{
     padding: 10px 20px;
-    background-color: #ffffff;
+    background-color: #c4c4c4;
     border: 2px solid transparent;
 }
 .pop-clo:hover{
