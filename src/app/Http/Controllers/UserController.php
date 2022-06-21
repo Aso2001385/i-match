@@ -41,14 +41,16 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
 
-            $user = User::fill(array_merge($request->all(),
-                ['password' => Hash::make($request->password)]
-             ))->save();
-            $result = [
-                'users'=>$user->toArray(),
-            ];
-            $status = Response::HTTP_OK;
-            return response()->json($result,$status);
+        $user = new User();
+
+        $user = $user->fill(
+            array_merge($request->all(),
+            ['password' => Hash::make($request->password)]
+        ))
+        ->save();
+
+        $status = Response::HTTP_OK;
+        return response()->json([],$status);
     }
 
 
