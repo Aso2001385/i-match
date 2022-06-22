@@ -20,4 +20,9 @@ class UserSkillController extends Controller
         return response()->json($response['result'],$response['status']);
     }
 
+    public function delete(Request $request){
+        $response = UserSkill::delete_skill($request);
+        return response()->json($response['result'],$response['status']);
+    }
+
 }
