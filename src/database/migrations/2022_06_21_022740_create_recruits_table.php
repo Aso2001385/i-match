@@ -18,7 +18,6 @@ class CreateRecruitsTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('title',30);
             $table->text('contents');
-            $table->string('purpose');
             $table->integer('persons');
             $table->dateTime('due');       
             $table->timestamps();

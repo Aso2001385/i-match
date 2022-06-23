@@ -6,6 +6,7 @@ use App\Models\Users\User;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\PasswordUpdateUserRequest;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +22,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function index()
     {
             $result = [
                 'users' => User::all()->toArray()
@@ -38,17 +39,35 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
 
-            $user = User::fill(array_merge($request->all(),
+        try{
+
+            $user = User::create($request->all());
+
+            $user->fill(
+                array_merge($request->all(),
                 ['password' => Hash::make($request->password)]
-             ))->save();
-            $result = [
-                'users'=>$user->toArray(),
+            ))
+            ->save();
+
+            $response = [
+                'result' => 'success!'
             ];
+
             $status = Response::HTTP_OK;
-            return response()->json($result,$status);
+
+        }catch(Exception $e){
+            $response = [
+                'result' => $e
+            ];
+
+            $status = Response::HTTP_BAD_REQUEST;
+        }
+
+        return response()->json($response,$status);
+
     }
 
 
@@ -58,16 +77,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        // $check=new StatusController;
-        // list($view,$user,$status) = $check::show($id);
-
-        $result =[
-            'user' => User::find($id)->toArray(),
-        ];
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        $response = User::get_user($request);
+        return response()->json($response['result'],$response['status']);
     }
 
 
