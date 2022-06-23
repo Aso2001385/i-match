@@ -4,7 +4,7 @@ namespace App\Http\Requests\Recruits;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateRecruitsRequest extends FormRequest
+class UpdateRecruitRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class CreateRecruitsRequest extends FormRequest
     {
         return [
             'title'=>'required|string|max:30',
-            'content'=>'required|text|max:1024',
+            'contents'=>'required|string|max:1024',
             'persons'=>'required|integer|max:2',
             'due'=>'required|date|after:today',
         ];
@@ -34,6 +34,7 @@ class CreateRecruitsRequest extends FormRequest
     {
         return[
             'title.required' => 'タイトルを入力してください',
+            'title.string' => '文字列で入力してください',
             'title.max' => '30文字以内で入力してください',
             'content.required' => '本文を入力してください',
             'content.max' => '1024文字以内で入力してください',
@@ -42,6 +43,8 @@ class CreateRecruitsRequest extends FormRequest
             'persons.max'=> '2桁以下で入力してください',
             'due.required'=> '募集期間を入力してくさい',
             'due.date'=>'日付を入力してください',
+            'due.after'=>'今日以降の日付を設定してください',
         ];
     }
+
 }

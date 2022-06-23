@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recruits\Recruit;
-use App\Http\Requests\Recruits\CreateRecruitsRequest;
+use App\Http\Requests\Recruits\CreateRecruitRequest;
+use App\Http\Requests\Recruits\UpdateRecruitRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +39,7 @@ class RecruitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRecruitsRequest $request)
     {
         $result=[
             'recruit'=>Recruit::create($request->all())->toArray(),
@@ -75,7 +76,7 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(UpdateRecruitRequest $request)
     {
         $recruit=Request::find($request->id);
 
