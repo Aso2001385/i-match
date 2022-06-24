@@ -1,0 +1,43 @@
+.bulletin-detail{
+    width: 55%;
+    margin-left: 35%;
+    padding-top: 10rem;
+}
+.bulletin-detail-your-container{
+    border: 1px solid transparent;
+    background-color: #ffffff;
+    padding: 20px 20px;
+}
+.bulletin-title,.bulletin-over,.bulletin-skill-title,.now-number,#bulletin-day{
+    margin-left: 1.5%;
+    border-bottom: 2px solid #a3a3a3;
+}
+.bulletin-title-con,.bulletin-over-con,.bulletin-skill-con,.now-number-count,#bulletin-day-con{
+    margin-left: 2.5%;
+}
+.bulletin-title-con{
+    font-size: 1.5rem;
+}
+.bulletin-cate{
+    margin-left: 40%;
+}
+.bulletin-over{
+    margin-right: 5%;
+}
+.bulletin-detail-btn-con{
+    text-align: center;
+}
+.bulletin-detail-button{
+    background-color: #ffffff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+.bulletin-detail-button:hover{
+    background-color: #db9006;
+    color: #ffffff;
+}
+.bulletin-over-con,.now-number-count,.bulletin-skill-con{
+    font-size: 1rem;
+}
+

@@ -1,0 +1,89 @@
+.add-skill{
+    margin-left: 35%;
+    padding-top: 8rem;
+}
+.addskill-container{
+    background-color: #c4c4c4;
+    border: 1px solid transparent;
+    width: 70%;
+    padding-bottom: 10%;
+}
+#required-skill{
+    font-size: 1.5rem;
+    padding-left: 1.5%;
+    border-bottom: 1px solid #000;
+}
+.add-skill-con{
+    border: 1px solid #000;
+    width: 60%;
+    margin-left: 20%;
+    padding-bottom: 10%;
+}
+#skill-card-img-con{
+    float: left;
+    height: 30%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 20%;
+}
+.skill-card-image{
+    font-size: 4.5rem;
+    margin-right: 10%;
+    padding-left: 5.5%;
+}
+#sublang-image{
+    font-size: 2.5rem;
+    text-align: center;
+}
+#skillcard-title{
+    font-size: 2.5rem;
+    border-bottom: 2px solid #000;
+    padding-left: 1.5%;
+}
+.skill-sorting,.level-sorting,.exp-sorting{
+    margin-bottom: 1rem;
+    height: 2.2rem;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+.skill-card-title,.about-skill-tit,#skill-card-title{
+    font-size: 1.5rem;
+}
+#addskill-btn-con{
+    margin-top: 5%;
+}
+#add-button{
+    float: right;
+    margin-right: 45%;
+    background-color: #ffffff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 20px;
+}
+#add-button:hover{
+    background-color: #db9006;
+    color: #ffffff;
+}
+#addskill-back-url{
+    float: right;
+    background-color: #ffffff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-right: 25%;
+    padding: 10px 20px;
+}
+#addskill-back-url:hover{
+    background-color: #db9006;
+    color: #ffffff;
+}
+.addskill-btn-con{
+    float: left;
+    width: 80%;
+    margin-top: 5%;
+}
+
+
+
