@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Users\User;
+use App\Models\Teachers\Teacher;
 
-class UsersTableSeeder extends Seeder
+class TeachersTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-       User::factory(10)->create();
+        Teacher::factory(10)->create();
     }
 }

@@ -21,10 +21,11 @@ use Illuminate\Support\Facades\Route;
 
 
 // のちにログイン中かどうかで表示するページを変えるようにする
-// Route::get('/login', function () {
+Route::get('/login', function () {
 //     // デフォのファイル
 //     return view('app');
 // });
+
 // Route::get('/register', function () {
 //     // デフォのファイル
 //     return view('register');
