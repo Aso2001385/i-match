@@ -3,7 +3,7 @@
     <div class="historys-list">
         <HistoryListTit1></HistoryListTit1>
         <div class="historys-list-con historys-list-box scroll">
-            <router-link to="/historys-detail">
+            <router-link to="/history-detail">
                 <button class="historys-con-btn">
                     <div class="historys-con">
                         <p class="historys-title">〇〇さんからオファーが届いています。</p>
@@ -12,7 +12,7 @@
                 </button>
             </router-link>
 
-            <router-link to="/historys-detail">
+            <router-link to="/history-detail">
                 <button class="historys-con-btn">
                     <div class="historys-con">
                         <p class="historys-title">〇〇さんからオファーが届いています。</p>
@@ -21,7 +21,7 @@
                 </button>
             </router-link>
 
-            <router-link to="/historys-detail">
+            <router-link to="/history-detail">
                 <button class="historys-con-btn">
                     <div class="historys-con">
                         <p class="historys-title">〇〇さんからオファーが届いています。</p>
@@ -30,7 +30,7 @@
                 </button>
             </router-link>
 
-            <router-link to="/historys-detail">
+            <router-link to="/history-detail">
                 <button class="historys-con-btn">
                     <div class="historys-con">
                         <p class="historys-title">〇〇さんからオファーが届いています。</p>
@@ -39,7 +39,7 @@
                 </button>
             </router-link>
 
-             <router-link to="/historys-detail">
+             <router-link to="/history-detail">
                 <button class="historys-con-btn">
                     <div class="historys-con">
                         <p class="historys-title">〇〇さんからオファーが届いています。</p>
@@ -48,7 +48,7 @@
                 </button>
             </router-link>
 
-            <router-link to="/historys-detail">
+            <router-link to="/history-detail">
                 <button class="historys-con-btn">
                     <div class="historys-con">
                         <p class="historys-title">〇〇さんからオファーが届いています。</p>

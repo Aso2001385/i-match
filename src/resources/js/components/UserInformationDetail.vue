@@ -51,6 +51,39 @@
     import UserInformationPro1 from './UserInformationPro.vue'
 
       export default {
+        data() {
+            return {
+                skilldetail: false,
+                isActive:true,
+                // ログインに成功したらセッションにデータを格納してそれを利用する
+                // user_id:sessionStorage.getItem('user_id'),
+                // user_name:sessionStorage.getItem('user_name'),
+                // user_email:sessionStorage.getItem('user_email'),
+                // request: {user_id},
+                user: {}
+            };
+        },
+        methods: {
+            popup() {
+                this.skilldetail = !(this.skilldetail);
+            },
+            // getUser: function () {
+            //     axios
+            //         .get("/api/user{id}", this.request)
+            //         .then((res) => {
+            //             // 全てのユーザーのid,class,name,email取得
+            //             console.log(res);
+            //             this.user = res.data.user;
+
+            //         })
+            //         .catch((err) => {
+            //             console.log(err);
+            //         })
+            // },
+        },
+        mounted(){
+            // getUser();
+        },
         components: {
             UserInformationPro1,
         }

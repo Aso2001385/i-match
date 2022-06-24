@@ -5,7 +5,7 @@
     margin-left: 35rem;
     padding-bottom: 5%;
     border: 1px solid transparent;
-    background-color: #ffffff;
+    background-color: #a3a3a3;
 }
 #name-cate{
     font-size: 1.5rem;
@@ -45,3 +45,16 @@
     background-color: #db9006;
     color: #ffffff;
 }
+.news-detail-content-box{
+    height:10rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }

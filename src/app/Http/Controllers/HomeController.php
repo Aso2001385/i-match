@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// データベースができたらコメントを外す
 // use Illuminate\Support\Facades\Auth;
-// $user = Auth::user();
-// $id = Auth::id();
+// use Cookie;
 
 class HomeController extends Controller
 {
@@ -31,6 +29,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // $user = Auth::user()->name;
+        // $user_email = \Auth::user()->email;
+        // $script = "<script> sessionStorage.setItem('user','$user') </script>";
+        // $script_email = "<script> sessionStorage.setItem('user_email','$user_email') </script>";
+        // echo $script;
+        // echo $script_email;
+        
         // return view('home');
         return view('app');
     }

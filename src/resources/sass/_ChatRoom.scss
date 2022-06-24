@@ -1,23 +1,21 @@
 .chat-room-tit{
     position: fixed;
-    top: 5rem;
+    top: 9%;
     z-index: 2;
     margin-left: 25rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    background-color: #000;
+    padding-top: 1.3rem;
+    background-color: #c4c4c4;
     width: 100%;
-    height: 10%;
+    height: 7%;
     
 }
 #chat-user-name{
     padding-left: 2.5%;
-    color: #ffffff;
+    color: #000;
 }
 .chat-room{
     margin-left: 30rem;
     padding-top: 14rem;
-    // width: 100%;
     height: 100%;
 }
 .chat-container-partner{

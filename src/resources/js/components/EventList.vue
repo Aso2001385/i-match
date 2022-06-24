@@ -4,7 +4,7 @@
             <BulletinSubmenu1></BulletinSubmenu1>
             <BulletinSorting1></BulletinSorting1>
             <div class="bulletin bulletin-box scroll">
-                <div class="bulletin-list">
+                <div class="bulletin-list" v-for="n in 10">
                     <p>
                         <span id="deadline">募集期間：</span>
                         <span id="deadline-day">1月1日〜12月31日</span>
@@ -22,7 +22,7 @@
                         </router-link>
                     </div>
                 </div>
-                <div class="bulletin-list">
+                <!-- <div class="bulletin-list">
                     <p>
                         <span id="deadline">募集期間：</span>
                         <span id="deadline-day">1月1日〜12月31日</span>
@@ -111,7 +111,7 @@
                             <button class="readmore-detail">Read More</button>
                         </router-link>
                     </div>
-                </div>
+                </div> -->
             </div>
       </div>
       <SkillSearch1></SkillSearch1>

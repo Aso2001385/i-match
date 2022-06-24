@@ -1,7 +1,7 @@
 <template>
     <div class="top-dev-list">
         <div class="top-dev-bulletin">
-                <div class="top-bulletin-list">
+                <div class="top-bulletin-list" v-for="n in 3">
                     <p>
                         <span id="deadline">募集締め切り：</span>
                         <span id="deadline-day">1月1日(仮)</span>
@@ -19,7 +19,7 @@
                         </router-link>
                     </div>
                 </div>
-                <div class="top-bulletin-list">
+                <!-- <div class="top-bulletin-list">
                     <p>
                         <span id="deadline">募集締め切り：</span>
                         <span id="deadline-day">1月1日(仮)</span>
@@ -50,7 +50,7 @@
                     <div class="readmore-container">
                         <button class="readmore-detail">Read More</button>
                     </div>
-                </div>
+                </div> -->
         </div>
     </div>
 </template>

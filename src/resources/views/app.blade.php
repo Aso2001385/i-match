@@ -1,4 +1,4 @@
-<?php use Illuminate\Support\Facades\Auth; ?>
+<php use Illuminate\Support\Facades\Auth; ?>
 <!doctype html>
  <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
  <head>
@@ -16,13 +16,24 @@
  </head>
  <body>
     <div id="app">
-        <log-component></log-component>
-        <logspace-component></logspace-component>
-        <menubar-component></menubar-component>
-        <account-component></account-component>
-        <router-view></router-view>
+        <div>
+        @if (1 == 1)
+            <div>
+                <log-component></log-component>
+                <logspace-component></logspace-component>
+                <menubar-component></menubar-component>
+                <account-component></account-component>
+                <router-view></router-view>
+            </div>
+        @else
+            <div>
+                <router-view name="account"></router-view>
+                <!-- <login-component></login-component> -->
+            </div>
+        @endif
+        </div>
     </div>
-<!-- Scripts -->
+    <!-- Scripts -->
   <script src="{{ mix('/js/app.js') }}" defer></script>
  </body>
 </html>
