@@ -32,6 +32,13 @@
  import UserInformationDetail from "./components/UserInformationDetail";
  import PassUpdate from "./components/PassUpdate";
  import NewsDetail from "./components/NewsDetail";
+ import HistoryDetail from "./components/HistoryDetail";
+ import BulletinEditDetail from "./components/BulletinEditDetail";
+ import EditDetail from "./components/EditDetail";
+ import LoginEnter from "./components/Login";
+ import RegisterEnter from "./components/Register";
+
+//  import vuetify from "./vuetify";
 
 
 require('./bootstrap');
@@ -41,127 +48,237 @@ window.Vue = require('vue').default;
 Vue.use(VueCookies);
 
 Vue.use(VueRouter);
-  
+
 const router = new VueRouter({
     mode: 'history',
     routes: [
         {
             path: '/',
             name: 'top.dev.tit',
-            component: TopDevTit
+            components: {
+                default: TopDevTit,
+                account: LoginEnter
+            }
         },
         {
             path: '/home',
             name: 'top.dev.tit',
-            component: TopDevTit
+            components: {
+                default: TopDevTit,
+                account: LoginEnter
+            }
         },
         {
             path: '/top-dev-tit',
             name: 'top.dev.tit',
-            component: TopDevTit
+            components: {
+                default: TopDevTit,
+                account: LoginEnter
+            }
         },
         {
             path: '/news-list',
             name: 'news.list',
-            component: NewsList
+            components: {
+                default: NewsList,
+                account: LoginEnter
+            }
         },
         {
             path: '/bulletin-list',
             name: 'bulletin.list',
-            component: BulletinList
+            components: {
+                default: BulletinList,
+                account: LoginEnter
+            }
         },
         {
             path: '/event-list',
             name: 'event.list',
-            component: EventList
+            components: {
+                default: EventList,
+                account: LoginEnter
+            }
         },
         {
             path: '/chat-list',
             name: 'chat.list',
-            component: ChatList
+            components: {
+                default: ChatList,
+                account: LoginEnter
+            }
         },
         {
             path: '/user-list',
             name: 'user.list',
-            component: UserList
+            components: {
+                default: UserList,
+                account: LoginEnter
+            }
         },
         {
             path: '/history-list',
             name: 'history.list',
-            component: HistoryList
+            components: {
+                default: HistoryList,
+                account: LoginEnter
+            }
         },
         {
             path: '/chat-room-tit',
             name: 'chat.room.tit',
-            component: ChatRoomTit
+            components: {
+                default: ChatRoomTit,
+                account: LoginEnter
+            }
         },
         {
             path: '/partner-user-detail',
             name: 'partner.user.detail',
-            component: PartnerUserDetail,
+            components: {
+                default: PartnerUserDetail,
+                account: LoginEnter
+            }
         },
         {
             path: '/user-bulletin-list',
             name: 'userbulletin.list',
-            component: UserBulletinList
+            components: {
+                default: UserBulletinList,
+                account: LoginEnter
+            }
         },
         {
             path: '/user-skill-detail',
             name: 'userskill.detail',
-            component: UserSkillDetail
+            components: {
+                default: UserSkillDetail,
+                account: LoginEnter
+            }
         },
         {
             path: '/user-info-detail',
             name: 'user.info.detail',
-            component: UserInformationDetail,
+            components: {
+                default: UserInformationDetail,
+                account: LoginEnter
+            },
             props: true
         },
         {
             path: '/pass-update',
             name: 'pass.update',
-            component: PassUpdate,
+            components: {
+                default: PassUpdate,
+                account: LoginEnter
+            }
         },
         {
             path: '/skill-signup',
             name: 'skill.signup',
-            component: SkillSignup
+            components: {
+                default: SkillSignup,
+                account: LoginEnter
+            }
         },
         {
             path: '/skill-signup-detail',
             name: 'skillsignup.detail',
-            component: SkillSignupDetail
+            components: {
+                default: SkillSignupDetail,
+                account: LoginEnter
+            }
         },
         {
             path: '/create-bulletin',
             name: 'create.bulletin',
-            component: CreateBulletin
+            components: {
+                default: CreateBulletin,
+                account: LoginEnter
+            }
         },
         {
             path: '/add-skill',
             name: 'add.skill',
-            component: AddSkill
+            components: {
+                default: AddSkill,
+                account: LoginEnter
+            }
         },
         {
             path: '/bulletin-detail-your',
             name: 'bulletin.detail.your',
-            component: BulletinDetailYour,
+            components: {
+                default: BulletinDetailYour,
+                account: LoginEnter
+            },
             props: true
         },
         {
             path: '/bulletin-detail-me',
             name: 'bulletin.detail.me',
-            component: BulletinDetailMe
+            components: {
+                default: BulletinDetailMe,
+                account: LoginEnter
+            }
         },
         {
             path: '/bulletin-edit',
             name: 'bulletin.edit',
-            component: BulletinEdit
+            components: {
+                default: BulletinEdit,
+                account: LoginEnter
+            }
         },
         {
             path: '/news-detail',
             name: 'news.detail',
-            component: NewsDetail
+            components: {
+                default: NewsDetail,
+                account: LoginEnter
+            }
         },
+        {
+            path: '/history-detail',
+            name: 'history.detail',
+            components: {
+                default: HistoryDetail,
+                account: LoginEnter
+            }
+        },
+        {
+            path: '/bulletin-edit-detail',
+            name: 'bulletin.edit.detail',
+            components: {
+                default: BulletinEditDetail,
+                account: LoginEnter
+            }
+        },
+        {
+            path: '/edit-detail',
+            name: 'edit.detail',
+            components: {
+                default: EditDetail,
+                account: LoginEnter
+            }
+        },
+        {
+            path: '/login-enter',
+            name: 'login.enter',
+            components: {
+                default: TopDevTit,
+                account: LoginEnter
+            }
+        },
+        {
+            path: '/register-enter',
+            name: 'register.enter',
+            components: {
+                default: TopDevTit,
+                account: RegisterEnter
+            }
+        },
+        
     ]
 });
 

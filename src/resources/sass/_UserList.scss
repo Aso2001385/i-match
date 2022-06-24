@@ -10,7 +10,8 @@
     background-color: #545454;
     color: #ffffff;
     border-bottom: 2px solid #3f3f3f;
-    padding-bottom: 10rem;
+    padding-bottom: 12rem;
+    margin-bottom: 0rem;
     padding-left: 7.5%;
 }
 .submenu-user-space{
@@ -44,10 +45,12 @@
 }
 .user-skill-con{
     margin-left: 70%;
-    font-size: 1rem;
+}
+.user-skill-image{
+    font-size: 35px;
 }
 .user-box{
-    height:55rem;
+    height:49rem;
   }
   .scroll{
     overflow:auto;

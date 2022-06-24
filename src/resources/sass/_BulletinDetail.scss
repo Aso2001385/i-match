@@ -1,14 +1,20 @@
 .bulletin-detail{
-    width: 55%;
+    position: absolute;
+    top: 7rem;
+    width: 50%;
     margin-left: 35%;
-    padding-top: 10rem;
 }
 .bulletin-detail-your-container{
     border: 1px solid transparent;
     background-color: #ffffff;
-    padding: 20px 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.bulletin-title{
+    margin-top: 5%;
 }
 .bulletin-title,.bulletin-over,.bulletin-skill-title,.now-number,#bulletin-day{
+    margin-bottom: 2.5%;
     margin-left: 1.5%;
     border-bottom: 2px solid #a3a3a3;
 }
@@ -21,9 +27,6 @@
 .bulletin-cate{
     margin-left: 40%;
 }
-.bulletin-over{
-    margin-right: 5%;
-}
 .bulletin-detail-btn-con{
     text-align: center;
 }
@@ -31,6 +34,7 @@
     background-color: #ffffff;
     border: 1px solid #000;
     border-radius: 5px;
+    margin-bottom: 1%;
     padding: 10px 20px;
 }
 .bulletin-detail-button:hover{
@@ -38,6 +42,19 @@
     color: #ffffff;
 }
 .bulletin-over-con,.now-number-count,.bulletin-skill-con{
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
+.bulletin-over-con-box{
+    height:15rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }
 
