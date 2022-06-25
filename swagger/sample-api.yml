@@ -1,7 +1,10 @@
 openapi: 3.0.0
 info:
-  title: Prism Test API
+  title: SampleAPI
   version: '1.0'
+  description: |-
+    モックサーバー作成テスト、練習用のAPI定義書でーす
+    更新されてるかなー
 servers:
   - url: 'http://localhost:4010'
 paths:
@@ -47,6 +50,20 @@ paths:
           name: X-Api-Key
           description: APIキー
           required: true
+    put:
+      summary: ''
+      operationId: put-users
+      responses:
+        '200':
+          description: OK
+      description: ユーザーを更新する
+    delete:
+      summary: ''
+      operationId: delete-users
+      responses:
+        '200':
+          description: OK
+      description: ユーザーを削除する
   '/users/{id}':
     parameters:
       - schema:
