@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  title: Prism Test API
+  version: '1.0'
+servers:
+  - url: 'http://localhost:4010'
+paths:
+  /users:
+    get:
+      summary: ユーザー一覧取得API
+      tags:
+        - users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/res_get_users'
+      operationId: get-users
+      description: ユーザー一覧を取得する
+    post:
+      summary: ユーザー作成API
+      operationId: post-users
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/res_status_code_other_200'
+      description: ユーザーを作成する
+      tags:
+        - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/req_post_users'
+        description: リクエストボディ
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: X-Api-Key
+          description: APIキー
+          required: true
+  '/users/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: ユーザーID
+    get:
+      summary: ユーザー詳細取得API
+      tags:
+        - users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/res_get_users_id'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/res_status_code_other_200'
+      operationId: 'get-users-:id'
+      description: ユーザ詳細を取得する
+components:
+  schemas:
+    res_get_users:
+      title: res_get_users
+      x-tags:
+        - users
+      description: GET /usersのレスポンスモデル
+      type: object
+      x-examples: {}
+      properties:
+        list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: ユーザーID
+                type: integer
+              name:
+                type: string
+                description: ユーザー名
+            required:
+              - id
+              - name
+      required:
+        - list
+    res_get_users_id:
+      title: res_get_users_id
+      type: object
+      description: 'GET /users/{id}のレスポンスモデル'
+      x-tags:
+        - users
+      properties:
+        name:
+          type: string
+          description: ユーザー名
+        nickname:
+          type: string
+          description: ニックネーム
+        isAvailable:
+          type: boolean
+          description: 利用可能か
+      required:
+        - name
+        - nickname
+        - isAvailable
+      x-examples: {}
+    res_status_code_other_200:
+      title: res_status_code_other_200
+      type: object
+      description: ステータスコード200以外の場合のレスポンスモデル
+      properties:
+        message:
+          type: string
+          description: エラーメッセージ
+        code:
+          type: integer
+          description: エラーコード
+      required:
+        - message
+        - code
+      x-tags:
+        - status-code
+    req_post_users:
+      title: req_post_users
+      type: object
+      description: POST /usersのリクエストモデル
+      x-tags:
+        - users
+      properties:
+        name:
+          type: string
+          description: ユーザー名
+        nickname:
+          type: string
+          description: ニックネーム
+        likeFood:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 好きな食べ物名
+        year:
+          type: integer
+          description: 年齢
+      required:
+        - name
+        - nickname
+        - year
