@@ -145,9 +145,6 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
-                  id:
-                    type: integer
       operationId: put-users-id
       tags:
         - update
@@ -164,6 +161,10 @@ paths:
                   example: 翔
               required:
                 - name
+            examples:
+              example:
+                value:
+                  name: 翔
         description: ニックネームとクラスを変更
     delete:
       summary: delete
@@ -209,6 +210,48 @@ paths:
                   type: string
                   format: password
                   example: Aso-2001195
+  /skills:
+    post:
+      summary: スキル作成
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-skills
+      description: スキルを作成します
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                categorry_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  maximum: 255
+                  minimum: 1
+                name:
+                  type: string
+                  example: skill1
+    get:
+      summary: スキル一覧
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Skill'
+      operationId: get-skills
 components:
   schemas:
     User:
@@ -223,7 +266,14 @@ components:
           created_at: '2022-06-29 10:29:50'
           updated_at: '2022-06-29 10:29:50'
           deleted_at: '2022-06-29 10:29:50'
-      examples: []
+      examples:
+        - id: 1
+          name: 翔
+          email: 2001195@s.asojuku.ac.jp
+          password: Aso-2001195
+          created_at: '2022-06-29 10:29:50'
+          updated_at: '2022-06-29 10:29:50'
+          deleted_at: null
       description: ユーザーModel
       x-tags:
         - Model
@@ -272,8 +322,7 @@ components:
       required:
         - name
         - email
-      description: ユーザーModel
-      title: ''
+        - password
     UserSkill:
       type: object
       x-examples:
@@ -328,10 +377,28 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    SkillCategories:
+      required:
+        - user_id
+        - skill_id
+        - practical_flag
+        - learning_flag
+        - level
+      examples:
+        - id: 1
+          user_id: 1
+          skill_id: 1
+          practical_flag: true
+          learning_flag: true
+          level: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    SkillCategory:
       type: object
       x-examples:
         example-1:
@@ -340,14 +407,18 @@ components:
           created_at: '2022-01-01 11:11:11'
           updated_at: '2022-01-01 11:11:11'
           deleted_at: '2022-01-01 11:11:11'
+      title: ''
       properties:
         id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         name:
           type: string
+          example: 言語
+          maxLength: 100
         created_at:
           type: string
           format: date-time
@@ -357,10 +428,20 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    Skills:
+      required:
+        - name
+      examples:
+        - id: 1
+          name: 言語
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    Skill:
       type: object
       x-examples:
         example-1:
@@ -377,18 +458,22 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         category_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         name:
           type: string
+          example: skill1
         depth:
           type: integer
-          format: int64
+          format: int32
           minimum: 1
-          maximum: 255
+          maximum: 5
+          example: 1
         created_at:
           type: string
           format: date-time
@@ -398,10 +483,24 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    SkillRelations:
+      required:
+        - category_id
+        - name
+        - depth
+      examples:
+        - id: 1
+          category_id: 1
+          name: skill1
+          depth: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    SkillRelation:
       type: object
       x-examples:
         example-1:
@@ -417,16 +516,19 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         primary_skill_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         secondary_skill_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         created_at:
           type: string
           format: date-time
@@ -436,10 +538,22 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    Recruits:
+      required:
+        - primary_skill_id
+        - secondary_skill_id
+      examples:
+        - id: 1
+          primary_skill_id: 1
+          secondary_skill_id: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    Recruit:
       type: object
       x-examples:
         example-1:
@@ -459,25 +573,30 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         user_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         title:
           type: string
+          maxLength: 30
+          example: Flaskの勉強しませんか
         contents:
           type: string
-        purpose_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
+          example: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+        purpose:
+          type: string
+          example: 開発
+          maxLength: 3
         persons:
           type: integer
-          format: int64
+          format: int32
           minimum: 1
           maximum: 255
+          example: 5
         due:
           type: string
           format: date-time
@@ -491,9 +610,29 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
+      required:
+        - user_id
+        - title
+        - contents
+        - purpose
+        - persons
+        - due
+      examples:
+        - id: 1
+          user_id: 1
+          title: Flaskの勉強しませんか
+          contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+          purpose: 開発
+          persons: 5
+          due: '2022-01-01 11:11:11'
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
     RecruitSkill:
       type: object
       x-examples:
@@ -511,21 +650,24 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         recruit_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         skill_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         level:
           type: integer
-          format: int64
+          format: int32
           minimum: 1
-          maximum: 255
+          maximum: 5
         created_at:
           type: string
           format: date-time
@@ -535,9 +677,23 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
+      required:
+        - recruit_id
+        - skill_id
+        - level
+      examples:
+        - id: 1
+          recruit_id: 1
+          skill_id: 1
+          level: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
     RecruitUser:
       type: object
       x-examples:
@@ -554,16 +710,19 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         recruit_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         user_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         created_at:
           type: string
           format: date-time
@@ -573,34 +732,22 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    RecruitPurPoses:
-      type: object
-      x-examples:
-        example-1:
-          id: 1
-          name: name
+      required:
+        - recruit_id
+        - user_id
+      examples:
+        - id: 1
+          recruit_id: 1
+          user_id: 1
           created_at: '2022-01-01 11:11:11'
           updated_at: '2022-01-01 11:11:11'
-      properties:
-        id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-        name:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-          example: '2022-01-01 11:11:11'
-        updated_at:
-          type: string
-          format: date-time
-          example: '2022-01-01 11:11:11'
-    Rooms:
+          deleted_at: null
+    Room:
       type: object
       x-examples:
         example-1:
@@ -614,6 +761,7 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         created_at:
           type: string
           format: date-time
@@ -623,9 +771,16 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
+      examples:
+        - id: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
     RoomUser:
       type: object
       x-examples:
@@ -643,18 +798,23 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         room_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         user_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         name:
           type: string
+          example: チャットルーム1
+          maxLength: 30
         created_at:
           type: string
           format: date-time
@@ -664,10 +824,24 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    Chats:
+      required:
+        - room_id
+        - user_id
+        - name
+      examples:
+        - id: 1
+          room_id: 1
+          user_id: 1
+          name: チャットルーム1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    Chat:
       type: object
       x-examples:
         example-1:
@@ -683,12 +857,15 @@ components:
         id:
           type: integer
           format: int64
-          example: 255
+          example: 1
+          minimum: 1
+          maximum: 255
         room_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         user_id:
           type: integer
           format: int64
@@ -696,6 +873,8 @@ components:
           maximum: 255
         message:
           type: string
+          example: おはようございます
+          maxLength: 255
         read:
           type: boolean
         created_at:
@@ -707,10 +886,26 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    Informations:
+      required:
+        - room_id
+        - user_id
+        - message
+        - read
+      examples:
+        - id: 1
+          room_id: 1
+          user_id: 1
+          message: おはようございます
+          read: true
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    Information:
       type: object
       x-examples:
         example-1:
@@ -724,12 +919,24 @@ components:
           created_at: '2022-01-01 11:11:11'
           updated_at: '2022-01-01 11:11:11'
           deleted_at: '2022-01-01 11:11:11'
+      examples:
+        - id: 1
+          user_id: 1
+          title: 参加希望が届きました
+          contents: ○○さんから■■の参加希望が届きました
+          read: true
+          category_id: 1
+          url: 'http://localhost:8080/index'
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
       properties:
         id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         user_id:
           type: integer
           format: int64
@@ -737,8 +944,11 @@ components:
           maximum: 255
         title:
           type: string
+          maxLength: 255
+          example: 参加希望が届きました
         contents:
           type: string
+          example: ○○さんから■■の参加希望が届きました
         read:
           type: boolean
         category_id:
@@ -746,15 +956,33 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         url:
           type: string
+          example: 'http://localhost:8080/index'
+          maxLength: 255
         created_at:
           type: string
+          example: '2022-01-01 11:11:11'
+          format: date-time
         updated_at:
           type: string
+          example: '2022-01-01 11:11:11'
+          format: date-time
         deleted_at:
-          type: string
-    InformationCategories:
+          type:
+            - string
+            - 'null'
+          example: '2022-01-01 11:11:11'
+          format: date-time
+      required:
+        - user_id
+        - title
+        - contents
+        - read
+        - category_id
+        - url
+    InformationCategory:
       type: object
       x-examples:
         example-1:
@@ -769,8 +997,11 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         name:
           type: string
+          example: 参加希望
+          maxLength: 100
         created_at:
           type: string
           format: date-time
@@ -780,10 +1011,20 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    Teachers:
+      required:
+        - name
+      examples:
+        - id: 1
+          name: 参加希望
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    Teacher:
       type: object
       x-examples:
         example-1:
@@ -799,15 +1040,21 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         name:
           type: string
+          example: 西野　直幸
+          maxLength: 30
         email:
           type: string
           pattern: '^[0-9]{7}@asojuku\.ac\.jp'
+          format: email
+          maxLength: 25
         password:
           type: string
           format: password
           minLength: 8
+          pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
         created_at:
           type: string
           format: date-time
@@ -817,12 +1064,24 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-        '':
-          type: string
-    Events:
+      required:
+        - name
+        - email
+        - password
+      examples:
+        - id: 1
+          name: 西野　直幸
+          email: user@example.com
+          password: pa$$word
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    Event:
       type: object
       x-examples:
         example-1:
@@ -840,15 +1099,20 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         teacher_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         title:
           type: string
+          maxLength: 30
+          example: コーディング大会
         contents:
           type: string
+          example: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
         due:
           type: string
           format: date-time
@@ -862,10 +1126,26 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
-    SkillRequests:
+      required:
+        - teacher_id
+        - title
+        - contents
+        - due
+      examples:
+        - id: 1
+          teacher_id: 1
+          title: コーディング大会
+          contents: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+          due: '2022-01-01 11:11:11'
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+    SkillRequest:
       type: object
       x-examples:
         example-1:
@@ -882,15 +1162,20 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         user_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         name:
           type: string
+          example: skill1
+          maxLength: 255
         message:
           type: string
+          example: 勉強したいから
         created_at:
           type: string
           format: date-time
@@ -900,9 +1185,23 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
+      required:
+        - user_id
+        - name
+        - message
+      examples:
+        - id: 1
+          user_id: 1
+          name: skill1
+          message: 勉強したいから
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
     SkillRequestTeacher:
       type: object
       x-examples:
@@ -920,21 +1219,25 @@ components:
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         skill_request_id:
           type: integer
           minimum: 1
           maximum: 255
           format: int64
+          example: 1
         skill_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         teacher_id:
           type: integer
           format: int64
           minimum: 1
           maximum: 255
+          example: 1
         created_at:
           type: string
           format: date-time
@@ -944,9 +1247,23 @@ components:
           format: date-time
           example: '2022-01-01 11:11:11'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           format: date-time
           example: '2022-01-01 11:11:11'
+      required:
+        - skill_request_id
+        - skill_id
+        - teacher_id
+      examples:
+        - id: 1
+          skill_request_id: 1
+          skill_id: 1
+          teacher_id: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
   securitySchemes: {}
   parameters:
     id:
