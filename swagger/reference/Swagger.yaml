@@ -5,15 +5,17 @@ info:
   title: i-Match API
   version: '1.0'
   summary: i-Match のAPI
-  description: ''
+  description: i-MatchのOpen APIです
 servers:
   - url: 'http://localhost:3000'
+    description: ''
 paths:
   /users:
     get:
-      summary: user一覧
+      summary: Users一覧
       tags:
         - index
+        - EndPoint
       responses:
         '200':
           description: HTTP_OK
@@ -21,14 +23,192 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: array
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/User'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      class: SD3D
+                      name: 翔
+                      email: 2001195@s.asojuku.ac.jp
+                      created_at: '2022-06-29 10:29:50'
+                      updated_at: '2022-06-29 10:29:50'
+                      deleted_at: null
+                    - id: 2
+                      class: SD3C
+                      name: はじめ
+                      email: 2001191@s.asojuku.ac.jp
+                      created_at: '2022-06-29 10:29:50'
+                      updated_at: '2022-06-29 10:29:50'
+                      deleted_at: '2022-06-29 10:29:50'
       operationId: get-users
+      description: ユーザーの一覧を表示します
     post:
-      summary: user作成
-      tags:
-        - index
-      responses: {}
+      summary: User作成
       operationId: post-users
+      description: ユーザーの作成をします
+      tags:
+        - store
+        - EndPoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  class: SD3D
+                  name: 翔
+                  email: 2001195@s.asojuku.ac.jp
+                  password: Aso-2001195
+              properties:
+                name:
+                  type: string
+                  example: 翔
+                  maxLength: 30
+                email:
+                  type: string
+                  example: 2001195@s.asojuku.ac.jp
+                  minLength: 23
+                  maxLength: 23
+                password:
+                  type: string
+                  pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
+                  example: Aso-2001195
+                  format: password
+                  minLength: 8
+              required:
+                - name
+                - email
+                - password
+            examples:
+              example:
+                value:
+                  name: 翔
+                  email: 2001195@s.asojuku.ac.jp
+                  password: Aso-2001195
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+        description: ユーザー作成
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+    parameters: []
+  '/users/{id}':
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      summary: User詳細
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: 翔
+                    maxLength: 30
+                  email:
+                    type: string
+                    format: email
+                    pattern: '^[0-9]{7}@s\.asojuku\.ac\.jp'
+                    minLength: 23
+                    maxLength: 23
+              examples:
+                example:
+                  value:
+                    name: 翔
+                    email: 2001195@s.asojuku.ac.jp
+      operationId: get-users-id
+      tags:
+        - show
+        - EndPoint
+      description: 指定されたIDの情報を表示
+      parameters: []
+    put:
+      summary: update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+      operationId: put-users-id
+      tags:
+        - update
+        - EndPoint
+      description: ユーザー情報を編集
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 翔
+              required:
+                - name
+        description: ニックネームとクラスを変更
+    delete:
+      summary: delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-users-id
+      tags:
+        - delete
+        - EndPoint
+      description: ユーザーを論理削除
+  /user/password:
+    put:
+      summary: User　パスワード更新
+      tags:
+        - EndPoint
+        - passUpdate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-user-password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                  format: password
+                  example: Aso-2001195
+                password:
+                  type: string
+                  format: password
+                  example: Aso-2001195
 components:
   schemas:
     User:
@@ -44,6 +224,11 @@ components:
           updated_at: '2022-06-29 10:29:50'
           deleted_at: '2022-06-29 10:29:50'
       examples: []
+      description: ユーザーModel
+      x-tags:
+        - Model
+        - Users
+      title: Userモデル
       properties:
         id:
           type: integer
@@ -51,12 +236,6 @@ components:
           format: int64
           minimum: 1
           maximum: 255
-        class:
-          type: string
-          example: SD3D
-          maxLength: 30
-          minLength: 1
-          pattern: '^[A-Z]{2}[0-9][A-Z]'
         name:
           type: string
           example: 翔
@@ -70,6 +249,12 @@ components:
           minLength: 23
           maxLength: 23
           pattern: '^[0-9]{7}@s\.asojuku\.ac\.jp'
+        password:
+          type: string
+          format: password
+          pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
+          example: Aso-2001195
+          minLength: 8
         created_at:
           type: string
           format: date-time
@@ -79,11 +264,25 @@ components:
           format: date-time
           example: '2022-06-29 10:29:50'
         deleted_at:
-          type: string
+          type:
+            - string
+            - 'null'
           example: '2022-06-29 10:29:50'
           format: date-time
       required:
-        - class
         - name
         - email
-      description: ユーザーModel
+  securitySchemes: {}
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+        example: 1
+        minimum: 1
+        maximum: 255
+        format: int64
+      description: user-id
+  responses: {}
