@@ -44,3 +44,7 @@ Route::auth();
 // Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('app')->where('any', '.*');
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

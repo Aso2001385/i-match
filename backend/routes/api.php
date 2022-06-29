@@ -19,7 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::get('/ac',[UserController::class,'access']); //T
 Route::get('/users', [UserController::class, 'index']); //R
 Route::post('/users', [UserController::class, 'store']); //C 
@@ -32,3 +31,11 @@ Route::put('/user/password',[UserController::class, 'passwordUpdate']); // U
 Route::resource('skills','SkillController');
 
 Route::resource('userSkill','UserSkillController', ['only' => ['store','update','destroy']]);
+
+
+Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
+Route::get('/refresh', [App\Http\Controllers\Api\AuthController::class, 'refresh']);
+Route::group(['/middleware' => ['jwt.auth']], function () {
+    Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
+    Route::get('/me', [App\Http\Controllers\Api\AuthController::class, 'me']);
+});

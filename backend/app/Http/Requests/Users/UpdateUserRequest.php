@@ -24,7 +24,6 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'class' => 'required|string|max:30',
             'name' => 'required|string|max:30',
         ];
     }
@@ -32,8 +31,6 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return[
-            'class.required' => 'クラスを入力してください',
-            'class.max' => '30文字以内で入力してください',
             'name.required' => '名前を入力してください',
             'name.max' => '30文字以内で入力してください',
         ];
