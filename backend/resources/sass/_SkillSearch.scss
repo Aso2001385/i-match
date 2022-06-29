@@ -1,0 +1,88 @@
+#skillsearch-container{
+    background-color: #c4c4c4;
+    position: fixed;
+    top: 9rem;
+    width: 15%;
+    margin-top: 1%;
+    margin-left: 82%;
+}
+.search-title{
+    margin-top: 10%;
+    margin-left: 5%;
+}
+#serch-text{
+    width: 80%;
+    margin-left: 10%;
+    height: 2rem;// 場合によって変わる
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+.skill-checkcon{
+    float: left;
+    margin-right: 10%;
+    margin-top: 5%;
+}
+.serch-btn-con{
+    text-align: center;
+    margin-bottom: 10%;
+}
+.serch-button{
+    margin-top: 10%;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    
+}
+.serch-button:hover{
+    background-color: #db9006;
+    color: #ffffff;
+    border-radius: 5px;
+}
+.skill-checkbox,.frame-contqiner,.db-container,.infra-container,.oth-container{
+    float: left;
+    width: 100%;
+}
+.frame-container{
+    float: left;
+}
+.oth-container{
+    width: 100%;
+}
+.skill-genle{
+    border-bottom: #ffffff;
+}
+#lan-subtitle,#frame-subtitle,#db-subtitle,#infra-subtitle,#oth-subtitle{
+    margin-top: 2%;
+    border-bottom: 1px solid #a3a3a3;
+}
+.skill-contailer{
+    margin-left: 10%;
+}
+.skill-checkbox{
+    width: 100%;
+}
+.skill-check-url{
+    border: 2px solid #00ff6e;
+    border-radius: 50%;
+}
+.search-pop-con{
+    position: fixed;
+    top: 22%;
+    margin-left: 38%;
+    z-index: 5;
+}
+.skill-search-box{
+    height:30rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }

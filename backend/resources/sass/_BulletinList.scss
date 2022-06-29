@@ -1,0 +1,52 @@
+.bulletin-container{
+    background-color: #3f3f3f3f;
+    top: 6rem;
+    width: 55%;
+    margin-left: 25rem;
+}
+.bulletin{
+    position: absolute;
+    top: 9rem;
+    width: 55%;
+}
+.bulletin-list{
+    background-color: #545454;
+    color: #ffffff;
+    border-bottom: 2px solid #3f3f3f;
+    padding-top: 3%;
+    padding-bottom: 1%;
+    padding-left: 7.5%;
+}
+#people{
+    margin-left: 10%;
+}
+#title-sentence,.skill{
+    font-size: 35px;
+}
+.skill-container{
+    float: left;
+}
+.readmore-detail{
+    background-color: #ffffff;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-left: 20%;
+    padding: 10px 20px;
+}
+.readmore-detail:hover{
+    background-color: #db9006;
+    color: #ffffff;
+}
+.bulletin-box{
+    height:49rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }

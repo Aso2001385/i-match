@@ -1,0 +1,64 @@
+.user-container{
+    margin-left: 25rem;
+}
+.user{
+    position: absolute;
+    top: 9rem;
+    width: 55%;
+}
+.user-list{
+    background-color: #545454;
+    color: #ffffff;
+    border-bottom: 2px solid #3f3f3f;
+    padding-bottom: 12rem;
+    margin-bottom: 0rem;
+    padding-left: 7.5%;
+}
+.submenu-user-space{
+    background-color: #c4c4c4;
+    position: fixed;
+    top: 9%;
+    z-index: 2;
+    width: 100%;
+    height: 7%;
+    padding-top: 1%;
+}
+#submenu-user-tit{
+    font-size: 2rem;
+    padding-left: 2.5%;
+}
+.user-title-sentence,.user-readmore-container,.user-skill-con{
+    float: left;
+}
+.user-title-sentence{
+    font-size: 35px;
+    width: 60%;
+    margin-right: 15%;
+    padding-top: 3%;
+}
+.user-readmore-detail{
+    background-color: transparent;
+    border: 1px solid transparent;
+    margin-left: 70%;
+    padding: 1px 1px;
+    font-size: 35px;
+}
+.user-skill-con{
+    margin-left: 70%;
+}
+.user-skill-image{
+    font-size: 35px;
+}
+.user-box{
+    height:49rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }
