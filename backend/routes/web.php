@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+<<<<<<< HEAD:src/routes/web.php
+Route::get('/', function () {
+    return view('welcome');
+});
+=======
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -36,11 +40,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('app');
 // })->where('any', '.*');
 // Auth::routes();
+>>>>>>> origin/develop:backend/routes/web.php
 
-// ログインしていなければlogin画面に変わるようになっている
 Auth::routes();
-//  ここでログインしているかの確認をしている　　一旦ログイン機能ができるまでコメントアウトにしておく
-Route::auth();
-// Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('app')->where('any', '.*');
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -1,4 +1,3 @@
-<!-- ログイン後に表示されるファイル -->
 @extends('layouts.app')
 
 @section('content')
