@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Models\Users;
+namespace App\Models;
 
-use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -22,7 +19,6 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'class',
         'name',
         'email',
         'password',
@@ -88,6 +84,5 @@ class User extends Authenticatable implements JWTSubject
         ];
     
     }
-
 
 }
