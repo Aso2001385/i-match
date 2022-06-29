@@ -84,6 +84,7 @@ export default {
     password: '',
     confirmPassword: '',
     addMessage: 'Add',
+    user: {},
   }),
 
   computed: {
@@ -122,10 +123,37 @@ export default {
 
   methods: {
     submit() {
+      this.$v.$touch()
+
       alert(this.confirmPassword + ':' + this.password + ' = ' + (this.confirmPassword !== this.password))
 
-      this.addMessage = 'OK!'
+      if (this.confirmPassword !== this.password) return
+
+      this.user = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+      }
+
+      this.$axios.get('http://localhost:8080/api/ac').then(response => {
+        alert(response.status)
+        this.addMessage = response.status
+        // this.$auth.loginWith('local', {
+        //   data: this.user,
+        // })
+      })
+
+      this.$axios.post('http://localhost:8080/api/users', this.user).then(response => {
+        alert(response.status)
+        this.addMessage = response.status
+        // this.$auth.loginWith('local', {
+        //   data: this.user,
+        // })
+      })
+
+      alert('通ったっす！')
     },
+
     clear() {
       this.$v.$reset()
       this.name = ''

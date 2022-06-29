@@ -3,7 +3,6 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-// <<<<<:src/resources/js/app.js
 import VueCookies from "vue-cookies";
 
 import Vue from "vue";
@@ -43,8 +42,11 @@ import RegisterEnter from "./components/Register";
 
 require("./bootstrap");
 
+
 window.Vue = require("vue").default;
 
+
+=======
 Vue.use(VueCookies);
 
 Vue.use(VueRouter);
@@ -292,10 +294,7 @@ const router = new VueRouter({
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component(
-    "example-component",
-    require("./components/ExampleComponent.vue").default
-);
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -304,5 +303,5 @@ Vue.component(
  */
 
 const app = new Vue({
-    el: "#app",
+    el: '#app',
 });
