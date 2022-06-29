@@ -1,0 +1,46 @@
+{
+    "skillinfra00":{
+        "id": 29,
+        "name": "Linux"
+    },
+    "skillinfra01":{
+        "id": 30,
+        "name": "Windows"
+    },
+    "skillinfra02":{
+        "id": 31,
+        "name": "iOS"
+    },
+    "skillinfra03":{
+        "id": 32,
+        "name": "Android"
+    },
+    "skillinfra04":{
+        "id": 33,
+        "name": "AWS"
+    },
+    "skillinfra05":{
+        "id": 34,
+        "name": "Azure"
+    },
+    "skillinfra06":{
+        "id": 35,
+        "name": "Google Cloud"
+    },
+    "skillinfra07":{
+        "id": 36,
+        "name": "Firebase"
+    },
+    "skillinfra08":{
+        "id": 37,
+        "name": "Salesforce"
+    },
+    "skillinfra09":{
+        "id": 38,
+        "name": "Docker"
+    },
+    "skillinfra10":{
+        "id": 39,
+        "name": "xampp"
+    }
+}

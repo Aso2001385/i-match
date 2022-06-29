@@ -1,0 +1,55 @@
+.partner-user-tit{
+    background-color: #c4c4c4;
+    position: fixed;
+    top: 9%;
+    z-index: 2;
+    width: 100%;
+    height: 7%;
+    margin-left: 25rem;
+    margin-bottom: 3rem;
+    padding-top: 1%;
+}
+#partner-user-tit{
+    font-size: 2rem;
+    padding-left: 2.5%;
+}
+.partner-user-detail{
+    position: fixed;
+    top: 13rem;
+    width: 50%;
+    margin-left: 38%;
+    margin-right: 10%;
+    padding-bottom: 2.5%;
+    padding-left: 10%;
+    background-color: #a3a3a3;
+}
+#part-user-img-con{
+    float: left;
+    margin-right: 20%;
+}
+#partner-user-image{
+    font-size: 10rem;
+}
+#partner-user-name{
+    margin-top: 4em;
+    margin-bottom: 4rem;
+    font-size: 1.5rem;
+}
+#partner-use-skills,#partner-learn-skills{
+    border: 1px solid transparent;
+    background-color: #c4c4c4;
+    margin-top: 10%;
+    width: 80%;
+    padding: 10px 15px;
+}
+.partner-use-learn-skills{
+    float: left;
+}
+#use-skills,#learn-skills,.use-learn-skills-list{
+    padding-left: 2.5%;
+}
+#use-skills,#learn-skills{
+    font-size: 1rem;
+    border-bottom: 1px solid #808080;
+}
+

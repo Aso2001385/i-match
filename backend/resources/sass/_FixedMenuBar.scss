@@ -1,0 +1,49 @@
+.sidebar__item--fixed {
+    background-color: #2c2c2c;
+    width: 25rem;
+}
+.sidebar__item--fixed {
+    // 固定
+    position: fixed;
+    top: 10%;
+    z-index: 1;
+    margin-bottom: 0;
+    padding-top: 3.4%;
+
+}
+.menu-list:hover,.menu-image:hover{
+  color: #ffa500;
+}
+// スクロール処理
+.menu-box{
+    width:25rem;
+    height:36rem;
+  }
+  .scroll{
+    overflow:auto;
+  }
+  .scrolly{
+    overflow:hidden;
+    overflow-y:scroll;
+  }
+  .menu-list{
+   white-space:nowrap; 
+  }
+.menu-list,.menu-image{
+    color: #ffffff;
+}
+.menubar-container{
+  margin-bottom: 5%;
+}
+.menu-list{
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: 1px solid transparent;
+    text-decoration: none;
+    margin-top: 5%;
+    margin-bottom: 10%;
+}
+.menu-image{
+    font-size: 1.5rem;
+    margin-left: 10%;
+}
