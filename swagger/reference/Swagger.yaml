@@ -1707,6 +1707,7 @@ paths:
                   minLength: 8
                   pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
               required:
+                - name
                 - email
                 - password
       description: teacher の作成
@@ -1744,15 +1745,70 @@ paths:
     put:
       summary: Teacher 更新
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
       operationId: put-teachers-id
       description: 指定されたIDのteacher情報を更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 西野　直幸
+              required:
+                - name
     delete:
       summary: Teacher 削除
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
       operationId: delete-teachers-id
       description: 指定されたIDのteacher情報を削除
+  /teacher/password:
+    put:
+      summary: Teacher パスワード更新
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-teacher-password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                  format: password
+                  example: Aso-2001195
+                password:
+                  type: string
+                  example: Aso-2001195
+                  format: password
+              required:
+                - old_password
+                - password
   /events:
     get:
       summary: Event 一覧
