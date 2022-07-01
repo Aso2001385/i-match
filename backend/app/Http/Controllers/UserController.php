@@ -27,7 +27,7 @@ class UserController extends Controller
             $result = [
                 'users' => User::all()->toArray()
             ];
-
+            
             $status = Response::HTTP_OK;
             return response()->json($result,$status);
         
