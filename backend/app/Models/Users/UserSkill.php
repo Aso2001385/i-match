@@ -29,8 +29,8 @@ class UserSkill extends Model
             //$user_skills = UserSkill::where('user_id',$user_id)->get()->toArray();
             $user_skills=DB::table('user_skill')
             ->join('skills', 'user_skill.skill_id','=','skills.id')
-            ->select('user_skill.*','skills.name')
-            ->where('user_id','=',$user_id)
+            ->select('user_skill.*','skills.name','skills.category_id','skills.depth')
+            ->where('user_id',$user_id)
             ->whereNull('user_skill.deleted_at')
             ->get()->toArray();
             $success = true;

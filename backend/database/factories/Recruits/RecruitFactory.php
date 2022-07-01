@@ -16,8 +16,8 @@ class RecruitFactory extends Factory
     {
         $purpose=['勉強会','開発','その他'];
         return [
-            'usre_id' =>rand(1,10),
-            'title' =>$this->faker->country(),
+            'user_id' =>rand(1,10),
+            'title' =>"title".rand(1,10),
             'contents'=>$this->faker->realText(200,1),
             'purpose' =>Arr::random($purpose),
             'persons'=>rand(1,20),
