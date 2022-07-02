@@ -7,38 +7,38 @@
             <v-list>
               <v-list-item class="pl-1 pb-5 pa-7"
                 ><v-btn href="news-list" text color="link"
-                  ><v-icon class="white--text ma-6"> mdi-bell</v-icon
-                  ><v-span class="white--text text-h6">お知らせ</v-span></v-btn
+                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-bell</v-icon>
+                  <span class="white--text text-h6">お知らせ</span></v-btn
                 ></v-list-item
               >
               <v-list-item class="pl-1 pb-5 pa-6"
                 ><v-btn href="bulletin-list" text color="link"
-                  ><v-icon class="white--text ma-6"> mdi-bulletin-board</v-icon
-                  ><v-span class="white--text text-h6">掲示板</v-span></v-btn
+                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-bulletin-board</v-icon>
+                  <span class="white--text text-h6">掲示板</span></v-btn
                 ></v-list-item
               >
               <v-list-item class="pl-1 pb-5 pa-6"
-                ><v-btn href="chat-list" text color="link"
-                  ><v-icon class="white--text ma-6"> mdi-chat</v-icon
-                  ><v-span class="white--text text-h6">チャット</v-span></v-btn
+                ><v-btn href="chat-list" text color="link">
+                  <v-icon class="white--text ma-6" aria-hidden="false"> mdi-chat</v-icon>
+                  <span class="white--text text-h6">チャット</span></v-btn
                 ></v-list-item
               >
               <v-list-item class="pl-1 pb-5 pa-6"
-                ><v-btn href="account" text color="link"
-                  ><v-icon class="white--text ma-6"> mdi-account-group</v-icon
-                  ><v-span class="white--text text-h6">ユーザーリスト</v-span></v-btn
+                ><v-btn href="user-list" text color="link">
+                  <v-icon class="white--text ma-6" aria-hidden="false"> mdi-account-group</v-icon>
+                  <span class="white--text text-h6">ユーザーリスト</span></v-btn
                 ></v-list-item
               >
               <v-list-item class="pl-1 pb-5 pa-6"
-                ><v-btn href="history-list" text color="link"
-                  ><v-icon class="white--text ma-6"> mdi-clipboard-text-clock</v-icon
-                  ><v-span class="white--text text-h6">参加履歴</v-span></v-btn
+                ><v-btn href="history-list" text color="link">
+                  <v-icon class="white--text ma-6" aria-hidden="false"> mdi-clipboard-text-clock</v-icon>
+                  <span class="white--text text-h6">参加履歴</span></v-btn
                 ></v-list-item
               >
               <v-list-item class="pl-1 pb-5 pa-6"
-                ><v-btn href="account" text color="link"
-                  ><v-icon class="white--text ma-6"> mdi-account</v-icon
-                  ><v-span class="white--text text-h6">アカウント名</v-span></v-btn
+                ><v-btn href="account" text color="link">
+                  <v-icon class="white--text ma-6" aria-hidden="false"> mdi-account</v-icon>
+                  <span class="white--text text-h6">アカウント名</span></v-btn
                 ></v-list-item
               >
             </v-list>
@@ -54,9 +54,7 @@
     </v-flex>
     <v-app-bar color="grey darken-3" app clipped-left>
       <v-app-bar-nav-icon @click="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
-      <v-toolbar-title class="white--text">
-        <v-btn href="top" text class="white--text">i-Match</v-btn>
-      </v-toolbar-title>
+      <v-toolbar-title class="white--text">i-Match </v-toolbar-title>
     </v-app-bar>
     <v-app>
       <v-main>
@@ -65,7 +63,6 @@
     </v-app>
   </v-app>
 </template>
-
 <script>
 export default {
   data() {

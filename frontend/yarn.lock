@@ -991,6 +991,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@mdi/font@^6.9.96":
+  "integrity" "sha512-z3QVZStyHVwkDsFR7A7F2PIvZJPWgdSFw4BEEy2Gc9HUN5NfK9mGbjgaYClRcbMWiYEV45srmiYtczmBtCqR8w=="
+  "resolved" "https://registry.npmjs.org/@mdi/font/-/font-6.9.96.tgz"
+  "version" "6.9.96"
+
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
   "resolved" "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
