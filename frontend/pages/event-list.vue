@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <v-flex>
     <v-row class="grey darken-2">
       <v-col cols="2" class="mt-6">
@@ -23,7 +23,7 @@
                   <v-col cols="12"><h2 class="ml-10">自作WebAPI作成</h2></v-col>
                 </v-row>
                 <v-row class="ml-4">
-                  <v-col cols="10" md="8" class="ml-0 pa-0">
+                  <v-col cols="10" md="8" class="ml-10 pa-0">
                     <v-span v-for="n in 10" :key="n" class="text-h4 ml-0 pa-0">◯</v-span>
                   </v-col>
                   <v-col cols="12" md="2" class="mr-0">
@@ -38,8 +38,10 @@
       <v-col cols="4" class="pl-3 mt-2">
         <v-row class="justify-center mb-1">
           <v-card style="text-align: center; width: 40vh" class="pa-10">
-            <p class="mt-2 text-h1 pl-10 pr-10 pb-10 pt-5 font-size: 5rem">◯</p>
-            <strong style="font-size: 2rem">test test</strong>
+            <p class="mt-2 text-h1 pl-10 pr-10 pb-5 pt-5">
+              <v-icon class="text-h1 ma-3" aria-hidden="false">mdi-account</v-icon>
+            </p>
+            <strong style="font-size: 2rem">桃太郎</strong>
             <p class="grey--text" style="font-size: 1rem">test@test.jp</p>
             <v-btn href="account-edit" text color="link">編集</v-btn>
           </v-card>
@@ -59,12 +61,14 @@
   </v-flex>
 </template>
 <script>
+// import { mdiAccount } from '@mdi/js'
 export default {
   data() {
     return {
       items: ['新着順', '投稿順', '締切が近い順'],
+      // icon: { mdiAccount },
     }
   },
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss"></style> -->

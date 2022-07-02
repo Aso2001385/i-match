@@ -101,6 +101,17 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
         },
+        // defaultAssets: {
+        //   font: {
+        //     family: 'Noto Sans JP',
+        //   },
+        // },
+        defaultAssets: {
+          font: {
+            display: 'swap',
+            face: 'swap',
+          },
+        },
       },
     },
     lang: {
@@ -110,7 +121,9 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    // analyze: true,
+  },
 
   env: {
     API_BASE_URL: baseURL,
