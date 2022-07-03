@@ -77,9 +77,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(User $user)
     {
-        $response = User::get_user($request);
+        $response = User::get_user($user);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -91,21 +91,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request,User $user)
     {
-        $user=User::find($request->id);
-
-        $user->class=$request->input('class');
-        $user->name = $request->input('name');
-
-        $user->save();
-
-        $result=[
-            'users' => $user->toArray(),
-        ];
         
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        $response=User::update_user($user,$request);
+
+        return response()->json($response['result'],$response['status']);
     }
 
     public function passUpdate(PasswordUpdateUserRequest $request)
@@ -134,7 +125,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         User::find($request->id)->delete();
 
