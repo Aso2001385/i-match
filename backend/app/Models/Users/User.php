@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Exception;
+use Illuminate\Http\Response;
 
 class User extends Authenticatable
 {
@@ -42,17 +44,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function get_user($request){
+    public static function get_user($user){
 
         try{
-            $user = User::where('id',$request->id)->first()->toArray();
-
-            $user_skill = UserSkill::get_skills($request->id);
+            $user_skill = UserSkill::get_skills($user->id);
 
             if(!$user_skill['success']){
                 throw new Exception();
             }
-
+            $user->toArray();
             $user['skills'] = $user_skill['result'];
     
             $status = Response::HTTP_OK;
@@ -61,7 +61,7 @@ class User extends Authenticatable
 
             return [
                 'result' => [],
-                'stasus' => Response::HTTP_BAD_REQUEST
+                'status' => Response::HTTP_BAD_REQUEST
             ];
 
         }
@@ -71,6 +71,29 @@ class User extends Authenticatable
             'status' => $status
         ];
     
+    }
+
+    public function update_user($user,$request){
+        try{
+            // $user=User::find($request->id);
+
+            // $user->class=$request->input('class');
+            // $user->name = $request->input('name');
+
+            // $user->save();
+            $user->update($request->all());
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+        return [
+            'result' => $user,
+            'status' => $status
+        ];
     }
 
 }
