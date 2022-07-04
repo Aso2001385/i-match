@@ -51,6 +51,7 @@ class Skill extends Model
     {
         try{
             $skill->update($request->all());
+            $status = Response::HTTP_OK;
         }catch(Exception $e){
 
             return [

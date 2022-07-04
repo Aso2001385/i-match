@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SkillController;
+use App\Http\Controllers\RecruitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::apiResource('users', UserController::class);
 Route::put('/user/password',[UserController::class, 'passwordUpdate']); // U
 
 Route::apiResource('skills', SkillController::class);
+
+Route::apiResource('recruits', RecruitController::class);
 
 
 Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
