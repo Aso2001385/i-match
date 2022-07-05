@@ -31,9 +31,8 @@ class Recruit extends Model
             $status = Response::HTTP_OK;
 
         }catch(Exception $e){
-            $response = [
-                'result' => $e
-            ];
+
+            $result = $e;
 
             $status = Response::HTTP_BAD_REQUEST;
         }

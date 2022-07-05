@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Exception;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -44,6 +45,33 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function create_user($request){
+        try{
+            $request->password = Hash::make($request->password);
+            // $user = User::create($request->all());
+
+            // $user->fill(
+            //     array_merge($request->all(),
+            //     ['password' => Hash::make($request->password)]
+            // ))->save();
+            User::create($request->all());
+
+            $result = 'success!';
+
+            $status = Response::HTTP_OK;
+
+        }catch(Exception $e){
+            $result = $e;
+
+            $status = Response::HTTP_BAD_REQUEST;
+        }
+
+        return [
+            'result' => $result,
+            'status' => $status,
+        ];
+    }
+
     public static function get_user($user){
 
         try{
@@ -76,8 +104,6 @@ class User extends Authenticatable
     public function update_user($user,$request){
         try{
             // $user=User::find($request->id);
-
-            // $user->class=$request->input('class');
             // $user->name = $request->input('name');
 
             // $user->save();
@@ -92,6 +118,51 @@ class User extends Authenticatable
         }
         return [
             'result' => $user,
+            'status' => $status
+        ];
+    }
+
+    public function password_update_user($request){
+        try{
+            $user=User::find($request->id);
+
+            if(!Hash::check($request->old_password,$user->password)){
+                throw new Exception();
+            }
+
+            $user->password=Hash::make($request->password);
+
+            $user->save();
+            $user = User::find($request->id)->toArray();
+            $status = Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_UNAUTHORIZED
+            ];
+        }
+
+        return [
+            'result' => $user,
+            'status' => $status
+        ];
+    }
+
+    public function delete_user($request){
+        try{
+            User::find($request->id)->delete();
+            $status= Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+        return [
+            'result' => [],
             'status' => $status
         ];
     }
