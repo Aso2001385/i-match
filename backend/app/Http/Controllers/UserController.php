@@ -9,7 +9,6 @@ use App\Http\Requests\Users\PasswordUpdateUserRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -24,12 +23,12 @@ class UserController extends Controller
      */
     public function index()
     {
-            $result = [
-                'users' => User::all()->toArray()
+            $response=[
+                'result' =>User::all()->toArray(),
+                'status' => Response::HTTP_OK
             ];
-            
-            $status = Response::HTTP_OK;
-            return response()->json($result,$status);
+
+            return response()->json($response['result'],$response['status']);
         
     }
 
@@ -42,31 +41,9 @@ class UserController extends Controller
     public function store(CreateUserRequest $request)
     {
 
-        try{
+        $response=User::create_user($request);
 
-            $user = User::create($request->all());
-
-            $user->fill(
-                array_merge($request->all(),
-                ['password' => Hash::make($request->password)]
-            ))
-            ->save();
-
-            $response = [
-                'result' => 'success!'
-            ];
-
-            $status = Response::HTTP_OK;
-
-        }catch(Exception $e){
-            $response = [
-                'result' => $e
-            ];
-
-            $status = Response::HTTP_BAD_REQUEST;
-        }
-
-        return response()->json($response,$status);
+        return response()->json($response['result'],$response['status']);
 
     }
 
@@ -80,6 +57,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $response = User::get_user($user);
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -102,21 +80,8 @@ class UserController extends Controller
     public function passUpdate(PasswordUpdateUserRequest $request)
     {
 
-        $user=User::find($request->id);
-
-        if(!Hash::check($request->old_password,$user->password)){
-            $status = Response::HTTP_OK;
-            return response()->json([],$status);
-        }
-
-        $user->password=Hash::make($request->password);
-
-        $user->save();
-        $result=[
-            'users' => User::find($request->id)->toArray,
-        ];
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        User::password_update_user($request);
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -127,10 +92,9 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
-        User::find($request->id)->delete();
+        $response=User::delete_user($request);
 
-        $status = Response::HTTP_OK;
-        return response()->json([],$status);
+        return response()->json($response['result'],$response['status']);
 
     }
 }
