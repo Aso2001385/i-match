@@ -22,6 +22,28 @@ class Recruit extends Model
         'due',
     ];
 
+    public function create_recruits($request){
+        try{
+
+            $recruit = Recruit::create($request->all());
+            $result = 'success!';
+
+            $status = Response::HTTP_OK;
+
+        }catch(Exception $e){
+            $response = [
+                'result' => $e
+            ];
+
+            $status = Response::HTTP_BAD_REQUEST;
+        }
+
+        return [
+            'result' => $result,
+            'status' => $status,
+        ];
+    }
+
     public static function get_recruits(){
 
         try{
@@ -112,6 +134,24 @@ class Recruit extends Model
 
         return [
             'result' => $recruit,
+            'status' => $status
+        ];
+    }
+
+    public function delete_recruit($request){
+        try{
+            Recruit::find($request->id)->delete();
+            $status= Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+        return [
+            'result' => [],
             'status' => $status
         ];
     }
