@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recruits\Recruit;
-use App\Http\Requests\Recruits\CreateRecruitRequest;
-use App\Http\Requests\Recruits\UpdateRecruitRequest;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Exception;
+use App\Models\Teachers\Teacher;
+use App\Http\Requests\Teachers\CreateTeacherRequest;
+use App\Http\Requests\Teachers\UpdateTeacherRequest;
+use App\Http\Requests\Teachers\PasswordUpdateTeacherRequest;
 
-class RecruitController extends Controller
+class TeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +18,10 @@ class RecruitController extends Controller
     public function index()
     {
         $response=[
-            'result' => Recruit::all()->toArray(),
+            'result' => Teacher::all()->toArray(),
             'status'=>Response::HTTP_OK
         ];
         return response()->json($response['result'],$response['status']);
-
     }
 
     /**
@@ -33,10 +30,11 @@ class RecruitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRecruitsRequest $request)
+    public function store(CreateTeacherRequest $request)
     {
-        $response=Recruit::create_recruits($request);
+        $response=Teacher::create_teacher($request);
         return response()->json($response['result'],$response['status']);
+
     }
 
     /**
@@ -45,16 +43,9 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Recruit $recruit)
+    public function show(Teacher $teacher)
     {
-        $response=Recruit::get_user_recruits($recruit);
-
-        return response()->json($response['result'],$response['status']);
-    }
-
-    public function otherShow(Recruit $recruit)
-    {
-        $response=Recruit::get_user_recruits($recruit->user_id);
+        $response=Teacher::get_teacher($teacher->id);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -65,12 +56,16 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRecruitRequest $request,Recruit $recruit)
+    public function update(UpdateTeacherRequest $request,Teacher $teacher)
     {
-        $response=Recruit::update_recruit($recruit,$request);
-
+        $response=Teacher::update_teacher($teacher,$request);
         return response()->json($response['result'],$response['status']);
+    }
 
+    public function passUpdate(PasswordUpdateTeacherRequest $request)
+    {
+        Teacher::password_update_teacher($request);
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -81,7 +76,6 @@ class RecruitController extends Controller
      */
     public function destroy(Request $request)
     {
-        $response=Recruit::delete_recruit($request);
-        return response()->json($response['result'],$response['status']);
+        //
     }
 }

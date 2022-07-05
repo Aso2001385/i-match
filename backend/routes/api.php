@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\RecruitController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::apiResource('skills', SkillController::class);
 
 Route::apiResource('recruits', RecruitController::class);
 Route::get('recruits/other/{id}', [RecruitController::class,'otherShow']);
+
+Route::apiResource('teachers', TeacherController::class);
 
 
 Route::post('/login', [AuthController::class, 'login']);

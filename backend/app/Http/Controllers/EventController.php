@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Recruits\Recruit;
-use App\Http\Requests\Recruits\CreateRecruitRequest;
-use App\Http\Requests\Recruits\UpdateRecruitRequest;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Exception;
+use App\Models\Teachers\Event;
+use App\Http\Requests\Teachers\CreateEventRequest;
+use App\Http\Requests\Teachers\UpdateEventRequest;
 
-class RecruitController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +17,10 @@ class RecruitController extends Controller
     public function index()
     {
         $response=[
-            'result' => Recruit::all()->toArray(),
+            'result' => Event::all()->toArray(),
             'status'=>Response::HTTP_OK
         ];
         return response()->json($response['result'],$response['status']);
-
     }
 
     /**
@@ -33,9 +29,10 @@ class RecruitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRecruitsRequest $request)
+    public function store(CreateEventRequest $request)
     {
-        $response=Recruit::create_recruits($request);
+        $response=Event::create_event($request);
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -45,16 +42,9 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Recruit $recruit)
+    public function show(Event $event)
     {
-        $response=Recruit::get_user_recruits($recruit);
-
-        return response()->json($response['result'],$response['status']);
-    }
-
-    public function otherShow(Recruit $recruit)
-    {
-        $response=Recruit::get_user_recruits($recruit->user_id);
+        $response=Event::get_events($event);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -65,12 +55,10 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRecruitRequest $request,Recruit $recruit)
+    public function update(UpdateEventRequest $request,Event $event)
     {
-        $response=Recruit::update_recruit($recruit,$request);
-
+        $response=Event::update_event($event,$request);
         return response()->json($response['result'],$response['status']);
-
     }
 
     /**
@@ -79,9 +67,8 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $response=Recruit::delete_recruit($request);
-        return response()->json($response['result'],$response['status']);
+        //
     }
 }

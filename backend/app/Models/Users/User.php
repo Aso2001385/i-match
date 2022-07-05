@@ -48,12 +48,6 @@ class User extends Authenticatable
     public function create_user($request){
         try{
             $request->password = Hash::make($request->password);
-            // $user = User::create($request->all());
-
-            // $user->fill(
-            //     array_merge($request->all(),
-            //     ['password' => Hash::make($request->password)]
-            // ))->save();
             User::create($request->all());
 
             $result = 'success!';
