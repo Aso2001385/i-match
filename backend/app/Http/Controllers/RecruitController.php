@@ -19,12 +19,11 @@ class RecruitController extends Controller
      */
     public function index()
     {
-        $result=[
-            'recruits'=>Recruit::all()->toArray(),
+        $response=[
+            'result' => Recruit::all()->toArray(),
+            'status'=>Request::HTTP_OK
         ];
-
-        $status=Response::HTTP_OK;
-        return response()->json($result,$status);
+        return response()->json($response['result'],$response['status']);
 
     }
 
@@ -36,24 +35,8 @@ class RecruitController extends Controller
      */
     public function store(CreateRecruitsRequest $request)
     {
-        try{
-
-            $recruit = Recruit::create($request->all());
-
-            $response = [
-                'result' => 'success!'
-            ];
-
-            $status = Response::HTTP_OK;
-
-        }catch(Exception $e){
-            $response = [
-                'result' => $e
-            ];
-
-            $status = Response::HTTP_BAD_REQUEST;
-        }
-        return response()->json($response,$status);
+        $response=Recruit::create_recruits($request);
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -66,6 +49,12 @@ class RecruitController extends Controller
     {
         $response=Recruit::get_user_recruits($recruit);
 
+        return response()->json($response['result'],$response['status']);
+    }
+
+    public function otherShow(Recruit $recruit)
+    {
+        $response=Recruit::get_user_recruits($recruit->user_id);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -90,11 +79,9 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
-        Recruit::find($request->id)->delete();
-
-        $status = Response::HTTP_OK;
-        return response()->json([],$status);
+        $response=Recruit::delete_recruit($request);
+        return response()->json($response['result'],$response['status']);
     }
 }

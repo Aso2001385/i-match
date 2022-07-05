@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\RecruitController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,11 +29,12 @@ Route::put('/user/password',[UserController::class, 'passwordUpdate']); // U
 Route::apiResource('skills', SkillController::class);
 
 Route::apiResource('recruits', RecruitController::class);
+Route::get('recruits/other/{id}', [RecruitController::class,'otherShow']);
 
 
-Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
-Route::get('/refresh', [App\Http\Controllers\Api\AuthController::class, 'refresh']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/refresh', [AuthController::class, 'refresh']);
 Route::group(['/middleware' => ['jwt.auth']], function () {
-    Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
-    Route::get('/me', [App\Http\Controllers\Api\AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/me', [AuthController::class, 'me']);
 });
