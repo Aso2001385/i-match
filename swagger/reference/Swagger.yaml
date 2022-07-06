@@ -102,7 +102,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: string
+                example: success!
+                pattern: ^success!
     parameters: []
   '/users/{id}':
     parameters:
@@ -124,22 +126,68 @@ paths:
             application/json:
               schema:
                 type: object
+                x-examples:
+                  example-1:
+                    id: 1
+                    name: string
+                    email: email
                 properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
                   name:
                     type: string
-                    example: 翔
+                    example: 太郎
+                    minLength: 1
                     maxLength: 30
                   email:
                     type: string
-                    format: email
-                    pattern: '^[0-9]{7}@s\.asojuku\.ac\.jp'
+                    example: 2001111@s.asojuku.ac.jp
                     minLength: 23
                     maxLength: 23
-              examples:
-                example:
-                  value:
-                    name: 翔
-                    email: 2001195@s.asojuku.ac.jp
+                    format: email
+                  skills:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
+                        skill_id:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
+                        category_id:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
+                        name:
+                          type: string
+                          example: Java
+                          minLength: 1
+                          maxLength: 100
+                        practical_flag:
+                          type: boolean
+                        learning_flag:
+                          type: boolean
+                        level:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
+              examples: {}
       operationId: get-users-id
       tags:
         - show
@@ -155,6 +203,16 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  name:
+                    type: string
+                    example: 翔
+                    minLength: 1
+                    maxLength: 30
+              examples:
+                example:
+                  value:
+                    name: 翔
       operationId: put-users-id
       tags:
         - update
@@ -169,13 +227,14 @@ paths:
                 name:
                   type: string
                   example: 翔
+                  maxLength: 30
               required:
                 - name
             examples:
               example:
                 value:
                   name: 翔
-        description: ニックネームとクラスを変更
+        description: ニックネームを変更
     delete:
       summary: User 削除
       responses:
@@ -184,8 +243,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-users-id
       tags:
         - delete
@@ -204,7 +264,16 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  password:
+                    type: string
+                    example: Aso-2001195
+                    format: password
+                    minLength: 8
+              examples:
+                example:
+                  value:
+                    password: Aso-2001195
       operationId: put-user-password
       requestBody:
         content:
@@ -236,8 +305,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-skills
       description: skillの作成
       requestBody:
@@ -294,16 +364,28 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
                   category_id:
                     type: integer
                     format: int64
                     example: 1
                     minimum: 1
                     maximum: 255
+                  category_name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                    example: 言語
                   name:
                     type: string
                     maxLength: 100
-                    example: skill1
+                    minLength: 1
+                    example: Java
                   depth:
                     type: integer
                     format: int32
@@ -329,8 +411,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-skills-id
       description: 指定されたIDのskill情報を論理削除
     put:
@@ -345,7 +428,30 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  category_id:
+                    type: integer
+                    example: 1
+                    format: int64
+                    minimum: 1
+                    maximum: 255
+                  name:
+                    type: string
+                    example: skill1
+                    maxLength: 100
+                    minLength: 1
+                  depth:
+                    type: integer
+                    format: int32
+                    example: 1
+                    maximum: 1
+                    multipleOf: 255
+              examples:
+                example:
+                  value:
+                    category_id: 1
+                    name: skill1
+                    depth: 1
       operationId: put-skills-id
       requestBody:
         content:
@@ -395,8 +501,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-skill-relations
       requestBody:
         content:
@@ -461,20 +568,36 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  primary_skill_id:
-                    type: integer
-                    example: 1
-                    minimum: 1
-                    maximum: 255
-                    format: int64
-                  secondary_id:
-                    type: integer
-                    example: 1
-                    minimum: 1
-                    maximum: 255
-                    format: int64
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      format: int64
+                      example: 1
+                      minimum: 1
+                      maximum: 255
+                    primary_skill_id:
+                      type: integer
+                      format: int64
+                      example: 1
+                      minimum: 1
+                      maximum: 255
+                    primary_skill_name:
+                      type: string
+                      example: Java
+                      minLength: 1
+                      maxLength: 100
+                    secondary_skill_id:
+                      type: integer
+                      format: int64
+                      example: 1
+                      minimum: 1
+                      maximum: 255
+                    secondary_skill_name:
+                      type: string
+                      example: Spring Framework
               examples:
                 example:
                   value:
@@ -494,7 +617,24 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  primary_skill_id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    maximum: 255
+                    minimum: 1
+                  secondary_skill_id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+              examples:
+                example:
+                  value:
+                    primary_skill_id: 1
+                    secondary_skill_id: 1
       operationId: put-skill-relation-id
       requestBody:
         content:
@@ -535,8 +675,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-skill-relation-id
       description: 指定されたIDのskill relation情報を論理削除
   /recruits:
@@ -567,8 +708,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-recruits
       description: recruitの作成
       requestBody:
@@ -641,6 +783,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
                   user_id:
                     type: integer
                     format: int64
@@ -651,14 +799,17 @@ paths:
                     type: string
                     example: Flaskの勉強しませんか
                     maxLength: 30
+                    minLength: 1
                   contents:
                     type: string
                     example: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
                     maxLength: 1024
+                    minLength: 1
                   purpose:
                     type: string
                     example: 開発
                     maxLength: 3
+                    minLength: 1
                   persons:
                     type: integer
                     format: int32
@@ -669,6 +820,49 @@ paths:
                     type: string
                     example: '2019-06-13T15:00:00.0Z'
                     format: date-time
+                  members:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 30
+                          example: 太郎
+                  skills:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
+                        skill_id:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
+                        name:
+                          type: string
+                        category_id:
+                          type: integer
+                        level:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
               examples:
                 example:
                   value:
@@ -692,7 +886,38 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  title:
+                    type: string
+                    example: Flaskの勉強しませんか
+                    maxLength: 30
+                    minLength: 1
+                  contents:
+                    type: string
+                    example: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                    minLength: 1
+                    maxLength: 1024
+                  purpose:
+                    type: string
+                    example: 開発
+                    maxLength: 3
+                    minLength: 1
+                  persons:
+                    type: integer
+                    format: int32
+                    example: 5
+                  due:
+                    type: string
+                    example: '2019-06-13T15:00:00.0Z'
+                    format: date-time
+              examples:
+                example:
+                  value:
+                    title: Flaskの勉強しませんか
+                    contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                    purpose: 開発
+                    persons: 5
+                    due: '2019-06-13T15:00:00.0Z'
       operationId: put-recruits-id
       description: 指定されたIDのrecruit情報の更新
       requestBody:
@@ -734,8 +959,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-recruits-id
       description: 指定されたIDのrecruit情報を論理削除
   /recruit-skill:
@@ -766,8 +992,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-recruit-skill
       requestBody:
         content:
@@ -824,6 +1051,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
                   recruit_id:
                     type: integer
                     minimum: 1
@@ -842,6 +1075,27 @@ paths:
                     maximum: 5
                     example: 1
                     format: int32
+                  skills:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        category_id:
+                          type: integer
+                          format: int64
+                          minimum: 1
+                          maximum: 255
+                          example: 1
+                        name:
+                          type: string
+                          example: Java
+                          minLength: 1
+                          maxLength: 100
+                        depth:
+                          type: integer
+                          example: 1
+                          minimum: 1
+                          maximum: 5
               examples:
                 example:
                   value:
@@ -862,7 +1116,24 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  skill_id:
+                    type: integer
+                    format: int64
+                    minimum: 1
+                    maximum: 255
+                    example: 1
+                  level:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+              examples:
+                example:
+                  value:
+                    skill_id: 1
+                    level: 1
       operationId: put-recruit-skill-id
       description: 指定されたIDのrecruit skill情報を変更
       requestBody:
@@ -897,8 +1168,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-recruit-skill-id
       description: 指定されたIDのrecruit skill情報を論理削除
   /recruit-user:
@@ -929,8 +1201,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-recruit-user
       requestBody:
         content:
@@ -974,6 +1247,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
                   recruit_id:
                     type: integer
                     example: 1
@@ -986,6 +1265,22 @@ paths:
                     minimum: 1
                     maximum: 255
                     example: 1
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: 太郎
+                          minLength: 1
+                          maxLength: 30
+                        email:
+                          type: string
+                          minLength: 23
+                          maxLength: 23
+                          example: 2001111@s.asojuku.ac.jp
+                          format: email
               examples:
                 example:
                   value:
@@ -1004,8 +1299,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-recruit-user-id
       description: 指定されたIDのrecruit user情報を論理削除
   /rooms:
@@ -1034,7 +1330,15 @@ paths:
         required: true
     delete:
       summary: Room 削除
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-rooms-id
       description: 指定されたIDのroom情報を論理削除
       tags:
@@ -1066,8 +1370,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
             application/xml:
               schema:
                 type: object
@@ -1129,6 +1434,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
                   room_id:
                     type: integer
                     example: 1
@@ -1145,6 +1456,22 @@ paths:
                     type: string
                     example: room1
                     maxLength: 30
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: 太郎
+                          minLength: 1
+                          maxLength: 30
+                        email:
+                          type: string
+                          minLength: 23
+                          maxLength: 23
+                          format: email
+                          example: 2001111@s.asojuku.ac.jp
       operationId: get-room-user-id
       description: 指定されたIDのroom user情報を表示
     put:
@@ -1159,7 +1486,16 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 30
+                    example: room1
+              examples:
+                example:
+                  value:
+                    name: room1
       operationId: put-room-user-id
       description: 指定されたIDのroom user情報を更新
       requestBody:
@@ -1183,8 +1519,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-room-user-id
       description: 指定されたIDのroom情報を論理削除
   /chats:
@@ -1215,8 +1552,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-chats
       requestBody:
         content:
@@ -1274,6 +1612,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
                   room_id:
                     type: integer
                     example: 1
@@ -1317,9 +1661,21 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  message:
+                    type: string
+                    example: おはようございます
+                    minLength: 1
+                    maxLength: 255
+                  read:
+                    type: boolean
+              examples:
+                example:
+                  value:
+                    message: おはようございます
+                    read: true
       operationId: put-chats-id
-      description: 指定されたIDのroom user情報を更新
+      description: Chat情報を更新
       requestBody:
         content:
           application/json:
@@ -1367,8 +1723,8 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                pattern: ^success!
       operationId: delete-chats-id
       description: 指定されたIDのroom user情報を論理削除
   /informations:
@@ -1383,8 +1739,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-informations
       requestBody:
         content:
@@ -1464,6 +1821,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
                   user_id:
                     type: integer
                     format: int64
@@ -1474,10 +1837,14 @@ paths:
                     type: string
                     example: 参加希望が届きました
                     maxLength: 255
+                    minLength: 1
                   contents:
                     type: string
+                    minLength: 1
+                    maxLength: 255
+                    example: ○○さんから■■の参加希望が届きました
                   read:
-                    type: string
+                    type: boolean
                   category_id:
                     type: integer
                     format: int64
@@ -1501,8 +1868,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-informations-id
       description: 指定されたIDのinformation情報を論理削除
     put:
@@ -1517,7 +1885,37 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  title:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                    example: 参加希望が届きました
+                  contents:
+                    type: string
+                    minLength: 1
+                    maxLength: 1024
+                    example: ○○さんから■■の参加希望が届きました
+                  read:
+                    type: boolean
+                  category_id:
+                    type: integer
+                    minimum: 1
+                    maximum: 255
+                    example: 1
+                  url:
+                    type: string
+                    maxLength: 255
+                    minLength: 1
+                    example: 'http://localhost:8080/index'
+              examples:
+                example:
+                  value:
+                    title: 参加希望が届きました
+                    contents: ○○さんから■■の参加希望が届きました
+                    read: true
+                    category_id: 1
+                    url: 'http://localhost:8080/index'
       operationId: put-informations-id
       description: 指定されたIDのinformation情報を更新
       requestBody:
@@ -1569,8 +1967,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
         '201':
           description: Created
           content:
@@ -1630,7 +2029,16 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                    example: information1
+              examples:
+                example:
+                  value:
+                    name: information1
       operationId: put-information-categoris-id
       description: 指定されたIDのinformation category情報を更新
       requestBody:
@@ -1651,6 +2059,12 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-information-categoris-id
       description: 指定されたIDのinformation category情報を論理削除
   /teachers:
@@ -1681,8 +2095,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-teachers
       requestBody:
         content:
@@ -1710,6 +2125,30 @@ paths:
                 - email
                 - password
       description: teacher の作成
+  /teachers/password:
+    put:
+      summary: Teachers パスワード変更
+      tags:
+        - EndPoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  password:
+                    type: string
+                    format: password
+                    minLength: 8
+                    example: Aso-2001195
+              examples:
+                example:
+                  value:
+                    password: Aso-2001195
+      operationId: put-teachers-password
+      description: Teachersのパスワードを変更
   '/teachers/{id}':
     parameters:
       - schema:
@@ -1744,13 +2183,37 @@ paths:
     put:
       summary: Teacher 更新
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    maxLength: 30
+                    minLength: 1
+                    example: 西野直幸
+              examples:
+                example:
+                  value:
+                    name: 西野直幸
       operationId: put-teachers-id
       description: 指定されたIDのteacher情報を更新
     delete:
       summary: Teacher 削除
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-teachers-id
       description: 指定されたIDのteacher情報を削除
   /events:
@@ -1778,8 +2241,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-events
       requestBody:
         content:
@@ -1859,7 +2323,27 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  title:
+                    type: string
+                    maxLength: 30
+                    minLength: 1
+                    example: コーディング大会
+                  contents:
+                    type: string
+                    example: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+                    minLength: 1
+                    maxLength: 1024
+                  due:
+                    type: string
+                    format: date-time
+                    example: '2019-06-13T15:00:00.0Z'
+              examples:
+                example:
+                  value:
+                    title: コーディング大会
+                    contents: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+                    due: '2019-06-13T15:00:00.0Z'
       operationId: put-events-id
       requestBody:
         content:
@@ -1895,8 +2379,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-events-id
       description: 指定されたIDのevent情報を論理削除
   /skill-requests:
@@ -1921,7 +2406,15 @@ paths:
       tags:
         - EndPoint
         - store
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-skill-requests
       description: skill request の作成
       requestBody:
@@ -1960,7 +2453,15 @@ paths:
       tags:
         - EndPoint
         - delete
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-skill-requests-id
       description: 指定されたIDのskill request情報を表示
   /skill-request-teacher:
@@ -1991,8 +2492,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: post-skill-request-teacher
       requestBody:
         content:
@@ -2041,8 +2543,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                type: string
+                example: success!
+                pattern: ^success!
       operationId: delete-skill-request-teacher-id
       description: 指定されたIDのskill request teacher情報を表示
 components:
