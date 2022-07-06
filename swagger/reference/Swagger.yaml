@@ -7,7 +7,7 @@ info:
   summary: i-Match のAPI
   description: i-MatchのOpen APIです
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'http://localhost:8080/api'
     description: ''
 paths:
   /users:
