@@ -1,14 +1,73 @@
 <template>
   <v-app>
-    <Nuxt />
+    <v-flex xs6 md6>
+      <v-navigation-drawer v-model="drawer" color="grey darken-3" app clipped>
+        <v-container>
+          <v-row>
+            <v-list>
+              <v-list-item class="pl-1 pb-5 pa-7"
+                ><v-btn href="news-list" text color="link"
+                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-bell</v-icon>
+                  <span class="white--text text-h6">お知らせ</span></v-btn
+                ></v-list-item
+              >
+              <v-list-item class="pl-1 pb-5 pa-6"
+                ><v-btn href="bulletin-list" text color="link"
+                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-bulletin-board</v-icon>
+                  <span class="white--text text-h6">掲示板</span></v-btn
+                ></v-list-item
+              >
+              <v-list-item class="pl-1 pb-5 pa-6"
+                ><v-btn href="chat-list" text color="link">
+                  <v-icon class="white--text ma-6" aria-hidden="false"> mdi-chat</v-icon>
+                  <span class="white--text text-h6">チャット</span></v-btn
+                ></v-list-item
+              >
+              <v-list-item class="pl-1 pb-5 pa-6"
+                ><v-btn href="user-list" text color="link">
+                  <v-icon class="white--text ma-6" aria-hidden="false"> mdi-account-group</v-icon>
+                  <span class="white--text text-h6">ユーザーリスト</span></v-btn
+                ></v-list-item
+              >
+              <v-list-item class="pl-1 pb-5 pa-6"
+                ><v-btn href="history-list" text color="link">
+                  <v-icon class="white--text ma-6" aria-hidden="false"> mdi-clipboard-text-clock</v-icon>
+                  <span class="white--text text-h6">参加履歴</span></v-btn
+                ></v-list-item
+              >
+              <v-list-item class="pl-1 pb-5 pa-6"
+                ><v-btn href="account" text color="link">
+                  <v-icon class="white--text ma-6" aria-hidden="false"> mdi-account</v-icon>
+                  <span class="white--text text-h6">アカウント名</span></v-btn
+                ></v-list-item
+              >
+            </v-list>
+          </v-row>
+          <v-divider class="grey darken-1"></v-divider>
+          <v-row class="justify-center pa-7 ma-11" cols="1">
+            <v-btn href="account" text color="link" min-height="20">
+              <span class="white--text text-h6">ログアウト</span></v-btn
+            >
+          </v-row>
+        </v-container>
+      </v-navigation-drawer>
+    </v-flex>
+    <v-app-bar color="grey darken-3" app clipped-left>
+      <v-app-bar-nav-icon @click="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
+      <v-toolbar-title class="white--text">i-Match </v-toolbar-title>
+    </v-app-bar>
+    <v-app>
+      <v-main>
+        <Nuxt />
+      </v-main>
+    </v-app>
   </v-app>
 </template>
-
 <script>
 export default {
   data() {
     return {
-
+      drawer: true,
     }
   },
 }

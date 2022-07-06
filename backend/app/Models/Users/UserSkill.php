@@ -5,6 +5,7 @@ namespace App\Models\Users;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 
@@ -25,7 +26,13 @@ class UserSkill extends Model
     public static function get_skills($user_id){
         
         try{
-            $user_skills = UserSkill::where('user_id',$user_id)->get()->toArray();
+
+            $user_skills=DB::table('user_skill')
+            ->join('skills', 'user_skill.skill_id','skills.id')
+            ->select('user_skill.*','skills.name','skills.category_id','skills.depth')
+            ->where('user_skill.user_id',$user_id)
+            ->get()->toArray();
+
             $success = true;
         }catch(Exception $e){
             $user_skills = [];

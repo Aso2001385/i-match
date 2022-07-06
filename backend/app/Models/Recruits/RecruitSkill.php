@@ -17,9 +17,9 @@ class RecruitSkill extends Model
 
     public static function get_skills($recruit){
 
-        $recruit['skills'] = RecruitSkill::Join('skills', 'skills.id', '=', 'reqruit_skill.skill_id')
-        ->select('reqruit_skill.*','skills.name')
-        ->where('reqruit_skill.recruit_id',$recruit['id'])
+        $recruit['skills'] = RecruitSkill::Join('skills', 'skills.id', '=', 'recruit_skill.skill_id')
+        ->select('recruit_skill.*','skills.name')
+        ->where('recruit_skill.recruit_id',$recruit['id'])
         ->get()->toArray();
 
         return $recruit;

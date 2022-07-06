@@ -1,10 +1,10 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Skills;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ChatFactory extends Factory
+class SkillRequestFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,10 +14,9 @@ class ChatFactory extends Factory
     public function definition()
     {
         return [
-            'room_id'=>rand(1,20),
             'user_id'=>rand(1,10),
-            'message'=>$this->faker->realText(255,1),
-            'read' =>$this->faker->boolean(50),
+            'name'=>$this->faker->word(),
+            'message'=>$this->faker->realText(200,5),
         ];
     }
 }

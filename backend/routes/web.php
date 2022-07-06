@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,33 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-
-
-// のちにログイン中かどうかで表示するページを変えるようにする
-// Route::get('/login', function () {
-//     // デフォのファイル
-//     return view('app');
-// });
-
-// Route::get('/register', function () {
-//     // デフォのファイル
-//     return view('register');
-// });
-
-
-// Route::get('/{any}', function() {
-//     return view('app');
-// })->where('any', '.*');
-// Auth::routes();
-
-// ログインしていなければlogin画面に変わるようになっている
-Auth::routes();
-//  ここでログインしているかの確認をしている　　一旦ログイン機能ができるまでコメントアウトにしておく
-Route::auth();
-// Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
-Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('app')->where('any', '.*');
-
+Route::get('/', function () {
+    return view('welcome');
+});

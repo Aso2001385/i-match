@@ -9,7 +9,6 @@ use App\Http\Requests\Users\PasswordUpdateUserRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -24,12 +23,12 @@ class UserController extends Controller
      */
     public function index()
     {
-            $result = [
-                'users' => User::all()->toArray()
+            $response=[
+                'result' =>User::all()->toArray(),
+                'status' => Response::HTTP_OK
             ];
 
-            $status = Response::HTTP_OK;
-            return response()->json($result,$status);
+            return response()->json($response['result'],$response['status']);
         
     }
 
@@ -39,34 +38,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
 
-        try{
+        $response=User::create_user($request);
 
-            $user = User::create($request->all());
-
-            $user->fill(
-                array_merge($request->all(),
-                ['password' => Hash::make($request->password)]
-            ))
-            ->save();
-
-            $response = [
-                'result' => 'success!'
-            ];
-
-            $status = Response::HTTP_OK;
-
-        }catch(Exception $e){
-            $response = [
-                'result' => $e
-            ];
-
-            $status = Response::HTTP_BAD_REQUEST;
-        }
-
-        return response()->json($response,$status);
+        return response()->json($response['result'],$response['status']);
 
     }
 
@@ -77,9 +54,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
+    public function show(User $user)
     {
-        $response = User::get_user($request);
+        $response = User::get_user($user);
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -91,41 +69,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request,User $user)
     {
-        $user=User::find($request->id);
-
-        $user->class=$request->input('class');
-        $user->name = $request->input('name');
-
-        $user->save();
-
-        $result=[
-            'users' => $user->toArray(),
-        ];
         
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        $response=User::update_user($user,$request);
+
+        return response()->json($response['result'],$response['status']);
     }
 
     public function passUpdate(PasswordUpdateUserRequest $request)
     {
 
-        $user=User::find($request->id);
-
-        if(!Hash::check($request->old_password,$user->password)){
-            $status = Response::HTTP_OK;
-            return response()->json([],$status);
-        }
-
-        $user->password=Hash::make($request->password);
-
-        $user->save();
-        $result=[
-            'users' => User::find($request->id)->toArray,
-        ];
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        User::password_update_user($request);
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -134,12 +90,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
-        User::find($request->id)->delete();
+        $response=User::delete_user($request);
 
-        $status = Response::HTTP_OK;
-        return response()->json([],$status);
+        return response()->json($response['result'],$response['status']);
 
     }
 }

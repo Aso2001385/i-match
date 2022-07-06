@@ -60,9 +60,14 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL,
-    credentials: true,
+    proxy: true,
+    baseURL: 'http://localhost:8000/api/',
+  },
+
+  proxy: {
+    '/api/': {
+      target: 'http://localhost:8000',
+    },
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -96,6 +101,17 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
         },
+        // defaultAssets: {
+        //   font: {
+        //     family: 'Noto Sans JP',
+        //   },
+        // },
+        defaultAssets: {
+          font: {
+            display: 'swap',
+            face: 'swap',
+          },
+        },
       },
     },
     lang: {
@@ -105,7 +121,9 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    // analyze: true,
+  },
 
   env: {
     API_BASE_URL: baseURL,

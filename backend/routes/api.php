@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SkillController;
+use App\Http\Controllers\RecruitController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,16 +23,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::get('/ac',[UserController::class,'access']); //T
-Route::get('/users', [UserController::class, 'index']); //R
-Route::post('/users', [UserController::class, 'store']); //C 
-Route::get('/users/{id}',[UserController::class, 'show']); //R
-Route::put('/users/{id}',[UserController::class, 'update']); // U
-Route::delete('/users/{id}',[UserController::class, 'delete']); // D
-
+Route::apiResource('users', UserController::class);
 Route::put('/user/password',[UserController::class, 'passwordUpdate']); // U
 
-Route::resource('skills','SkillController');
+Route::apiResource('skills', SkillController::class);
 
-Route::resource('userSkill','UserSkillController', ['only' => ['store','update','destroy']]);
+Route::apiResource('recruits', RecruitController::class);
+Route::get('recruits/other/{id}', [RecruitController::class,'otherShow']);
+
+Route::apiResource('teachers', TeacherController::class);
+
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/refresh', [AuthController::class, 'refresh']);
+Route::group(['/middleware' => ['jwt.auth']], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/me', [AuthController::class, 'me']);
+});
