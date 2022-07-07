@@ -21,14 +21,11 @@
       <v-col cols="4" class="pl-3 mt-2">
         <v-row class="justify-center mb-1">
           <v-card style="text-align: center; width: 40vh" class="pa-10">
-            <div class="mt-2 text-h1 pl-10 pr-10 pt-5 justify-center">
+            <p class="mt-2 text-h1 pl-10 pr-10 pt-5">
               <v-icon class="text-h1 ma-3" aria-hidden="false">mdi-account</v-icon>
-            </div>
+            </p>
             <strong style="font-size: 2rem">test test</strong>
             <p class="grey--text" style="font-size: 1rem">test@test.jp</p>
-            <NuxtLink to="/account-edit" class="blue--text">
-              <v-col>編集</v-col>
-            </NuxtLink>
           </v-card>
         </v-row>
         <v-row class="justify-center">
