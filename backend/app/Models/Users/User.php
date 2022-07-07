@@ -2,8 +2,12 @@
 
 namespace App\Models\Users;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+<<<<<<< HEAD
+use Illuminate\Database\Eloquent\Model;
+
+class User extends Model
+=======
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -12,20 +16,19 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
+>>>>>>> 537702f581821ece23326b17b78e0f7d999714fb
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
+<<<<<<< HEAD
+    public static function get_user(Request $request){
+=======
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -53,6 +56,7 @@ class User extends Authenticatable
             $result = 'success!';
 
             $status = Response::HTTP_OK;
+>>>>>>> 537702f581821ece23326b17b78e0f7d999714fb
 
         }catch(Exception $e){
             $result = $e;
@@ -72,14 +76,14 @@ class User extends Authenticatable
             $user_skill = UserSkill::get_skills($user->id);
 
             if(!$user_skill['success']){
-                throw new Exception();
+                throw new \Exception();
             }
             $user->toArray();
             $user['skills'] = $user_skill['result'];
     
             $status = Response::HTTP_OK;
 
-        }catch(Exception $e){
+        }catch(\Exception $e){
 
             return [
                 'result' => [],

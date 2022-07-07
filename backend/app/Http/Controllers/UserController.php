@@ -6,9 +6,11 @@ use App\Models\Users\User;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\PasswordUpdateUserRequest;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Users\Token;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -57,7 +59,6 @@ class UserController extends Controller
     public function show(User $user)
     {
         $response = User::get_user($user);
-
         return response()->json($response['result'],$response['status']);
     }
 

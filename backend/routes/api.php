@@ -35,9 +35,4 @@ Route::get('recruits/other/{id}', [RecruitController::class,'otherShow']);
 Route::apiResource('teachers', TeacherController::class);
 
 
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/refresh', [AuthController::class, 'refresh']);
-Route::group(['/middleware' => ['jwt.auth']], function () {
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('/me', [AuthController::class, 'me']);
-});
+Route::post('/authorization', [App\Http\Controllers\AuthController::class, 'signIn']);
