@@ -8,6 +8,7 @@ use App\Http\Requests\Recruits\UpdateRecruitRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class RecruitController extends Controller
 {
@@ -16,20 +17,13 @@ class RecruitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function index()
     {
-        $recruits=DB::table('recruits')
-        ->join('users', 'recruits.user_id','=','users.id')
-        ->select('recruits.*','users.name')
-        ->whereNull('recruits.deleted_at')
-        ->get();
-
-        $result=[
-            'recruits'=>$recruits->toArray(),
+        $response=[
+            'result' => Recruit::all()->toArray(),
+            'status'=>Response::HTTP_OK
         ];
-
-        $status=Response::HTTP_OK;
-        return response()->json($result,$status);
+        return response()->json($response['result'],$response['status']);
 
     }
 
@@ -41,11 +35,8 @@ class RecruitController extends Controller
      */
     public function store(CreateRecruitsRequest $request)
     {
-        $result=[
-            'recruit'=>Recruit::create($request->all())->toArray(),
-        ];
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        $response=Recruit::create_recruits($request);
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -54,19 +45,17 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Recruit $recruit)
     {
-        $recruit=DB::table('recruits')
-        ->join('users', 'recruits.user_id','=','users.id')
-        ->select('recruits.*','users.name')
-        ->where('recruits.id','=',$id)
-        ->get();
+        $response=Recruit::get_user_recruits($recruit);
 
-        $result=[
-            'recruit'=>$recruit->toArray(),
-        ];
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        return response()->json($response['result'],$response['status']);
+    }
+
+    public function otherShow(Recruit $recruit)
+    {
+        $response=Recruit::get_user_recruits($recruit->user_id);
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -76,30 +65,11 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRecruitRequest $request)
+    public function update(UpdateRecruitRequest $request,Recruit $recruit)
     {
-        $recruit=Request::find($request->id);
+        $response=Recruit::update_recruit($recruit,$request);
 
-        $recruit->title=$recruit->input('title');
-        $recruit->contents=$recruit->input('contents');
-        $recruit->purpose_id=$recruit->input('purpose_id');
-        $recruit->persons=$recruit->input('persons');
-        $recruit->due=$recruit->input('due');
-
-        $recruit->save();
-
-        $recruits=DB::table('recruits')
-        ->join('users', 'recruits.user_id','=','users.id')
-        ->select('recruits.*','users.name')
-        ->whereNull('recruits.deleted_at')
-        ->get();
-
-        $result=[
-            'recruits' => $recruits->toArray(),
-        ];
-        
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        return response()->json($response['result'],$response['status']);
 
     }
 
@@ -109,11 +79,9 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
-        Recruit::find($request->id)->delete();
-
-        $status = Response::HTTP_OK;
-        return response()->json([],$status);
+        $response=Recruit::delete_recruit($request);
+        return response()->json($response['result'],$response['status']);
     }
 }

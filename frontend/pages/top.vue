@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <v-flex>
     <v-row>
       <v-col cols="8">
@@ -37,14 +37,13 @@
             <p class="ml-3 mt-2 text-h6">お知らせ</p>
           </v-col>
           <v-col class="d-flex white--text" cols="3">
-            <!-- <v-select x-small :items="items" label="Outlined style" class="pt-5" item-color="orange"></v-select> -->
             <v-btn @click="sortSection(sortId)" class="mt-3">{{ sortName[sortId] }}</v-btn>
           </v-col>
         </v-row>
         <v-row class="justify-center mb-3">
           <v-row class="justify-center">
             <v-col cols="10" style="overflow: hidden !important; height: 70vh; overflow-y: auto">
-              <v-card v-for="n in 20" :key="n" elevation="2" class="text-h6">お知らせリスト</v-card>
+              <v-card v-for="n in 30" :key="n" elevation="2" class="text-h6">お知らせリスト</v-card>
             </v-col>
           </v-row>
         </v-row>
@@ -76,4 +75,4 @@ export default {
   },
 }
 </script>
-<style lang="scss"></style>
+<style lang="scss"></style> -->

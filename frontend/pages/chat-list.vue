@@ -1,28 +1,24 @@
 <template>
   <v-flex>
     <v-row class="grey darken-2">
-      <v-col><h3 class="white--text ma-5">チャットリスト</h3></v-col>
+      <v-col>
+        <h3 class="white--text ma-5 pt-2">チャットリスト</h3>
+      </v-col>
     </v-row>
     <v-row>
-      <v-col cols="12">
-        <v-row>
-          <v-btn
-            style="width: 100%; overflow: hidden !important; height: 84vh; overflow-y: auto"
-            class="ma-0 pa-0"
-            href="chat-room"
-          >
-            <v-col>
-              <v-card class="mb-2" v-for="n in 20" :key="n" elevation="2">
-                <v-row class="ml-5">
-                  <v-col cols="12" md="4"><span class="black--text ml-5">相手のニックネーム</span></v-col>
-                  <v-col cols="12" md="8"><span class="black--text">3/6 12:10</span></v-col>
-                </v-row>
-                <v-row>
-                  <v-col cols="2" class="ml-10"><h2 class="black--text">最終メッセージ</h2></v-col>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-btn>
+      <v-col cols="12" style="overflow: hidden !important; height: 83vh; overflow-y: auto" class="pa-0 pb-1">
+        <v-row style="width: 100%">
+          <v-card v-for="chatList in 25" :key="chatList" style="width: 100%">
+            <NuxtLink to="/chat-room" class="white--text" style="text-decoration: none">
+              <v-row class="ml-5 mt-3 mb-5">
+                <v-col cols="12" md="4"
+                  ><span class="black--text ml-5" style="width: 80%">相手のニックネーム</span></v-col
+                >
+                <v-col cols="12" md="8"><span class="black--text">3/6 12:10</span></v-col>
+                <v-col cols="12" class="ml-10"><h2 class="black--text" style="width: 80%">最終メッセージ</h2></v-col>
+              </v-row>
+            </NuxtLink>
+          </v-card>
         </v-row>
       </v-col>
     </v-row>

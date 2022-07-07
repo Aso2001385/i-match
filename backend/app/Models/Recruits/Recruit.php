@@ -5,6 +5,9 @@ namespace App\Models\Recruits;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
+use Exception;
 
 class Recruit extends Model
 {
@@ -18,6 +21,27 @@ class Recruit extends Model
         'persons',
         'due',
     ];
+
+    public function create_recruits($request){
+        try{
+
+            $recruit = Recruit::create($request->all());
+            $result = 'success!';
+
+            $status = Response::HTTP_OK;
+
+        }catch(Exception $e){
+
+            $result = $e;
+
+            $status = Response::HTTP_BAD_REQUEST;
+        }
+
+        return [
+            'result' => $result,
+            'status' => $status,
+        ];
+    }
 
     public static function get_recruits(){
 
@@ -45,13 +69,9 @@ class Recruit extends Model
 
     }
 
-    public static function get_user_recruits($user_id){
+    public static function get_user_recruits($recruit){
 
         try{
-
-            $recruits = Recruit::where('user_id',$user_id)
-            ->whereNull('deleted_at')->get()->toArray();
-
             $recruits = RecruitSkill::merge_skills($recruits);
             $recruits = RecruitUser::marge_user_count($recruits);
 
@@ -95,6 +115,44 @@ class Recruit extends Model
             'status' => $status,
         ];
 
+    }
+
+    public static function update_recruit($recruit,$request)
+    {
+        try{
+            $recruit->update($request->all());
+            $status = Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+
+        return [
+            'result' => $recruit,
+            'status' => $status
+        ];
+    }
+
+    public function delete_recruit($request){
+        try{
+            Recruit::find($request->id)->delete();
+            $status= Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+        return [
+            'result' => [],
+            'status' => $status
+        ];
     }
 
 }
