@@ -33,9 +33,4 @@ Route::resource('skills','SkillController');
 Route::resource('userSkill','UserSkillController', ['only' => ['store','update','destroy']]);
 
 
-Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login']);
-Route::get('/refresh', [App\Http\Controllers\Api\AuthController::class, 'refresh']);
-Route::group(['/middleware' => ['jwt.auth']], function () {
-    Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
-    Route::get('/me', [App\Http\Controllers\Api\AuthController::class, 'me']);
-});
+Route::post('/authorization', [App\Http\Controllers\AuthController::class, 'signIn']);

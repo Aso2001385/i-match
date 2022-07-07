@@ -6,10 +6,11 @@ use App\Models\Users\User;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\PasswordUpdateUserRequest;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Users\Token;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -42,23 +43,25 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
+        // $header = $request->headers->get('Authorization');
+        
+        $headers = explode('|',$request->header('X-Auth'));
+        
+        return response()->json($headers[1],Response::HTTP_OK)->header('X-Auth','sss');
         try{
 
+            $request->merge(['password'=> Hash::make($request->password)]);
             $user = User::create($request->all());
-
-            $user->fill(
-                array_merge($request->all(),
-                ['password' => Hash::make($request->password)]
-            ))
-            ->save();
+            $token = Token::create(['id'=>$user->id,'content'=>Str::random(32)]);
 
             $response = [
-                'result' => 'success!'
+                'result' => ''.$token->id
             ];
 
             $status = Response::HTTP_OK;
 
-        }catch(Exception $e){
+        }catch(\Exception $e){
+
             $response = [
                 'result' => $e
             ];
@@ -79,7 +82,7 @@ class UserController extends Controller
      */
     public function show(Request $request)
     {
-        $response = User::get_user($request);
+        // $response = User::get_user($request);
         return response()->json($response['result'],$response['status']);
     }
 
