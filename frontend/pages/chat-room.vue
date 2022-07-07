@@ -49,7 +49,7 @@
     </v-row>
   </v-flex>
 </template>
-<script>
+<script defer>
 export default {
   data() {
     return {

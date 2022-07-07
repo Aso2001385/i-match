@@ -12,16 +12,18 @@
             <v-col cols="10" md="8" class="ml-10 pa-0">
               <span v-for="skillList in 10" :key="skillList" class="text-h4 ml-0 pa-0">◯</span>
             </v-col>
-            <v-col cols="12" md="2" class="mr-0">
-              <v-btn href="account" text color="link">Read More</v-btn>
-            </v-col>
+            <NuxtLink to="/bulletin-detail" class="white--text" style="text-decoration: none">
+              <v-col cols="12" md="12" class="mr-0">
+                <span class="black--text">Read More </span>
+              </v-col>
+            </NuxtLink>
           </v-row>
         </v-card>
       </v-col>
     </v-row>
   </v-container>
 </template>
-<script>
+<script defer>
 export default {
   data() {
     return {}
