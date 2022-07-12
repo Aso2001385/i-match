@@ -1,91 +1,101 @@
 <template>
   <v-row>
-    <v-col cols="12" class="pl-3 mt-2" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
+    <v-col cols="12" class="pl-3 mt-2">
       <v-row class="justify-center mb-1">
-        <col cols="9" />
-
-        <v-col cols="6"
-          ><p style="text-align: center"><v-btn color="green">検索</v-btn></p></v-col
-        >
-        <v-col cols="6">
-          <v-btn color="orange" @click="alldeleteSkill()">all<v-icon dark right>mdi-minus-circle</v-icon></v-btn>
-        </v-col>
-        <v-col cols="12"
-          ><span v-for="value in allSkill" :key="value">
-            <v-chip :class="colors(value)" class="mr-2 mb-1 white--text" deletable-chips
-              >{{ value }}<v-icon dark right @click="deleteSkill(value)">mdi-minus-circle</v-icon></v-chip
+        <v-col>
+          <v-row>
+            <v-col cols="6"
+              ><p style="text-align: center"><v-btn color="green">検索</v-btn></p></v-col
             >
-          </span>
+            <v-col cols="6">
+              <v-btn color="orange" @click="alldeleteSkill()">clear<v-icon dark right>mdi-minus-circle</v-icon></v-btn>
+            </v-col>
+            <v-col cols="12" style="overflow: hidden !important; height: 15vh; overflow-y: auto"
+              ><span v-for="value in allSkill" :key="value">
+                <v-chip :class="colors(value)" class="mr-2 mb-1 white--text" deletable-chips small
+                  >{{ value }}<v-icon dark right @click="deleteSkill(value)" small>mdi-minus-circle</v-icon></v-chip
+                >
+              </span>
+            </v-col>
+          </v-row>
         </v-col>
-
-        <v-col cols="12" sm="11">
-          <v-select
-            v-model="langSea"
-            item-text="skillName"
-            item-value="value"
-            :items="langs"
-            attach
-            color="red"
-            item-color="red"
-            label="言語"
-            class="mb-0 skillLang"
-          ></v-select>
-        </v-col>
-        <v-col cols="11" sm="11">
-          <v-select
-            v-model="frameSea"
-            item-text="skillName"
-            item-value="value"
-            :items="frameworks"
-            attach
-            color="blue"
-            item-color="blue"
-            label="フレームワーク"
-          ></v-select>
-        </v-col>
-        <v-col cols="11" sm="11">
-          <v-select
-            v-model="dbSea"
-            item-text="skillName"
-            item-value="value"
-            :items="dbs"
-            attach
-            color="green"
-            item-color="green"
-            label="DB"
-          ></v-select>
-        </v-col>
-        <v-col cols="11" sm="11">
-          <v-select
-            v-model="infSea"
-            item-text="skillName"
-            item-value="value"
-            :items="infs"
-            attach
-            color="purple"
-            item-color="purple"
-            label="インフラ"
-          ></v-select>
-        </v-col>
-        <v-col cols="11" sm="11">
-          <v-select
-            v-model="othSea"
-            item-text="skillName"
-            item-value="value"
-            :items="oths"
-            attach
-            color="lightgrey"
-            item-color="lightgrey"
-            label="その他"
-          ></v-select>
-        </v-col>
+        <v-row style="overflow: hidden !important; height: 60vh; overflow-y: auto; padding-bottom: 80%">
+          <v-col cols="12" sm="11">
+            <v-select
+              v-model="langSea"
+              item-text="skillName"
+              item-value="value"
+              :items="langs"
+              attach
+              color="red"
+              item-color="red"
+              label="言語"
+              class="mb-0 skillLang ml-10"
+              style="width: 80%"
+            ></v-select>
+          </v-col>
+          <v-col cols="11" sm="11">
+            <v-select
+              v-model="frameSea"
+              item-text="skillName"
+              item-value="value"
+              :items="frameworks"
+              attach
+              color="blue"
+              item-color="blue"
+              class="ml-10"
+              label="フレームワーク"
+              style="width: 80%"
+            ></v-select>
+          </v-col>
+          <v-col cols="11" sm="11">
+            <v-select
+              v-model="dbSea"
+              item-text="skillName"
+              item-value="value"
+              :items="dbs"
+              attach
+              color="green"
+              item-color="green"
+              class="ml-10"
+              label="DB"
+              style="width: 80%"
+            ></v-select>
+          </v-col>
+          <v-col cols="11" sm="11">
+            <v-select
+              v-model="infSea"
+              item-text="skillName"
+              item-value="value"
+              :items="infs"
+              attach
+              color="purple"
+              item-color="purple"
+              class="ml-10"
+              label="インフラ"
+              style="width: 80%"
+            ></v-select>
+          </v-col>
+          <v-col cols="11" sm="11">
+            <v-select
+              v-model="othSea"
+              item-text="skillName"
+              item-value="value"
+              :items="oths"
+              attach
+              color="lightgrey"
+              item-color="lightgrey"
+              class="ml-10"
+              label="その他"
+              style="width: 80%"
+            ></v-select>
+          </v-col>
+        </v-row>
       </v-row>
     </v-col>
   </v-row>
 </template>
 <script defer>
-// import { computed } from '@vue/reactivity'
-
 export default {
   data() {
     return {
@@ -156,19 +166,6 @@ export default {
     }
   },
   methods: {
-    // addSkill(event) {
-    //   // 変更があった部分だけをallSkillに格納していく
-    //   console.log(event)
-    //   if (!this.allSkill.includes(event)) {
-    //     this.allSkill.push(event)
-    //     console.log(this.allSkill.indexOf(event))
-    //   } else {
-    //     const prace = this.allSkill.indexOf(event)
-    //     console.log(prace)
-    //     this.allSkill.splice(prace, 1)
-    //   }
-    //   // event.splice(0, event.length)
-    // },
     deleteSkill(value) {
       return this.allSkill.splice(this.allSkill.indexOf(value), 1)
     },
@@ -216,7 +213,7 @@ export default {
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          this.allSkill.splice(prace, 1)
+          // this.allSkill.splice(prace, 1)
         }
       },
     },
@@ -233,7 +230,7 @@ export default {
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          this.allSkill.splice(prace, 1)
+          // this.allSkill.splice(prace, 1)
         }
       },
     },
@@ -250,7 +247,7 @@ export default {
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          this.allSkill.splice(prace, 1)
+          // this.allSkill.splice(prace, 1)
         }
       },
     },
@@ -267,7 +264,7 @@ export default {
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          this.allSkill.splice(prace, 1)
+          // this.allSkill.splice(prace, 1)
         }
       },
     },
@@ -284,7 +281,7 @@ export default {
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          this.allSkill.splice(prace, 1)
+          // this.allSkill.splice(prace, 1)
         }
       },
     },
