@@ -127,24 +127,21 @@ export default {
 
       // if (this.confirmPassword !== this.password) return
 
+      this.$cookies.set('token', {
+        id: '1',
+        content: 'ABCDEFGHIJKLMNOPQRSTUVWXYZAABBCC',
+        update: '2222-08-08 23:56:44',
+      })
+
       this.user = {
         name: this.name,
         email: this.email,
         password: this.password,
       }
 
-      this.$axios
-        .post('http://localhost:8080/api/users', this.user, {
-          headers: {
-            'X-Auth': '1|xxxxxxxxxxlkksksksksk',
-          },
-        })
-        .then(response => {
-          console.log(response.headers['x-auth'])
-          this.addMessage = response.headers['x-auth']
-        })
-
-      alert('通ったっす！')
+      this.$axios.post('http://localhost:8080/api/auth', this.user).then(response => {
+        console.log(response.data)
+      })
     },
 
     clear() {

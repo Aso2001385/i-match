@@ -3,7 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\RecruitController;
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,4 +35,4 @@ Route::get('recruits/other/{id}', [RecruitController::class,'otherShow']);
 Route::apiResource('teachers', TeacherController::class);
 
 
-Route::post('/authorization', [App\Http\Controllers\AuthController::class, 'signIn']);
+Route::post('/auth', [AuthController::class, 'test']);

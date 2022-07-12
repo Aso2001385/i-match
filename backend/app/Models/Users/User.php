@@ -3,20 +3,9 @@
 namespace App\Models\Users;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-<<<<<<< HEAD
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
-=======
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Exception;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-
-class User extends Authenticatable
->>>>>>> 537702f581821ece23326b17b78e0f7d999714fb
 {
     use HasFactory;
 
@@ -26,9 +15,6 @@ class User extends Authenticatable
         'password',
     ];
 
-<<<<<<< HEAD
-    public static function get_user(Request $request){
-=======
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -48,7 +34,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function create_user($request){
+    public static function create_user($request){
         try{
             $request->password = Hash::make($request->password);
             User::create($request->all());
@@ -56,7 +42,6 @@ class User extends Authenticatable
             $result = 'success!';
 
             $status = Response::HTTP_OK;
->>>>>>> 537702f581821ece23326b17b78e0f7d999714fb
 
         }catch(Exception $e){
             $result = $e;

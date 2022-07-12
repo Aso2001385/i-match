@@ -50,7 +50,7 @@
       </v-navigation-drawer>
     </v-flex>
     <v-app-bar color="grey darken-3" app clipped-left>
-      <v-app-bar-nav-icon @click="drawer = !drawer" class="white--text"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="white--text" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="white--text">i-Match </v-toolbar-title>
     </v-app-bar>
     <v-app>
@@ -71,6 +71,6 @@ export default {
 </script>
 <style>
 body::-webkit-scrollbar {
- display:none;
+  display: none;
 }
 </style>

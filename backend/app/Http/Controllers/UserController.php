@@ -8,9 +8,6 @@ use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\PasswordUpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Hash;
-use App\Models\Users\Token;
-use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -40,12 +37,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
 
         $response=User::create_user($request);
-
-        return response()->json($response['result'],$response['status']);
+       
+        return response()->json($response,Response::HTTP_OK);
 
     }
 
