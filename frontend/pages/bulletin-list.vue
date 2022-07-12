@@ -12,11 +12,16 @@
       </v-col>
     </v-row>
     <v-row>
+      <v-icon color="orange" style="position: absolute; z-index: 2; top: 85%; margin-left: 60%" x-large
+        >mdi-plus-box</v-icon
+      >
+
       <v-col cols="8" class="ma-0 pa-0" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
         <v-row v-for="bulletinList in 5" :key="bulletinList">
           <BulletinList />
         </v-row>
       </v-col>
+
       <v-col cols="4">
         <SearchSkill />
       </v-col>
@@ -101,5 +106,27 @@ export default {
     BulletinList: () => import('../components/BulletinList.vue'),
     SearchSkill: () => import('../components/SearchSkill.vue'),
   },
+  // mounted() {
+  //   axios
+  //     // .get('http://18.183.25.12/api/user') awsのURL
+  //     .get('http://localhost:8000/api/user')
+  //     .then(res => {
+  //       console.log(res.data)
+  //       this.message = res.data
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // },
+  //   async asyncData({ $axios }) {
+  // 	// 取得先のURL
+  // const url = "https://qiita.com/api/v2/items";
+  // 	// リクエスト（Get）
+  // const response = await $axios.$get(url);
+  // 	// 配列で返ってくるのでJSONにして返却
+  // 	return {
+  // 		posts: response
+  // 	};
+  // },
 }
 </script>

@@ -18,7 +18,7 @@
       <v-col cols="8" class="ma-0 pa-0 pb-1" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
         <BulletinList v-for="userList in 5" :key="userList" />
       </v-col>
-      <v-col cols="4" class="pl-3 mt-2">
+      <v-col cols="4" class="pl-3 mt-2" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
         <v-row class="justify-center mb-1">
           <v-card style="text-align: center; width: 40vh" class="pa-10">
             <p class="mt-2 text-h1 pl-10 pr-10 pt-5">
@@ -30,12 +30,21 @@
         </v-row>
         <v-row class="justify-center">
           <v-card style="width: 40vh" class="pa-5">
-            <v-card-title class="mt-2 pl-10 pb-10 pr-10 pt-1" style="text-align: center">スキル一覧</v-card-title>
-            <v-card-text>▶︎言語：PHP・Java・Phthon</v-card-text>
-            <v-card-text>▶︎フレームワーク：Laravel・Vue.js・Flask</v-card-text>
-            <v-card-text>▶︎DB：MySQL・SQLite・MariaDB</v-card-text>
-            <v-card-text>▶︎インフラ：AWS・Azure・Linux</v-card-text>
-            <v-card-text>▶︎その他：figma・Github・Phthon</v-card-text>
+            <v-card-title class="pl-5 pr-10 pt-1">スキル一覧</v-card-title>
+            <v-col style="overflow: hidden !important; height: 25vh; overflow-y: auto">
+              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%">言語</p>
+              <v-chip v-for="n in 5" :key="n" color="red" class="ml-1 mr-1 mb-1 white--text">PHP</v-chip>
+              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">
+                フレームワーク
+              </p>
+              <v-chip v-for="n in 5" :key="n" color="blue" class="ml-1 mr-1 mb-1 white--text">Laravel</v-chip>
+              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">DB</p>
+              <v-chip v-for="n in 5" :key="n" color="green" class="ml-1 mr-1 mb-1 white--text">MySQL</v-chip>
+              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">インフラ</p>
+              <v-chip v-for="n in 5" :key="n" color="purple" class="ml-1 mr-1 mb-1 white--text">AWS</v-chip>
+              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">その他</p>
+              <v-chip v-for="n in 5" :key="n" color="grey" class="ml-1 mr-1 mb-1 white--text">figma</v-chip>
+            </v-col>
           </v-card>
         </v-row>
       </v-col>
@@ -64,5 +73,17 @@ export default {
   components: {
     BulletinList: () => import('../components/BulletinList.vue'),
   },
+  // mounted() {
+  //   axios
+  //     // .get('http://18.183.25.12/api/user') awsのURL
+  //     .get('http://localhost:8000/api/user')
+  //     .then(res => {
+  //       console.log(res.data)
+  //       this.message = res.data
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // },
 }
 </script>

@@ -5,36 +5,36 @@
         <v-container>
           <v-row>
             <v-list>
-              <v-list-item class="pl-1 pb-0 pa-7">
-                <NuxtLink to="/news-list" class="white--text text-h6" style="text-decoration: none"
-                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-bell</v-icon>お知らせ</NuxtLink
+              <v-list-item class="pl-1 pb-0 pa-5">
+                <NuxtLink to="/news-list" class="white--text text-h7" style="text-decoration: none"
+                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-bell</v-icon>お知らせ</NuxtLink
                 >
               </v-list-item>
-              <v-list-item class="pl-1 pb-0 pa-6">
-                <NuxtLink to="/bulletin-list" class="white--text text-h6" style="text-decoration: none"
-                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-bulletin-board</v-icon>掲示板</NuxtLink
+              <v-list-item class="pl-1 pb-0 pa-4">
+                <NuxtLink to="/bulletin-list" class="white--text text-h7" style="text-decoration: none"
+                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-bulletin-board</v-icon>掲示板</NuxtLink
                 >
               </v-list-item>
-              <v-list-item class="pl-1 pb-0 pa-6">
-                <NuxtLink to="/chat-list" class="white--text text-h6" style="text-decoration: none"
-                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-chat</v-icon>チャット</NuxtLink
+              <v-list-item class="pl-1 pb-0 pa-4">
+                <NuxtLink to="/chat-list" class="white--text text-h7" style="text-decoration: none"
+                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-chat</v-icon>チャット</NuxtLink
                 >
               </v-list-item>
-              <v-list-item class="pl-1 pb-0 pa-6">
-                <NuxtLink to="/user-list" class="white--text text-h6" style="text-decoration: none"
-                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-account-group</v-icon
+              <v-list-item class="pl-1 pb-0 pa-4">
+                <NuxtLink to="/user-list" class="white--text text-h7" style="text-decoration: none"
+                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-account-group</v-icon
                   >ユーザーリスト</NuxtLink
                 >
               </v-list-item>
-              <v-list-item class="pl-1 pb-0 pa-6">
-                <NuxtLink to="/history-list" class="white--text text-h6" style="text-decoration: none"
-                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-clipboard-text-clock</v-icon
+              <v-list-item class="pl-1 pb-0 pa-4">
+                <NuxtLink to="/history-list" class="white--text text-h7" style="text-decoration: none"
+                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-clipboard-text-clock</v-icon
                   >参加履歴</NuxtLink
                 >
               </v-list-item>
-              <v-list-item class="pl-1 pb-0 pa-6">
-                <NuxtLink to="/account" class="white--text text-h6" style="text-decoration: none"
-                  ><v-icon class="white--text ma-6" aria-hidden="false"> mdi-account</v-icon>アカウント名</NuxtLink
+              <v-list-item class="pl-1 pb-0 pa-4">
+                <NuxtLink to="/account" class="white--text text-h7" style="text-decoration: none"
+                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-account</v-icon>アカウント名</NuxtLink
                 >
               </v-list-item>
             </v-list>

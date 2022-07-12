@@ -18,7 +18,7 @@
       <v-col cols="8" class="ma-0 pa-0 pb-1" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
         <BulletinList v-for="userList in 5" :key="userList" />
       </v-col>
-      <v-col cols="4" class="pl-3 mt-2">
+      <v-col cols="4" class="pl-3 mt-2" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
         <v-row class="justify-center mb-1">
           <v-card style="text-align: center; width: 40vh" class="pa-10">
             <div class="mt-2 text-h1 pl-10 pr-10 pt-5 justify-center">
@@ -67,5 +67,27 @@ export default {
   components: {
     BulletinList: () => import('../components/BulletinList.vue'),
   },
+  // mounted() {
+  //   axios
+  //     // .get('http://18.183.25.12/api/user') awsのURL
+  //     .get('http://localhost:8000/api/user')
+  //     .then(res => {
+  //       console.log(res.data)
+  //       this.message = res.data
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // },
+  //   async asyncData({ $axios }) {
+  // 	// 取得先のURL
+  // const url = "https://qiita.com/api/v2/items";
+  // 	// リクエスト（Get）
+  // const response = await $axios.$get(url);
+  // 	// 配列で返ってくるのでJSONにして返却
+  // 	return {
+  // 		posts: response
+  // 	};
+  // },
 }
 </script>
