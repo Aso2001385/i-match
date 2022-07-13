@@ -256,7 +256,7 @@ paths:
             schema:
               type: object
               properties:
-                categorry_id:
+                category_id:
                   type: integer
                   format: int64
                   example: 1
@@ -266,8 +266,13 @@ paths:
                   type: string
                   example: skill1
               required:
-                - categorry_id
+                - category_id
                 - name
+            examples:
+              example:
+                value:
+                  category_id: 1
+                  name: skill1
     get:
       summary: Skill 一覧
       tags:
