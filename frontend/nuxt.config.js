@@ -62,13 +62,13 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'http://localhost:8080/api/',
     // baseURL: 'http://13.115.187.17/api/',
   },
 
   proxy: {
     '/api/': {
-      target: 'http://localhost:8000',
+      target: 'http://localhost:8080',
       // target: 'http://13.115.187.17',
     },
   },

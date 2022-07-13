@@ -195,7 +195,7 @@ export default {
           return 'purple'
         }
       }
-      return 'grey'
+      return 'indigo darken-3'
     },
   },
 

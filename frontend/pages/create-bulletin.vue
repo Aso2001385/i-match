@@ -2,7 +2,6 @@
   <div class="box" style="position: relative">
     <CreateBulletinSkill
       v-if="openFlag"
-      v-bind="openFlag"
       style="position: absolute; z-index: 2; top: 10%; width: 80%; margin-left: 10%"
     />
     <v-flex>
@@ -11,7 +10,9 @@
           <v-card-title style="border-bottom: 2px solid lightgrey; width: 90%">内容</v-card-title>
           <v-row class="mt-0 pa-0">
             <v-col cols="12"><v-card-title>●タイトル</v-card-title></v-col>
-            <v-col cols="12"><input style="border: 1px solid lightgrey; width: 30vh; border-radius: 5px" /></v-col>
+            <v-col cols="12"
+              ><input style="border: 1px solid lightgrey; width: 30vh; border-radius: 5px" v-model="inputText"
+            /></v-col>
           </v-row>
           <v-row class="mt-0 pa-0">
             <v-col cols="12"><v-card-title>●概要</v-card-title></v-col>
@@ -43,16 +44,15 @@
 
             <v-col cols="12">
               <input type="text" />
+              <!-- <v-span v-for="skill in skills" :key="skill">{{ skill.keys(data)[2] }}</v-span> -->
             </v-col>
           </v-row>
           <v-row class="pb-5 ml-10">
             <v-col style="text-align: center">
               <span class="mb-5">
-                <NuxtLink to="/bulletin-list" style="text-decoration: none">
-                  <div class="justify-center">
-                    <v-col id="addSkill" style="width: 90%; text-align: center">登録</v-col>
-                  </div>
-                </NuxtLink>
+                <div class="justify-center">
+                  <v-col id="addBulletin" style="width: 90%; text-align: center" @click="createBulletin">登録</v-col>
+                </div>
               </span>
             </v-col>
           </v-row>
@@ -68,6 +68,9 @@ export default {
   data() {
     return {
       openFlag: false,
+      inputText: '',
+      bulletin: [],
+      skills: [],
     }
   },
   components: {
@@ -79,29 +82,43 @@ export default {
     openModal() {
       this.openFlag = !this.openFlag
     },
+    charaLimit(inputText) {
+      return inputText.length > 30 ? inputText.slice(0, -1) : inputText
+    },
+    sessionClear() {
+      sessionStorage.removeItem('skills')
+    },
+    createBulletin() {
+      // axios
+      //   .post('http://18.183.25.12/api/user', this.bulletin)
+      //   .then(res => {
+      //     this.$router.push({ name: '' })
+      //   })
+      //   .then(res => {
+      //     console.log(res.data)
+      //     this.$router.push('/bulletin-list')
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   })
+
+      // データベースに保存してセッションのスキルの中身を削除してから掲示板リストに遷移するようにしている
+      this.sessionClear()
+      this.$router.push('/bulletin-list')
+    },
+    getSession() {
+      const skillBox = sessionStorage.getItem('skills')
+      this.skills.push(skillBox)
+      // console.log(skillBox)
+      // console.log(skillBox[5])
+      // const list = skillBox.map(obj => obj.name)
+      // console.log(list)
+      // console.log(this.skills.name)
+    },
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
-  //   async asyncData({ $axios }) {
-  // 	// 取得先のURL
-  // const url = "https://qiita.com/api/v2/items";
-  // 	// リクエスト（Get）
-  // const response = await $axios.$get(url);
-  // 	// 配列で返ってくるのでJSONにして返却
-  // 	return {
-  // 		posts: response
-  // 	};
-  // },
+  mounted() {
+    this.getSession()
+  },
 }
 </script>
 <style lang="scss">
@@ -109,13 +126,15 @@ export default {
   background-color: grey;
   color: black;
 }
-#addSkill {
+#addSkill,
+#addBulletin {
   border: 1px solid grey;
   border-radius: 5px;
   background-color: grey;
   color: white;
 }
-#addSkill:hover {
+#addSkill:hover,
+#addBulletin:hover {
   background-color: white;
   color: orange;
   border: 1px solid orange;
