@@ -2,6 +2,10 @@
 
 namespace App\Models\Recruits;
 
+use App\Models\Recruits\RecruitUser;
+use App\Models\Recruits\RecruitSkill;
+use App\Models\Skills\Skill;
+use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
@@ -17,12 +21,22 @@ class Recruit extends Model
         'user_id',
         'title',
         'contents',
-        'purpose_id',
+        'purpose',
         'persons',
         'due',
     ];
 
-    public function create_recruits($request){
+    public function recruit_users()
+    {
+        return $this->hasMany(RecruitUser::class);
+    }
+
+    public function recruit_skills()
+    {
+        return $this->hasMany(RecruitSkill::class);
+    }
+
+    public static function create_recruits($request){
         try{
 
             $recruit = Recruit::create($request->all());
@@ -38,74 +52,65 @@ class Recruit extends Model
         }
 
         return [
+            'recruit'=>$recruit,
             'result' => $result,
             'status' => $status,
         ];
     }
 
-    public static function get_recruits(){
-
-        try{
-
-            $recruits = Recruit::whereNull('deleted_at')
-            ->get()->toArray();
-
-            $recruits = RecruitSkill::merge_skills($recruits);
-            $recruits = RecruitUser::marge_user_count($recruits);
-
-            $status = Response::HTTP_OK;
-    
-        }catch(Example $e){
-
-            $recruits = [];
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
-
-        }
-        
-        return [
-            'result' => $recruits,
-            'status' => $status,
-        ];
-
-    }
-
     public static function get_user_recruits($recruit){
 
         try{
-            $recruits = RecruitSkill::merge_skills($recruits);
-            $recruits = RecruitUser::marge_user_count($recruits);
+
+            $recruit=Recruit::with('recruit_users')->find($recruit->id)->with('recruit_skills')->find($recruit->id);
+            $recruit->user_name=User::find($recruit->user_id)->name;
+
+            if(isset($recruit->recruit_users)){
+                $recruit->member=RecruitUser::where('recruit_id',$recruit->id)->count();
+                foreach($recruit->recruit_users as $user){
+                    $users=User::where('id',$user->user_id)->select('name')->first();
+                    $user->name=$users->name;
+                }
+                unset($user);
+            }
+
+            if(isset($recruit->recruit_skills)){
+                foreach($recruit->recruit_skills as $skill){
+                    $skills=Skill::where('id',$skill->skill_id)->select('name','category_id')->first();
+                    $skill->name=$skills->name;
+                    $skill->category_id=$skills->category_id;
+                }
+                unset($skill);
+            }
 
             $status = Response::HTTP_OK;
     
         }catch(Example $e){
 
-            $recruits = [];
+            $result = [];
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
 
         }
         
         return [
-            'result' => $recruits,
+            'result' => $recruit,
             'status' => $status,
         ];
 
     }
 
-    public static function get_other_recruits($user_id){
+    public static function get_other_recruits($request){
 
         try{
-
-            $recruits = Recruit::where('user_id','<>',$user_id)
-            ->whereNull('deleted_at')->get()->toArray();
-
-            $recruits = RecruitSkill::merge_skills($recruits);
-            $recruits = RecruitUser::marge_user_count($recruits);
-
+            $recruits=Recruit::where('user_id','<>',$request->id)->get();
+            foreach($recruits as $rec){
+                $rec->name=User::find($rec->user_id)->name;
+            }
             $status = Response::HTTP_OK;
     
         }catch(Example $e){
 
-            $recruits = [];
+            $result = [];
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
 
         }
@@ -120,8 +125,7 @@ class Recruit extends Model
     public static function update_recruit($recruit,$request)
     {
         try{
-            $recruit->update($request->all());
-            $status = Response::HTTP_OK;
+            
         }catch(Exception $e){
 
             return [
@@ -130,6 +134,9 @@ class Recruit extends Model
             ];
 
         }
+            //$request['due']=strtotime($recruit->due);
+            $recruit->update($request->all());
+            $status = Response::HTTP_OK;
 
         return [
             'result' => $recruit,
@@ -137,9 +144,9 @@ class Recruit extends Model
         ];
     }
 
-    public function delete_recruit($request){
+    public static function delete_recruit($recruit){
         try{
-            Recruit::find($request->id)->delete();
+            $recruit->delete();
             $status= Response::HTTP_OK;
         }catch(Exception $e){
 

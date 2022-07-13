@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recruits\Recruit;
+use App\Models\Recruits\RecruitSkill;
 use App\Http\Requests\Recruits\CreateRecruitRequest;
 use App\Http\Requests\Recruits\UpdateRecruitRequest;
 use Illuminate\Http\Request;
@@ -24,7 +25,6 @@ class RecruitController extends Controller
             'status'=>Response::HTTP_OK
         ];
         return response()->json($response['result'],$response['status']);
-
     }
 
     /**
@@ -33,9 +33,16 @@ class RecruitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRecruitsRequest $request)
+    public function store(CreateRecruitRequest $request)
     {
-        $response=Recruit::create_recruits($request);
+        $request1=collect(
+            ['user_id' => $request->user_id, 'title' =>$request->title, 'contents' => $request->contents, 'purpose'=>$request->purpose, 'persons'=>$request->persons, 'due'=>$request->due]
+        );
+        $response=Recruit::create_recruits($request1);
+
+        if($response['result']=='success!'){
+            $response=RecruitSkill::create_rec_skill($request,$response['recruit']);
+        }
         return response()->json($response['result'],$response['status']);
     }
 
@@ -52,9 +59,9 @@ class RecruitController extends Controller
         return response()->json($response['result'],$response['status']);
     }
 
-    public function otherShow(Recruit $recruit)
+    public function otherIndex(Request $request)
     {
-        $response=Recruit::get_user_recruits($recruit->user_id);
+        $response=Recruit::get_other_recruits($request);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -79,9 +86,9 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Recruit $recruit)
     {
-        $response=Recruit::delete_recruit($request);
+        $response=Recruit::delete_recruit($recruit);
         return response()->json($response['result'],$response['status']);
     }
 }
