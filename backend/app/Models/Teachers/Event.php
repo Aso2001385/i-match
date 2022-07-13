@@ -5,6 +5,8 @@ namespace App\Models\Teachers;
 use App\Models\Teachers\Teacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
+use Exception;
 
 class Event extends Model
 {
@@ -18,7 +20,7 @@ class Event extends Model
     ];
 
 
-    public function create_event($request){
+    public static function create_event($request){
         try{
             Event::create($request->all());
             $result = 'success!';
@@ -36,7 +38,7 @@ class Event extends Model
         ];
     }
 
-    public function get_events($event){
+    public static function get_events($event){
         try{
             $event->toArray();
             $event['teacher']=Teacher::get_teacher($event->teacher_id);
@@ -48,12 +50,12 @@ class Event extends Model
         }
 
         return [
-            'result' => $teacher,
+            'result' => $event,
             'status' => $status,
         ];
     }
 
-    public function update_event($event,$request){
+    public static function update_event($event,$request){
         try{
             $event->update($request->all());
         }catch(Exception $e){

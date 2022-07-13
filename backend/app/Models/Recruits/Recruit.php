@@ -22,7 +22,7 @@ class Recruit extends Model
         'due',
     ];
 
-    public function create_recruits($request){
+    public static function create_recruits($request){
         try{
 
             $recruit = Recruit::create($request->all());
@@ -137,7 +137,7 @@ class Recruit extends Model
         ];
     }
 
-    public function delete_recruit($request){
+    public static function delete_recruit($request){
         try{
             Recruit::find($request->id)->delete();
             $status= Response::HTTP_OK;

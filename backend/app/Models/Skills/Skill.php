@@ -47,7 +47,7 @@ class Skill extends Model
     
     }
 
-    public function update_skill($skill,$request)
+    public static function update_skill($skill,$request)
     {
         try{
             $skill->update($request->all());

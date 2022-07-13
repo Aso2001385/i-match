@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Response;
+use Exception;
 
 class Teacher extends Authenticatable
 {
@@ -26,7 +28,7 @@ class Teacher extends Authenticatable
         'remember_token',
     ];
 
-    public function create_teacher($request){
+    public static function create_teacher($request){
         try{
 
             $request->password = Hash::make($request->password);
@@ -49,7 +51,7 @@ class Teacher extends Authenticatable
         ];
     }
 
-    public function get_teacher($teacher_id) {
+    public static function get_teacher($teacher_id) {
         try{
             $teacher=Teacher::find($teacher_id);
         }catch(Exception $e){
@@ -64,7 +66,7 @@ class Teacher extends Authenticatable
         ];
     }
 
-    public function update_teacher($teacher,$request){
+    public static function update_teacher($teacher,$request){
         try{
             $teacher->update($request->all());
         }catch(Exception $e){
@@ -81,11 +83,11 @@ class Teacher extends Authenticatable
         ];
     }
 
-    public function password_update_teacher($request){
+    public static function password_update_teacher($request){
         try{
             $teacher=Teacher::find($request->id);
 
-            if(!Hash::check($request->old_password,$user->password)){
+            if(!Hash::check($request->old_password,$teacher->password)){
                 throw new Exception();
             }
 
