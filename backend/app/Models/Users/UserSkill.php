@@ -29,29 +29,6 @@ class UserSkill extends Model
         return $this->hasMany(Skill::class);
     }
 
-    public static function get_skills($user_id){
-        
-        try{
-
-            $user_skills=DB::table('user_skill')
-            ->join('skills', 'user_skill.skill_id','skills.id')
-            ->select('user_skill.*','skills.name','skills.category_id','skills.depth')
-            ->where('user_skill.user_id',$user_id)
-            ->get()->toArray();
-
-            $success = true;
-        }catch(Exception $e){
-            $user_skills = [];
-            $success = false;
-        }
-       
-        return [
-            'result' => $user_skills,
-            'success' => $success,
-        ];
-
-    }
-
     public static function store_skills(Request $request){
 
         try{
