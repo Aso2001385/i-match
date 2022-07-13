@@ -77,10 +77,9 @@ class UserController extends Controller
         return response()->json($response['result'],$response['status']);
     }
 
-    public function passUpdate(PasswordUpdateUserRequest $request)
+    public function passUpdate(PasswordUpdateUserRequest $request,User $user)
     {
-
-        User::password_update_user($request);
+        $response=User::password_update_user($user,$request);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -90,9 +89,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(User $user)
     {
-        $response=User::delete_user($request);
+        $response=User::delete_user($user);
 
         return response()->json($response['result'],$response['status']);
 

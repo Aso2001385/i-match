@@ -2,6 +2,7 @@
 
 namespace App\Models\Users;
 
+use App\Models\Skills\Skill;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,11 @@ class UserSkill extends Model
         'learning_flag',
         'level',
     ];
+
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
+    }
 
     public static function get_skills($user_id){
         

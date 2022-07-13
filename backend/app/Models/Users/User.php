@@ -2,18 +2,23 @@
 
 namespace App\Models\Users;
 
+use App\Models\Users\UserSkill;
+use App\Models\Skills\Skill;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
-use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+use Exception;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,softDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -45,9 +50,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function create_user($request){
+    // public function user_skills()
+    // {
+    //     return $this->belongsToMany(Skill::class, 'user_skill', 'user_id', 'skill_id');
+    // }
+
+    public function user_skills()
+    {
+        return $this->hasMany(UserSkill::class);
+    }
+
+
+    public static function create_user($request){
         try{
-            $request->password = Hash::make($request->password);
+            $request['password'] = Hash::make($request->password);
             User::create($request->all());
 
             $result = 'success!';
@@ -55,9 +71,10 @@ class User extends Authenticatable
             $status = Response::HTTP_OK;
 
         }catch(Exception $e){
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
         }
 
         return [
@@ -69,15 +86,17 @@ class User extends Authenticatable
     public static function get_user($user){
 
         try{
-            $user_skill = UserSkill::get_skills($user->id);
+            $user=User::with('user_skills')->find($user->id);
+            $status=Response::HTTP_OK;
 
-            if(!$user_skill['success']){
-                throw new Exception();
+            if(isset($user->user_skills)){
+                foreach($user->user_skills as $user_skill){
+                    $skill=Skill::where("id",$user_skill->skill_id)->select("name","category_id")->first();
+                    $user_skill->name=$skill->name;
+                    $user_skill->category_id=$skill->category_id;
+                }
+                unset($skill_id);
             }
-            $user->toArray();
-            $user['skills'] = $user_skill['result'];
-    
-            $status = Response::HTTP_OK;
 
         }catch(Exception $e){
 
@@ -87,6 +106,8 @@ class User extends Authenticatable
             ];
 
         }
+
+        
         
         return [
             'result' => $user,
@@ -95,13 +116,10 @@ class User extends Authenticatable
     
     }
 
-    public function update_user($user,$request){
+    public static function update_user($user,$request){
         try{
-            // $user=User::find($request->id);
-            // $user->name = $request->input('name');
-
-            // $user->save();
             $user->update($request->all());
+            $status = Response::HTTP_OK;
         }catch(Exception $e){
 
             return [
@@ -116,18 +134,16 @@ class User extends Authenticatable
         ];
     }
 
-    public function password_update_user($request){
+    public static function password_update_user($user,$request){
+        $user=User::find($request->id);
         try{
-            $user=User::find($request->id);
-
             if(!Hash::check($request->old_password,$user->password)){
                 throw new Exception();
             }
-
-            $user->password=Hash::make($request->password);
-
+            $request->password = Hash::make($request->password);
+            $user->password=$request->input('password');
             $user->save();
-            $user = User::find($request->id)->toArray();
+            $result = 'success!';
             $status = Response::HTTP_OK;
         }catch(Exception $e){
 
@@ -138,14 +154,14 @@ class User extends Authenticatable
         }
 
         return [
-            'result' => $user,
+            'result' => $result,
             'status' => $status
         ];
     }
 
-    public function delete_user($request){
+    public static function delete_user($user){
         try{
-            User::find($request->id)->delete();
+            $user->delete();
             $status= Response::HTTP_OK;
         }catch(Exception $e){
 
