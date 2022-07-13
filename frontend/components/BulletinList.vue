@@ -3,22 +3,21 @@
     <v-row>
       <v-col cols="12" class="ma-0">
         <v-card>
-          <v-row class="pt-5 pl-10">
+          <v-row class="pt-5 pl-15">
             <v-col cols="4" class="ml-8"><span>募集締め切り：1月1日</span></v-col>
             <v-col cols="4"><span>募集人数：3/6人</span></v-col>
             <v-col cols="12"><h2 class="ml-8">Flaskの勉強をしませんか？</h2></v-col>
           </v-row>
-          <v-row class="pl-10">
-            <v-col cols="8" class="ml-10 pa-0">
+          <v-row class="pl-12">
+            <v-col cols="8" class="ml-10" justify="center">
               <div style="width: 70%" id="bulletin_skill">
                 <span v-for="value in allSkill" :key="value">
-                  <v-chip :class="colors(value)" class="mr-2 mb-1 white--text" small>{{ value }}</v-chip>
+                  <v-chip :class="colors(value)" class="mr-2 white--text" small>{{ value }}</v-chip>
                 </span>
               </div>
-              <!-- <span v-for="skillList in 10" :key="skillList" class="text-h4 ml-0 pa-0">◯</span> -->
             </v-col>
             <NuxtLink to="/bulletin-detail" class="white--text" style="text-decoration: none">
-              <v-col cols="12" md="12" class="mr-0">
+              <v-col cols="12" md="12" class="ml-10">
                 <span class="black--text">Read More </span>
               </v-col>
             </NuxtLink>
@@ -122,7 +121,7 @@ export default {
           return 'purple'
         }
       }
-      return 'grey'
+      return 'indigo darken-3'
     },
   },
 }
