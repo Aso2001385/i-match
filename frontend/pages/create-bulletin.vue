@@ -44,7 +44,8 @@
 
             <v-col cols="12">
               <input type="text" />
-              <!-- <v-span v-for="skill in skills" :key="skill">{{ skill.keys(data)[2] }}</v-span> -->
+              <!-- <span v-for="skill in skills" :key="skill">{{ skill }}</span> -->
+              <span>{{ skill }}</span>
             </v-col>
           </v-row>
           <v-row class="pb-5 ml-10">
@@ -71,6 +72,9 @@ export default {
       inputText: '',
       bulletin: [],
       skills: [],
+      levels: [],
+      exps: [],
+      skill: '',
     }
   },
   components: {
@@ -87,6 +91,8 @@ export default {
     },
     sessionClear() {
       sessionStorage.removeItem('skills')
+      sessionStorage.removeItem('levels')
+      sessionStorage.removeItem('exps')
     },
     createBulletin() {
       // axios
@@ -109,11 +115,16 @@ export default {
     getSession() {
       const skillBox = sessionStorage.getItem('skills')
       this.skills.push(skillBox)
-      // console.log(skillBox)
-      // console.log(skillBox[5])
-      // const list = skillBox.map(obj => obj.name)
-      // console.log(list)
-      // console.log(this.skills.name)
+      console.log(this.skills)
+      this.skill = this.skills.toString().replace(/"/g, '').replace(',', '').replace(',', '・')
+      const count = (this.skill.match(/,/g) || []).length
+      console.log(count)
+      for (let i = 0; i < count; i++) {
+        this.skill = this.skill.replace(',', '・')
+      }
+      console.log(this.skill)
+      // console.log(this.skill.replace(',', '・'))
+      // var result = this.skill.indexOf( ',' );
     },
   },
   mounted() {
