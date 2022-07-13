@@ -18,7 +18,7 @@ class CreateInformationsTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('title',255);
             $table->text('contents');
-            $table->boolean('read');
+            $table->boolean('read')->default(false);
             $table->foreignId('category_id')->constrained('information_categories');
             $table->string('url',255);
             $table->timestamps();

@@ -125,7 +125,8 @@ class Recruit extends Model
     public static function update_recruit($recruit,$request)
     {
         try{
-            
+            $recruit->update($request->all());
+            $status = Response::HTTP_OK;
         }catch(Exception $e){
 
             return [
@@ -133,10 +134,7 @@ class Recruit extends Model
                 'status' => Response::HTTP_BAD_REQUEST
             ];
 
-        }
-            //$request['due']=strtotime($recruit->due);
-            $recruit->update($request->all());
-            $status = Response::HTTP_OK;
+        }           
 
         return [
             'result' => $recruit,

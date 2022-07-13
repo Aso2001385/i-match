@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Informations;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class UpdateInformationRequest extends FormRequest
 {
@@ -33,5 +36,15 @@ class UpdateInformationRequest extends FormRequest
             'read.required'=>'既読フラグが入力されていません',
             'read.boolean'=>'boolean型になっていません'
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }

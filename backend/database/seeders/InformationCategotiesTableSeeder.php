@@ -5,6 +5,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Informations\InformationCategory;
 
 class InformationCategotiesTableSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class InformationCategotiesTableSeeder extends Seeder
             $infocategory=[
                 'name'=>$category[$i],
             ];
-            DB::table('skill_categories')->insert($infocategory);
+            InformationCategory::create($infocategory);
         }
     }
 }
