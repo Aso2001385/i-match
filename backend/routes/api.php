@@ -30,7 +30,7 @@ Route::put('/user/password',[UserController::class, 'passUpdate']); // U
 Route::apiResource('skills', SkillController::class);
 
 Route::apiResource('recruits', RecruitController::class);
-Route::get('recruits/other/{id}', [RecruitController::class,'otherShow']);
+Route::get('recruits/other/{id}', [RecruitController::class,'otherIndex']);
 
 Route::apiResource('teachers', TeacherController::class);
 

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Recruits\RecruitSkill;
 
 class RecruitSkillTableSeeder extends Seeder
 {
@@ -22,7 +23,7 @@ class RecruitSkillTableSeeder extends Seeder
                 'skill_id'=>rand(1,30),
                 'level'=>rand(1,5),
             ];
-            DB::table('recruit_skill')->insert($recruit_skill);
+            RecruitSkill::create($recruit_skill);
         }
         Schema::enableForeignKeyConstraints();
     }

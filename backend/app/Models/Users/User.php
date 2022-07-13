@@ -50,11 +50,6 @@ class User extends Model
         'email_verified_at' => 'datetime',
     ];
 
-    // public function user_skills()
-    // {
-    //     return $this->belongsToMany(Skill::class, 'user_skill', 'user_id', 'skill_id');
-    // }
-
     public function user_skills()
     {
         return $this->hasMany(UserSkill::class);

@@ -125,6 +125,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                    format: int64
                   name:
                     type: string
                     example: 翔
@@ -135,11 +141,88 @@ paths:
                     pattern: '^[0-9]{7}@s\.asojuku\.ac\.jp'
                     minLength: 23
                     maxLength: 23
+                    example: 2001195@s.asojuku.ac.jp
+                  created_at:
+                    type: string
+                    format: date-time
+                    example: '2022-07-13T05:26:54.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2022-07-13T05:26:54.000000Z'
+                    format: date-time
+                  deleted_at:
+                    type:
+                      - string
+                      - 'null'
+                    example: 'null'
+                  user_skills:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                          format: int64
+                          minimum: 1
+                          maximum: 255
+                        user_id:
+                          type: integer
+                          format: int64
+                          minimum: 1
+                          maximum: 255
+                          example: 1
+                        pratical_flag:
+                          type: boolean
+                        learning_flag:
+                          type: boolean
+                        level:
+                          type: integer
+                          example: 1
+                          format: int32
+                          minimum: 1
+                          maximum: 5
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2022-07-13T05:26:55.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2022-07-13T05:26:55.000000Z'
+                          format: date-time
+                        deleted_at:
+                          type: string
+                          format: date-time
+                          example: '2022-07-13T05:26:55.000000Z'
+                        name:
+                          type: string
+                          example: skill1
+                        category_id:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
               examples:
                 example:
                   value:
+                    id: 1
                     name: 翔
                     email: 2001195@s.asojuku.ac.jp
+                    created_at: '2022-07-13T05:26:54.000000Z'
+                    updated_at: '2022-07-13T05:26:54.000000Z'
+                    deleted_at: 'null'
+                    user_skills:
+                      - id: 1
+                        user_id: 1
+                        pratical_flag: true
+                        learning_flag: true
+                        level: 1
+                        created_at: '2022-07-13T05:26:55.000000Z'
+                        updated_at: '2022-07-13T05:26:55.000000Z'
+                        deleted_at: '2022-07-13T05:26:55.000000Z'
+                        name: skill1
+                        category_id: 1
       operationId: get-users-id
       tags:
         - show
@@ -606,7 +689,7 @@ paths:
                   type: string
                   example: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
                   maxLength: 1024
-                porpose:
+                purpose:
                   type: string
                   maxLength: 3
                   example: 開発
@@ -619,23 +702,46 @@ paths:
                 due:
                   type: string
                   format: date-time
-                  example: '2019-06-13T15:00:00.0Z'
+                  example: '2023-07-13 19:12:31'
+                skills:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      skill_id:
+                        type: integer
+                        format: int64
+                        example: 1
+                        minimum: 1
+                        maximum: 255
+                      level:
+                        type: integer
+                        format: int32
+                        example: 1
+                        minimum: 1
+                        maximum: 5
+                    required:
+                      - skill_id
+                      - level
               required:
                 - user_id
                 - title
                 - contents
-                - porpose
+                - purpose
                 - persons
                 - due
             examples:
-              example:
+              example-1:
                 value:
                   user_id: 1
                   title: flaskの勉強しませんか
                   contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
-                  porpose: 開発
+                  purpose: 開発
                   persons: 5
-                  due: '2019-06-13T15:00:00.0Z'
+                  due: '2023-07-13 19:12:31'
+                  skills:
+                    - skill_id: 1
+                      level: 1
   '/recruits/{id}':
     parameters:
       - schema:
@@ -737,7 +843,7 @@ paths:
                 due:
                   type: string
                   format: date-time
-                  example: '2019-06-13T15:00:00.0Z'
+                  example: '2023-07-13 19:12:31'
     delete:
       summary: Recruit 削除
       tags:
@@ -753,6 +859,20 @@ paths:
                 properties: {}
       operationId: delete-recruits-id
       description: 指定されたIDのrecruit情報を論理削除
+  '/recruits/other/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Recruit 自分以外の項目
+      tags:
+        - EndPoint
+        - otherIndex
+      responses: {}
+      operationId: get-recruits-other-id
   /recruit-skill:
     get:
       summary: Recruit skill 一覧
