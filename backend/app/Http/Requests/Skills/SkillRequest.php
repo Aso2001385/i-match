@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException; 
 use Illuminate\Http\Response;
 
-class CreateSkillRequest extends FormRequest
+class SkillRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

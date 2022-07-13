@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Skills\CreateSkillRequest;
+use App\Http\Requests\Skills\SkillRequest;
 use Illuminate\Http\Request;
 use App\Models\Skills\Skill;
 use Illuminate\Http\Response;
@@ -32,7 +32,7 @@ class SkillController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateSkillRequest $request)
+    public function store(SkillRequest $request)
     {
         $response=Skill::create_skill($request);
 
@@ -58,7 +58,7 @@ class SkillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,Skill $skill)
+    public function update(SkillRequest $request,Skill $skill)
     {
         $response=Skill::update_skill($skill,$request);
 
