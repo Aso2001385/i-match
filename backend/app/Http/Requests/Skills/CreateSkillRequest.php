@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Skills;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class CreateSkillRequest extends FormRequest
 {
@@ -26,7 +29,6 @@ class CreateSkillRequest extends FormRequest
         return [
             'category_id'=>'required|integer',
             'name'=>'required|string|max:100',
-            'depth'=>'required|integer',
         ];
     }
     public function messages()
@@ -36,9 +38,17 @@ class CreateSkillRequest extends FormRequest
             'category_id.integer'=>'カテゴリIDが整数になっていません',
             'name.required'=>'名前を入力してください',
             'name.string'=>'文字列で入力してください',
-            'name.max'=>'100文字以内で入力してください',
-            'depth.required'=>'深度を入力してください',
-            'depth.integer'=>'整数で入力してください'
+            'name.max'=>'100文字以内で入力してください'
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }

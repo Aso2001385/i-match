@@ -17,7 +17,6 @@ class CreateSkillsTable extends Migration
             $table->id();
             $table->string('name',100);
             $table->foreignId('category_id')->constrained('skill_categories');
-            $table->integer('depth');
             $table->timestamps();
         });
     }

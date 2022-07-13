@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Skills\CreateSkillRequest;
 use Illuminate\Http\Request;
 use App\Models\Skills\Skill;
 use Illuminate\Http\Response;
@@ -16,12 +17,12 @@ class SkillController extends Controller
      */
     public function index()
     {
-        $result = [
-            'skills' => Skill::all()->toArray()
+        $response=[
+            'result' =>Skill::all()->toArray(),
+            'status' => Response::HTTP_OK
         ];
-        
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+
+        return response()->json($response['result'],$response['status']);
     }
 
 
@@ -31,25 +32,11 @@ class SkillController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateSkillRequest $request)
     {
-        try{
-            Skill::create($request->all());
-            $response = [
-                'result' => 'success!'
-            ];
+        $response=Skill::create_skill($request);
 
-            $status = Response::HTTP_OK;
-
-        }catch(Exception $e){
-            $response = [
-                'result' => $e
-            ];
-
-            $status = Response::HTTP_BAD_REQUEST;
-        }
-
-        return response()->json($response,$status);
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -84,8 +71,10 @@ class SkillController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Skill $skill)
     {
-        //
+        $response=Skill::delete_skill($skill);
+
+        return response()->json($response['result'],$response['status']);
     }
 }
