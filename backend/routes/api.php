@@ -25,7 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/ac',[UserController::class,'access']); //T
 Route::apiResource('users', UserController::class);
-Route::put('/user/password',[UserController::class, 'passwordUpdate']); // U
+Route::put('/user/password',[UserController::class, 'passUpdate']); // U
 
 Route::apiResource('skills', SkillController::class);
 

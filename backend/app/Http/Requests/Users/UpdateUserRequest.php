@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -34,5 +37,15 @@ class UpdateUserRequest extends FormRequest
             'name.required' => '名前を入力してください',
             'name.max' => '30文字以内で入力してください',
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }
