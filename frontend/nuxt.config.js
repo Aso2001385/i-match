@@ -29,7 +29,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: './plugins/vuejs-datepicker.js', mode: 'client', ssr: false }, { src: './plugins/main.js' }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -56,17 +56,20 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    ['cookie-universal-nuxt', { parseJSON: false }],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
     baseURL: 'http://localhost:8000/api/',
+    // baseURL: 'http://13.115.187.17/api/',
   },
 
   proxy: {
     '/api/': {
       target: 'http://localhost:8000',
+      // target: 'http://13.115.187.17',
     },
   },
 
@@ -106,12 +109,13 @@ export default {
         //     family: 'Noto Sans JP',
         //   },
         // },
-        defaultAssets: {
-          font: {
-            display: 'swap',
-            face: 'swap',
-          },
-        },
+        // defaultAssets: {
+        //   font: {
+        //     display: 'swap',
+        //     face: 'swap',
+        //   },
+        // },
+        defaultAssets: false,
       },
     },
     lang: {
@@ -128,4 +132,8 @@ export default {
   env: {
     API_BASE_URL: baseURL,
   },
+  // server: {
+  //   host: '18.183.26.169',
+  //   port: 8000, // デフォルト: localhost,
+  // },
 }
