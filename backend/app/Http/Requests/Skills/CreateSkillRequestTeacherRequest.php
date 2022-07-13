@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Skills;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class CreateSkillRequestTeacherRequest extends FormRequest
 {
@@ -39,5 +42,15 @@ class CreateSkillRequestTeacherRequest extends FormRequest
             'teacher_id.required'=>'teacher_idが入力されていません',
             'teacher_id.integer'=>'teacher_idが整数になっていません',
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }
