@@ -63,31 +63,23 @@ export default {
         this.sortId = 0
       }
     },
+    getAccount() {
+      //   axios
+      //     .get('http://18.183.25.12/api/user') awsのURL
+      //     .then(res => {
+      //       console.log(res.data)
+      //       this.message = res.data
+      //     })
+      //     .catch(error => {
+      //       console.log(error)
+      //     })
+    },
   },
   components: {
     BulletinList: () => import('../components/BulletinList.vue'),
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
-  //   async asyncData({ $axios }) {
-  // 	// 取得先のURL
-  // const url = "https://qiita.com/api/v2/items";
-  // 	// リクエスト（Get）
-  // const response = await $axios.$get(url);
-  // 	// 配列で返ってくるのでJSONにして返却
-  // 	return {
-  // 		posts: response
-  // 	};
-  // },
+  mounted() {
+    this.getAccount()
+  },
 }
 </script>

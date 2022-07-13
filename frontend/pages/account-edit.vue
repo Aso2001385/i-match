@@ -71,18 +71,22 @@ export default {
   data() {
     return {}
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
+  methods: {
+    getAccount() {
+      //   axios
+      //     .get('http://18.183.25.12/api/user') awsのURL
+      //     .then(res => {
+      //       console.log(res.data)
+      //       this.message = res.data
+      //     })
+      //     .catch(error => {
+      //       console.log(error)
+      //     })
+    },
+  },
+  mounted() {
+    this.getAccount()
+  },
 }
 </script>
 <style lang="scss">
