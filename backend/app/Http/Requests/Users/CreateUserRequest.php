@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class CreateUserRequest extends FormRequest
 {
@@ -37,10 +40,22 @@ class CreateUserRequest extends FormRequest
             'email.required' => '学校用のメールアドレスを入力してください',
             'email.email' => '有効なメールアドレスではありません',
             'email.regex'=> 'メールアドレスが学校用ではありません',
+            'email.min'=> '23文字で入力してください',
+            'email.max'=> '23文字で入力してください',
             'email.unique'=> '登録済のメールアドレスです',
             'password.required' => 'パスワードを入力してください',
             'password.min' => 'パスワードが8文字以上ではありません',
             'password.regex'=> 'パスワードが適切ではありません',            
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }

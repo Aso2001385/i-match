@@ -22,3 +22,29 @@
     </v-row>
   </v-flex>
 </template>
+<script defer>
+export default {
+  data() {
+    return {
+      chat: '',
+    }
+  },
+  methods: {
+    sendChat() {
+      this.chat = ''
+    },
+  },
+  // mounted() {
+  //   axios
+  //     // .get('http://18.183.25.12/api/user') awsのURL
+  //     .get('http://localhost:8000/api/user')
+  //     .then(res => {
+  //       console.log(res.data)
+  //       this.message = res.data
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // },
+}
+</script>

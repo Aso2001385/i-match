@@ -112,5 +112,17 @@ export default {
   components: {
     SearchSkill: () => import('../components/SearchSkill.vue'),
   },
+  // mounted() {
+  //   axios
+  //     // .get('http://18.183.25.12/api/user') awsのURL
+  //     .get('http://localhost:8000/api/user')
+  //     .then(res => {
+  //       console.log(res.data)
+  //       this.message = res.data
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // },
 }
 </script>

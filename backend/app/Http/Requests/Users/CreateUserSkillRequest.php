@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class CreateUserSkillRequest extends FormRequest
 {
@@ -45,5 +48,15 @@ class CreateUserSkillRequest extends FormRequest
             'level.required'=>'レベルが入力されていません',
             'level.integer'=>'レベルが整数になっていません',
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Users;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class PasswordUpdateUserRequest extends FormRequest
 {
@@ -25,7 +28,7 @@ class PasswordUpdateUserRequest extends FormRequest
     {
         return [
             'old_password'=>'required',
-            'password' => ['required','string','confirmed','min:8','regex:/(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]/'],
+            'password' => ['required','string','min:8','regex:/(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]/'],
         ];
     }
     public function messages()
@@ -36,7 +39,16 @@ class PasswordUpdateUserRequest extends FormRequest
             'password.required' => '新しいパスワードを入力してください',
             'password.min' => 'パスワードが8文字以上ではありません',
             'password.regex'=> 'パスワードが適切ではありません',
-            'password.confirmed'=> 'パスワードが一致しません',
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }
