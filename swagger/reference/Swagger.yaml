@@ -10,6 +10,29 @@ servers:
   - url: 'http://localhost:8080/api'
     description: ''
 paths:
+  /ac:
+    get:
+      summary: アクセス確認
+      tags:
+        - Models
+        - Access
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: 'true'
+              examples:
+                example-1:
+                  value:
+                    result: 'true'
+      operationId: get-ac
+      description: アクセスを確認できます。
   /users:
     get:
       summary: User 一覧
@@ -1666,10 +1689,11 @@ paths:
                   example: 参加希望が届きました
                 contents:
                   type: string
-                  example: ○○さんから■■の参加希望が届きました
+                  example: AさんからBの参加希望が届きました
                   maxLength: 1024
                 read:
                   type: boolean
+                  default: false
                 caregory_id:
                   type: integer
                   format: int64
@@ -1680,6 +1704,20 @@ paths:
                   type: string
                   example: 'http://localhost:8080/index'
                   maxLength: 255
+              required:
+                - title
+                - contents
+                - read
+                - caregory_id
+                - url
+            examples:
+              example:
+                value:
+                  title: 参加希望が届きました
+                  contents: AさんからBの参加希望が届きました
+                  read: false
+                  caregory_id: 1
+                  url: 'http://localhost:8080/index'
   /information-categories:
     get:
       summary: Information category 一覧
@@ -2238,29 +2276,6 @@ paths:
                 properties: {}
       operationId: delete-skill-request-teacher-id
       description: 指定されたIDのskill request teacher情報を表示
-  /ac:
-    get:
-      summary: アクセス確認
-      tags:
-        - Models
-        - Access
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  result:
-                    type: string
-                    example: 'true'
-              examples:
-                example-1:
-                  value:
-                    result: 'true'
-      operationId: get-ac
-      description: アクセスを確認できます。
 components:
   schemas:
     User:
