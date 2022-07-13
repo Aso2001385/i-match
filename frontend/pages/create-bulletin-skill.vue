@@ -36,7 +36,7 @@
                   <v-select
                     style="width: 50%"
                     v-model="paramsSkill.lev"
-                    item-text="level"
+                    item-text="levels"
                     item-value="value"
                     :items="devLevel"
                     attach
@@ -55,8 +55,8 @@
                 ><v-col>
                   <v-select
                     style="width: 50%"
-                    v-model="paramsSkill.expBool"
-                    item-text="exp"
+                    v-model="exp"
+                    item-text="exps"
                     item-value="value"
                     :items="devExp"
                     attach
@@ -71,6 +71,7 @@
         <v-row class="justify-center mt-5 pa-1">
           <v-btn href="create-bulletin" id="addSkill" class="mr-15">戻る</v-btn>
           <v-btn href="create-bulletin" id="addSkill" class="ml-15" @click="sessionSet">追加</v-btn>
+          <!-- <span href="create-bulletin" id="addSkill" class="ml-15" @click="sessionSet">見てみる</span> -->
         </v-row>
       </v-card>
     </v-col>
@@ -80,7 +81,7 @@
 export default {
   data() {
     return {
-      // props: ['openFlag'],
+      EXP: '',
       devSkill: [
         { id: 0, skillCategory: 0, skillName: 'Java' },
         { id: 1, skillCategory: 0, skillName: 'PHP' },
@@ -137,39 +138,51 @@ export default {
         { id: 52, skillCategory: 4, skillName: 'Node.js' },
       ],
       devExp: [
-        { id: 0, exp: 'あり' },
-        { id: 1, exp: 'なし' },
+        { id: 0, exps: 'あり' },
+        { id: 1, exps: 'なし' },
       ],
       devLevel: [
-        { id: 0, level: 1 },
-        { id: 1, level: 2 },
-        { id: 2, level: 3 },
-        { id: 3, level: 4 },
-        { id: 4, level: 5 },
+        { id: 0, levels: 1 },
+        { id: 1, levels: 2 },
+        { id: 2, levels: 3 },
+        { id: 3, levels: 4 },
+        { id: 4, levels: 5 },
       ],
       paramsSkill: {
         name: '',
         lev: 99,
         expBool: true,
       },
+      skills: [],
+      levels: [],
+      exps: [],
       bulletinSkills: [],
     }
   },
   methods: {
     sessionSet() {
-      if (this.paramsSkill.expBool === 'あり') {
+      if (this.exp === 'あり') {
         this.$set(this.paramsSkill, 'expBool', true)
       } else {
         this.$set(this.paramsSkill, 'expBool', false)
       }
-      this.bulletinSkills.push(JSON.stringify(this.paramsSkill))
-      sessionStorage.setItem('skills', this.bulletinSkills)
-    },
+      console.log(JSON.stringify(this.paramsSkill.name))
+      this.skills.push(JSON.stringify(this.paramsSkill.name))
+      this.levels.push(JSON.stringify(this.paramsSkill.lev))
+      this.exps.push(JSON.stringify(this.paramsSkill.expBool))
+      console.log(this.skills)
 
+      sessionStorage.setItem('skills', this.skills)
+      sessionStorage.setItem('levels', this.levels)
+      sessionStorage.setItem('exps', this.exps)
+    },
     getSession() {
       const skillBox = sessionStorage.getItem('skills')
-      this.bulletinSkills.push(skillBox)
-      console.log(skillBox)
+      const levelBox = sessionStorage.getItem('levels')
+      const expBox = sessionStorage.getItem('exps')
+      this.skills.push(skillBox)
+      this.levels.push(levelBox)
+      this.exps.push(expBox)
     },
   },
   computed: {

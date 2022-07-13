@@ -226,7 +226,7 @@ export default {
         console.log('set')
         if (!this.allSkill.includes(val)) {
           this.allSkill.push(val)
-          console.log(this.allSkill.indexOf(val))
+          // console.log(this.allSkill.indexOf(val))
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
@@ -243,7 +243,7 @@ export default {
         console.log('set')
         if (!this.allSkill.includes(val)) {
           this.allSkill.push(val)
-          console.log(this.allSkill.indexOf(val))
+          // console.log(this.allSkill.indexOf(val))
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
