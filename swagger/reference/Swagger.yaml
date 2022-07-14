@@ -1871,8 +1871,8 @@ paths:
                   type: string
                   format: email
                   maxLength: 25
-                  example: nishino@asojuku.jp.ac
-                  pattern: '^[a-z]{4,7}@asojuku\.jp\.ac'
+                  example: nishino@asojuku.ac.jp
+                  pattern: '^[a-z]{4,7}@asojuku\.ac\.jp'
                 password:
                   type: string
                   format: password
@@ -1883,6 +1883,13 @@ paths:
                 - name
                 - email
                 - password
+            examples:
+              example:
+                value:
+                  name: 西野　直幸
+                  email: nishino@asojuku.ac.jp
+                  password: Aso-2001195
+        description: ''
       description: teacher の作成
   '/teachers/{id}':
     parameters:
@@ -1939,6 +1946,10 @@ paths:
                   example: 西野　直幸
               required:
                 - name
+            examples:
+              example:
+                value:
+                  name: 西野　直幸
     delete:
       summary: Teacher 削除
       tags:
@@ -1973,6 +1984,12 @@ paths:
             schema:
               type: object
               properties:
+                id:
+                  type: integer
+                  example: 1
+                  format: int64
+                  minimum: 1
+                  maximum: 255
                 old_password:
                   type: string
                   format: password
@@ -1982,8 +1999,15 @@ paths:
                   example: Aso-2001195
                   format: password
               required:
+                - id
                 - old_password
                 - password
+            examples:
+              example:
+                value:
+                  id: 1
+                  old_password: Aso-2001195
+                  password: Aso-2001195
   /events:
     get:
       summary: Event 一覧

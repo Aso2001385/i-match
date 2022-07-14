@@ -36,6 +36,7 @@ Route::get('recruits/other/{id}', [RecruitController::class,'otherIndex']);
 Route::apiResource('informations',InformationController::class);
 
 Route::apiResource('teachers', TeacherController::class);
+Route::put('/teacher/password',[TeacherController::class,'passUpdate']);
 
 
 Route::post('/authorization', [App\Http\Controllers\AuthController::class, 'signIn']);
