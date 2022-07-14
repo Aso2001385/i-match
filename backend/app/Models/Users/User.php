@@ -64,13 +64,15 @@ class User extends Model
 
             $result = 'success!';
 
+            $result = User::create($request->all());
             $status = Response::HTTP_OK;
+            session(['user_id'=>$result->id]);
 
         }catch(Exception $e){
-            return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
-            ];
+
+            $result = '';
+            $status = Response::HTTP_BAD_REQUEST;
+
         }
 
         return [
@@ -103,13 +105,13 @@ class User extends Model
 
         }
 
-        
-        
+
+
         return [
             'result' => $user,
             'status' => $status
         ];
-    
+
     }
 
     public static function update_user($user,$request){

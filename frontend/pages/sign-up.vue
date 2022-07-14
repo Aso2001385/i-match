@@ -4,7 +4,7 @@
       <v-col cols="12" md="5">
         <v-card class="pb-10 mx-auto fill-width">
           <v-card-title class="d-flex justify-center pa-4 grey darken-4">
-            <h3 class="text-center white--text">SIGN UP</h3>
+            <h3 class="text-center white--text">Sign Up</h3>
           </v-card-title>
           <v-divider class="pb-5"> </v-divider>
           <v-form>
@@ -79,10 +79,10 @@ export default {
   data: () => ({
     show1: false,
     show2: false,
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    name: 'オルカさん',
+    email: '2001385@s.asojuku.ac.jp',
+    password: 'ultra-1966M78',
+    confirmPassword: 'ultra-1966M78',
     addMessage: 'Add',
     user: {},
   }),
@@ -119,13 +119,22 @@ export default {
       !this.$v.confirmPassword.required && errors.push('Confirm Password is required')
       return errors
     },
+    primitiveUser(){
+      return this.$store.state.user
+    }
   },
 
   methods: {
     submit() {
       this.$v.$touch()
+      console.log(this.$store.state.user.name)
+      if (this.confirmPassword !== this.password) return
 
-      // if (this.confirmPassword !== this.password) return
+      this.$cookies.set('token', {
+        id: '1',
+        content: 'ABCDEFGHIJKLMNOPQRSTUVWXYZAABBCC',
+        update: '2222-08-08 23:56:44',
+      })
 
       this.user = {
         name: this.name,
@@ -133,18 +142,13 @@ export default {
         password: this.password,
       }
 
-      this.$axios
-        .post('http://localhost:8080/api/users', this.user, {
-          headers: {
-            'X-Auth': '1|xxxxxxxxxxlkksksksksk',
-          },
-        })
-        .then(response => {
-          console.log(response.headers['x-auth'])
-          this.addMessage = response.headers['x-auth']
-        })
+      this.$axios.post('http://localhost:8080/api/users', this.user).then(response => {
 
-      alert('通ったっす！')
+        console.log(response.headers)
+        this.$store.commit('restoreUser',response.data);
+        this.$store.commit('restoreToken',response.headers['x-auth']);
+
+      })
     },
 
     clear() {

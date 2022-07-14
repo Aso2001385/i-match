@@ -81,13 +81,18 @@ export default {
       //   href: 'PATH/splashscreens/splashscreens_ipadpro2_splash.png',
       // },
     ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.icon' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: './plugins/vuejs-datepicker.js', mode: 'client', ssr: false }, { src: './plugins/main.js' }],
+  plugins: [
+    { src: './plugins/vuejs-datepicker.js', mode: 'client', ssr: false },
+    { src: './plugins/main.js' },
+    '~/plugins/axios',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [

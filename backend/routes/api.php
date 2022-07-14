@@ -3,7 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\RecruitController;
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\InformationController;
 use Illuminate\Http\Request;
@@ -39,4 +39,5 @@ Route::apiResource('teachers', TeacherController::class);
 Route::put('/teacher/password',[TeacherController::class,'passUpdate']);
 
 
-Route::post('/authorization', [App\Http\Controllers\AuthController::class, 'signIn']);
+Route::post('/auth', [AuthController::class, 'login']);
+Route::get('/auth', [AuthController::class, 'restore']);
