@@ -7,6 +7,8 @@ use App\Models\Teachers\Teacher;
 use App\Http\Requests\Teachers\CreateTeacherRequest;
 use App\Http\Requests\Teachers\UpdateTeacherRequest;
 use App\Http\Requests\Teachers\PasswordUpdateTeacherRequest;
+use Illuminate\Http\Response;
+use Exception;
 
 class TeacherController extends Controller
 {
@@ -45,7 +47,7 @@ class TeacherController extends Controller
      */
     public function show(Teacher $teacher)
     {
-        $response=Teacher::get_teacher($teacher->id);
+        $response=Teacher::get_teacher($teacher);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -62,9 +64,9 @@ class TeacherController extends Controller
         return response()->json($response['result'],$response['status']);
     }
 
-    public function passUpdate(PasswordUpdateTeacherRequest $request)
+    public function passUpdate(PasswordUpdateTeacherRequest $request,Teacher $teacher)
     {
-        Teacher::password_update_teacher($request);
+        $response=Teacher::password_update_teacher($teacher,$request);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -74,8 +76,9 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Teacher $teacher)
     {
-        //
+        $response=Teacher::delete_teacher($teacher);
+        return response()->json($response['result'],$response['status']);
     }
 }
