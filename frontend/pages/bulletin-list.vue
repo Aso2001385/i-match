@@ -7,19 +7,22 @@
       <!-- <v-col cols="2" class="mt-6">
         <v-btn href="bulletin-list" text color="link" class="white--text text-h6">メンバー募集</v-btn>
       </v-col> -->
-      <v-col cols="2" class="mt-5 ml-10">
-        <NuxtLink to="/create-bulletin" class="white--text text-h6" style="text-decoration: none"> 投稿作成 </NuxtLink>
+      <v-col cols="12" class="pl-10 pt-9 pb-5" style="position: fixed; z-index: 3; background-color: #616161">
+        <NuxtLink to="/create-bulletin" class="white--text text-h6" style="text-decoration: none">
+          <strong>掲示板リスト</strong>
+        </NuxtLink>
       </v-col>
     </v-row>
-    <v-row>
-      <v-icon color="orange" style="position: absolute; z-index: 2; top: 85%; margin-left: 60%" x-large
-        >mdi-plus-box</v-icon
-      >
-
-      <v-col cols="8" class="ma-0 pa-0" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
+    <v-row style="margin-top: 7%">
+      <v-col cols="8" class="ma-0 pa-0" style="overflow: hidden !important; height: 76vh; overflow-y: auto">
         <v-row v-for="bulletinList in 5" :key="bulletinList">
           <BulletinList />
         </v-row>
+      </v-col>
+      <v-col cols="8" style="position: absolute; z-index: 2; background-color: white; top: 90%">
+        <NuxtLink to="/create-bulletin" class="white--text mt-2" style="text-decoration: none; float: right"
+          ><v-icon color="orange" x-large>mdi-plus-box</v-icon></NuxtLink
+        >
       </v-col>
 
       <v-col cols="4">
@@ -102,31 +105,20 @@ export default {
       ],
     }
   },
+  methods: {
+    submit() {
+      this.$axios.get('http://localhost:8080/api/ac').then(response => {
+        console.log('ちゃんと通っている')
+      })
+      alert('通ったっす！')
+    },
+  },
   components: {
     BulletinList: () => import('../components/BulletinList.vue'),
     SearchSkill: () => import('../components/SearchSkill.vue'),
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
-  //   async asyncData({ $axios }) {
-  // 	// 取得先のURL
-  // const url = "https://qiita.com/api/v2/items";
-  // 	// リクエスト（Get）
-  // const response = await $axios.$get(url);
-  // 	// 配列で返ってくるのでJSONにして返却
-  // 	return {
-  // 		posts: response
-  // 	};
-  // },
+  mounted() {
+    this.submit()
+  },
 }
 </script>

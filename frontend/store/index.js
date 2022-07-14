@@ -1,23 +1,32 @@
 export const state = () => ({
-  token: {},
-  user: {},
+  user: {
+
+  },
+  skills:{
+
+  },
+  token:{
+
+  }
 })
 
 export const getters = {
-  // stateの状態を外部で取り出すときに使用する
-  token: state => state.token,
+  user: state => state.user,
+  skills: state => state.skills,
+  token: state => state.token
 }
 
 export const mutations = {
-  ミューテーション関数名(state, 引数) {
-    // ここでstate（ストアの状態）を変更する
-    state.変数名 = '値'
+
+  restoreUser(state,e){
+    state.user = e
+  },
+
+  restoreToken(state,e){
+    state.token = e
+  },
+
+  refresh(state,e) {
+    state.user = e
   },
 }
-
-// export const actions = {
-//   async login({ commit }) {
-//     // ここでミューテーションを呼び出し、外部とのAPI通信や非同期処理も行う
-//     commit('ミューテーション関数名', 引数)
-//   },
-// }

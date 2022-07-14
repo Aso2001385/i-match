@@ -6,9 +6,6 @@ use App\Models\Users\UserSkill;
 use App\Models\Skills\Skill;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-<<<<<<< HEAD
-use Illuminate\Database\Eloquent\Model;
-=======
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +15,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Exception;
->>>>>>> 3aebc8c98a92d8c94f817c2a90fbd9bbdcdee8b9
 
 class User extends Model
 {
@@ -54,34 +50,25 @@ class User extends Model
         'email_verified_at' => 'datetime',
     ];
 
-<<<<<<< HEAD
-=======
-    // public function user_skills()
-    // {
-    //     return $this->belongsToMany(Skill::class, 'user_skill', 'user_id', 'skill_id');
-    // }
-
     public function user_skills()
     {
         return $this->hasMany(UserSkill::class);
     }
 
 
->>>>>>> 3aebc8c98a92d8c94f817c2a90fbd9bbdcdee8b9
     public static function create_user($request){
         try{
             $request['password'] = Hash::make($request->password);
-            User::create($request->all());
 
-            $result = 'success!';
-
+            $result = User::create($request->all());
             $status = Response::HTTP_OK;
+            session(['user_id'=>$result->id]);
 
         }catch(Exception $e){
-            return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
-            ];
+
+            $result = '';
+            $status = Response::HTTP_BAD_REQUEST;
+
         }
 
         return [
@@ -114,13 +101,13 @@ class User extends Model
 
         }
 
-        
-        
+
+
         return [
             'result' => $user,
             'status' => $status
         ];
-    
+
     }
 
     public static function update_user($user,$request){

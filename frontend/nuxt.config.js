@@ -22,7 +22,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.icon' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -66,13 +66,13 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'http://localhost:8080/api/',
     // baseURL: 'http://13.115.187.17/api/',
   },
 
   proxy: {
     '/api/': {
-      target: 'http://localhost:8000',
+      target: 'http://localhost:8080',
       // target: 'http://13.115.187.17',
     },
   },

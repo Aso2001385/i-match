@@ -35,4 +35,5 @@ Route::get('recruits/other/{id}', [RecruitController::class,'otherShow']);
 Route::apiResource('teachers', TeacherController::class);
 
 
-Route::post('/auth', [AuthController::class, 'test']);
+Route::post('/auth', [AuthController::class, 'login']);
+Route::get('/auth', [AuthController::class, 'restore']);

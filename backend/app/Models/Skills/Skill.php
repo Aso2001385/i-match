@@ -15,21 +15,37 @@ class Skill extends Model
     protected $fillable = [
         'category_id',
         'name',
-        'depth',
     ];
 
-    public static function get_skill($skill){
+
+    public static function create_skill($request)
+    {
+        try{
+            Skill::create($request->all());
+            $result = 'success!';
+
+            $status = Response::HTTP_OK;
+
+        }catch(Exception $e){
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+        }
+
+        return [
+            'result' => $result,
+            'status' => $status,
+        ];
+    }
+
+    public static function get_skill($skill)
+    {
 
         try{
-            $skill_categories = SkillCategory::get_skill_category($skill->category_id);
-
-            if(!$skill_categories['success']){
-                throw new Exception();
-            }
-            $skill->toArray();
-            $skill['category'] = $skill_categories['result'];
-    
-            $status = Response::HTTP_OK;
+            $skill_category =SkillCategory::find($skill->category_id);
+            $skill->category_name = $skill_category->name;
+            $status=Response::HTTP_OK;
 
         }catch(Exception $e){
 
@@ -42,12 +58,12 @@ class Skill extends Model
         
         return [
             'result' => $skill,
-            'status' => $status
+            'status' => $status=Response::HTTP_OK
         ];
     
     }
 
-    public function update_skill($skill,$request)
+    public static function update_skill($skill,$request)
     {
         try{
             $skill->update($request->all());
@@ -62,6 +78,24 @@ class Skill extends Model
         }
         return [
             'result' => $skill,
+            'status' => $status
+        ];
+    }
+
+    public static function delete_skill($skill){
+        try{
+            $skill->delete();
+            $status= Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+        return [
+            'result' => [],
             'status' => $status
         ];
     }

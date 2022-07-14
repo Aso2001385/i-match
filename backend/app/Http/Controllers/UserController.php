@@ -28,7 +28,7 @@ class UserController extends Controller
             ];
 
             return response()->json($response['result'],$response['status']);
-        
+
     }
 
     /**
@@ -40,9 +40,9 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $response=User::create_user($request);
-       
-        return response()->json($response,Response::HTTP_OK);
+        $response = User::create_user($request);
+
+        return response()->json($response['result'],$response['status']);
 
     }
 
@@ -69,7 +69,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request,User $user)
     {
-        
+
         $response=User::update_user($user,$request);
 
         return response()->json($response['result'],$response['status']);
