@@ -3,14 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Teachers\Teacher;
-use App\Http\Requests\Teachers\CreateTeacherRequest;
-use App\Http\Requests\Teachers\UpdateTeacherRequest;
-use App\Http\Requests\Teachers\PasswordUpdateTeacherRequest;
 use Illuminate\Http\Response;
-use Exception;
+use App\Models\Informations\Information;
+use App\Http\Requests\Informations\CreateInformationRequest;
+use App\Http\Requests\Informations\UpdateInformationRequest;
 
-class TeacherController extends Controller
+class InformationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +18,10 @@ class TeacherController extends Controller
     public function index()
     {
         $response=[
-            'result' => Teacher::all()->toArray(),
-            'status'=>Response::HTTP_OK
+            'result' =>Information::all()->toArray(),
+            'status' => Response::HTTP_OK
         ];
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -32,11 +31,10 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateTeacherRequest $request)
+    public function store(CreateInformationRequest $request)
     {
-        $response=Teacher::create_teacher($request);
+        $response=Information::create_information($request);
         return response()->json($response['result'],$response['status']);
-
     }
 
     /**
@@ -45,9 +43,9 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Teacher $teacher)
+    public function show(Information $information)
     {
-        $response=Teacher::get_teacher($teacher);
+        $response=Information::get_information($information);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -58,15 +56,10 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTeacherRequest $request,Teacher $teacher)
+    public function update(UpdateInformationRequest $request,Information $information)
     {
-        $response=Teacher::update_teacher($teacher,$request);
-        return response()->json($response['result'],$response['status']);
-    }
+        $response=Information::update_information($information,$request);
 
-    public function passUpdate(PasswordUpdateTeacherRequest $request,Teacher $teacher)
-    {
-        $response=Teacher::password_update_teacher($teacher,$request);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -76,9 +69,9 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teacher $teacher)
+    public function destroy(Information $information)
     {
-        $response=Teacher::delete_teacher($teacher);
+        $response=Information::delete_information($information);
         return response()->json($response['result'],$response['status']);
     }
 }

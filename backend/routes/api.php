@@ -5,6 +5,7 @@ use App\Http\Controllers\SkillController;
 use App\Http\Controllers\RecruitController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\InformationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,9 +31,12 @@ Route::put('/user/password',[UserController::class, 'passUpdate']); // U
 Route::apiResource('skills', SkillController::class);
 
 Route::apiResource('recruits', RecruitController::class);
-Route::get('recruits/other/{id}', [RecruitController::class,'otherShow']);
+Route::get('recruits/other/{id}', [RecruitController::class,'otherIndex']);
+
+Route::apiResource('informations',InformationController::class);
 
 Route::apiResource('teachers', TeacherController::class);
+Route::put('/teacher/password',[TeacherController::class,'passUpdate']);
 
 
 Route::post('/auth', [AuthController::class, 'login']);

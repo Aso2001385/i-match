@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Recruits;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class UpdateRecruitRequest extends FormRequest
 {
@@ -26,7 +29,7 @@ class UpdateRecruitRequest extends FormRequest
         return [
             'title'=>'required|string|max:30',
             'contents'=>'required|string|max:1024',
-            'persons'=>'required|integer|max:2',
+            'persons'=>'required|integer|max:99',
             'due'=>'required|date|after:today',
         ];
     }
@@ -45,6 +48,16 @@ class UpdateRecruitRequest extends FormRequest
             'due.date'=>'日付を入力してください',
             'due.after'=>'今日以降の日付を設定してください',
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 
 }

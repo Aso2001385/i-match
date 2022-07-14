@@ -5,73 +5,75 @@
         <v-row class="mb-5 ml-10">
           <v-col cols="10">スキル</v-col>
         </v-row>
-        <div style="border: 1px solid lightgrey; width: 85%" class="ma-0 pb-5">
-          <v-row style="text-align: center">
-            <v-col class="text-h4 mt-3">スキルカード</v-col>
-          </v-row>
-          <v-row>
-            <v-col class="ml-15" cols="2"><v-icon x-large>mdi-alpha-v-box</v-icon></v-col>
-            <v-col>
-              <v-row
-                ><v-col>
-                  <v-select
-                    style="width: 50%"
-                    v-model="paramsSkill.name"
-                    item-text="skillName"
-                    item-value="value"
-                    :items="devSkill"
-                    attach
-                    label="利用スキル"
-                    class="mb-0"
-                  >
-                  </v-select> </v-col
-              ></v-row>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="ml-15" cols="2"><v-icon large>mdi-alpha-v-box</v-icon></v-col>
-            <v-col>
-              <v-row
-                ><v-col>
-                  <v-select
-                    style="width: 50%"
-                    v-model="paramsSkill.lev"
-                    item-text="levels"
-                    item-value="value"
-                    :items="devLevel"
-                    attach
-                    label="レベル"
-                    class="mb-0"
-                  >
-                  </v-select>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col class="ml-15" cols="2"><v-icon color="transparent">mdi-alpha-v-box</v-icon></v-col>
-            <v-col>
-              <v-row
-                ><v-col>
-                  <v-select
-                    style="width: 50%"
-                    v-model="exp"
-                    item-text="exps"
-                    item-value="value"
-                    :items="devExp"
-                    attach
-                    label="開発経験"
-                    class="mb-0"
-                  ></v-select>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-        </div>
+        <v-row class="justify-center">
+          <div style="border: 1px solid lightgrey; width: 85%" class="ma-0 pb-5">
+            <v-row style="text-align: center">
+              <v-col class="text-h4 mt-3">スキルカード</v-col>
+            </v-row>
+            <v-row>
+              <v-col class="ml-15" cols="2"><v-icon x-large>mdi-alpha-v-box</v-icon></v-col>
+              <v-col>
+                <v-row
+                  ><v-col>
+                    <v-select
+                      style="width: 50%"
+                      v-model="paramsSkill.name"
+                      item-text="skillName"
+                      item-value="value"
+                      :items="devSkill"
+                      attach
+                      label="利用スキル"
+                      class="mb-0"
+                    >
+                    </v-select> </v-col
+                ></v-row>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col class="ml-15" cols="2"><v-icon large>mdi-alpha-v-box</v-icon></v-col>
+              <v-col>
+                <v-row
+                  ><v-col>
+                    <v-select
+                      style="width: 50%"
+                      v-model="paramsSkill.lev"
+                      item-text="levels"
+                      item-value="value"
+                      :items="devLevel"
+                      attach
+                      label="レベル"
+                      class="mb-0"
+                    >
+                    </v-select>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col class="ml-15" cols="2"><v-icon color="transparent">mdi-alpha-v-box</v-icon></v-col>
+              <v-col>
+                <v-row
+                  ><v-col>
+                    <v-select
+                      style="width: 50%"
+                      v-model="exp"
+                      item-text="exps"
+                      item-value="value"
+                      :items="devExp"
+                      attach
+                      label="開発経験"
+                      class="mb-0"
+                    ></v-select>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </div>
+        </v-row>
+
         <v-row class="justify-center mt-5 pa-1">
           <v-btn href="create-bulletin" id="addSkill" class="mr-15">戻る</v-btn>
           <v-btn href="create-bulletin" id="addSkill" class="ml-15" @click="sessionSet">追加</v-btn>
-          <!-- <span href="create-bulletin" id="addSkill" class="ml-15" @click="sessionSet">見てみる</span> -->
         </v-row>
       </v-card>
     </v-col>
@@ -136,6 +138,7 @@ export default {
         { id: 50, skillCategory: 4, skillName: 'Swagger' },
         { id: 51, skillCategory: 4, skillName: 'Postman' },
         { id: 52, skillCategory: 4, skillName: 'Node.js' },
+        { id: 53, skillCategory: 4, skillName: 'all' },
       ],
       devExp: [
         { id: 0, exps: 'あり' },
@@ -208,28 +211,6 @@ export default {
   mounted() {
     this.getSession()
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
-  //   async asyncData({ $axios }) {
-  // 	// 取得先のURL
-  // const url = "https://qiita.com/api/v2/items";
-  // 	// リクエスト（Get）
-  // const response = await $axios.$get(url);
-  // 	// 配列で返ってくるのでJSONにして返却
-  // 	return {
-  // 		posts: response
-  // 	};
-  // },
 }
 </script>
 <style lang="scss">

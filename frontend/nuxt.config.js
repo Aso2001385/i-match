@@ -21,6 +21,65 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
+      // 追加
+      // { name: 'mobile-web-app-capable', content: 'yes' },
+      // { name: 'apple-mobile-web-app-capable', content: 'yes' },
+      // { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
+      // { name: 'apple-mobile-web-app-title', content: 'APP_TITLE' },
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      // 追加
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)',
+      //   href: 'PATH/splashscreens_iphone5_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)',
+      //   href: 'PATH/splashscreens/splashscreens_iphone6_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 621px) and (device-height: 1104px) and (-webkit-device-pixel-ratio: 3)',
+      //   href: 'PATH/splashscreens/splashscreens_iphoneplus_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)',
+      //   href: 'PATH/splashscreens/splashscreens_iphonex_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)',
+      //   href: 'PATH/splashscreens/splashscreens_iphonexr_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)',
+      //   href: 'PATH/splashscreens/splashscreens_iphonexsmax_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)',
+      //   href: 'PATH/splashscreens/splashscreens_ipad_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2)',
+      //   href: 'PATH/splashscreens/splashscreens_ipadpro1_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)',
+      //   href: 'PATH/splashscreens/splashscreens_ipadpro3_splash.png',
+      // },
+      // {
+      //   rel: 'apple-touch-startup-image',
+      //   media: '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)',
+      //   href: 'PATH/splashscreens/splashscreens_ipadpro2_splash.png',
+      // },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.icon' }],
   },
@@ -52,6 +111,8 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    // 追加
+    // '@nuxtjs/pwa',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -82,6 +143,55 @@ export default {
     manifest: {
       lang: 'ja',
     },
+    // // 追加
+    // icon: {
+    //   source: 'SRC_DIR/static/*****/icon_pwa.png',
+    //   fileName: 'icon_pwa.png',
+    // },
+    // // 追加
+    // manifest: {
+    //   lang: 'ja',
+    //   name: 'APP_NAME',
+    //   short_name: 'APP_SHORT_NAME',
+    //   description: 'APP_DESCRIPTION',
+    //   display: 'standalone',
+    //   theme_color: '#000',
+    //   background_color: '#fff',
+    //   orientation: 'portrait',
+    //   scope: '/',
+    //   start_url: '/',
+    //   icons: [
+    //     {
+    //       src: 'SRC_DIR/static/*****/icon_pwa.png',
+    //       sizes: '512x512',
+    //       type: 'image/png',
+    //     },
+    //   ],
+    // },
+    // // 追加
+    // workbox: {
+    //   runtimeCaching: [
+    //     {
+    //       urlPattern: '^https://polyfill.io/.*',
+    //       handler: 'cacheFirst',
+    //     },
+    //     {
+    //       urlPattern: `${SITE_URL}.*`,
+    //       handler: 'staleWhileRevalidate',
+    //       strategyOptions: {
+    //         cacheName: 'site-cache',
+    //       },
+    //       strategyPlugins: [
+    //         {
+    //           use: 'Expiration',
+    //           config: {
+    //             maxAgeSeconds: 24 * 60 * 60 * 30,
+    //           },
+    //         },
+    //       ],
+    //     },
+    //   ],
+    // },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

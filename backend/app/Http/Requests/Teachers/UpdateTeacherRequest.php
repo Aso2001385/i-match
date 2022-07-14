@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Teachers;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class UpdateTeacherRequest extends FormRequest
 {
@@ -25,18 +28,23 @@ class UpdateTeacherRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:30',
-            'email' => ['required','email','max:23','unique:users','regex:/@asojuku.ac.jp$/'],
         ];
     }
     public function messages()
     {
         return[
             'name.required' => '名前を入力してください',
-            'name.max' => '30文字以内で入力してください',
-            'email.required' => '学校用のメールアドレスを入力してください',
-            'email.email' => '有効なメールアドレスではありません',
-            'email.regex'=> 'メールアドレスが学校用ではありません',
-            'email.unique'=> '登録済のメールアドレスです',
+            'name.max' => '30文字以内で入力してください'
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }
