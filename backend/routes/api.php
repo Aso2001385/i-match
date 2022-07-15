@@ -6,6 +6,9 @@ use App\Http\Controllers\RecruitController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +41,10 @@ Route::apiResource('informations',InformationController::class);
 Route::apiResource('teachers', TeacherController::class);
 Route::put('/teacher/password',[TeacherController::class,'passUpdate']);
 
+Route::apiResource('chats',ChatController::class);
+
+Route::apiResource('rooms',RoomController::class);
+
+Route::apiResource('room-user',RoomUserController::class);
 
 Route::post('/authorization', [App\Http\Controllers\AuthController::class, 'signIn']);

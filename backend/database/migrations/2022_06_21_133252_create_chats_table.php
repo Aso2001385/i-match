@@ -18,7 +18,7 @@ class CreateChatsTable extends Migration
             $table->foreignId('room_id')->constrained('rooms');
             $table->foreignId('user_id')->constrained('users');
             $table->string('message',255);
-            $table->boolean('read');
+            $table->boolean('read')->default(false);
             $table->timestamps();
         });
     }

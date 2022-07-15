@@ -24,7 +24,6 @@ class CreateRoomUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'room_id' => 'required|integer',
             'user_id' => 'required|integer',
             'name' => 'required|string|max:30',
         ];
@@ -32,8 +31,6 @@ class CreateRoomUserRequest extends FormRequest
     public function messages()
     {
         return[
-            'room_id.required' =>'room_idが入力されていません',
-            'room_id.integer'=>'room_idが整数になっていません',
             'user_id.required'=>'user_idが入力されていません',
             'user_id.integer'=>'user_idが整数になっていません',
             'name.required'=>'名前を入力してください',
