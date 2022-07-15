@@ -209,11 +209,9 @@ export default {
         console.log('lang-set')
         if (!this.allSkill.includes(val)) {
           this.allSkill.push(val)
-          // console.log(this.allSkill.indexOf(this.langSea))
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          // this.allSkill.splice(prace, 1)
         }
       },
     },
@@ -226,11 +224,9 @@ export default {
         console.log('set')
         if (!this.allSkill.includes(val)) {
           this.allSkill.push(val)
-          // console.log(this.allSkill.indexOf(val))
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          // this.allSkill.splice(prace, 1)
         }
       },
     },
@@ -243,11 +239,9 @@ export default {
         console.log('set')
         if (!this.allSkill.includes(val)) {
           this.allSkill.push(val)
-          // console.log(this.allSkill.indexOf(val))
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          // this.allSkill.splice(prace, 1)
         }
       },
     },
@@ -264,7 +258,6 @@ export default {
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          // this.allSkill.splice(prace, 1)
         }
       },
     },
@@ -281,7 +274,6 @@ export default {
         } else {
           const prace = this.allSkill.indexOf(val)
           console.log(prace)
-          // this.allSkill.splice(prace, 1)
         }
       },
     },

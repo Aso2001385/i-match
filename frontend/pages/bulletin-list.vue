@@ -7,23 +7,23 @@
       <!-- <v-col cols="2" class="mt-6">
         <v-btn href="bulletin-list" text color="link" class="white--text text-h6">メンバー募集</v-btn>
       </v-col> -->
-      <v-col cols="12" class="pl-10 pt-9 pb-5" style="position: fixed; z-index: 3; background-color: #616161">
-        <NuxtLink to="/create-bulletin" class="white--text text-h6" style="text-decoration: none">
-          <strong>掲示板リスト</strong>
+      <v-col cols="12" class="mt-5 ml-10 pb-5">
+        <NuxtLink to="/create-bulletin" class="white--text" style="text-decoration: none">
+          <strong><v-icon color="orange">mdi-plus-box</v-icon>掲示板作成</strong>
         </NuxtLink>
       </v-col>
     </v-row>
-    <v-row style="margin-top: 7%">
-      <v-col cols="8" class="ma-0 pa-0" style="overflow: hidden !important; height: 76vh; overflow-y: auto">
-        <v-row v-for="bulletinList in 5" :key="bulletinList">
-          <BulletinList />
-        </v-row>
+    <v-row>
+      <v-col cols="8" class="ma-0 pa-0" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
+        <!-- <v-row v-for="bulletinList in 5" :key="bulletinList"> -->
+        <BulletinList />
+        <!-- </v-row> -->
       </v-col>
-      <v-col cols="8" style="position: absolute; z-index: 2; background-color: white; top: 90%">
+      <!-- <v-col cols="8" style="position: absolute; z-index: 2; background-color: white; top: 90%">
         <NuxtLink to="/create-bulletin" class="white--text mt-2" style="text-decoration: none; float: right"
           ><v-icon color="orange" x-large>mdi-plus-box</v-icon></NuxtLink
         >
-      </v-col>
+      </v-col> -->
 
       <v-col cols="4">
         <SearchSkill />
@@ -107,9 +107,17 @@ export default {
   },
   methods: {
     submit() {
-      this.$axios.get('http://localhost:8080/api/ac').then(response => {
-        console.log('ちゃんと通っている')
-      })
+      this.$axios
+        .get('http://localhost:8080/api/recruits')
+        .then(response => {
+          console.log('ちゃんと通っている１')
+          console.log(response.data)
+          // this.$router.push('/bulletin-list')
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          return err.response
+        })
       alert('通ったっす！')
     },
   },
@@ -118,7 +126,7 @@ export default {
     SearchSkill: () => import('../components/SearchSkill.vue'),
   },
   mounted() {
-    this.submit()
+    // this.getBulletin()
   },
 }
 </script>
