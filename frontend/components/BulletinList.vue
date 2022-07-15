@@ -1,12 +1,19 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row v-for="value in bulletinCount" :key="value">
       <v-col cols="12" class="ma-0">
         <v-card>
           <v-row class="pt-5 pl-15">
-            <v-col cols="4" class="ml-8"><span>募集締め切り：1月1日</span></v-col>
-            <v-col cols="4"><span>募集人数：3/6人</span></v-col>
-            <v-col cols="12"><h2 class="ml-8">Flaskの勉強をしませんか？</h2></v-col>
+            <v-col cols="4" class="ml-8"
+              >募集締め切り：<span>{{ dueList[value] }}</span></v-col
+            >
+            <v-col cols="4"
+              >募集人数：<span>3</span>/<span>{{ personsList[value] }}</span
+              >人</v-col
+            >
+            <v-col cols="12"
+              ><h2 class="ml-8">{{ bulletinList[value] }}</h2></v-col
+            >
           </v-row>
           <v-row class="pl-12">
             <v-col cols="8" class="ml-10" justify="center">
@@ -31,6 +38,11 @@
 export default {
   data() {
     return {
+      bulletinCount: 0,
+      bulletinList: [],
+      // skillIdList: [],
+      dueList: [],
+      personsList: [],
       allSkill: ['Java', 'Python', 'Spring', 'C', 'AWS', 'figma', 'Kotlin', 'C#', 'Qt', 'Flask'],
       langs: [
         { id: 0, skillCategory: 0, skillName: 'Java' },
@@ -97,6 +109,9 @@ export default {
       ],
     }
   },
+  mounted() {
+    this.getBulletin()
+  },
   methods: {
     colors(name) {
       console.log(name)
@@ -122,6 +137,29 @@ export default {
         }
       }
       return 'indigo darken-3'
+    },
+    getBulletin() {
+      this.$axios
+        .get('http://localhost:8080/api/recruits')
+        .then(response => {
+          console.log('ちゃんと通っている')
+          console.log(response.data)
+          console.log('内容確認')
+          this.bulletinCount = response.data.length
+          for (let i = 0; i < response.data.length; i++) {
+            this.bulletinList.push(response.data[i].title)
+            // this.skillIdList[response.data[0].skill]
+            this.dueList.push(response.data[i].due)
+            this.personsList.push(response.data[i].persons)
+          }
+          console.log(response.data[0].contents)
+          // this.$router.push('/bulletin-list')
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          return err.response
+        })
+      // alert('通ったっす！')
     },
   },
 }

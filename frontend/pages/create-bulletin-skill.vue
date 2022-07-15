@@ -1,9 +1,9 @@
 <template>
   <v-row class="justify-center">
     <v-col cols="6">
-      <v-card class="pb-10" style="background-color: whitesmoke; border-radius: 10px">
+      <v-card class="pb-15" style="background-color: whitesmoke; border-radius: 10px">
         <v-row class="mb-5 ml-10">
-          <v-col cols="10">スキル</v-col>
+          <v-col cols="10"><strong>スキル</strong></v-col>
         </v-row>
         <v-row class="justify-center">
           <div style="border: 1px solid lightgrey; width: 85%" class="ma-0 pb-5">
@@ -16,8 +16,8 @@
                 <v-row
                   ><v-col>
                     <v-select
-                      style="width: 50%"
                       v-model="paramsSkill.name"
+                      style="width: 50%"
                       item-text="skillName"
                       item-value="value"
                       :items="devSkill"
@@ -30,13 +30,13 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col class="ml-15" cols="2"><v-icon large>mdi-alpha-v-box</v-icon></v-col>
+              <v-col class="ml-15" cols="2"><v-icon color="transparent">mdi-alpha-v-box</v-icon></v-col>
               <v-col>
                 <v-row
                   ><v-col>
                     <v-select
-                      style="width: 50%"
                       v-model="paramsSkill.lev"
+                      style="width: 50%"
                       item-text="levels"
                       item-value="value"
                       :items="devLevel"
@@ -49,7 +49,7 @@
                 </v-row>
               </v-col>
             </v-row>
-            <v-row>
+            <!-- <v-row>
               <v-col class="ml-15" cols="2"><v-icon color="transparent">mdi-alpha-v-box</v-icon></v-col>
               <v-col>
                 <v-row
@@ -67,13 +67,13 @@
                   </v-col>
                 </v-row>
               </v-col>
-            </v-row>
+            </v-row> -->
           </div>
         </v-row>
 
         <v-row class="justify-center mt-5 pa-1">
-          <v-btn href="create-bulletin" id="addSkill" class="mr-15">戻る</v-btn>
-          <v-btn href="create-bulletin" id="addSkill" class="ml-15" @click="sessionSet">追加</v-btn>
+          <v-btn id="addSkill" href="create-bulletin" class="mr-15">戻る</v-btn>
+          <v-btn id="addSkill" href="create-bulletin" class="ml-15" @click="sessionSet">追加</v-btn>
         </v-row>
       </v-card>
     </v-col>
@@ -81,6 +81,17 @@
 </template>
 <script defer>
 export default {
+  computed: {
+    level: {
+      get() {
+        console.log('get')
+        return ''
+      },
+      set(val) {
+        console.log('set')
+      },
+    },
+  },
   data() {
     return {
       EXP: '',
@@ -140,10 +151,6 @@ export default {
         { id: 52, skillCategory: 4, skillName: 'Node.js' },
         { id: 53, skillCategory: 4, skillName: 'all' },
       ],
-      devExp: [
-        { id: 0, exps: 'あり' },
-        { id: 1, exps: 'なし' },
-      ],
       devLevel: [
         { id: 0, levels: 1 },
         { id: 1, levels: 2 },
@@ -154,62 +161,35 @@ export default {
       paramsSkill: {
         name: '',
         lev: 99,
-        expBool: true,
       },
       skills: [],
       levels: [],
-      exps: [],
+      // exps: [],
       bulletinSkills: [],
     }
   },
+  mounted() {
+    this.getSession()
+  },
   methods: {
     sessionSet() {
-      if (this.exp === 'あり') {
-        this.$set(this.paramsSkill, 'expBool', true)
-      } else {
-        this.$set(this.paramsSkill, 'expBool', false)
-      }
-      console.log(JSON.stringify(this.paramsSkill.name))
       this.skills.push(JSON.stringify(this.paramsSkill.name))
       this.levels.push(JSON.stringify(this.paramsSkill.lev))
-      this.exps.push(JSON.stringify(this.paramsSkill.expBool))
-      console.log(this.skills)
-
+      this.openFlg = 1
+      sessionStorage.setItem('openFlg', this.openFlg)
       sessionStorage.setItem('skills', this.skills)
       sessionStorage.setItem('levels', this.levels)
-      sessionStorage.setItem('exps', this.exps)
     },
     getSession() {
       const skillBox = sessionStorage.getItem('skills')
       const levelBox = sessionStorage.getItem('levels')
-      const expBox = sessionStorage.getItem('exps')
       this.skills.push(skillBox)
       this.levels.push(levelBox)
-      this.exps.push(expBox)
+      if (this.levels[0] === '') {
+        this.levels.shift()
+      }
+      console.log(this.levels)
     },
-  },
-  computed: {
-    exp: {
-      get() {
-        console.log('get')
-        return ''
-      },
-      set(val) {
-        console.log('set')
-      },
-    },
-    level: {
-      get() {
-        console.log('get')
-        return ''
-      },
-      set(val) {
-        console.log('set')
-      },
-    },
-  },
-  mounted() {
-    this.getSession()
   },
 }
 </script>
