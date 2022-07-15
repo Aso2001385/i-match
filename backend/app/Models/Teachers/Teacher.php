@@ -21,10 +21,11 @@ class Teacher extends Authenticatable
         'class',
         'name',
         'email',
+        'password',
     ];
 
     protected $hidden =[
-        //'password',
+        'password',
         'remember_token',
     ];
 
@@ -36,12 +37,14 @@ class Teacher extends Authenticatable
     public static function create_teacher($request){
         try{
 
-            $request['password'] = Hash::make($request->password);
+            // $password = Hash::make($request->password);
+            // unset($request->password);
+            // $request['password'] = $password;
+            $request['password']=Hash::make($request->password);
             Teacher::create($request->all());
-
             $result = 'success!';
 
-            $status = Response::HTTP_OK;
+             $status = Response::HTTP_OK;
 
         }catch(Exception $e){
 
