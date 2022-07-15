@@ -34,27 +34,6 @@ class Room extends Model
 
     public static function get_room($room){
         try{
-            // $room=Room::with('room_users')->find($room->id);
-            // $room->chats=Chat::where('room_id',$room->id)->get();
-            
-            // foreach($room->room_users as $user) {
-            //     $roomUser=RoomUser::find($user->user_id);
-            //     $user->partner_name=RoomUser::get_room_user($roomUser)->partner_name;
-            //     $user->user_name=User::find($user->user_id)->name;
-            // }
-
-            // foreach($room->chats as $chat) {
-            //     $chat->user_name=User::find($chat->user_id)->name;
-            // }
-            // $status= Response::HTTP_OK;
-        }catch(Exception $e){
-    
-            return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
-            ];
-    
-        }
             $room_user=RoomUser::where('room_id',$room->id)->get();
             $room->chats=Chat::where('room_id',$room->id)->get();
             
@@ -68,6 +47,15 @@ class Room extends Model
                 $chat->user_name=User::find($chat->user_id)->name;
             }
             $status= Response::HTTP_OK;
+        }catch(Exception $e){
+    
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+    
+        }
+            
         return [
             'result' => $room,
             'status' => $status
