@@ -140,7 +140,8 @@ export default {
     },
     getBulletin() {
       this.$axios
-        .get('http://localhost:8080/api/recruits')
+        .get('http://54.65.0.194/api/recruits')
+        // .get('http://localhost:8080/api/recruits')
         .then(response => {
           console.log('ちゃんと通っている')
           console.log(response.data)
