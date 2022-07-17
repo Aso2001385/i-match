@@ -71,22 +71,25 @@ export default {
   data() {
     return {}
   },
-  methods: {
-    getAccount() {
-      //   axios
-      //     .get('http://18.183.25.12/api/user') awsのURL
-      //     .then(res => {
-      //       console.log(res.data)
-      //       this.message = res.data
-      //     })
-      //     .catch(error => {
-      //       console.log(error)
-      //     })
-    },
-  },
   mounted() {
     this.getAccount()
   },
+  methods: {
+    getAccount() {
+      this.$axios
+        .get('http://localhost:8080/api/users/{id}', getAccount)
+        .then(response => {
+          console.log('ちゃんと通っている１')
+          console.log(response.data)
+          this.$router.push('/account')
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          return err.response
+        })
+      alert('通ったっす！')
+    },
+  }
 }
 </script>
 <style lang="scss">

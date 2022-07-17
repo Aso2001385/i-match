@@ -59,6 +59,9 @@ export default {
       sortId: 0,
     }
   },
+  mounted() {
+    this.otherpartyAccount()
+  },
   methods: {
     sortSection(sort) {
       if (sort === 0) {
@@ -68,6 +71,20 @@ export default {
       } else {
         this.sortId = 0
       }
+    },
+    getAccount() {
+      this.$axios
+      .get('http://localhost:8080/api/users/{id}', getAccount)
+      .then(response => {
+        console.log('ちゃんと通っている１')
+        console.log(response.data)
+        this.$router.push('/bulletin-list')
+      })
+      .catch(err => {
+        console.log('通ってないよー')
+        return err.response
+      })
+      alert('通ったっす！')
     },
   },
   components: {

@@ -57,4 +57,32 @@ export default {
   //       console.log(error)
   //     })
   // },
+    mounted() {
+        this.getAccount()
+    },
+    methods: {
+        sortSection(sort) {
+            if (sort === 0) {
+                this.sortId = 1
+            } else if (sort === 1) {
+                this.sortId = 2
+            } else {
+                this.sortId = 0
+            }
+        },
+        getAccount() {
+        this.$axios
+        .get('http://localhost:8080/api/', getAccount)
+        .then(response => {
+            console.log('ちゃんと通っている１')
+            console.log(response.data)
+            this.$router.push('/bulletin-list')
+        })
+        .catch(err => {
+            console.log('通ってないよー')
+            return err.response
+        })
+        alert('通ったっす！')
+        },
+    },
 }

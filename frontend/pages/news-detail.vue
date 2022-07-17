@@ -45,6 +45,34 @@ export default {
   //       console.log(error)
   //     })
   // },
+  mounted() {
+    this.getEvent()
+  },
+  methods: {
+    sortSection(sort) {
+      if (sort === 0) {
+        this.sortId = 1
+      } else if (sort === 1) {
+        this.sortId = 2
+      } else {
+        this.sortId = 0
+      }
+    },
+    getEvent() {
+      this.$axios
+      .get('http://localhost:8080/api/events/{id}', getAccount)
+      .then(response => {
+        console.log('ちゃんと通っている１')
+        console.log(response.data)
+        this.$router.push('/bulletin-list')
+      })
+      .catch(err => {
+        console.log('通ってないよー')
+        return err.response
+      })
+      alert('通ったっす！')
+    },
+  },
 }
 </script>
 <style lang="scss">

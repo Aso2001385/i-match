@@ -332,7 +332,7 @@ export default {
       }
       console.log(sendBulletin)
       this.$axios
-        .post('http://54.65.0.194/api/recruits', sendBulletin)
+        .post('http://localhost:8080/api/recruits', sendBulletin)
         // .post('http://localhost:8080/api/recruits', sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')

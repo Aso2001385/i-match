@@ -53,6 +53,9 @@ export default {
       sortId: 0,
     }
   },
+  mounted() {
+    this.getAccount()
+  },
   methods: {
     sortSection(sort) {
       if (sort === 0) {
@@ -64,22 +67,21 @@ export default {
       }
     },
     getAccount() {
-      //   axios
-      //     .get('http://18.183.25.12/api/user') awsのURL
-      //     .then(res => {
-      //       console.log(res.data)
-      //       this.message = res.data
-      //     })
-      //     .catch(error => {
-      //       console.log(error)
-      //     })
+      this.$axios
+      .get('http://localhost:8080/api/users/{id}', getAccount)
+      .then(response => {
+        console.log('ちゃんと通っている１')
+        console.log(response.data)
+      })
+      .catch(err => {
+        console.log('通ってないよー')
+        return err.response
+      })
+    alert('通ったっす！')
     },
   },
   components: {
     BulletinList: () => import('../components/BulletinList.vue'),
-  },
-  mounted() {
-    this.getAccount()
-  },
+  }
 }
 </script>
