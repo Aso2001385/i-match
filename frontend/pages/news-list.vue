@@ -29,10 +29,29 @@ export default {
       chat: '',
     }
   },
+  mounted() {
+    this.sendChat()
+    this.getEvent()
+  },
   methods: {
     sendChat() {
       this.chat = ''
     },
+    getEvent() {
+      this.$axios
+      .get('http://localhost:8080/api/events/{id}', getAccount)
+      .then(response => {
+        console.log('ちゃんと通っている１')
+        console.log(response.data)
+        this.$router.push('/bulletin-list')
+      })
+      .catch(err => {
+        console.log('通ってないよー')
+        return err.response
+      })
+      alert('通ったっす！')
+    },
+
   },
   // mounted() {
   //   axios

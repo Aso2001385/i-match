@@ -41,5 +41,23 @@ export default {
   //       console.log(error)
   //     })
   // },
+  mounted() {
+    this.chatList()
+  },
+  methods: {
+    chatList() {
+      this.$axios
+      .get('http://localhost:8080/api/chats', getAccount)
+      .then(response => {
+        console.log('ちゃんと通っている１')
+        console.log(response.data)
+      })
+      .catch(err => {
+        console.log('通ってないよー')
+        return err.response
+      })
+    alert('通ったっす！')
+    },
+  },
 }
 </script>

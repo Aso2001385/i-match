@@ -105,6 +105,10 @@ export default {
       ],
     }
   },
+  mounted() {
+    // this.getBulletin()
+    this.submit()
+  },
   methods: {
     submit() {
       this.$axios
@@ -124,9 +128,6 @@ export default {
   components: {
     BulletinList: () => import('../components/BulletinList.vue'),
     SearchSkill: () => import('../components/SearchSkill.vue'),
-  },
-  mounted() {
-    // this.getBulletin()
-  },
+  }
 }
 </script>

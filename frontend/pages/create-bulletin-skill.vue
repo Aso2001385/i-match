@@ -189,6 +189,19 @@ export default {
         this.levels.shift()
       }
       console.log(this.levels)
+      //追加部分
+      this.$axios
+      .get('http://localhost:8080/api/rectuits', getAccount)
+      .then(response => {
+        console.log('ちゃんと通っている１')
+        console.log(response.data)
+        this.$router.push('/bulletin-list')
+      })
+      .catch(err => {
+        console.log('通ってないよー')
+        return err.response
+      })
+      alert('通ったっす！')
     },
   },
 }
