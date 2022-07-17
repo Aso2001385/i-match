@@ -62,12 +62,9 @@ class User extends Model
             // unset($request->password);
             // $request['password'] = $password;
             $request['password']=Hash::make($request->password);
-            User::create($request->all());
-
-            $result = 'success!';
-
-            $result = User::create($request->all());
+            $result =  User::create($request->all());
             $status = Response::HTTP_OK;
+            
             session(['user_id'=>$result->id]);
 
         }catch(Exception $e){
