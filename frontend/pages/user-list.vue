@@ -132,7 +132,7 @@ export default {
     async getUser() {
       await this.$axios
         // .get('http://localhost:8080/api/users')
-        .get('http://3.113.81.143/api/users')
+        .get('https://i-match.click/api/users')
         .then(response => {
           console.log('ちゃんと通っている')
           this.userCount = response.data.length
