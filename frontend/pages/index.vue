@@ -7,13 +7,15 @@
       <!-- <v-col cols="2" class="mt-6">
         <v-btn href="bulletin-list" text color="link" class="white--text text-h6">メンバー募集</v-btn>
       </v-col> -->
-      <v-col cols="2" class="mt-5 ml-10">
-        <NuxtLink to="/create-bulletin" class="white--text text-h6" style="text-decoration: none"> 投稿作成 </NuxtLink>
+      <v-col cols="12" class="mt-5 ml-10 pb-5">
+        <NuxtLink to="/create-bulletin" class="white--text" style="text-decoration: none"
+          ><strong><v-icon color="orange">mdi-plus-box</v-icon>掲示板作成</strong></NuxtLink
+        >
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="8" class="ma-0 pa-0" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
-        <v-row v-for="bulletinList in 5" :key="bulletinList">
+        <v-row>
           <BulletinList />
         </v-row>
       </v-col>
@@ -25,8 +27,13 @@
 </template>
 <script defer>
 export default {
+  components: {
+    BulletinList: () => import('../components/BulletinList.vue'),
+    SearchSkill: () => import('../components/SearchSkill.vue'),
+  },
   data() {
     return {
+      bulletinFlg: 1,
       langSea: [],
       frameSea: [],
       dbSea: [],
@@ -97,21 +104,33 @@ export default {
       ],
     }
   },
-  components: {
-    BulletinList: () => import('../components/BulletinList.vue'),
-    SearchSkill: () => import('../components/SearchSkill.vue'),
+  mounted() {
+    // this.submit()
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
+  methods: {
+    sortSection(sort) {
+      if (sort === 0) {
+        this.sortId = 1
+      } else if (sort === 1) {
+        this.sortId = 2
+      } else {
+        this.sortId = 0
+      }
+    },
+    // submit() {
+    //   this.$axios
+    //     .get('http://localhost:8080/api/recruits')
+    //     .then(response => {
+    //       console.log('ちゃんと通っている１')
+    //       console.log(response.data)
+    //       // this.$router.push('/bulletin-list')
+    //     })
+    //     .catch(err => {
+    //       console.log('通ってないよー')
+    //       return err.response
+    //     })
+    //   alert('通ったっす！')
+    // },
+  },
 }
 </script>

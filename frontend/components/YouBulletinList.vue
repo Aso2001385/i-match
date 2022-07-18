@@ -3,16 +3,18 @@
     <v-row v-for="value in bulletinCount" :key="value">
       <v-col cols="12" class="ma-0">
         <v-card>
-          <v-row class="pt-5 pl-15">
-            <v-col cols="4" class="ml-8"
+          <v-row class="pt-5 pl-15 ml-2">
+            <v-col cols="4" class="ml-2"
               >募集締め切り：<span>{{ dueList[value] }}</span></v-col
             >
             <v-col cols="4"
               >募集人数：<span>3</span>/<span>{{ personsList[value] }}</span
               >人</v-col
-            >
-            <v-col cols="12"
-              ><h2 class="ml-8">{{ bulletinList[value] }}</h2></v-col
+            ></v-row
+          >
+          <v-row class="pl-15 ml-2">
+            <v-col cols="12" class="ml-2"
+              ><h2>{{ bulletinList[value] }}</h2></v-col
             >
           </v-row>
           <v-row class="pl-12">
@@ -24,8 +26,8 @@
               </div>
             </v-col>
             <NuxtLink to="/bulletin-detail" class="white--text" style="text-decoration: none">
-              <v-col cols="12" md="12" class="ml-10">
-                <span class="black--text" @click="getSession(bulletinIdList[value])">Read More </span>
+              <v-col cols="12" md="12" class="ml-8">
+                <span class="black--text" @click="getBulletinDetail(bulletinIdList[value])">Read More </span>
               </v-col>
             </NuxtLink>
           </v-row>
@@ -39,8 +41,9 @@ export default {
   data() {
     return {
       bulletinCount: 0,
+      recruitsIdList: [],
       bulletinList: [],
-      bulletinIdList: [],
+      userId: 0,
       dueList: [],
       personsList: [],
       allSkill: ['Java', 'Python', 'Spring', 'C', 'AWS', 'figma', 'Kotlin', 'C#', 'Qt', 'Flask'],
@@ -110,12 +113,17 @@ export default {
     }
   },
   mounted() {
+    this.getSession()
     this.getBulletin()
   },
   methods: {
-    getSession(value) {
-      // どの掲示板の詳細を表示するか
+    getBulletinDetail(value) {
       sessionStorage.setItem('bulletinDetail', value)
+    },
+    getSession() {
+      // クリックされた相手の情報
+      this.userId = sessionStorage.getItem('userInfo')
+      console.log(this.userId + 'どんな値か確認')
     },
     colors(name) {
       for (let i = 0; i < this.langs.length; i++) {
@@ -143,17 +151,32 @@ export default {
     getBulletin() {
       this.$axios
         // .get('http://localhost:8080/api/recruits')
-        .get('https://i-match.click/api/recruits')
+        .get('3.113.81.143/api/recruits')
         .then(response => {
-          console.log('ちゃんと通っている')
-          console.log(response.data)
-          this.bulletinCount = response.data.length
+          console.log('ちゃんと通っている相手の情報')
+
           for (let i = 0; i < response.data.length; i++) {
-            this.bulletinList.push(response.data[i].title)
-            this.dueList.push(response.data[i].due)
-            this.personsList.push(response.data[i].persons)
-            this.bulletinIdList.push(response.data[i].id)
+            //   ここで相手の情報だけを取得するようにする
+            console.log(this.userId + 'どんな値か確認ddkdkdkdkdkdkdkdっkdっkdk' + response.data[i].user_id)
+            // console.log(this.userId === )
+            const user_id = Number(response.data[i].user_id)
+            const userId = Number(this.userId)
+            if (userId === user_id) {
+              console.log(response.data[i].user_id)
+              console.log(this.userId)
+              this.recruitsIdList.push(response.data[i].id)
+              this.bulletinList.push(response.data[i].title)
+              this.dueList.push(response.data[i].due)
+              this.personsList.push(response.data[i].persons)
+            } else {
+              console.log('1人の上右往掛け12345')
+            }
           }
+          this.bulletinCount = this.bulletinList.length
+          this.recruitsIdList.push(this.recruitsIdList[0])
+          this.bulletinList.push(this.bulletinList[0])
+          this.dueList.push(this.dueList[0])
+          this.personsList.push(this.personsList[0])
         })
         .catch(err => {
           console.log('通ってないよー')

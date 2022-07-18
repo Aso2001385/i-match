@@ -27,7 +27,9 @@ class Token extends Model
         try{
 
             $user = User::where('email',$request->email)->first();
-            if (!Hash::check($request->password, $user->password)) return ['result'=>'','status' => Response::HTTP_UNAUTHORIZED,'token' => False];
+            if (!Hash::check($request->password, $user->password))
+            return ['result'=>'','status' => Response::HTTP_UNAUTHORIZED,'token' => False];
+
             $token = Token::createOrUpdate(['id' => $user->id],['id'=>$user->id,'content'=>Str::random(32)]);
             $user = User::get_user($user);
 

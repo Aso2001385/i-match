@@ -119,22 +119,31 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     ['cookie-universal-nuxt', { parseJSON: false }],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
-    baseURL: 'http://localhost:8080/api/',
-    // baseURL: 'http://13.115.187.17/api/',
+    // baseURL: 'http://localhost:8080/api/',
+    baseURL: 'https://i-match.click/api/',
   },
 
+  // proxy: {
+  //   '/api/': {
+  //     // target: 'http://localhost:8080',
+  //     target: 'https://i-match.click',
+  //   },
+  // },
   proxy: {
-    '/api/': {
-      target: 'http://localhost:8080',
-      // target: 'http://13.115.187.17',
+    '/api': {
+      target: 'https://i-match.click/',
+      pathRewrite: {
+        '^/api': '/',
+      },
     },
   },
 

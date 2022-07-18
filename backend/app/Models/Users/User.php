@@ -29,6 +29,7 @@ class User extends Model
         'password',
         'name',
         'email',
+        'password',
     ];
 
     /**
@@ -134,8 +135,7 @@ class User extends Model
             if(!Hash::check($request->old_password,$user->password)){
                 throw new Exception();
             }
-            $request->password = Hash::make($request->password);
-            $user->password=$request->input('password');
+            $user->password=Hash::make($request->password);;
             $user->save();
             $result = 'success!';
             $status = Response::HTTP_OK;

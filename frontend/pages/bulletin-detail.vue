@@ -5,23 +5,31 @@
         <v-card-title style="border-bottom: 2px solid lightgrey; width: 90%">内容</v-card-title>
         <v-row class="mt-0 pa-0">
           <v-col cols="2"><v-card-title>●タイトル：</v-card-title></v-col>
-          <v-col cols="8" class="text-h6"><v-card-title>Flaskの勉強会をしましょう。</v-card-title></v-col>
+          <v-col cols="8" class="text-h6"
+            ><v-card-title>{{ title }}</v-card-title></v-col
+          >
+          <v-col cols="2"
+            ><v-chip>{{ purpose }}</v-chip></v-col
+          >
         </v-row>
         <v-row class="mt-0 pa-0">
           <v-col cols="12"><v-card-title>●概要</v-card-title></v-col>
         </v-row>
         <v-row class="mt-0 pa-0" style="width: 95%; overflow: hidden !important; height: 20vh; overflow-y: auto">
           <v-col cols="12">
-            〇〇さんへオファーが来ました。あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああんああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああんあああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああんああああああああああああああああああああああああああああああああああああああああああああああああああ
+            {{ contents }}
           </v-col>
         </v-row>
         <v-row class="mt-0 pa-0">
           <v-col cols="2"><v-card-title>●募集人数：</v-card-title></v-col>
-          <v-col cols="2" class="mt-5">3/6人 </v-col>
+          <v-col cols="2" class="mt-5"
+            >3/<span>{{ persons }}</span
+            >人</v-col
+          >
         </v-row>
         <v-row class="mt-0 pa-0">
           <v-col cols="2"><v-card-title>●募集期間：</v-card-title></v-col>
-          <v-col cols="2" class="mt-5">2022/6/30:12:30まで </v-col>
+          <v-col cols="2" class="mt-5">{{ due }}</v-col>
         </v-row>
         <v-row class="mt-0 pa-0">
           <v-col cols="4" class="d-flex"> </v-col>
@@ -54,20 +62,53 @@
 <script defer>
 export default {
   data() {
-    return {}
+    return {
+      bulletinDetailId: 0,
+      title: '',
+      contents: '',
+      purpose: '',
+      due: '',
+      persons: 0,
+    }
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
+  mounted() {
+    this.getSession()
+    this.getBulletinDetail()
+  },
+  methods: {
+    getSession() {
+      // クリックされた掲示板の詳細を受け取るためのid
+      this.bulletinDetailId = sessionStorage.getItem('bulletinDetail')
+    },
+    sortSection(sort) {
+      if (sort === 0) {
+        this.sortId = 1
+      } else if (sort === 1) {
+        this.sortId = 2
+      } else {
+        this.sortId = 0
+      }
+    },
+    getBulletinDetail() {
+      this.$axios
+        // .get(`http://localhost:8080/api/recruits/${this.bulletinDetailId}`)
+        .get(`https://i-match.click/api/recruits/${this.bulletinDetailId}`)
+        .then(response => {
+          console.log('ちゃんと通っている')
+          this.title = response.data.title
+          this.contents = response.data.contents
+          this.purpose = response.data.purpose
+          this.due = response.data.due
+          this.persons = response.data.persons
+
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          return err.response
+        })
+    },
+  },
 }
 </script>
 <style lang="scss">

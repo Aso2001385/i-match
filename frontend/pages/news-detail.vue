@@ -2,14 +2,16 @@
   <v-flex>
     <v-row class="mt-15 pa-0 justify-center">
       <v-card style="width: 80%" class="mt-10 pl-10 pb-0">
-        <v-card-title style="border-bottom: 2px solid lightgrey; width: 90%">オファー</v-card-title>
+        <v-card-title style="border-bottom: 2px solid lightgrey; width: 90%">{{ category }}</v-card-title>
         <v-row class="mt-10 pa-0">
-          <v-col cols="4"><v-card-title>〇〇さんからのオファー</v-card-title></v-col>
+          <v-col cols="4"
+            ><v-card-title>{{ title }}</v-card-title></v-col
+          >
           <v-col cols="7"><v-card-title>3/6 12:10</v-card-title></v-col>
         </v-row>
         <v-row class="mt-0 pa-0" style="width: 95%; overflow: hidden !important; height: 40vh; overflow-y: auto">
           <v-col cols="12">
-            〇〇さんへオファーが来ました。あああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああんああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああんあああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああああんああああああああああああああああああああああああああああああああああああああああああああああああああ
+            {{ content }}
           </v-col>
         </v-row>
         <v-row style="float: right" class="ma-10">
@@ -31,20 +33,47 @@
 <script defer>
 export default {
   data() {
-    return {}
+    return {
+      id: 0,
+      title: '',
+      content: '',
+      category: '',
+    }
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
+  mounted() {
+    this.getSession()
+  },
+  methods: {
+    getSession() {
+      this.id = sessionStorage.getItem('id')
+      this.title = sessionStorage.getItem('tit')
+      this.content = sessionStorage.getItem('con')
+    },
+    sortSection(sort) {
+      if (sort === 0) {
+        this.sortId = 1
+      } else if (sort === 1) {
+        this.sortId = 2
+      } else {
+        this.sortId = 0
+      }
+    },
+    getDetail() {
+      this.$axios
+        // .get('http://localhost:8080/api/informations?id=this.id')
+        .get(`https://i-match.click/api/informations/${this.id}`)
+        .then(response => {
+          console.log('ちゃんと通っている詳細取得')
+          this.category.push(response.data[0].category_name)
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          console.log(err)
+          return err.response
+        })
+    },
+  },
 }
 </script>
 <style lang="scss">

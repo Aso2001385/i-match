@@ -41,17 +41,33 @@ export default {
   data() {
     return {}
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
+  mounted() {
+    this.getHistory()
+  },
+  methods: {
+    sortSection(sort) {
+      if (sort === 0) {
+        this.sortId = 1
+      } else if (sort === 1) {
+        this.sortId = 2
+      } else {
+        this.sortId = 0
+      }
+    },
+    getHistory() {
+      this.$axios
+        .get('https://i-match.click/api/')
+        .then(response => {
+          console.log('ちゃんと通っている１')
+          console.log(response.data)
+          this.$router.push('/bulletin-list')
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          return err.response
+        })
+      alert('通ったっす！')
+    },
+  },
 }
 </script>

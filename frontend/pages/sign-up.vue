@@ -119,9 +119,9 @@ export default {
       !this.$v.confirmPassword.required && errors.push('Confirm Password is required')
       return errors
     },
-    primitiveUser(){
+    primitiveUser() {
       return this.$store.state.user
-    }
+    },
   },
 
   methods: {
@@ -137,10 +137,9 @@ export default {
       }
 
       this.$axios.post('http://localhost:8080/api/users', this.user).then(response => {
-
-        console.log(response.data)
-        // this.$store.commit('restoreUser',response.data);
-
+        console.log(response.headers)
+        this.$store.commit('restoreUser', response.data)
+        this.$store.commit('restoreToken', response.headers['x-auth'])
       })
     },
 
