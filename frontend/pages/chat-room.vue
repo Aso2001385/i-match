@@ -75,24 +75,24 @@ export default {
     }
   },
   mounted() {
-    this.chatRoom()
+    // this.chatRoom()
   },
   methods: {
-    chatRoom() {
-      //this.chat = ''
-      this.$axios
-      .get('http://localhost:8080/api/chats', getAccount)
-      .then(response => {
-        console.log('ちゃんと通っている１')
-        console.log(response.data)
-        this.$router.push('/bulletin-list')
-      })
-      .catch(err => {
-        console.log('通ってないよー')
-        return err.response
-      })
-    alert('通ったっす！')
-    },
+    // chatRoom() {
+    //   //this.chat = ''
+    //   this.$axios
+    //   .get('http://localhost:8080/api/chats', getAccount)
+    //   .then(response => {
+    //     console.log('ちゃんと通っている１')
+    //     console.log(response.data)
+    //     this.$router.push('/bulletin-list')
+    //   })
+    //   .catch(err => {
+    //     console.log('通ってないよー')
+    //     return err.response
+    //   })
+    // alert('通ったっす！')
+    // },
   },
   // mounted() {
   //   axios

@@ -108,12 +108,13 @@ export default {
   },
   mounted() {
     // this.getBulletin()
-    this.submit()
+    // this.submit()
   },
   methods: {
     submit() {
       this.$axios
-        .get('http://localhost:8080/api/recruits')
+        // .get('http://localhost:8080/api/recruits')
+        .get('http://3.113.81.143/api/recruits')
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)
@@ -121,6 +122,7 @@ export default {
         })
         .catch(err => {
           console.log('通ってないよー')
+          console.log(err)
           return err.response
         })
       alert('通ったっす！')
@@ -129,6 +131,6 @@ export default {
   components: {
     BulletinList: () => import('../components/BulletinList.vue'),
     SearchSkill: () => import('../components/SearchSkill.vue'),
-  }
+  },
 }
 </script>

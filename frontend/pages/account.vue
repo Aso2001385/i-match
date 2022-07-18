@@ -16,7 +16,7 @@
     </v-row>
     <v-row>
       <v-col cols="8" class="ma-0 pa-0 pb-1" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
-        <BulletinList v-for="userList in 5" :key="userList" />
+        <BulletinList :bulletinFlg="2" />
       </v-col>
       <v-col cols="4" class="pl-3 mt-2" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
         <v-row class="justify-center mb-1">
@@ -24,8 +24,8 @@
             <div class="mt-2 text-h1 pl-10 pr-10 pt-5 justify-center">
               <v-icon class="text-h1 ma-3" aria-hidden="false">mdi-account</v-icon>
             </div>
-            <strong style="font-size: 2rem">test test</strong>
-            <p class="grey--text" style="font-size: 1rem">test@test.jp</p>
+            <strong style="font-size: 2rem">{{ name }}</strong>
+            <p class="grey--text" style="font-size: 1rem">{{ email }}</p>
             <NuxtLink to="/account-edit" class="blue--text">
               <v-col>編集</v-col>
             </NuxtLink>
@@ -51,6 +51,9 @@ export default {
     return {
       sortName: ['新着順', '投稿順', '締切が近い順'],
       sortId: 0,
+      userId: 1,
+      name: '',
+      email: '',
     }
   },
   mounted() {
@@ -68,20 +71,24 @@ export default {
     },
     getAccount() {
       this.$axios
-      .get('http://localhost:8080/api/users/{id}', getAccount)
-      .then(response => {
-        console.log('ちゃんと通っている１')
-        console.log(response.data)
-      })
-      .catch(err => {
-        console.log('通ってないよー')
-        return err.response
-      })
-    alert('通ったっす！')
+        // .get(`http://localhost:8080/api/users/${this.userId}`)
+        .get(`http://3.113.81.143/api/users/${this.userId}`)
+        .then(response => {
+          console.log('ちゃんと通っている')
+          this.name = response.data.name
+          this.email = response.data.email
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          console.log(err)
+          return err.response
+        })
+      // alert('通ったっす！')
     },
   },
   components: {
     BulletinList: () => import('../components/BulletinList.vue'),
-  }
+  },
 }
 </script>
