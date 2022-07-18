@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Recruits\Recruit;
+use App\Models\Recruits\RecruitSkill;
 use App\Http\Requests\Recruits\CreateRecruitRequest;
 use App\Http\Requests\Recruits\UpdateRecruitRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class RecruitController extends Controller
 {
@@ -16,21 +18,13 @@ class RecruitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function list()
+    public function index()
     {
-        $recruits=DB::table('recruits')
-        ->join('users', 'recruits.user_id','=','users.id')
-        ->select('recruits.*','users.name')
-        ->whereNull('recruits.deleted_at')
-        ->get();
-
-        $result=[
-            'recruits'=>$recruits->toArray(),
+        $response=[
+            'result' => Recruit::all()->toArray(),
+            'status'=>Response::HTTP_OK
         ];
-
-        $status=Response::HTTP_OK;
-        return response()->json($result,$status);
-
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -39,13 +33,17 @@ class RecruitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRecruitsRequest $request)
+    public function store(CreateRecruitRequest $request)
     {
-        $result=[
-            'recruit'=>Recruit::create($request->all())->toArray(),
-        ];
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        $request1=collect(
+            ['user_id' => $request->user_id, 'title' =>$request->title, 'contents' => $request->contents, 'purpose'=>$request->purpose, 'persons'=>$request->persons, 'due'=>$request->due]
+        );
+        $response=Recruit::create_recruits($request1);
+
+        if($response['result']=='success!'){
+            $response=RecruitSkill::create_rec_skill($request,$response['recruit']);
+        }
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -54,19 +52,17 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Recruit $recruit)
     {
-        $recruit=DB::table('recruits')
-        ->join('users', 'recruits.user_id','=','users.id')
-        ->select('recruits.*','users.name')
-        ->where('recruits.id','=',$id)
-        ->get();
+        $response=Recruit::get_user_recruits($recruit);
 
-        $result=[
-            'recruit'=>$recruit->toArray(),
-        ];
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        return response()->json($response['result'],$response['status']);
+    }
+
+    public function otherIndex(Request $request)
+    {
+        $response=Recruit::get_other_recruits($request);
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -76,30 +72,11 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRecruitRequest $request)
+    public function update(UpdateRecruitRequest $request,Recruit $recruit)
     {
-        $recruit=Request::find($request->id);
+        $response=Recruit::update_recruit($recruit,$request);
 
-        $recruit->title=$recruit->input('title');
-        $recruit->contents=$recruit->input('contents');
-        $recruit->purpose_id=$recruit->input('purpose_id');
-        $recruit->persons=$recruit->input('persons');
-        $recruit->due=$recruit->input('due');
-
-        $recruit->save();
-
-        $recruits=DB::table('recruits')
-        ->join('users', 'recruits.user_id','=','users.id')
-        ->select('recruits.*','users.name')
-        ->whereNull('recruits.deleted_at')
-        ->get();
-
-        $result=[
-            'recruits' => $recruits->toArray(),
-        ];
-        
-        $status = Response::HTTP_OK;
-        return response()->json($result,$status);
+        return response()->json($response['result'],$response['status']);
 
     }
 
@@ -109,11 +86,9 @@ class RecruitController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete(Request $request)
+    public function destroy(Recruit $recruit)
     {
-        Recruit::find($request->id)->delete();
-
-        $status = Response::HTTP_OK;
-        return response()->json([],$status);
+        $response=Recruit::delete_recruit($recruit);
+        return response()->json($response['result'],$response['status']);
     }
 }

@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Chats;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class CreateChatRequest extends FormRequest
 {
@@ -27,7 +30,6 @@ class CreateChatRequest extends FormRequest
             'room_id' =>'required|integer',
             'user_id' =>'required|integer',
             'message' =>'required|string|max:255',
-            'read' =>'required|boolean'
         ];
     }
     public function messages()
@@ -40,8 +42,16 @@ class CreateChatRequest extends FormRequest
             'message.required'=>'メッセージが入力されていません',
             'message.string'=> '文字列で入力してください',
             'message.max'=>'255文字以内で入力してください',
-            'read.required' =>'既読フラグが入力されていません',
-            'read.boolean'=>'boolean型になっていません',
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }

@@ -5,14 +5,39 @@ info:
   title: i-Match API
   version: '1.0'
   summary: i-Match のAPI
-  description: i-MatchのOpen APIです
+  description: i-MatchのOpen APIです。
 servers:
-  - url: 'http://localhost:3000'
-    description: ''
+  - url: 'http://localhost:8080/api'
+    description: localhost
+  - description: mock
+    url: 'http://127.0.0.1:4010'
 paths:
+  /ac:
+    get:
+      summary: アクセス確認
+      tags:
+        - Models
+        - Access
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: 'true'
+              examples:
+                example-1:
+                  value:
+                    result: 'true'
+      operationId: get-ac
+      description: アクセスを確認できます。
   /users:
     get:
-      summary: Users一覧
+      summary: User 一覧
       tags:
         - index
         - EndPoint
@@ -34,6 +59,7 @@ paths:
                       class: SD3D
                       name: 翔
                       email: 2001195@s.asojuku.ac.jp
+                      password: Aso-2001195
                       created_at: '2022-06-29 10:29:50'
                       updated_at: '2022-06-29 10:29:50'
                       deleted_at: null
@@ -41,15 +67,16 @@ paths:
                       class: SD3C
                       name: はじめ
                       email: 2001191@s.asojuku.ac.jp
+                      password: Aso-2001195
                       created_at: '2022-06-29 10:29:50'
                       updated_at: '2022-06-29 10:29:50'
                       deleted_at: '2022-06-29 10:29:50'
       operationId: get-users
-      description: ユーザーの一覧を表示します
+      description: userの一覧を表示
     post:
-      summary: User作成
+      summary: User 作成
       operationId: post-users
-      description: ユーザーの作成をします
+      description: userの作成
       tags:
         - store
         - EndPoint
@@ -104,9 +131,17 @@ paths:
     parameters: []
   '/users/{id}':
     parameters:
-      - $ref: '#/components/parameters/id'
+      - in: path
+        schema:
+          type: integer
+          format: int64
+          example: 1
+          minimum: 1
+          maximum: 255
+        name: id
+        required: true
     get:
-      summary: User詳細
+      summary: User 詳細
       responses:
         '200':
           description: OK
@@ -115,6 +150,12 @@ paths:
               schema:
                 type: object
                 properties:
+                  id:
+                    type: integer
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                    format: int64
                   name:
                     type: string
                     example: 翔
@@ -125,19 +166,96 @@ paths:
                     pattern: '^[0-9]{7}@s\.asojuku\.ac\.jp'
                     minLength: 23
                     maxLength: 23
+                    example: 2001195@s.asojuku.ac.jp
+                  created_at:
+                    type: string
+                    format: date-time
+                    example: '2022-07-13T05:26:54.000000Z'
+                  updated_at:
+                    type: string
+                    example: '2022-07-13T05:26:54.000000Z'
+                    format: date-time
+                  deleted_at:
+                    type:
+                      - string
+                      - 'null'
+                    example: 'null'
+                  user_skills:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                          format: int64
+                          minimum: 1
+                          maximum: 255
+                        user_id:
+                          type: integer
+                          format: int64
+                          minimum: 1
+                          maximum: 255
+                          example: 1
+                        pratical_flag:
+                          type: boolean
+                        learning_flag:
+                          type: boolean
+                        level:
+                          type: integer
+                          example: 1
+                          format: int32
+                          minimum: 1
+                          maximum: 5
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2022-07-13T05:26:55.000000Z'
+                        updated_at:
+                          type: string
+                          example: '2022-07-13T05:26:55.000000Z'
+                          format: date-time
+                        deleted_at:
+                          type: string
+                          format: date-time
+                          example: '2022-07-13T05:26:55.000000Z'
+                        name:
+                          type: string
+                          example: skill1
+                        category_id:
+                          type: integer
+                          format: int64
+                          example: 1
+                          minimum: 1
+                          maximum: 255
               examples:
                 example:
                   value:
+                    id: 1
                     name: 翔
                     email: 2001195@s.asojuku.ac.jp
+                    created_at: '2022-07-13T05:26:54.000000Z'
+                    updated_at: '2022-07-13T05:26:54.000000Z'
+                    deleted_at: 'null'
+                    user_skills:
+                      - id: 1
+                        user_id: 1
+                        pratical_flag: true
+                        learning_flag: true
+                        level: 1
+                        created_at: '2022-07-13T05:26:55.000000Z'
+                        updated_at: '2022-07-13T05:26:55.000000Z'
+                        deleted_at: '2022-07-13T05:26:55.000000Z'
+                        name: skill1
+                        category_id: 1
       operationId: get-users-id
       tags:
         - show
         - EndPoint
-      description: 指定されたIDの情報を表示
+      description: 指定されたIDのuser情報を表示
       parameters: []
     put:
-      summary: update
+      summary: User 更新
       responses:
         '200':
           description: OK
@@ -149,7 +267,7 @@ paths:
       tags:
         - update
         - EndPoint
-      description: ユーザー情報を編集
+      description: 指定されたIDのuser情報を変更
       requestBody:
         content:
           application/json:
@@ -167,7 +285,7 @@ paths:
                   name: 翔
         description: ニックネームとクラスを変更
     delete:
-      summary: delete
+      summary: User 削除
       responses:
         '200':
           description: OK
@@ -180,10 +298,10 @@ paths:
       tags:
         - delete
         - EndPoint
-      description: ユーザーを論理削除
+      description: 指定されたIDのuserを論理削除
   /user/password:
     put:
-      summary: User　パスワード更新
+      summary: User パスワード更新
       tags:
         - EndPoint
         - passUpdate
@@ -196,24 +314,40 @@ paths:
                 type: object
                 properties: {}
       operationId: put-user-password
+      description: userのpasswordを変更
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
+                id:
+                  type: integer
+                  format: int64
+                  minimum: 1
+                  maximum: 255
+                  example: 11
                 old_password:
                   type: string
                   format: password
+                  minLength: 8
                   example: Aso-2001195
                 password:
                   type: string
                   format: password
+                  minLength: 8
                   example: Aso-2001195
+              required:
+                - id
+                - old_password
+                - password
+    parameters: []
   /skills:
     post:
-      summary: スキル作成
-      tags: []
+      summary: Skill 作成
+      tags:
+        - EndPoint
+        - store
       responses:
         '200':
           description: OK
@@ -223,14 +357,14 @@ paths:
                 type: object
                 properties: {}
       operationId: post-skills
-      description: スキルを作成します
+      description: skillの作成
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                categorry_id:
+                category_id:
                   type: integer
                   format: int64
                   example: 1
@@ -239,9 +373,19 @@ paths:
                 name:
                   type: string
                   example: skill1
+              required:
+                - category_id
+                - name
+            examples:
+              example:
+                value:
+                  category_id: 1
+                  name: skill1
     get:
-      summary: スキル一覧
-      tags: []
+      summary: Skill 一覧
+      tags:
+        - EndPoint
+        - index
       responses:
         '200':
           description: OK
@@ -252,6 +396,1864 @@ paths:
                 items:
                   $ref: '#/components/schemas/Skill'
       operationId: get-skills
+      description: skillの一覧を表示
+  '/skills/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Skill 詳細
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category_id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                  name:
+                    type: string
+                    maxLength: 100
+                    example: skill1
+                  depth:
+                    type: integer
+                    format: int32
+                    minimum: 1
+                    maximum: 5
+                    example: 1
+              examples:
+                example:
+                  value:
+                    category_id: 1
+                    name: skill1
+                    depth: 1
+      operationId: get-skills-id
+      description: 指定されたIDのskill情報を表示
+    delete:
+      summary: Skill 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-skills-id
+      description: 指定されたIDのskill情報を論理削除
+    put:
+      summary: Skill 更新
+      tags:
+        - EndPoint
+        - update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-skills-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                name:
+                  type: string
+                  example: skill1
+                  maxLength: 100
+              required:
+                - category_id
+                - name
+      description: 指定されたIDのskill情報を変更
+  /skill-relations:
+    get:
+      summary: Skill Relation 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SkillRelation'
+              examples: {}
+      operationId: get-skill-relations
+      description: skill relationの一覧を表示
+    post:
+      summary: Skill Relation 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-skill-relations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                primary_skill_id:
+                  type: integer
+                  minimum: 1
+                  maximum: 255
+                  example: 1
+                secondary_skill_id:
+                  type: integer
+                  minimum: 1
+                  maximum: 255
+                  example: 1
+              required:
+                - primary_skill_id
+                - secondary_skill_id
+            examples:
+              example:
+                value:
+                  primary_skill_id: 1
+                  secondary_skill_id: 1
+          application/xml:
+            schema:
+              type: object
+              properties:
+                primary_skill_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                  format: int64
+                secondary_skill_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+              required:
+                - primary_skill_id
+                - secondary_skill_id
+        description: ''
+      description: skill relationの作成
+  '/skill-relation/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Skill relation 詳細
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  primary_skill_id:
+                    type: integer
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                    format: int64
+                  secondary_id:
+                    type: integer
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                    format: int64
+              examples:
+                example:
+                  value:
+                    primary_skill_id: 1
+                    secondary_id: 1
+      operationId: get-skill-relation-id
+      description: 指定されたIDのskill relation情報を表示
+    put:
+      summary: Skill relation 更新
+      tags:
+        - EndPoint
+        - update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-skill-relation-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                primary_skill_id:
+                  type: integer
+                  minimum: 1
+                  maximum: 255
+                  example: 1
+                  format: int64
+                secondary_skill_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+              required:
+                - primary_skill_id
+                - secondary_skill_id
+            examples:
+              example:
+                value:
+                  primary_skill_id: 1
+                  secondary_skill_id: 1
+        description: ''
+      description: 指定されたIDのskill relation情報の更新
+    delete:
+      summary: Skill relation 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-skill-relation-id
+      description: 指定されたIDのskill relation情報を論理削除
+  /recruits:
+    get:
+      summary: Recruit 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recruit'
+      operationId: get-recruits
+      description: recruit の一覧
+    post:
+      summary: Recruit 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-recruits
+      description: recruitの作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                title:
+                  type: string
+                  example: flaskの勉強しませんか
+                  maxLength: 30
+                contents:
+                  type: string
+                  example: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                  maxLength: 1024
+                purpose:
+                  type: string
+                  maxLength: 3
+                  example: 開発
+                persons:
+                  type: integer
+                  format: int32
+                  maximum: 99
+                  minimum: 1
+                  example: 5
+                due:
+                  type: string
+                  format: date-time
+                  example: '2023-07-13 19:12:31'
+                skills:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      skill_id:
+                        type: integer
+                        format: int64
+                        example: 1
+                        minimum: 1
+                        maximum: 255
+                      level:
+                        type: integer
+                        format: int32
+                        example: 1
+                        minimum: 1
+                        maximum: 5
+                    required:
+                      - skill_id
+                      - level
+              required:
+                - user_id
+                - title
+                - contents
+                - purpose
+                - persons
+                - due
+            examples:
+              example-1:
+                value:
+                  user_id: 1
+                  title: flaskの勉強しませんか
+                  contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                  purpose: 開発
+                  persons: 5
+                  due: '2023-07-13 19:12:31'
+                  skills:
+                    - skill_id: 1
+                      level: 1
+  '/recruits/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Recruit 詳細
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                  title:
+                    type: string
+                    example: Flaskの勉強しませんか
+                    maxLength: 30
+                  contents:
+                    type: string
+                    example: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                    maxLength: 1024
+                  purpose:
+                    type: string
+                    example: 開発
+                    maxLength: 3
+                  persons:
+                    type: integer
+                    format: int32
+                    minimum: 1
+                    maximum: 99
+                    example: 5
+                  due:
+                    type: string
+                    example: '2019-06-13T15:00:00.0Z'
+                    format: date-time
+              examples:
+                example:
+                  value:
+                    user_id: 1
+                    title: Flaskの勉強しませんか
+                    contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                    purpose: 開発
+                    persons: 5
+                    due: '2019-06-13T15:00:00.0Z'
+      operationId: get-recruits-id
+      description: 指定されたIDのrecruit情報を表示
+    put:
+      summary: Recruit 更新
+      tags:
+        - EndPoint
+        - update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-recruits-id
+      description: 指定されたIDのrecruit情報の更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  maxLength: 30
+                  example: Flaskの勉強しませんか
+                contents:
+                  type: string
+                  example: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                  maxLength: 1024
+                purpose:
+                  type: string
+                  example: 開発
+                  maxLength: 3
+                persons:
+                  type: integer
+                  format: int32
+                  example: 5
+                  minimum: 1
+                  maximum: 99
+                due:
+                  type: string
+                  format: date-time
+                  example: '2023-07-13 19:12:31'
+    delete:
+      summary: Recruit 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-recruits-id
+      description: 指定されたIDのrecruit情報を論理削除
+  '/recruits/other/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Recruit 自分以外の項目
+      tags:
+        - EndPoint
+        - otherIndex
+      responses: {}
+      operationId: get-recruits-other-id
+  /recruit-skill:
+    get:
+      summary: Recruit skill 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecruitSkill'
+      operationId: get-recruit-skill
+      description: recruit skill の一覧
+    post:
+      summary: Recruit skill 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-recruit-skill
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recruit_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                  format: int64
+                skill_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                level:
+                  type: integer
+                  format: int32
+                  minimum: 1
+                  maximum: 5
+                  example: 1
+              required:
+                - recruit_id
+                - skill_id
+                - level
+            examples:
+              example:
+                value:
+                  recruit_id: 1
+                  skill_id: 1
+                  level: 1
+      description: |
+        recruit skill の作成
+  '/recruit-skill/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Recruit skill 詳細
+      tags:
+        - Endpoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recruit_id:
+                    type: integer
+                    minimum: 1
+                    maximum: 255
+                    example: 1
+                    format: int64
+                  skill_id:
+                    type: integer
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                    format: int64
+                  level:
+                    type: integer
+                    minimum: 1
+                    maximum: 5
+                    example: 1
+                    format: int32
+              examples:
+                example:
+                  value:
+                    recruit_id: 1
+                    skill_id: 1
+                    level: 1
+      operationId: get-recruit-skill-id
+      description: 指定されたIDのrecruit skill情報を表示
+    put:
+      summary: recruit skill 更新
+      tags:
+        - Endpoint
+        - update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-recruit-skill-id
+      description: 指定されたIDのrecruit skill情報を変更
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                skill_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                level:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 5
+                  format: int32
+              required:
+                - skill_id
+                - level
+    delete:
+      summary: recruit skill 削除
+      tags:
+        - Endpoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-recruit-skill-id
+      description: 指定されたIDのrecruit skill情報を論理削除
+  /recruit-user:
+    get:
+      summary: recruit user 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RecruitUser'
+      operationId: get-recruit-user
+      description: recruit user の一覧
+    post:
+      summary: Recruit user 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-recruit-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recruit_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                  format: int64
+                user_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+              required:
+                - recruit_id
+                - user_id
+      description: recruit user の作成
+  '/recruit-user/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Recruit user 詳細
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recruit_id:
+                    type: integer
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                    format: int64
+                  user_id:
+                    type: integer
+                    format: int64
+                    minimum: 1
+                    maximum: 255
+                    example: 1
+              examples:
+                example:
+                  value:
+                    recruit_id: 1
+                    user_id: 1
+      operationId: get-recruit-user-id
+      description: 指定されたIDのrecruit user情報を表示
+    delete:
+      summary: Recruit user 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-recruit-user-id
+      description: 指定されたIDのrecruit user情報を論理削除
+  /rooms:
+    get:
+      summary: Room 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+      operationId: get-rooms
+      description: room の一覧
+  '/rooms/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: Room 削除
+      responses: {}
+      operationId: delete-rooms-id
+      description: 指定されたIDのroom情報を論理削除
+      tags:
+        - EndPoint
+        - delete
+    get:
+      summary: Room 詳細
+      operationId: get-rooms-id
+      responses:
+        '200':
+          description: OK
+  /room-user:
+    get:
+      summary: Room user 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoomUser'
+      operationId: get-room-user
+      description: room user の一覧
+    post:
+      summary: Room user 作成
+      operationId: post-room-user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+              examples: {}
+      description: room user の作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                example-1:
+                  users:
+                    - 1
+                    - 2
+              properties:
+                users:
+                  type: array
+                  items:
+                    type: integer
+                    format: int64
+            examples:
+              example:
+                value:
+                  users:
+                    - 1
+                    - 2
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+      tags:
+        - EndPoint
+        - store
+  '/room-user/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Room user 詳細
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  room_id:
+                    type: integer
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                    format: int64
+                  user_id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                  name:
+                    type: string
+                    example: room1
+                    maxLength: 30
+      operationId: get-room-user-id
+      description: 指定されたIDのroom user情報を表示
+    put:
+      summary: Room user 更新
+      tags:
+        - EndPoint
+        - update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-room-user-id
+      description: 指定されたIDのroom user情報を更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: room1
+                  maxLength: 30
+    delete:
+      summary: Room 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-room-user-id
+      description: 指定されたIDのroom情報を論理削除
+  /chats:
+    get:
+      summary: Chat 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Chat'
+      operationId: get-chats
+      description: chat の一覧
+    post:
+      summary: Chat 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-chats
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                user_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                message:
+                  type: string
+                  example: おはようございます
+              required:
+                - room_id
+                - user_id
+                - message
+          application/xml:
+            schema:
+              type: object
+              properties:
+                room_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                  format: int64
+                user_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                  format: int64
+                message:
+                  type: string
+                  maxLength: 255
+                  example: おはようございます
+                read:
+                  type: boolean
+              required:
+                - room_id
+                - user_id
+                - message
+                - read
+            examples: {}
+        description: ''
+      description: chatの作成
+  '/chats/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    put:
+      summary: Chat 更新
+      tags:
+        - EndPoint
+        - update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-chats-id
+      description: 指定されたIDのroom user情報を更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                read:
+                  type: boolean
+            examples:
+              example:
+                value:
+                  message: おはようございます
+              example-1:
+                value:
+                  read: true
+    delete:
+      summary: Chat 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-chats-id
+      description: 指定されたIDのroom user情報を論理削除
+  /informations:
+    post:
+      summary: Information 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-informations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                title:
+                  type: string
+                  example: 参加希望が届きました
+                  maxLength: 255
+                contents:
+                  type: string
+                  example: ○○さんから■■の参加希望が届きました
+                  maxLength: 1024
+                read:
+                  type: boolean
+                category_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+              required:
+                - user_id
+                - title
+                - contents
+                - read
+                - category_id
+            examples:
+              example:
+                value:
+                  user_id: 1
+                  title: 参加希望が届きました
+                  contents: ○○さんから■■の参加希望が届きました
+                  read: true
+                  category_id: 1
+    get:
+      summary: Information 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Information'
+      operationId: get-informations
+      description: information の一覧
+  '/informations/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: information 詳細
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user_id:
+                    type: integer
+                    format: int64
+                    minimum: 1
+                    maximum: 255
+                    example: 1
+                  title:
+                    type: string
+                    example: 参加希望が届きました
+                    maxLength: 255
+                  contents:
+                    type: string
+                  read:
+                    type: string
+                  category_id:
+                    type: integer
+                    format: int64
+                    example: 1
+                    minimum: 1
+                    maximum: 255
+                  url:
+                    type: string
+                    example: 'http://localhost:8080/index'
+                    maxLength: 255
+      operationId: get-informations-id
+      description: 指定されたIDのinformation情報を表示
+    delete:
+      summary: information 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-informations-id
+      description: 指定されたIDのinformation情報を論理削除
+    put:
+      summary: information 更新
+      tags:
+        - EndPoint
+        - update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-informations-id
+      description: 指定されたIDのinformation情報を更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: 参加希望が届きました
+                contents:
+                  type: string
+                  example: AさんからBの参加希望が届きました
+                  maxLength: 1024
+                read:
+                  type: boolean
+                  default: false
+                caregory_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                url:
+                  type: string
+                  example: 'http://localhost:8080/index'
+                  maxLength: 255
+              required:
+                - title
+                - contents
+                - read
+                - caregory_id
+                - url
+            examples:
+              example:
+                value:
+                  title: 参加希望が届きました
+                  contents: AさんからBの参加希望が届きました
+                  read: false
+                  caregory_id: 1
+                  url: 'http://localhost:8080/index'
+  /information-categories:
+    get:
+      summary: Information category 一覧
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InformationCategory'
+      operationId: get-information-categories
+      description: information category の一覧
+    post:
+      summary: Information category 作成
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-information-categories
+      description: information category の作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: information1
+                  maxLength: 100
+              required:
+                - name
+            examples:
+              example:
+                value:
+                  name: information1
+  '/information-categoris/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Informtion category 詳細
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    maxLength: 100
+                    example: information1
+      operationId: get-information-categoris-id
+      description: 指定されたIDのinformation category情報を表示
+    put:
+      summary: Informtion category 更新
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-information-categoris-id
+      description: 指定されたIDのinformation category情報を更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 100
+                  example: information1
+              required:
+                - name
+    delete:
+      summary: Informtion category 削除
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: delete-information-categoris-id
+      description: 指定されたIDのinformation category情報を論理削除
+  /teachers:
+    get:
+      summary: Teacher 一覧
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'
+      operationId: get-teachers
+      description: teacher の一覧
+    post:
+      summary: Teacher 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-teachers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 西野　直幸
+                  maxLength: 30
+                email:
+                  type: string
+                  format: email
+                  maxLength: 25
+                  example: nishino@asojuku.ac.jp
+                  pattern: '^[a-z]{4,7}@asojuku\.ac\.jp'
+                password:
+                  type: string
+                  format: password
+                  example: Aso-2001195
+                  minLength: 8
+                  pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
+              required:
+                - name
+                - email
+                - password
+            examples:
+              example:
+                value:
+                  name: 西野　直幸
+                  email: nishino@asojuku.ac.jp
+                  password: Aso-2001195
+        description: ''
+      description: teacher の作成
+  '/teachers/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Teacher 詳細
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  email:
+                    type: string
+                    format: email
+                  password:
+                    type: string
+                    pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
+                    format: password
+      operationId: get-teachers-id
+      description: 指定されたIDのteacher情報を表示
+    put:
+      summary: Teacher 更新
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-teachers-id
+      description: 指定されたIDのteacher情報を更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 西野　直幸
+              required:
+                - name
+            examples:
+              example:
+                value:
+                  name: 西野　直幸
+    delete:
+      summary: Teacher 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-teachers-id
+      description: 指定されたIDのteacher情報を削除
+  /teacher/password:
+    put:
+      summary: Teacher パスワード更新
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-teacher-password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                  format: int64
+                  minimum: 1
+                  maximum: 255
+                old_password:
+                  type: string
+                  format: password
+                  example: Aso-2001195
+                password:
+                  type: string
+                  example: Aso-2001195
+                  format: password
+              required:
+                - id
+                - old_password
+                - password
+            examples:
+              example:
+                value:
+                  id: 1
+                  old_password: Aso-2001195
+                  password: Aso-2001195
+  /events:
+    get:
+      summary: Event 一覧
+      tags:
+        - EndPoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      operationId: get-events
+      description: event の一覧
+    post:
+      summary: Event 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-events
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                teacher_id:
+                  type: integer
+                title:
+                  type: string
+                  example: コーディング大会
+                  maxLength: 30
+                contents:
+                  type: string
+                  pattern: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+                  maxLength: 1024
+                due:
+                  type: string
+                  format: date-time
+                  example: '2019-06-13T15:00:00.0Z'
+              required:
+                - teacher_id
+                - title
+                - contents
+                - due
+      description: event の作成
+  '/events/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Event 詳細
+      tags:
+        - EndPoint
+        - show
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  teacher_id:
+                    type: integer
+                    example: 1
+                    format: int64
+                    minimum: 1
+                    maximum: 255
+                  title:
+                    type: string
+                    example: コーディング大会
+                    maxLength: 30
+                  contents:
+                    type: string
+                    example: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+                    maxLength: 1024
+                  due:
+                    type: string
+                    format: date-time
+                    example: '2019-06-13T15:00:00.0Z'
+      operationId: get-events-id
+      description: 指定されたIDのevent情報を表示
+    put:
+      summary: Event 更新
+      tags:
+        - EndPoint
+        - update
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: put-events-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: コーディング大会
+                  maxLength: 30
+                contents:
+                  type: string
+                  maxLength: 1024
+                  example: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+                due:
+                  type: string
+                  format: date-time
+                  example: '2019-06-13T15:00:00.0Z'
+              required:
+                - title
+                - contents
+                - due
+      description: 指定されたIDのevent情報を更新
+    delete:
+      summary: Event 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-events-id
+      description: 指定されたIDのevent情報を論理削除
+  /skill-requests:
+    get:
+      summary: Skill request 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SkillRequest'
+      operationId: get-skill-requests
+      description: skill request の一覧
+    post:
+      summary: Skill request 作成
+      tags:
+        - EndPoint
+        - store
+      responses: {}
+      operationId: post-skill-requests
+      description: skill request の作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                name:
+                  type: string
+                  example: skill1
+                  maxLength: 255
+                message:
+                  type: string
+                  example: 勉強したいから
+                  maxLength: 1024
+              required:
+                - user_id
+                - name
+                - message
+  '/skill-requests/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: Skill request 削除
+      tags:
+        - EndPoint
+        - delete
+      responses: {}
+      operationId: delete-skill-requests-id
+      description: 指定されたIDのskill request情報を表示
+  /skill-request-teacher:
+    get:
+      summary: Skill request teacher 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SkillRequestTeacher'
+      operationId: get-skill-request-teacher
+      description: skill request teacher の一覧
+    post:
+      summary: Skill request teacher 作成
+      tags:
+        - EndPoint
+        - store
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: post-skill-request-teacher
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                skill_request_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                skill_id:
+                  type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                  format: int64
+                teacher_id:
+                  type: integer
+                  format: int64
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+              required:
+                - skill_request_id
+                - skill_id
+                - teacher_id
+      description: skill request teacher の作成
+  '/skill-request-teacher/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: Skill request teacher　削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-skill-request-teacher-id
+      description: 指定されたIDのskill request teacher情報を表示
 components:
   schemas:
     User:
@@ -452,6 +2454,14 @@ components:
           created_at: '2022-01-01 11:11:11'
           updated_at: '2022-01-01 11:11:11'
           deleted_at: '2022-01-01 11:11:11'
+      examples:
+        - id: 1
+          category_id: 1
+          name: skill1
+          depth: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
       properties:
         id:
           type: integer
@@ -468,6 +2478,7 @@ components:
         name:
           type: string
           example: skill1
+          maxLength: 100
         depth:
           type: integer
           format: int32
@@ -492,14 +2503,6 @@ components:
         - category_id
         - name
         - depth
-      examples:
-        - id: 1
-          category_id: 1
-          name: skill1
-          depth: 1
-          created_at: '2022-01-01 11:11:11'
-          updated_at: '2022-01-01 11:11:11'
-          deleted_at: null
     SkillRelation:
       type: object
       x-examples:
@@ -567,6 +2570,17 @@ components:
           created_at: '2022-01-01 11:11:11'
           updated_at: '2022-01-01 11:11:11'
           deleted_at: '2022-01-01 11:11:11'
+      examples:
+        - id: 1
+          user_id: 1
+          title: Flaskの勉強しませんか
+          contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+          purpose: 開発
+          persons: 5
+          due: '2022-01-01 11:11:11'
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -587,6 +2601,7 @@ components:
         contents:
           type: string
           example: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+          maxLength: 1024
         purpose:
           type: string
           example: 開発
@@ -595,8 +2610,8 @@ components:
           type: integer
           format: int32
           minimum: 1
-          maximum: 255
           example: 5
+          maximum: 99
         due:
           type: string
           format: date-time
@@ -622,17 +2637,6 @@ components:
         - purpose
         - persons
         - due
-      examples:
-        - id: 1
-          user_id: 1
-          title: Flaskの勉強しませんか
-          contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
-          purpose: 開発
-          persons: 5
-          due: '2022-01-01 11:11:11'
-          created_at: '2022-01-01 11:11:11'
-          updated_at: '2022-01-01 11:11:11'
-          deleted_at: null
     RecruitSkill:
       type: object
       x-examples:
@@ -949,6 +2953,7 @@ components:
         contents:
           type: string
           example: ○○さんから■■の参加希望が届きました
+          maxLength: 1024
         read:
           type: boolean
         category_id:
@@ -1034,6 +3039,14 @@ components:
           created_at: '2022-01-01 11:11:11'
           updated_at: '2022-01-01 11:11:11'
           deleted_at: '2022-01-01 11:11:11'
+      examples:
+        - id: 1
+          name: 西野　直幸
+          email: nishino@asojuku.ac.jp
+          password: pa$$word
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -1047,9 +3060,9 @@ components:
           maxLength: 30
         email:
           type: string
-          pattern: '^[0-9]{7}@asojuku\.ac\.jp'
           format: email
           maxLength: 25
+          example: nishino@asojuku.ac.jp
         password:
           type: string
           format: password
@@ -1073,14 +3086,6 @@ components:
         - name
         - email
         - password
-      examples:
-        - id: 1
-          name: 西野　直幸
-          email: user@example.com
-          password: pa$$word
-          created_at: '2022-01-01 11:11:11'
-          updated_at: '2022-01-01 11:11:11'
-          deleted_at: null
     Event:
       type: object
       x-examples:
@@ -1093,6 +3098,15 @@ components:
           created_at: '2022-01-01 11:11:11'
           updated_at: '2022-01-01 11:11:11'
           deleted_at: '2022-01-01 11:11:11'
+      examples:
+        - id: 1
+          teacher_id: 1
+          title: コーディング大会
+          contents: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+          due: '2022-01-01 11:11:11'
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
       properties:
         id:
           type: integer
@@ -1113,6 +3127,7 @@ components:
         contents:
           type: string
           example: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+          maxLength: 1024
         due:
           type: string
           format: date-time
@@ -1136,15 +3151,6 @@ components:
         - title
         - contents
         - due
-      examples:
-        - id: 1
-          teacher_id: 1
-          title: コーディング大会
-          contents: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
-          due: '2022-01-01 11:11:11'
-          created_at: '2022-01-01 11:11:11'
-          updated_at: '2022-01-01 11:11:11'
-          deleted_at: null
     SkillRequest:
       type: object
       x-examples:
@@ -1265,15 +3271,7 @@ components:
           updated_at: '2022-01-01 11:11:11'
           deleted_at: null
   securitySchemes: {}
-  parameters:
-    id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: integer
-        example: 1
-        minimum: 1
-        maximum: 255
-        format: int64
-      description: user-id
+  parameters: {}
+tags:
+  - name: EndPoint
+  - name: Models

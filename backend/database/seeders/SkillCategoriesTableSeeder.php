@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Skills\SkillCategory;
 
 class SkillCategoriesTableSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class SkillCategoriesTableSeeder extends Seeder
             $category=[
                 'name'=>$name[$i],
             ];
-            DB::table('skill_categories')->insert($category);
+            SkillCategory::create($category);
         }
     }
 }

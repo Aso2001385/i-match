@@ -1,6 +1,14 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SkillController;
+use App\Http\Controllers\RecruitController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\InformationController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\RoomUserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,16 +27,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 Route::get('/ac',[UserController::class,'access']); //T
-Route::get('/users', [UserController::class, 'index']); //R
-Route::post('/users', [UserController::class, 'store']); //C 
-Route::get('/users/{id}',[UserController::class, 'show']); //R
-Route::put('/users/{id}',[UserController::class, 'update']); // U
-Route::delete('/users/{id}',[UserController::class, 'delete']); // D
+Route::apiResource('users', UserController::class);
+Route::put('/user/password',[UserController::class, 'passUpdate']); // U
 
-Route::put('/user/password',[UserController::class, 'passwordUpdate']); // U
+Route::apiResource('skills', SkillController::class);
 
-Route::resource('skills','SkillController');
+Route::apiResource('recruits', RecruitController::class);
+Route::get('recruits/other/{id}', [RecruitController::class,'otherIndex']);
 
-Route::resource('userSkill','UserSkillController', ['only' => ['store','update','destroy']]);
+Route::apiResource('informations',InformationController::class);
+
+Route::apiResource('teachers', TeacherController::class);
+Route::put('/teacher/password',[TeacherController::class,'passUpdate']);
+
+Route::apiResource('chats',ChatController::class);
+
+Route::apiResource('rooms',RoomController::class);
+
+Route::apiResource('room-user',RoomUserController::class);
+
+Route::post('/auth', [AuthController::class, 'login']);
+Route::get('/auth', [AuthController::class, 'restore']);

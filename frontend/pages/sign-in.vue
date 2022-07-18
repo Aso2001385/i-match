@@ -3,22 +3,12 @@
     <v-row justify="center">
       <v-col cols="12" md="5">
         <v-card class="pb-10 mx-auto fill-width">
-          <v-card-title class="d-flex justify-center pa-8 grey darken-4">
+          <v-card-title class="d-flex justify-center pa-4 grey darken-4">
             <h3 class="text-center white--text">SIGN UP</h3>
           </v-card-title>
           <v-divider class="pb-5"> </v-divider>
           <v-form>
             <div class="pa-10">
-              <v-text-field
-                v-model="name"
-                label="Name"
-                required
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
-              >
-              </v-text-field>
               <v-text-field
                 v-model="email"
                 label="E-mail"
@@ -38,17 +28,6 @@
                 @blur="$v.password.$touch()"
                 @click:append="show1 = !show1"
               ></v-text-field>
-              <v-text-field
-                v-model="confirmPassword"
-                label="Confirm Password"
-                required
-                :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="show2 ? 'text' : 'password'"
-                :error-messages="confirmPasswordErrors"
-                @input="$v.confirmPassword.$touch()"
-                @blur="$v.confirmPassword.$touch()"
-                @click:append="show2 = !show2"
-              ></v-text-field>
               <div class="pt-5 position: relative">
                 <v-btn class="mr-0" @click="submit">{{ addMessage }}</v-btn>
               </div>
@@ -67,33 +46,19 @@ export default {
   mixins: [validationMixin],
   layout: 'auth',
   validations: {
-    name: { required, maxLength: maxLength(10) },
     email: { required, email, maxLength: maxLength(23), minLength: minLength(23) },
     password: { required, minLength: minLength(8) },
-    confirmPassword: {
-      required,
-      minLength: minLength(8),
-    },
   },
 
   data: () => ({
     show1: false,
-    show2: false,
-    name: '',
     email: '',
     password: '',
-    confirmPassword: '',
     addMessage: 'Add',
+    user: {},
   }),
 
   computed: {
-    nameErrors() {
-      const errors = []
-      if (!this.$v.name.$dirty) return errors
-      !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-      !this.$v.name.required && errors.push('Name is required.')
-      return errors
-    },
     emailErrors() {
       const errors = []
       if (!this.$v.email.$dirty) return errors
@@ -108,24 +73,24 @@ export default {
       !this.$v.password.required && errors.push('Password is required')
       return errors
     },
-    confirmPasswordErrors() {
-      const errors = []
-      if (!this.$v.confirmPassword.$dirty) {
-        this.confirmPassword !== this.password && errors.push('The password you entered does not match!')
-        return errors
-      }
-      this.confirmPassword !== this.password && errors.push('The password you entered does not match!')
-      !this.$v.confirmPassword.required && errors.push('Confirm Password is required')
-      return errors
-    },
   },
 
   methods: {
     submit() {
-      alert(this.confirmPassword + ':' + this.password + ' = ' + (this.confirmPassword !== this.password))
+      this.$v.$touch()
 
-      this.addMessage = 'OK!'
+      this.user = {
+        email: this.email,
+        password: this.password,
+      }
+
+      this.$axios.post('http://localhost:8080/api/authorization', this.user).then(response => {
+        this.addMessage = response.data
+      })
+
+      alert('通ったっす！')
     },
+
     clear() {
       this.$v.$reset()
       this.name = ''

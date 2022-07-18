@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Skills;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,7 +16,6 @@ class SkillFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'category_id'=>rand(1,5),
-            'depth' => rand(1,5),
         ];
     }
 }

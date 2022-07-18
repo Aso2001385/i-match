@@ -3,6 +3,9 @@
 namespace App\Http\Requests\Teachers;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Response;
 
 class UpdateEventRequest extends FormRequest
 {
@@ -41,5 +44,15 @@ class UpdateEventRequest extends FormRequest
             'due.date'=>'日付を入力してください',
             'due.after'=>'今日以降の日付を設定してください',
         ];
+    }
+
+    protected function failedValidation( Validator $validator )
+    {
+        $response['result'] = $validator->errors()->toArray();
+        $response['status']=Response::HTTP_UNPROCESSABLE_ENTITY;
+
+        throw new HttpResponseException(
+            response()->json($response['result'],$response['status'])
+        );
     }
 }

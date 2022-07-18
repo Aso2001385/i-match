@@ -14,6 +14,8 @@ class RecruitUser extends Model
         'user_id',
     ];
 
+    protected $table = "recruit_user";
+
     public static function get_users($recruit){
 
         $recruit['user_count'] = RecruitUser::where('recruit_id',$recruit['id'])->count();

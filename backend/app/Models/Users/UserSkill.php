@@ -2,9 +2,11 @@
 
 namespace App\Models\Users;
 
+use App\Models\Skills\Skill;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 
@@ -22,21 +24,9 @@ class UserSkill extends Model
         'level',
     ];
 
-    public static function get_skills($user_id){
-        
-        try{
-            $user_skills = UserSkill::where('user_id',$user_id)->get()->toArray();
-            $success = true;
-        }catch(Exception $e){
-            $user_skills = [];
-            $success = false;
-        }
-       
-        return [
-            'result' => $user_skills,
-            'success' => $success,
-        ];
-
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
     }
 
     public static function store_skills(Request $request){
