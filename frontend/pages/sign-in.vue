@@ -4,7 +4,7 @@
       <v-col cols="12" md="5">
         <v-card class="pb-10 mx-auto fill-width">
           <v-card-title class="d-flex justify-center pa-4 grey darken-4">
-            <h3 class="text-center white--text">SIGN UP</h3>
+            <h3 class="text-center white--text">SIGN IN</h3>
           </v-card-title>
           <v-divider class="pb-5"> </v-divider>
           <v-form>
@@ -85,7 +85,7 @@ export default {
       }
 
 
-      this.$axios.post('http://localhost:8080/api/authorization', this.user).then(response => {
+      this.$axios.post('http://localhost:8080/api/auth', this.user).then(response => {
         this.addMessage = response.data
       })
 

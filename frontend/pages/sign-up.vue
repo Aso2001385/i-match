@@ -130,12 +130,6 @@ export default {
       console.log(this.$store.state.user.name)
       if (this.confirmPassword !== this.password) return
 
-      this.$cookies.set('token', {
-        id: '1',
-        content: 'ABCDEFGHIJKLMNOPQRSTUVWXYZAABBCC',
-        update: '2222-08-08 23:56:44',
-      })
-
       this.user = {
         name: this.name,
         email: this.email,
@@ -144,9 +138,8 @@ export default {
 
       this.$axios.post('http://localhost:8080/api/users', this.user).then(response => {
 
-        console.log(response.headers)
-        this.$store.commit('restoreUser',response.data);
-        this.$store.commit('restoreToken',response.headers['x-auth']);
+        console.log(response.data)
+        // this.$store.commit('restoreUser',response.data);
 
       })
     },

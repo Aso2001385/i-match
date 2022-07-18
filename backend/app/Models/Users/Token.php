@@ -68,6 +68,7 @@ class Token extends Model
 
     }
 
+    // トークン再生成
     public static function regeneration($user_id){
 
         $token = Token::updateOrCreate(['id'=>$user_id],['content' => Str::random(32)]);

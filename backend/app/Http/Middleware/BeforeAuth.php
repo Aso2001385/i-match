@@ -22,6 +22,7 @@ class BeforeAuth
     public function handle(Request $request, Closure $next)
     {
 
+
         $route = $request->method().explode("/api",$request->url())[1];
         session(['request_route'=>$route]);
 
@@ -32,8 +33,12 @@ class BeforeAuth
         ];
 
         // exit_routeに登録されたルートであればスルー
-        if(in_array($route,$exit_route)) return $next($request);
+        if(!in_array($route,$exit_route)) return $next($request);
+
         // 認可に失敗したら401エラーでレスポンス
+        $x_auth = $request->headers->get('X-Auth');
+        if(isset($x_auth)) return response()->json('',401)->header('Access-Control-Allow-Origin','*');
+
         if(Token::authorization($request)) return response()->json('',Response::HTTP_UNAUTHORIZED);
 
         session([ 'user_id' => explode("|",$request->headers->get('X-Auth'))[0] ]);

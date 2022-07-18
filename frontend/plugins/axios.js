@@ -9,6 +9,7 @@ export default ({ $axios, redirect }) => {
       'get:ac'
     ],
     response:[
+
     ]
   }
 

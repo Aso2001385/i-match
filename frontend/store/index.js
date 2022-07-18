@@ -13,7 +13,6 @@ export const state = () => ({
 export const getters = {
   user: state => state.user,
   skills: state => state.skills,
-  token: state => state.token
 }
 
 export const mutations = {
@@ -22,11 +21,8 @@ export const mutations = {
     state.user = e
   },
 
-  restoreToken(state,e){
-    state.token = e
-  },
+  restoreSkills(state,e){
+    state.skills = e
+  }
 
-  refresh(state,e) {
-    state.user = e
-  },
 }

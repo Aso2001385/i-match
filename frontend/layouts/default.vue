@@ -61,12 +61,15 @@
   </v-app>
 </template>
 <script>
+import redirect from '~/middleware/redirect'
+
 export default {
   data() {
     return {
       drawer: true,
     }
   },
+  middleware: redirect,
 }
 </script>
 <style>
