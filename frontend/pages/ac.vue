@@ -1,7 +1,7 @@
 <template>
   <v-flex>
     <v-row class="grey darken-2">
-      <v-col cols="6" class="ml-5 mt-4 pt-3">
+      <!-- <v-col cols="6" class="ml-5 mt-4 pt-3">
         <h3 class="white--text">ユーザー投稿</h3>
       </v-col>
       <v-col class="d-flex mr-5 white--text" cols="2">
@@ -41,7 +41,7 @@
             <v-card-text>▶︎その他：figma・Github・Phthon</v-card-text>
           </v-card>
         </v-row>
-      </v-col>
+      </v-col> -->
     </v-row>
   </v-flex>
 </template>
@@ -60,23 +60,21 @@ export default {
     this.getAccount()
   },
   methods: {
-    sortSection(sort) {
-      if (sort === 0) {
-        this.sortId = 1
-      } else if (sort === 1) {
-        this.sortId = 2
-      } else {
-        this.sortId = 0
-      }
-    },
+    // sortSection(sort) {
+    //   if (sort === 0) {
+    //     this.sortId = 1
+    //   } else if (sort === 1) {
+    //     this.sortId = 2
+    //   } else {
+    //     this.sortId = 0
+    //   }
     getAccount() {
       this.$axios
-        // .get(`http://localhost:8080/api/users/${this.userId}`)
-        .get(`https://i-match.click/api/users/${this.userId}`)
+        .get('https://i-match.click/api/ac')
         .then(response => {
-          console.log('ちゃんと通っている')
-          this.name = response.data.name
-          this.email = response.data.email
+          //   console.log('ちゃんと通っている')
+          //   this.name = response.data.name
+          //   this.email = response.data.email
           console.log(response.data)
         })
         .catch(err => {
@@ -87,8 +85,8 @@ export default {
       // alert('通ったっす！')
     },
   },
-  components: {
-    BulletinList: () => import('../components/BulletinList.vue'),
-  },
 }
+//   components: {
+//     BulletinList: () => import('../components/BulletinList.vue'),
+//   },
 </script>

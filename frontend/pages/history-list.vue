@@ -56,7 +56,7 @@ export default {
     },
     getHistory() {
       this.$axios
-        .get('http://3.113.81.143/api/')
+        .get('https://i-match.click/api/')
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)

@@ -2,7 +2,7 @@ export default ({ $axios, redirect }) => {
   // X-Aothを付けないルートを追記していく(条件式を増やしていくよりこの方が管理しやすくてスマートだよね)
   const EXIT_ROUTES = {
     request: ['post:auth', 'post:users', 'get:ac'],
-    response: [],
+    response: ['get:ac'],
   }
 
   // リクエスト処理

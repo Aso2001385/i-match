@@ -57,7 +57,7 @@ export default {
     getNews() {
       this.$axios
         // .get('http://localhost:8080/api/informations')
-        .get('http://3.113.81.143/api/informations')
+        .get('https://i-match.click/api/informations')
         .then(response => {
           console.log('ちゃんと通っている')
           this.newsCount = response.data.length
@@ -77,7 +77,7 @@ export default {
         })
       this.$axios
         // .get('http://localhost:8080/api/informations')
-        .get('http://3.113.81.143/api/informations')
+        .get('https://i-match.click/api/informations')
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
           this.titleList.unshift(this.titleList[0])
