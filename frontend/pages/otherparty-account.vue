@@ -16,7 +16,7 @@
     </v-row>
     <v-row>
       <v-col cols="8" class="ma-0 pa-0 pb-1" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
-        <BulletinList v-for="userList in 5" :key="userList" />
+        <YouBulletinList />
       </v-col>
       <v-col cols="4" class="pl-3 mt-2" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
         <v-row class="justify-center mb-1">
@@ -24,8 +24,8 @@
             <p class="mt-2 text-h1 pl-10 pr-10 pt-5">
               <v-icon class="text-h1 ma-3" aria-hidden="false">mdi-account</v-icon>
             </p>
-            <strong style="font-size: 2rem">test test</strong>
-            <p class="grey--text" style="font-size: 1rem">test@test.jp</p>
+            <strong style="font-size: 2rem">{{ name }}</strong>
+            <p class="grey--text" style="font-size: 1rem">{{ email }}</p>
           </v-card>
         </v-row>
         <v-row class="justify-center">
@@ -57,12 +57,20 @@ export default {
     return {
       sortName: ['新着順', '投稿順', '締切が近い順'],
       sortId: 0,
+      userId: 0,
+      name: '',
+      email: '',
     }
   },
   mounted() {
+    this.getSession()
     this.otherpartyAccount()
   },
   methods: {
+    getSession() {
+      // クリックされた相手の情報
+      this.userId = sessionStorage.getItem('userInfo')
+    },
     sortSection(sort) {
       if (sort === 0) {
         this.sortId = 1
@@ -72,35 +80,26 @@ export default {
         this.sortId = 0
       }
     },
-    getAccount() {
+    otherpartyAccount() {
       this.$axios
-      .get('http://localhost:8080/api/users/{id}', getAccount)
-      .then(response => {
-        console.log('ちゃんと通っている１')
-        console.log(response.data)
-        this.$router.push('/bulletin-list')
-      })
-      .catch(err => {
-        console.log('通ってないよー')
-        return err.response
-      })
+        // .get(`http://localhost:8080/api/users/${this.userId}`)
+        .get(`3.113.81.143/api/users/${this.userId}`)
+        .then(response => {
+          console.log('ちゃんと通っている')
+          this.name = response.data.name
+          this.email = response.data.email
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          console.log(err)
+          return err.response
+        })
       alert('通ったっす！')
     },
   },
   components: {
-    BulletinList: () => import('../components/BulletinList.vue'),
+    YouBulletinList: () => import('../components/YouBulletinList.vue'),
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
 }
 </script>

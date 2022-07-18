@@ -82,15 +82,15 @@
 <script defer>
 export default {
   computed: {
-    level: {
-      get() {
-        console.log('get')
-        return ''
-      },
-      set(val) {
-        console.log('set')
-      },
-    },
+    // level: {
+    //   get() {
+    //     console.log('get')
+    //     return ''
+    //   },
+    //   set(val) {
+    //     console.log('set')
+    //   },
+    // },
   },
   data() {
     return {
@@ -189,19 +189,6 @@ export default {
         this.levels.shift()
       }
       console.log(this.levels)
-      //追加部分
-      this.$axios
-      .get('http://localhost:8080/api/rectuits', getAccount)
-      .then(response => {
-        console.log('ちゃんと通っている１')
-        console.log(response.data)
-        this.$router.push('/bulletin-list')
-      })
-      .catch(err => {
-        console.log('通ってないよー')
-        return err.response
-      })
-      alert('通ったっす！')
     },
   },
 }

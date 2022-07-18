@@ -27,36 +27,34 @@
 <script defer>
 export default {
   data() {
-    return {}
+    return {
+      userId: 1,
+    }
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
   mounted() {
-    this.chatList()
+    this.getChatList()
   },
   methods: {
-    chatList() {
+    getChatList() {
       this.$axios
-      .get('http://localhost:8080/api/chats', getAccount)
-      .then(response => {
-        console.log('ちゃんと通っている１')
-        console.log(response.data)
-      })
-      .catch(err => {
-        console.log('通ってないよー')
-        return err.response
-      })
-    alert('通ったっす！')
+        // .get('http://localhost:8080/api/chats')
+        .get('http://3.113.81.143/api/chats')
+        .then(response => {
+          console.log('ちゃんと通っている')
+          this.bulletinCount = response.data.length
+          for (let i = 0; i < response.data.length; i++) {
+            this.bulletinList.push(response.data[i].title)
+            // this.skillIdList[response.data[0].skill]
+            this.dueList.push(response.data[i].due)
+            this.personsList.push(response.data[i].persons)
+          }
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          return err.response
+        })
+      alert('通ったっす！')
     },
   },
 }

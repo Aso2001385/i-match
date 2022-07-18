@@ -5,10 +5,10 @@
     </v-row>
     <v-row>
       <v-col cols="8" class="pb-5" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
-        <v-card v-for="userList in 10" :key="userList">
+        <v-card v-for="userList in cnt" :key="userList">
           <v-row>
             <v-col cols="12"
-              ><p style="text-align: right" class="mr-5 mb-1">
+              ><p style="text-align: right" class="mr-5 mb-1" @click="session(userIdList[userList])">
                 <NuxtLink to="/otherparty-account" class="white--text text-h6" style="text-decoration: none"
                   ><v-icon class="text-h3" aria-hidden="false">mdi-chat-processing-outline</v-icon></NuxtLink
                 >
@@ -17,7 +17,7 @@
           </v-row>
           <v-row>
             <v-col cols="11" class="ml-10 mt-0">
-              <h2>金太郎</h2>
+              <h2>{{ nameList[userList] }}</h2>
             </v-col>
           </v-row>
           <v-row>
@@ -39,11 +39,20 @@
 export default {
   data() {
     return {
+      userId: 1,
+      firstName: '',
+      userIdList: [],
+      nameList: [],
+      nameTitle: [],
+      cnt: 0,
+      userCount: 0,
+      userSkillId: [],
       langSea: [],
       frameSea: [],
       dbSea: [],
       infSea: [],
       othSea: [],
+      userInfo: 0,
       langs: [
         { id: 0, skillCategory: 0, skillName: 'Java' },
         { id: 1, skillCategory: 0, skillName: 'PHP' },
@@ -112,36 +121,42 @@ export default {
   components: {
     SearchSkill: () => import('../components/SearchSkill.vue'),
   },
-
   mounted() {
-    this.chatRoom()
+    this.getUser()
   },
+  methods: {
+    session(value) {
+      console.log(value)
+      sessionStorage.setItem('userInfo', value)
+    },
+    async getUser() {
+      await this.$axios
+        // .get('http://localhost:8080/api/users')
+        .get('http://3.113.81.143/api/users')
+        .then(response => {
+          console.log('ちゃんと通っている')
+          this.userCount = response.data.length
+          for (let i = 0; i < this.userCount; i++) {
+            this.userIdList.push(response.data[i].id)
+            this.nameList.push(response.data[i].name)
+            this.nameTitle.push(response.data[i].name)
+          }
+          // this.userIdList.shift()
+          this.nameTitle.shift()
 
-  getAccount() {
-    this.$axios
-    .get('http://localhost:8080/api/users/{id}', getAccount)
-    .then(response => {
-      console.log('ちゃんと通っている１')
-      console.log(response.data)
-      this.$router.push('/bulletin-list')
-    })
-    .catch(err => {
-      console.log('通ってないよー')
-      return err.response
-    })
-    alert('通ったっす！')
+          console.log(this.nameTitle[0])
+          const count = this.nameTitle.length
+          this.cnt = count
+
+          console.log(response.data)
+          console.log(this.nameList)
+          console.log(this.userIdList)
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          return err.response
+        })
+    },
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
 }
 </script>

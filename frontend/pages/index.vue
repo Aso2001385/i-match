@@ -27,8 +27,13 @@
 </template>
 <script defer>
 export default {
+  components: {
+    BulletinList: () => import('../components/BulletinList.vue'),
+    SearchSkill: () => import('../components/SearchSkill.vue'),
+  },
   data() {
     return {
+      bulletinFlg: 1,
       langSea: [],
       frameSea: [],
       dbSea: [],
@@ -99,24 +104,8 @@ export default {
       ],
     }
   },
-  components: {
-    BulletinList: () => import('../components/BulletinList.vue'),
-    SearchSkill: () => import('../components/SearchSkill.vue'),
-  },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
   mounted() {
-    this.getAccount()
+    // this.submit()
   },
   methods: {
     sortSection(sort) {
@@ -128,20 +117,20 @@ export default {
         this.sortId = 0
       }
     },
-    getAccount() {
-      this.$axios
-      .get('http://localhost:8080/api/users/{id}', getAccount)
-      .then(response => {
-        console.log('ちゃんと通っている１')
-        console.log(response.data)
-        this.$router.push('/bulletin-list')
-      })
-      .catch(err => {
-        console.log('通ってないよー')
-        return err.response
-      })
-    alert('通ったっす！')
-    },
+    // submit() {
+    //   this.$axios
+    //     .get('http://localhost:8080/api/recruits')
+    //     .then(response => {
+    //       console.log('ちゃんと通っている１')
+    //       console.log(response.data)
+    //       // this.$router.push('/bulletin-list')
+    //     })
+    //     .catch(err => {
+    //       console.log('通ってないよー')
+    //       return err.response
+    //     })
+    //   alert('通ったっす！')
+    // },
   },
 }
 </script>

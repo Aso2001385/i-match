@@ -41,20 +41,8 @@ export default {
   data() {
     return {}
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
   mounted() {
-    this.getAccount()
+    this.getHistory()
   },
   methods: {
     sortSection(sort) {
@@ -66,19 +54,19 @@ export default {
         this.sortId = 0
       }
     },
-    getAccount() {
+    getHistory() {
       this.$axios
-      .get('http://localhost:8080/api/users/{id}', getAccount)
-      .then(response => {
-        console.log('ちゃんと通っている１')
-        console.log(response.data)
-        this.$router.push('/bulletin-list')
-      })
-      .catch(err => {
-        console.log('通ってないよー')
-        return err.response
-      })
-    alert('通ったっす！')
+        .get('http://3.113.81.143/api/')
+        .then(response => {
+          console.log('ちゃんと通っている１')
+          console.log(response.data)
+          this.$router.push('/bulletin-list')
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          return err.response
+        })
+      alert('通ったっす！')
     },
   },
 }

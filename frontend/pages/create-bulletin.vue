@@ -226,8 +226,6 @@ export default {
   },
   methods: {
     informationBull() {
-      // スキル更新があったとしても消えないようにセッションに一時的に保存しておく
-      // スキル更新後に変更があった場合はセッションに変更がいくようにする
       sessionStorage.setItem('infoTitle', this.tit)
       sessionStorage.setItem('infoContent', this.content)
       sessionStorage.setItem('infoTime', this.time)
@@ -332,7 +330,7 @@ export default {
       }
       console.log(sendBulletin)
       this.$axios
-        .post('http://localhost:8080/api/recruits', sendBulletin)
+        .post('http://3.113.81.143/api/recruits', sendBulletin)
         // .post('http://localhost:8080/api/recruits', sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')

@@ -34,7 +34,7 @@
               </v-list-item>
               <v-list-item class="pl-1 pb-0 pa-4">
                 <NuxtLink to="/account" class="white--text text-h7" style="text-decoration: none"
-                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-account</v-icon>アカウント名</NuxtLink
+                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-account</v-icon>{{ name }}</NuxtLink
                 >
               </v-list-item>
             </v-list>
@@ -65,7 +65,29 @@ export default {
   data() {
     return {
       drawer: true,
+      userId: 1,
+      name: '',
     }
+  },
+  mounted() {
+    this.getAccount()
+  },
+  methods: {
+    getAccount() {
+      this.$axios
+        .get('http://localhost:8080/api/users?id=1')
+        .then(response => {
+          console.log('ちゃんと通っている')
+          this.name = response.data[0].name
+          console.log(response.data[0])
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          console.log(err)
+          return err.response
+        })
+      alert('通ったっす！')
+    },
   },
 }
 </script>

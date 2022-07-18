@@ -58,7 +58,7 @@ export default {
   //     })
   // },
     mounted() {
-        this.getAccount()
+        // this.getAccount()
     },
     methods: {
         sortSection(sort) {
@@ -70,19 +70,19 @@ export default {
                 this.sortId = 0
             }
         },
-        getAccount() {
-        this.$axios
-        .get('http://localhost:8080/api/', getAccount)
-        .then(response => {
-            console.log('ちゃんと通っている１')
-            console.log(response.data)
-            this.$router.push('/bulletin-list')
-        })
-        .catch(err => {
-            console.log('通ってないよー')
-            return err.response
-        })
-        alert('通ったっす！')
-        },
+        // getAccount() {
+        // this.$axios
+        // .get('http://localhost:8080/api/', getAccount)
+        // .then(response => {
+        //     console.log('ちゃんと通っている１')
+        //     console.log(response.data)
+        //     this.$router.push('/bulletin-list')
+        // })
+        // .catch(err => {
+        //     console.log('通ってないよー')
+        //     return err.response
+        // })
+        // alert('通ったっす！')
+        // },
     },
 }

@@ -58,10 +58,6 @@ export default {
     user: {},
   }),
 
-  mounted() {
-    this.signIn()
-  },
-
   computed: {
     emailErrors() {
       const errors = []
@@ -80,21 +76,6 @@ export default {
   },
 
   methods: {
-    getAccount() {
-      this.$axios
-      .get('http://localhost:8080/api/users/{id}', getAccount)
-      .then(response => {
-        console.log('ちゃんと通っている１')
-        console.log(response.data)
-        this.$router.push('/bulletin-list')
-      })
-      .catch(err => {
-        console.log('通ってないよー')
-        return err.response
-      })
-      alert('通ったっす！')
-    },
-
     submit() {
       this.$v.$touch()
 
@@ -102,7 +83,6 @@ export default {
         email: this.email,
         password: this.password,
       }
-
 
       this.$axios.post('http://localhost:8080/api/authorization', this.user).then(response => {
         this.addMessage = response.data
