@@ -22,7 +22,8 @@ class AfterAuth
         $response = $next($request);
 
         $exit_route = [
-            'GET/ac'
+            'GET/ac',
+            'GET/recruits'
         ];
 
         if(in_array(session('request_route'),$exit_route)) return $response;

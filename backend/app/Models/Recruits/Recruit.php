@@ -27,12 +27,12 @@ class Recruit extends Model
         'due',
     ];
 
-    public function recruit_users()
+    public function users()
     {
         return $this->hasMany(RecruitUser::class);
     }
 
-    public function recruit_skills()
+    public function skills()
     {
         return $this->hasMany(RecruitSkill::class);
     }
