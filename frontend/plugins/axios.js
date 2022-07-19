@@ -3,7 +3,16 @@ export default ({ $axios, redirect }) => {
   const EXIT_ROUTES = {
     // 練習用に
     request: ['post:auth', 'post:users', 'get:ac'],
-    response: ['get:ac', 'get:recruits', `get:users/1`, 'get:recruits/2'],
+    response: [
+      'get:ac',
+      'get:recruits',
+      'get:users',
+      `get:users/1`,
+      `get:recruits/1`,
+      `get:recruits/2`,
+      'get:informations',
+      `get:informations/3`,
+    ],
   }
 
   // リクエスト処理

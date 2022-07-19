@@ -5,7 +5,7 @@
     </v-row>
     <v-row>
       <v-col cols="8" class="pb-5" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
-        <v-card v-for="userList in cnt" :key="userList">
+        <v-card v-for="userList in userCount" :key="userList">
           <v-row>
             <v-col cols="12"
               ><p style="text-align: right" class="mr-5 mb-1" @click="session(userIdList[userList])">
@@ -135,22 +135,19 @@ export default {
         // .get('https://localhost:8080/api/users')
         .then(response => {
           console.log('ちゃんと通っている')
-          this.userCount = response.data.length
+          this.userCount = response.data.length - 1
+          console.log(this.userCount)
           for (let i = 0; i < this.userCount; i++) {
-            this.userIdList.push(response.data[i].id)
-            this.nameList.push(response.data[i].name)
-            this.nameTitle.push(response.data[i].name)
+            if (this.userId === response.data[i].id) {
+              console.log('同じID')
+            } else {
+              this.userIdList.push(response.data[i].id)
+              this.nameList.push(response.data[i].name)
+            }
           }
-          // this.userIdList.shift()
-          this.nameTitle.shift()
-
-          console.log(this.nameTitle[0])
-          const count = this.nameTitle.length
-          this.cnt = count
-
-          console.log(response.data)
+          this.userCount = this.userCount - 1
+          this.nameList.unshift(this.nameList[0])
           console.log(this.nameList)
-          console.log(this.userIdList)
         })
         .catch(err => {
           console.log('通ってないよー')
@@ -160,3 +157,5 @@ export default {
   },
 }
 </script>
+<!-- this.$states.state.killsスキル全ての情報取得できる -->
+<!-- this.$states.state.usersスキル全ての情報取得できる -->
