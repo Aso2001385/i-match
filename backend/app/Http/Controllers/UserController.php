@@ -13,7 +13,14 @@ class UserController extends Controller
 {
 
     public function access(){
-        return response()->json(['result' => true],Response::HTTP_OK);
+
+        return response()->json(['result' => true],Response::HTTP_OK)->
+        header("Access-Control-Allow-Origin", "*")->
+        header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE")->
+        header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept"
+        );
     }
     /**
      * Display a listing of the resource.

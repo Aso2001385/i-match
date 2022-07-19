@@ -28,7 +28,8 @@ class BeforeAuth
         // トークンで認証しないルート
         $exit_route = [
             'POST/users',
-            'GET/ac'
+            'GET/ac',
+            'GET/recruits'
         ];
 
         // exit_routeに登録されたルートであればスルー

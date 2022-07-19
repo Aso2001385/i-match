@@ -21,8 +21,13 @@ class RecruitController extends Controller
     public function index()
     {
         $response=[
-            'result' => Recruit::all()->toArray(),
-            'status'=>Response::HTTP_OK
+            'result' => Recruit::with([
+                'users' => function ($query) {
+                $query->select('recruit_user.*','users.name')
+                ->join('users','recruit_user.user_id','users.id');
+            },
+            'skills'])->get(),
+            'status' => Response::HTTP_OK
         ];
         return response()->json($response['result'],$response['status']);
     }
