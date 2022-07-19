@@ -28,9 +28,8 @@ class CreateInformationRequest extends FormRequest
     {
         return [
             'user_id'=>'required|integer',
-            'title'=>'required|string|max 255',
-            'contents'=>'required|string|max 1024',
-            'read'=>'required|boolean',
+            'title'=>'required|string|max:255',
+            'contents'=>'required|string|max:1024',
             'category_id'=>'required|integer',
             'url'=>'required|url|active_url',
         ];
@@ -45,8 +44,6 @@ class CreateInformationRequest extends FormRequest
             'contents.required' =>'本文を入力してください',
             'contents.string'=>'文字列で入力してください',
             'contents.max'=>'1024文字以内で入力してください',
-            'read.required'=>'既読フラグが入力されていません',
-            'read.boolean'=>'boolean型になっていません',
             'category_id.required'=>'カテゴリIDが入力されていません',
             'category_id.integer'=>'カテゴリIDが整数になっていません',
             'url.required'=>'URLを入力してください',

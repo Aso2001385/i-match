@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users\User;
-use App\Http\Requests\Users\CreateUserRequest;
-use App\Http\Requests\Users\UpdateUserRequest;
-use App\Http\Requests\Users\PasswordUpdateUserRequest;
+use App\Models\Skills\SkillRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Exception;
 
-class UserController extends Controller
+class SkillRequestController extends Controller
 {
-
-    public function access(){
-        return response()->json(['result' => true],Response::HTTP_OK);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,13 +16,12 @@ class UserController extends Controller
      */
     public function index()
     {
-            $response=[
-                'result' =>User::all()->toArray(),
-                'status' => Response::HTTP_OK
-            ];
+        $response=[
+            'result' =>SkillRequest::all()->toArray(),
+            'status' => Response::HTTP_OK
+        ];
 
-            return response()->json($response['result'],$response['status']);
-
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -39,13 +32,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
-        $response = User::create_user($request);
+        $response=SkillRequest::create_skill_request($request);
 
         return response()->json($response['result'],$response['status']);
-
     }
-
 
     /**
      * Display the specified resource.
@@ -53,13 +43,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(SkillRequest $skill_request)
     {
-        $response = User::get_user($user);
-        
+        $response=SkillRequest::get_skill_request($skill_request);
+
         return response()->json($response['result'],$response['status']);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -68,18 +57,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request,User $user)
+    public function update(Request $request,SkillRequest $skill_request)
     {
-
-        $response=User::update_user($user,$request);
-
-        return response()->json($response['result'],$response['status']);
-    }
-
-    public function passUpdate(PasswordUpdateUserRequest $request,User $user)
-    {
-        $response=User::password_update_user($user,$request);
-        return response()->json($response['result'],$response['status']);
+        //
     }
 
     /**
@@ -88,11 +68,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(SkillRequest $skill_request)
     {
-        $response=User::delete_user($user);
+        $response=SkillRequest::delete_request_skill($skill_request);
 
         return response()->json($response['result'],$response['status']);
-
     }
 }

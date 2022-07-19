@@ -5,6 +5,7 @@ namespace App\Models\Teachers;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
@@ -15,7 +16,7 @@ use Exception;
 
 class Teacher extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,softDeletes;
 
     protected $fillable = [
         'class',
@@ -123,6 +124,10 @@ class Teacher extends Authenticatable
 
     public static function delete_teacher($teacher){
         try{
+            $events=Event::where('teacher_id',$teacher->id)->get();
+            foreach($events as $event){
+                Event::delete_event($event);
+            }
             $teacher->delete();
             $status= Response::HTTP_OK;
         }catch(Exception $e){

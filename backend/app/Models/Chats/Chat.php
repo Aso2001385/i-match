@@ -4,12 +4,13 @@ namespace App\Models\Chats;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Response;
 use Exception;
 
 class Chat extends Model
 {
-    use HasFactory;
+    use HasFactory,softDeletes;
 
     protected $fillable = [
         'room_id',

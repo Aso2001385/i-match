@@ -20,6 +20,7 @@ class CreateChatsTable extends Migration
             $table->string('message',255);
             $table->boolean('read')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

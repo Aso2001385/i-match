@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Users\User;
-use App\Http\Requests\Users\CreateUserRequest;
-use App\Http\Requests\Users\UpdateUserRequest;
-use App\Http\Requests\Users\PasswordUpdateUserRequest;
-use Illuminate\Http\Request;
+use App\Models\Skills\SkillReuestTeacher;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
-class UserController extends Controller
+class SKillsRequestTeacherController extends Controller
 {
-
-    public function access(){
-        return response()->json(['result' => true],Response::HTTP_OK);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,13 +15,12 @@ class UserController extends Controller
      */
     public function index()
     {
-            $response=[
-                'result' =>User::all()->toArray(),
-                'status' => Response::HTTP_OK
-            ];
+        $response=[
+            'result' =>SkillReuestTeacher::all()->toArray(),
+            'status' => Response::HTTP_OK
+        ];
 
-            return response()->json($response['result'],$response['status']);
-
+        return response()->json($response['result'],$response['status']);
     }
 
     /**
@@ -39,13 +31,10 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-
-        $response = User::create_user($request);
+        $response=SkillReuestTeacher::create_skill_request_teacher($request);
 
         return response()->json($response['result'],$response['status']);
-
     }
-
 
     /**
      * Display the specified resource.
@@ -53,13 +42,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(SkillReuestTeacher $skill_request_teacher)
     {
-        $response = User::get_user($user);
-        
+        $response=SkillReuestTeacher::get_skill_request_teacher($skill_request_teacher);
+
         return response()->json($response['result'],$response['status']);
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -68,17 +56,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request,User $user)
+    public function update(Request $request,SkillReuestTeacher $skill_request_teacher)
     {
+        $response=SkillReuestTeacher::update_skill_request_teacher($skill_request_teacher,$request);
 
-        $response=User::update_user($user,$request);
-
-        return response()->json($response['result'],$response['status']);
-    }
-
-    public function passUpdate(PasswordUpdateUserRequest $request,User $user)
-    {
-        $response=User::password_update_user($user,$request);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -88,11 +69,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(SkillRequestTeacher $skill_request_teacher)
     {
-        $response=User::delete_user($user);
+        $response=SkillReuestTeacher::delete_skill_request_teacher($skill_request_teacher);
 
         return response()->json($response['result'],$response['status']);
-
     }
 }

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recruits\RecruitUser;
 use Illuminate\Http\Request;
-use App\Models\Teachers\Event;
-use App\Http\Requests\Teachers\CreateEventRequest;
-use App\Http\Requests\Teachers\UpdateEventRequest;
 use Illuminate\Http\Response;
 
-class EventController extends Controller
+class RecruitUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +16,10 @@ class EventController extends Controller
     public function index()
     {
         $response=[
-            'result' => Event::all()->toArray(),
-            'status'=>Response::HTTP_OK
+            'result' =>RecruitUser::all()->toArray(),
+            'status' => Response::HTTP_OK
         ];
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -30,9 +29,9 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateEventRequest $request)
+    public function store(Request $request)
     {
-        $response=Event::create_event($request);
+        $response= RecruitUser::create_recruit_user($request);
 
         return response()->json($response['result'],$response['status']);
     }
@@ -43,22 +42,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show(RecruitUser $recruit_user)
     {
-        $response=Event::get_events($event);
-        return response()->json($response['result'],$response['status']);
-    }
+        $response=RecruitUser::get_recruit_user($recruit_user);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateEventRequest $request,Event $event)
-    {
-        $response=Event::update_event($event,$request);
         return response()->json($response['result'],$response['status']);
     }
 
@@ -68,9 +55,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(RecruitUser $recruit_user)
     {
-        $response=Event::delete_event($event);
+        $response = RecruitUser::delete_recruit_user($recruit_user);
 
         return response()->json($response['result'],$response['status']);
     }

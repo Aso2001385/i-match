@@ -19,6 +19,7 @@ class CreateSkillRequestTeacherTable extends Migration
             $table->foreignId('skill_id')->constrained('skills');
             $table->foreignId('teacher_id')->constrained('teachers');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

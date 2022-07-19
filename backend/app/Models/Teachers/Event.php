@@ -4,11 +4,14 @@ namespace App\Models\Teachers;
 
 use App\Models\Teachers\Teacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
+use Exception;
 
 class Event extends Model
 {
-    use HasFactory;
+    use HasFactory,softDeletes;
 
     protected $fillable = [
         'teacher_id',
@@ -18,7 +21,7 @@ class Event extends Model
     ];
 
 
-    public function create_event($request){
+    public static function create_event($request){
         try{
             Event::create($request->all());
             $result = 'success!';
@@ -36,10 +39,10 @@ class Event extends Model
         ];
     }
 
-    public function get_events($event){
+    public static function get_events($event){
         try{
-            $event->toArray();
-            $event['teacher']=Teacher::get_teacher($event->teacher_id);
+            $teacher=Teacher::find($event->teacher_id);
+            $event->name=$teacher->name;
             $status = Response::HTTP_OK;
         }catch(Exception $e){
             $result = $e;
@@ -48,14 +51,16 @@ class Event extends Model
         }
 
         return [
-            'result' => $teacher,
+            'result' => $event,
             'status' => $status,
         ];
     }
 
-    public function update_event($event,$request){
+    public static function update_event($event,$request){
         try{
             $event->update($request->all());
+
+            $status=Response::HTTP_OK;
         }catch(Exception $e){
 
             return [
@@ -69,5 +74,24 @@ class Event extends Model
             'status' => $status
         ];
         
+    }
+
+    public static function delete_event($event){
+        try{
+            $event->delete();
+
+            $status = Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+        return [
+            'result' => [],
+            'status' => $status
+        ];
     }
 }

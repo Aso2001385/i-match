@@ -3,14 +3,17 @@
 namespace App\Models\Skills;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Skills\SkillCategory;
+use App\Models\Users\UserSkill;
+use App\Models\Recruits\RecruitSkill;
 use Exception;
 use Illuminate\Http\Response;
 
 class Skill extends Model
 {
-    use HasFactory;
+    use HasFactory,softDeletes;
 
     protected $fillable = [
         'category_id',
@@ -84,6 +87,10 @@ class Skill extends Model
 
     public static function delete_skill($skill){
         try{
+            $user_skills=UserSkill::where('skill_id',$skill->id)->whereNull('deleted_at')->get();
+            foreach($user_skills as $user_skill){
+                UserSkill::delete($user_skill);
+            }
             $skill->delete();
             $status= Response::HTTP_OK;
         }catch(Exception $e){

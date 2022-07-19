@@ -19,6 +19,7 @@ class CreateSkillRequestsTable extends Migration
             $table->string('name');
             $table->text('message');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
