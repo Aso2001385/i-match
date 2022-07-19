@@ -192,8 +192,37 @@ class Recruit extends Model
             ];
 
         }
+    }
 
+    public static function skillSearch($request)
+    {
 
+        try{
+            $array = $request;
+            $recruit = Recruit::with([
+                'skills'=> function ($query){
+                    $query->select('recruit_skill.*','skills.name','skills.category_id')->join('skills', 'skill_id', '=', 'skills.id');
+                },
+                'users'=> function ($query){
+                    $query->select('recruit_user.*','users.name')->join('users', 'user_id', '=', 'users.id');
+                },
+            ])->whereIn('id',RecruitSkill::select('recruit_id')
+                ->whereIn('skill_id',array_map(function($v){
+                    return $v['id'];
+                },$array))->get()
+            )->get();
+
+            return [
+                'result' => $recruit,
+                'status' => 200
+            ];
+        }catch(Exception $e){
+            return [
+                'result' => $e,
+                'status' => 400
+            ];
+
+        }
     }
 
 }

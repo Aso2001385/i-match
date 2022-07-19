@@ -23,7 +23,8 @@ class AfterAuth
 
         $exit_route = [
             'GET/ac',
-            'GET/recruits/history/1'
+            'GET/recruits/history/1',
+            'POST/search/skill'
         ];
 
         if(in_array(session('request_route'),$exit_route)) return $response;
