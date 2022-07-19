@@ -39,8 +39,14 @@ class AuthController extends Controller
     public function restore(Request $request){
 
         $response =  explode('|',$request->headers->get('X-Auth'));
-        $user = User::get_user(User::find($response[0]));
-        return response()->json($user['result'],Response::HTTP_OK);
+
+        $user = User::get_user(User::find($response[0]))['result'];
+        $skills = Skill::get_skills()['result'];
+        $response = [
+            'user' => $user,
+            'skills' => $skills
+        ];
+        return response()->json( $response,Response::HTTP_OK);
 
     }
 

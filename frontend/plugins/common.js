@@ -34,7 +34,6 @@ export default {
 
     materials.map( e =>  {
 
-      console.log(e)
       if(Array.isArray(nestKeys)){
         nestKeys.forEach(el => {
           e = e[el]
@@ -51,10 +50,12 @@ export default {
           return elm
         },(condKey,condValues,addKey,addValues,defaultvalue))
 
+
       }else{
 
         e[addKey] = defaultvalue
         for(let i=0; i<condValues.length; i++){
+
           if(e[condKey] === condValues[i]){
             e[addKey] = addValues[i]
             break

@@ -15,11 +15,9 @@ export const getters = {
 
 export const mutations = {
 
-  restoreUser(state,e){
-    state.user = e
-  },
-
-  restoreSkills(state,e){
+  restoreLogin(state,e){
+    state.user = e.user
+    e = e.skills
     e = Common.groupBy(e,'category_name')
     e = Common.addKey(e,'category','skills')
     e = Common.condAddValues(
@@ -34,13 +32,23 @@ export const mutations = {
     e = Common.condAddValues(
       e,
       '',
-      'category_name',
+      'category',
       ['language','framework','database','infrastructure'],
       'jp_name',
       ['言語','フレームワーク','データベース','インフラ'],
       'その他'
     )
+    e = Common.condAddValues(
+      e,
+      '',
+      'category',
+      ['language','framework','database','infrastructure'],
+      'color',
+      ['red','blue','green','purple'],
+      'indigo darken-3'
+    )
     state.skills = e
-  }
 
+    this.$router.push('/')
+  },
 }
