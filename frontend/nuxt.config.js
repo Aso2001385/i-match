@@ -128,24 +128,26 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
-    // baseURL: 'http://localhost:8080/api/',
-    baseURL: 'https://i-match.click/api/',
+    baseURL: 'http://localhost:8080/api/',
+    // baseURL: 'https://localhost:8080/api/',
   },
 
-  // proxy: {
-  //   '/api/': {
-  //     // target: 'http://localhost:8080',
-  //     target: 'https://i-match.click',
-  //   },
-  // },
+  // 練習
   proxy: {
-    '/api': {
-      target: 'https://i-match.click/',
-      pathRewrite: {
-        '^/api': '/',
-      },
+    '/api/': {
+      target: 'http://localhost:8080',
+      // target: 'https://localhost:8080',
     },
   },
+  // 本番
+  // proxy: {
+  //   '/api': {
+  //     target: 'https://localhost:8080/',
+  //     pathRewrite: {
+  //       '^/api': '/',
+  //     },
+  //   },
+  // },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

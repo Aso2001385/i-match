@@ -104,9 +104,6 @@ export default {
       ],
     }
   },
-  mounted() {
-    // this.submit()
-  },
   methods: {
     sortSection(sort) {
       if (sort === 0) {
@@ -117,20 +114,6 @@ export default {
         this.sortId = 0
       }
     },
-    // submit() {
-    //   this.$axios
-    //     .get('http://localhost:8080/api/recruits')
-    //     .then(response => {
-    //       console.log('ちゃんと通っている１')
-    //       console.log(response.data)
-    //       // this.$router.push('/bulletin-list')
-    //     })
-    //     .catch(err => {
-    //       console.log('通ってないよー')
-    //       return err.response
-    //     })
-    //   alert('通ったっす！')
-    // },
   },
 }
 </script>

@@ -91,8 +91,8 @@ export default {
     },
     getBulletinDetail() {
       this.$axios
-        // .get(`http://localhost:8080/api/recruits/${this.bulletinDetailId}`)
-        .get(`https://i-match.click/api/recruits/${this.bulletinDetailId}`)
+        .get(`http://localhost:8080/api/recruits/${this.bulletinDetailId}`)
+        // .get(`https://localhost:8080/api/recruits/${this.bulletinDetailId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.title = response.data.title
@@ -104,7 +104,7 @@ export default {
           console.log(response.data)
         })
         .catch(err => {
-          console.log('通ってないよー')
+          console.log('通ってないよー!')
           return err.response
         })
     },
