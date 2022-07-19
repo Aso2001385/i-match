@@ -42,9 +42,9 @@ class RoomUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(RoomUser $roomUser)
+    public function show(RoomUser $room_user)
     {
-        $response=RoomUser::get_room_user($roomUser);
+        $response=RoomUser::get_room_user($room_user);
 
         return response()->json($response['result'],$response['status']);
     }
@@ -56,9 +56,9 @@ class RoomUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,RoomUser $roomUser)
+    public function update(Request $request,RoomUser $room_user)
     {
-        $response=RoomUser::update_room_user($roomUser,$request);
+        $response=RoomUser::update_room_user($room_user,$request);
 
         return response()->json($response['result'],$response['status']);
     }
@@ -69,8 +69,10 @@ class RoomUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(RoomUser $room_user)
     {
-        //
+        $response=RoomUser::delete_room_user($room_user);
+
+        return response()->json($response['result'],$response['status']);
     }
 }

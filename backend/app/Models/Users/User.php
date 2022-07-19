@@ -2,8 +2,10 @@
 
 namespace App\Models\Users;
 
+use App\Models\Recruits\Recruit;
 use App\Models\Users\UserSkill;
 use App\Models\Skills\Skill;
+use App\Models\Chats\RoomUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -107,8 +109,6 @@ class User extends Model
 
         }
 
-
-
         return [
             'result' => $user,
             'status' => $status
@@ -160,8 +160,22 @@ class User extends Model
 
     public static function delete_user($user){
         try{
+            $recruits= Recruit::where('user_id',$user->id)->whereNull('deleted_at')->get();
+            date_default_timezone_set("Asia/Tokyo");
+            $today=date("Y-m-d H:i:s");
+            foreach($recruits as $recruit){
+                if($today<=$recruit->due){
+                    Recruit::delete_recruit($recruit);
+
+                }
+            }
+            $room_users=RoomUser::where('user_id',$user->id)->whereNull('deleted_at')->get();
+            foreach($room_users as $user){
+                RoomUser::delete_room_user($user);
+            }
             $user->delete();
             $status= Response::HTTP_OK;
+
         }catch(Exception $e){
 
             return [
