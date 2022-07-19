@@ -2096,6 +2096,18 @@ paths:
       responses:
         '200':
           description: OK
+  '/recruits/history/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-recruit-history-user_id
 components:
   schemas:
     User:

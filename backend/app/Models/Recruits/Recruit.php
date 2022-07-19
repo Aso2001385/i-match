@@ -27,12 +27,12 @@ class Recruit extends Model
         'due',
     ];
 
-    public function recruit_users()
+    public function users()
     {
         return $this->hasMany(RecruitUser::class);
     }
 
-    public function recruit_skills()
+    public function skills()
     {
         return $this->hasMany(RecruitSkill::class);
     }
@@ -59,22 +59,6 @@ class Recruit extends Model
         ];
     }
 
-    public static function get_user_recruits($request){
-        try{
-            
-        }catch(Example $e){
-
-            $result = [];
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
-
-        }
-        
-        return [
-            'result' => $recruit,
-            'status' => $status,
-        ];
-    }
-
     public static function get_other_recruits($request,$id){
 
         try{
@@ -83,14 +67,14 @@ class Recruit extends Model
                 $rec->name=User::find($rec->user_id)->name;
             }
             $status = Response::HTTP_OK;
-    
+
         }catch(Example $e){
 
             $result = [];
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
 
         }
-        
+
         return [
             'result' => $recruits,
             'status' => $status,
@@ -102,7 +86,7 @@ class Recruit extends Model
 
         try{
 
-            $recruit=Recruit::with('recruit_users')->find($recruit->id)->with('recruit_skills')->find($recruit->id);
+            $recruit=Recruit::with('users')->find($recruit->id)->with('skills')->find($recruit->id);
             $recruit->user_name=User::find($recruit->user_id)->name;
 
             if(isset($recruit->recruit_users)){
@@ -124,14 +108,14 @@ class Recruit extends Model
             }
 
             $status = Response::HTTP_OK;
-    
+
         }catch(Example $e){
 
             $result = [];
             $status = Response::HTTP_INTERNAL_SERVER_ERROR;
 
         }
-        
+
         return [
             'result' => $recruit,
             'status' => $status,
@@ -151,7 +135,7 @@ class Recruit extends Model
                 'status' => Response::HTTP_BAD_REQUEST
             ];
 
-        }           
+        }
 
         return [
             'result' => $recruit,
@@ -179,11 +163,37 @@ class Recruit extends Model
             ];
 
         }
-        
+
         return [
             'result' => [],
             'status' => $status
         ];
+    }
+
+    public static function get_history($user_id){
+
+        try{
+            $recruit = Recruit::with([
+                'skills'=> function ($query){
+                    $query->select('recruit_skill.*','skills.name','skills.category_id')->join('skills', 'skill_id', '=', 'skills.id');
+                },
+                'users'=> function ($query){
+                    $query->select('recruit_user.*','users.name')->join('users', 'user_id', '=', 'users.id');
+                },
+            ])->whereIn('id',RecruitUser::select('recruit_id as id')->where('user_id',$user_id)->get())->get();
+            return [
+                'result' => $recruit,
+                'status' => 200
+            ];
+        }catch(Exception $e){
+            return [
+                'result' => $e,
+                'status' => 400
+            ];
+
+        }
+
+
     }
 
 }

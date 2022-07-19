@@ -15,7 +15,7 @@ export const getters = {
 
 export const mutations = {
 
-  restoreLogin(state,e){
+  async restoreLogin(state,e){
     state.user = e.user
     e = e.skills
     e = Common.groupBy(e,'category_name')
@@ -47,8 +47,18 @@ export const mutations = {
       ['red','blue','green','purple'],
       'indigo darken-3'
     )
+    e = Common.condAddValues(
+      e,
+      '',
+      'category',
+      ['language','framework','database','infrastructure'],
+      'id',
+      ['1','2','3','4'],
+      '5'
+    )
+    e = Common.orderBy(e,'id','num',true)
     state.skills = e
 
-    this.$router.push('/')
+    await this.$router.push('/')
   },
 }

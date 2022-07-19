@@ -30,7 +30,8 @@ class BeforeAuth
         $exit_route = [
             'POST/users',
             'POST/auth',
-            'GET/ac'
+            'GET/ac',
+            'GET/recruits/history/1'
         ];
 
         // exit_routeに登録されたルートであればスルー

@@ -57,7 +57,6 @@ export default {
   },
   computed: {
     skillUnits(){
-      console.log(this.$store.state.skills)
       return this.$store.state.skills
     }
   },
@@ -66,7 +65,6 @@ export default {
       this.skillChips.push(this.selectSkill)
       this.skillChips = Common.orderBy(this.skillChips,'category_id','num',true,{keys:['id'],mode:'num',asc:true})
       this.skillChips = this.skillChips.filter((ele, index, self) => self.findIndex(e => e.id === ele.id) === index)
-      console.log(this.skillChips)
     },
     deleteSkillChip(index) {
       this.skillChips.splice(index, 1)

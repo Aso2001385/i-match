@@ -53,6 +53,7 @@ Route::apiResource('skill-request-teacher',SKillsRequestTeacherController::class
 //募集機能
 Route::apiResource('recruits', RecruitController::class);
 Route::get('recruits/other/{id}', [RecruitController::class,'otherIndex']);
+Route::get('recruits/history/{id}',[RecruitController::class,'history']);
 
 Route::apiResource('recruit-skill',RecruitSkillController::class);
 

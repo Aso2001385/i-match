@@ -38,15 +38,19 @@ class AuthController extends Controller
     // 復元
     public function restore(Request $request){
 
-        $response =  explode('|',$request->headers->get('X-Auth'));
+        try{
+            $response = explode('|',$request->headers->get('X-Auth'));
+            $user = User::get_user(User::find($response[0]))['result'];
+            $skills = Skill::get_skills()['result'];
+            $response = [
+                'user' => $user,
+                'skills' => $skills
+            ];
+            return response()->json($response,Response::HTTP_OK);
+        }catch(Exception $e){
+            return response()->json($e,400);
+        }
 
-        $user = User::get_user(User::find($response[0]))['result'];
-        $skills = Skill::get_skills()['result'];
-        $response = [
-            'user' => $user,
-            'skills' => $skills
-        ];
-        return response()->json( $response,Response::HTTP_OK);
 
     }
 

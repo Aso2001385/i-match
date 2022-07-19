@@ -101,4 +101,20 @@ class RecruitController extends Controller
         $response=Recruit::delete_recruit($recruit);
         return response()->json($response['result'],$response['status']);
     }
+
+    public function history(Request $request)
+    {
+        try{
+
+            $response = Recruit::get_history($request->id);
+
+        }catch(\Exception $e){
+
+            return response()->json($e,400);
+
+        }
+
+        return response()->json($response['result'],200);
+    }
+
 }
