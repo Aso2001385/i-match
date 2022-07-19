@@ -28,6 +28,7 @@ class User extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'password',
         'name',
         'email',
         'password',
@@ -39,7 +40,6 @@ class User extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
@@ -60,18 +60,15 @@ class User extends Model
 
     public static function create_user($request){
         try{
-            // $password = Hash::make($request->password);
-            // unset($request->password);
-            // $request['password'] = $password;
-            $request['password']=Hash::make($request->password);
+
+            $request['password'] = Hash::make($request->password);
             $result =  User::create($request->all());
             $status = Response::HTTP_OK;
-            
-            session(['user_id'=>$result->id]);
 
+            session(['user_id'=>$result->id]);
         }catch(Exception $e){
 
-            $result = '';
+            $result = $e;
             $status = Response::HTTP_BAD_REQUEST;
 
         }

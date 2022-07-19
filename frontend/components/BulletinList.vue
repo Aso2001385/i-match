@@ -140,10 +140,9 @@ export default {
       }
       return 'indigo darken-3'
     },
-    getBulletin() {
-      this.$axios
+    async getBulletin() {
+      await this.$axios
         .get('http://localhost:8080/api/recruits')
-        // .get('https://localhost:8080/api/recruits')
         .then(response => {
           console.log('ちゃんと通っている')
           console.log(response.data)
