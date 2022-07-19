@@ -17,6 +17,23 @@ class Skill extends Model
         'name',
     ];
 
+    public static function get_skills(){
+        try{
+            $skills = Skill::select('skills.*','skill_categories.name as category_name')
+            ->join('skill_categories','category_id','skill_categories.id')->get()->toArray();
+        }catch(Exception $e){
+            return [
+                'result' => $e,
+                'status' => 400
+            ];
+        }
+
+        return [
+            'result' => $skills,
+            'status' => 200
+        ];
+    }
+
 
     public static function create_skill($request)
     {
@@ -55,12 +72,12 @@ class Skill extends Model
             ];
 
         }
-        
+
         return [
             'result' => $skill,
             'status' => $status=Response::HTTP_OK
         ];
-    
+
     }
 
     public static function update_skill($skill,$request)

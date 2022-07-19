@@ -60,7 +60,6 @@ export default {
     },
     getDetail() {
       this.$axios
-        // .get('http://localhost:8080/api/informations?id=this.id')
         .get(`http://localhost:8080/api/informations/${this.id}`)
         .then(response => {
           console.log('ちゃんと通っている詳細取得')

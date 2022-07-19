@@ -145,6 +145,15 @@ export default {
       },
     },
   },
+  // 本番
+  // proxy: {
+  //   '/api': {
+  //     target: 'https://localhost:8080/',
+  //     pathRewrite: {
+  //       '^/api': '/',
+  //     },
+  //   },
+  // },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

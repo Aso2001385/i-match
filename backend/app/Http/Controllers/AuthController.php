@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Skills\Skill;
 use App\Models\Users\Token;
 use App\Models\Users\User;
 use Illuminate\Http\Response;
@@ -21,12 +22,17 @@ class AuthController extends Controller
             $user = User::where('email',$request->email)->first();
             session(['user_id' => $user['id']]);
             if (!(Hash::check($request->password, $user->password))) throw new Exception;
-            $user = User::get_user($user);
+            $user = User::get_user($user)['result'];
+            $skills = Skill::get_skills()['result'];
+            $response = [
+                'user' => $user,
+                'skills' => $skills
+            ];
 
         }catch(Exception $e){
             return response()->json($e,404);
         }
-        return response()->json($user,200);
+        return response()->json($response,200);
     }
 
     // 復元

@@ -9,13 +9,9 @@ export default async function ({ redirect }) {
     const ELAPSED_TIME = Date.now() - Date.parse(TOKEN.update)
 
     if ((ELAPSED_TIME < 3600000)) {
-
       await redirect('/')
-
     }else{
-
       sessionStorage.clear()
-
     }
   }
 

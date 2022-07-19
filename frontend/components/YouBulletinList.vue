@@ -150,27 +150,20 @@ export default {
     },
     getBulletin() {
       this.$axios
-        // .get('http://localhost:8080/api/recruits')
-        .get('3.113.81.143/api/recruits')
+        // .get('https://localhost:8080/api/recruits')
+        .get(`http://localhost:8080/api/recruits${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている相手の情報')
 
           for (let i = 0; i < response.data.length; i++) {
-            //   ここで相手の情報だけを取得するようにする
-            console.log(this.userId + 'どんな値か確認ddkdkdkdkdkdkdkdっkdっkdk' + response.data[i].user_id)
-            // console.log(this.userId === )
-            const user_id = Number(response.data[i].user_id)
-            const userId = Number(this.userId)
-            if (userId === user_id) {
-              console.log(response.data[i].user_id)
-              console.log(this.userId)
-              this.recruitsIdList.push(response.data[i].id)
-              this.bulletinList.push(response.data[i].title)
-              this.dueList.push(response.data[i].due)
-              this.personsList.push(response.data[i].persons)
-            } else {
-              console.log('1人の上右往掛け12345')
-            }
+            // const user_id = Number(response.data[i].user_id)
+            // const userId = Number(this.userId)
+            console.log(response.data[i].user_id)
+            console.log(this.userId)
+            this.recruitsIdList.push(response.data[i].id)
+            this.bulletinList.push(response.data[i].title)
+            this.dueList.push(response.data[i].due)
+            this.personsList.push(response.data[i].persons)
           }
           this.bulletinCount = this.bulletinList.length
           this.recruitsIdList.push(this.recruitsIdList[0])

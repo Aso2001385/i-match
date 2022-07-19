@@ -131,7 +131,6 @@ export default {
     },
     async getUser() {
       await this.$axios
-        // .get('http://localhost:8080/api/users')
         .get('http://localhost:8080/api/users')
         .then(response => {
           console.log('ちゃんと通っている')

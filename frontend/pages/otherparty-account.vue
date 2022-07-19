@@ -82,8 +82,8 @@ export default {
     },
     otherpartyAccount() {
       this.$axios
-        // .get(`http://localhost:8080/api/users/${this.userId}`)
-        .get(`3.113.81.143/api/users/${this.userId}`)
+        .get(`http://localhost:8080/api/users/${this.userId}`)
+        // .get(`https://localhost:8080/api/users/${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.name = response.data.name

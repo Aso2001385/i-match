@@ -89,8 +89,11 @@ export default {
       await this.$axios.post('http://localhost:8080/api/auth', this.user).then(response => {
         console.log(response.data)
         console.log(response.headers)
-        this.$store.commit('restoreUser', response.data)
-        window.location.href = '/'
+        this.$store.commit('restoreUser', response.data.user)
+        this.$store.commit('restoreSkills',response.data.skills)
+        console.log(this.$store.state.user)
+        console.log(this.$store.state.skills)
+        // window.location.href = '/'
       })
 
     },
