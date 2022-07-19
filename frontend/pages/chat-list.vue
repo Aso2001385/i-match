@@ -38,7 +38,7 @@ export default {
     getChatList() {
       this.$axios
         // .get('http://localhost:8080/api/chats')
-        .get('https://i-match.click/api/chats')
+        .get('http://localhost:8080/api/chats')
         .then(response => {
           console.log('ちゃんと通っている')
           this.bulletinCount = response.data.length

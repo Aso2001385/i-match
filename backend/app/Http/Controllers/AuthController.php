@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Users\Token;
+use App\Models\Users\User;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class AuthController extends Controller
 {
@@ -13,22 +16,25 @@ class AuthController extends Controller
     // ログイン
     public function login(Request $request){
 
-        $response = Token::authentication($request);
+        try{
 
-        return response()->json(['result'=>$response['result']],$response['status']);
+            $user = User::where('email',$request->email)->first();
+            session(['user_id' => $user['id']]);
+            if (!(Hash::check($request->password, $user->password))) throw new Exception;
+            $user = User::get_user($user);
 
+        }catch(Exception $e){
+            return response()->json($e,404);
+        }
+        return response()->json($user,200);
     }
 
     // 復元
     public function restore(Request $request){
 
-        if(!Token::authorization($request)) return response()->json('',Response::HTTP_UNAUTHORIZED);
-
         $response =  explode('|',$request->headers->get('X-Auth'));
-
-        $token = $response['token'][0].'|'.$response['token'][1].'|'.$response['token'][2];
-
-        return response()->json($response['user'],Response::HTTP_OK)->header('x-auth',$token);
+        $user = User::get_user(User::find($response[0]));
+        return response()->json($user['result'],Response::HTTP_OK);
 
     }
 

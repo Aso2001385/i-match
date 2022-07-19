@@ -5,10 +5,10 @@ namespace App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Support\Str;
 use App\Models\Users\User;
-
+use Exception;
 class Token extends Model
 {
 
@@ -21,33 +21,6 @@ class Token extends Model
 
     public $incrementing = false;
 
-    //ログイン
-    public static function authentication(Request $request){
-
-        try{
-
-            $user = User::where('email',$request->email)->first();
-            if (!Hash::check($request->password, $user->password))
-            return ['result'=>'','status' => Response::HTTP_UNAUTHORIZED,'token' => False];
-
-            $token = Token::createOrUpdate(['id' => $user->id],['id'=>$user->id,'content'=>Str::random(32)]);
-            $user = User::get_user($user);
-
-            return [
-                'result' => [
-                    'user' => $user['result'],
-                    'token' => $token
-                ],
-                'status' => Response::HTTP_UNAUTHORIZED ,
-            ];
-
-        }catch(\Exception $e){
-
-            return ['result' => '', 'status' => Response::HTTP_UNAUTHORIZED];
-
-        }
-
-    }
 
     //認可
     public static function authorization(Request $request){

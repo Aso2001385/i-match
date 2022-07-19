@@ -72,7 +72,7 @@ export default {
     getAccount() {
       this.$axios
         // .get(`http://localhost:8080/api/users/${this.userId}`)
-        .get(`https://i-match.click/api/users/${this.userId}`)
+        .get(`http://localhost:8080/api/users/${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.name = response.data.name

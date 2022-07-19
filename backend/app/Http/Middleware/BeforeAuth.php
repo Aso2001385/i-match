@@ -29,17 +29,18 @@ class BeforeAuth
         // トークンで認証しないルート
         $exit_route = [
             'POST/users',
+            'POST/auth',
             'GET/ac'
         ];
 
         // exit_routeに登録されたルートであればスルー
-        if(!in_array($route,$exit_route)) return $next($request);
+        if(in_array($route,$exit_route)) return $next($request);
 
         // 認可に失敗したら401エラーでレスポンス
         $x_auth = $request->headers->get('X-Auth');
-        if(isset($x_auth)) return response()->json('',401)->header('Access-Control-Allow-Origin','*');
+        if(!isset($x_auth)) return response()->json('TOKEN IS NOT FOUND',401)->header('Access-Control-Allow-Origin','*');
 
-        if(Token::authorization($request)) return response()->json('',Response::HTTP_UNAUTHORIZED);
+        if(!Token::authorization($request)) return response()->json('TOKEN IS INAPPROPRIATE',Response::HTTP_UNAUTHORIZED);
 
         session([ 'user_id' => explode("|",$request->headers->get('X-Auth'))[0] ]);
 

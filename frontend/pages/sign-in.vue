@@ -43,6 +43,7 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
+
   mixins: [validationMixin],
   layout: 'auth',
   validations: {
@@ -52,8 +53,8 @@ export default {
 
   data: () => ({
     show1: false,
-    email: '',
-    password: '',
+    email: '2001385@s.asojuku.ac.jp',
+    password: 'ultra-1966M78',
     addMessage: 'Add',
     user: {},
   }),
@@ -76,7 +77,7 @@ export default {
   },
 
   methods: {
-    submit() {
+    async submit({ redirect }) {
       this.$v.$touch()
 
       this.user = {
@@ -85,11 +86,13 @@ export default {
       }
 
 
-      this.$axios.post('http://localhost:8080/api/auth', this.user).then(response => {
-        this.addMessage = response.data
+      await this.$axios.post('http://localhost:8080/api/auth', this.user).then(response => {
+        console.log(response.data)
+        console.log(response.headers)
+        this.$store.commit('restoreUser', response.data)
+        window.location.href = '/'
       })
 
-      alert('通ったっす！')
     },
 
     clear() {

@@ -138,8 +138,9 @@ export default {
 
       this.$axios.post('http://localhost:8080/api/users', this.user).then(response => {
         console.log(response.headers)
+        console.log(response.data)
         this.$store.commit('restoreUser', response.data)
-        this.$store.commit('restoreToken', response.headers['x-auth'])
+
       })
     },
 

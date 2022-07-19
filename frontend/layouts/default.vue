@@ -61,9 +61,10 @@
   </v-app>
 </template>
 <script>
-import redirect from '~/middleware/redirect'
+import auth from '~/middleware/auth'
 
 export default {
+  middleware:auth,
   data() {
     return {
       drawer: true,
@@ -72,16 +73,13 @@ export default {
       name: '',
     }
   },
-<<<<<<< HEAD
-  middleware: redirect,
-=======
   mounted() {
     this.getAccount()
   },
   methods: {
     // getAccount1() {
     //   this.$axios
-    //     .get('https://i-match.click/api/users?id=1')
+    //     .get('http://localhost:8080/api/users?id=1')
     //     .then(response => {
     //       console.log('ちゃんと通っている')
     //       this.name = response.data[0].name
@@ -96,7 +94,7 @@ export default {
     // },
     async getAccount() {
       await this.$axios
-        .get('https://i-match.click/api/ac')
+        .get('http://localhost:8080/api/ac')
         .then(response => {
           //   console.log('ちゃんと通っている')
           //   this.name = response.data.name
@@ -111,7 +109,6 @@ export default {
       // alert('通ったっす！')
     },
   },
->>>>>>> cded06aaa7ad9de5cc5e9c245c572be31d0f691f
 }
 </script>
 <style>

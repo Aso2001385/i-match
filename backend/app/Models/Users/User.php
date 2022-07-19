@@ -38,7 +38,6 @@ class User extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
@@ -60,7 +59,7 @@ class User extends Model
     public static function create_user($request){
         try{
 
-            $request->password = Hash::make($request->password);
+            $request['password'] = Hash::make($request->password);
             $result =  User::create($request->all());
             $status = Response::HTTP_OK;
 
