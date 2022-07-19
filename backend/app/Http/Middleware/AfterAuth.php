@@ -30,10 +30,6 @@ class AfterAuth
         // ユーザーIDをもとにトークンをリジェネ
         $token = Token::regeneration(session('user_id'));
 
-        // 念のためセッションの変数を削除
-
-        // session_destroy();
-
         $response->header('x-auth',$token);
 
         return $response;

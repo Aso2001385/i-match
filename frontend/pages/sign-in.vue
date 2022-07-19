@@ -4,7 +4,7 @@
       <v-col cols="12" md="5">
         <v-card class="pb-10 mx-auto fill-width">
           <v-card-title class="d-flex justify-center pa-4 grey darken-4">
-            <h3 class="text-center white--text">SIGN UP</h3>
+            <h3 class="text-center white--text">SIGN IN</h3>
           </v-card-title>
           <v-divider class="pb-5"> </v-divider>
           <v-form>
@@ -43,6 +43,7 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
+
   mixins: [validationMixin],
   layout: 'auth',
   validations: {
@@ -52,8 +53,8 @@ export default {
 
   data: () => ({
     show1: false,
-    email: '',
-    password: '',
+    email: '2001385@s.asojuku.ac.jp',
+    password: 'ultra-1966M78',
     addMessage: 'Add',
     user: {},
   }),
@@ -76,7 +77,7 @@ export default {
   },
 
   methods: {
-    submit() {
+    async submit({ redirect }) {
       this.$v.$touch()
 
       this.user = {
@@ -84,11 +85,14 @@ export default {
         password: this.password,
       }
 
-      this.$axios.post('http://localhost:8080/api/authorization', this.user).then(response => {
-        this.addMessage = response.data
+
+      await this.$axios.post('http://localhost:8080/api/auth', this.user)
+      .then(async response => {
+
+        await this.$store.commit('restoreLogin', response.data)
+
       })
 
-      alert('通ったっす！')
     },
 
     clear() {

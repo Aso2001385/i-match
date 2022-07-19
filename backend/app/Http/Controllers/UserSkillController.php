@@ -16,14 +16,14 @@ class UserSkillController extends Controller
         return response()->json($response['result'],$response['status']);
     }
     
-    public function update(UpdateUserSkillRequest $request)
+    public function update(UpdateUserSkillRequest $request,UserSkill $user_skill)
     {
-        $response = UserSkill::upsert_skills($request);
+        $response = UserSkill::upsert_skills($user_skill,$request);
         return response()->json($response['result'],$response['status']);
     }
 
-    public function delete(Request $request){
-        $response = UserSkill::delete_skill($request);
+    public function delete(UserSkill $user_skill){
+        $response = UserSkill::delete_skill($user_skill);
         return response()->json($response['result'],$response['status']);
     }
 

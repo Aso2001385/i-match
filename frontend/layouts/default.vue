@@ -61,51 +61,25 @@
   </v-app>
 </template>
 <script>
+import auth from '~/middleware/auth'
+
 export default {
+  middleware:auth,
   data() {
     return {
       drawer: true,
       // ログインしてデータを取得するまで代わりに入れておく
-      userId: 1,
-      name: '',
+      user:{}
     }
   },
   mounted() {
-    this.getAccount()
+    this.user = this.$store.state.user
+    this.conuser()
   },
   methods: {
-    getAccount() {
-      this.$axios
-        // .get('https://localhost:8080/api/users?id=1')
-        .get(`http://localhost:8080/api/users/${this.userId}`)
-        .then(response => {
-          console.log('ちゃんと通っている')
-          this.name = response.data.name
-          console.log(response.data)
-        })
-        .catch(err => {
-          console.log('通ってないよー!!!')
-          console.log(err)
-          return err.response
-        })
-      alert('通ったっす！')
-    },
-    // async getAccount() {
-    //   await this.$axios
-    //     .get('https://localhost:8080/api/ac')
-    //     .then(response => {
-    //       //   console.log('ちゃんと通っている')
-    //       //   this.name = response.data.name
-    //       //   this.email = response.data.email
-    //       console.log(response.data)
-    //     })
-    //     .catch(err => {
-    //       console.log('通ってないよー')
-    //       console.log(err)
-    //       return err.response
-    //     })
-    //   // alert('通ったっす！')
-    // },
+    conuser(){
+      console.log(this.user)
+    }
   },
 }
 </script>

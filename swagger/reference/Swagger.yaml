@@ -131,14 +131,10 @@ paths:
     parameters: []
   '/users/{id}':
     parameters:
-      - in: path
-        schema:
-          type: integer
-          format: int64
-          example: 1
-          minimum: 1
-          maximum: 255
+      - schema:
+          type: string
         name: id
+        in: path
         required: true
     get:
       summary: User 詳細
@@ -489,179 +485,62 @@ paths:
                 - category_id
                 - name
       description: 指定されたIDのskill情報を変更
-  /skill-relations:
+  /skill-category:
     get:
-      summary: Skill Relation 一覧
-      tags:
-        - EndPoint
-        - index
+      summary: Skill category一覧
+      tags: []
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/SkillRelation'
-              examples: {}
-      operationId: get-skill-relations
-      description: skill relationの一覧を表示
+                $ref: '#/components/schemas/SkillCategory'
+      operationId: get-skill-category
     post:
-      summary: Skill Relation 作成
-      tags:
-        - EndPoint
-        - store
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: post-skill-relations
+      summary: Skill category作成
+      tags: []
+      responses: {}
+      operationId: post-skill-category
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                primary_skill_id:
-                  type: integer
-                  minimum: 1
-                  maximum: 255
-                  example: 1
-                secondary_skill_id:
-                  type: integer
-                  minimum: 1
-                  maximum: 255
-                  example: 1
-              required:
-                - primary_skill_id
-                - secondary_skill_id
-            examples:
-              example:
-                value:
-                  primary_skill_id: 1
-                  secondary_skill_id: 1
-          application/xml:
-            schema:
-              type: object
-              properties:
-                primary_skill_id:
-                  type: integer
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                  format: int64
-                secondary_skill_id:
-                  type: integer
-                  format: int64
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-              required:
-                - primary_skill_id
-                - secondary_skill_id
-        description: ''
-      description: skill relationの作成
-  '/skill-relation/{id}':
+                name:
+                  type: string
+                  example: category1
+                  maxLength: 100
+  '/skill-category/{id}':
     parameters:
       - schema:
           type: integer
         name: id
         in: path
         required: true
-    get:
-      summary: Skill relation 詳細
-      tags:
-        - EndPoint
-        - show
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  primary_skill_id:
-                    type: integer
-                    example: 1
-                    minimum: 1
-                    maximum: 255
-                    format: int64
-                  secondary_id:
-                    type: integer
-                    example: 1
-                    minimum: 1
-                    maximum: 255
-                    format: int64
-              examples:
-                example:
-                  value:
-                    primary_skill_id: 1
-                    secondary_id: 1
-      operationId: get-skill-relation-id
-      description: 指定されたIDのskill relation情報を表示
+    delete:
+      summary: Skill category削除
+      tags: []
+      responses: {}
+      operationId: delete-skill-category-id
     put:
-      summary: Skill relation 更新
-      tags:
-        - EndPoint
-        - update
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: put-skill-relation-id
+      summary: Skill category更新
+      tags: []
+      responses: {}
+      operationId: put-skill-category-id
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                primary_skill_id:
-                  type: integer
-                  minimum: 1
-                  maximum: 255
-                  example: 1
-                  format: int64
-                secondary_skill_id:
-                  type: integer
-                  format: int64
-                  example: 1
-                  minimum: 1
-                  maximum: 255
+                name:
+                  type: string
+                  example: category1
+                  maxLength: 100
               required:
-                - primary_skill_id
-                - secondary_skill_id
-            examples:
-              example:
-                value:
-                  primary_skill_id: 1
-                  secondary_skill_id: 1
-        description: ''
-      description: 指定されたIDのskill relation情報の更新
-    delete:
-      summary: Skill relation 削除
-      tags:
-        - EndPoint
-        - delete
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: delete-skill-relation-id
-      description: 指定されたIDのskill relation情報を論理削除
+                - name
   /recruits:
     get:
       summary: Recruit 一覧
@@ -881,7 +760,6 @@ paths:
             application/json:
               schema:
                 type: object
-                properties: {}
       operationId: delete-recruits-id
       description: 指定されたIDのrecruit情報を論理削除
   '/recruits/other/{id}':
@@ -915,55 +793,6 @@ paths:
                   $ref: '#/components/schemas/RecruitSkill'
       operationId: get-recruit-skill
       description: recruit skill の一覧
-    post:
-      summary: Recruit skill 作成
-      tags:
-        - EndPoint
-        - store
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: post-recruit-skill
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                recruit_id:
-                  type: integer
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                  format: int64
-                skill_id:
-                  type: integer
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                level:
-                  type: integer
-                  format: int32
-                  minimum: 1
-                  maximum: 5
-                  example: 1
-              required:
-                - recruit_id
-                - skill_id
-                - level
-            examples:
-              example:
-                value:
-                  recruit_id: 1
-                  skill_id: 1
-                  level: 1
-      description: |
-        recruit skill の作成
   '/recruit-skill/{id}':
     parameters:
       - schema:
@@ -1526,6 +1355,10 @@ paths:
                   example: 1
                   minimum: 1
                   maximum: 255
+                url:
+                  type: string
+                  maxLength: 255
+                  example: 'https://github.com/Aso2001385/i-match'
               required:
                 - user_id
                 - title
@@ -1533,13 +1366,14 @@ paths:
                 - read
                 - category_id
             examples:
-              example:
+              example-1:
                 value:
                   user_id: 1
                   title: 参加希望が届きました
                   contents: ○○さんから■■の参加希望が届きました
                   read: true
                   category_id: 1
+                  url: 'https://github.com/Aso2001385/i-match'
     get:
       summary: Information 一覧
       tags:
@@ -1638,41 +1472,13 @@ paths:
             schema:
               type: object
               properties:
-                title:
-                  type: string
-                  example: 参加希望が届きました
-                contents:
-                  type: string
-                  example: AさんからBの参加希望が届きました
-                  maxLength: 1024
                 read:
                   type: boolean
-                  default: false
-                caregory_id:
-                  type: integer
-                  format: int64
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                url:
-                  type: string
-                  example: 'http://localhost:8080/index'
-                  maxLength: 255
-              required:
-                - title
-                - contents
-                - read
-                - caregory_id
-                - url
             examples:
               example:
                 value:
-                  title: 参加希望が届きました
-                  contents: AさんからBの参加希望が届きました
-                  read: false
-                  caregory_id: 1
-                  url: 'http://localhost:8080/index'
-  /information-categories:
+                  read: true
+  /information-category:
     get:
       summary: Information category 一覧
       tags: []
@@ -1723,7 +1529,8 @@ paths:
               example:
                 value:
                   name: information1
-  '/information-categoris/{id}':
+    parameters: []
+  '/information-category/{id}':
     parameters:
       - schema:
           type: integer
@@ -1998,23 +1805,34 @@ paths:
               properties:
                 teacher_id:
                   type: integer
+                  example: 1
+                  minimum: 1
+                  maximum: 255
+                  format: int64
                 title:
                   type: string
                   example: コーディング大会
                   maxLength: 30
                 contents:
                   type: string
-                  pattern: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
                   maxLength: 1024
+                  example: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
                 due:
                   type: string
                   format: date-time
-                  example: '2019-06-13T15:00:00.0Z'
+                  example: '2023-06-13 15:00:00'
               required:
                 - teacher_id
                 - title
                 - contents
                 - due
+            examples:
+              example-1:
+                value:
+                  teacher_id: 1
+                  title: コーディング大会
+                  contents: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+                  due: '2023-06-13 15:00:00'
       description: event の作成
   '/events/{id}':
     parameters:
@@ -2087,11 +1905,17 @@ paths:
                 due:
                   type: string
                   format: date-time
-                  example: '2019-06-13T15:00:00.0Z'
+                  example: '2023-06-13 15:00:00'
               required:
                 - title
                 - contents
                 - due
+            examples:
+              example-1:
+                value:
+                  title: コーディング大会
+                  contents: '6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします'
+                  due: '2023-06-13 15:00:00'
       description: 指定されたIDのevent情報を更新
     delete:
       summary: Event 削除
@@ -2172,6 +1996,18 @@ paths:
       responses: {}
       operationId: delete-skill-requests-id
       description: 指定されたIDのskill request情報を表示
+    get:
+      summary: Skill request 詳細
+      operationId: get-skill-requests-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      description: ''
   /skill-request-teacher:
     get:
       summary: Skill request teacher 一覧
@@ -2254,6 +2090,12 @@ paths:
                 properties: {}
       operationId: delete-skill-request-teacher-id
       description: 指定されたIDのskill request teacher情報を表示
+    get:
+      summary: ''
+      operationId: get-skill-request-teacher-id
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     User:
@@ -2503,59 +2345,6 @@ components:
         - category_id
         - name
         - depth
-    SkillRelation:
-      type: object
-      x-examples:
-        example-1:
-          id: 1
-          primary_skill_id: 1
-          secondary_skill_id: 1
-          created_at: '2022-01-01 11:11:11'
-          updated_at: '2022-01-01 11:11:11'
-          deleted_at: '2022-01-01 11:11:11'
-      properties:
-        id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        primary_skill_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        secondary_skill_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        created_at:
-          type: string
-          format: date-time
-          example: '2022-01-01 11:11:11'
-        updated_at:
-          type: string
-          format: date-time
-          example: '2022-01-01 11:11:11'
-        deleted_at:
-          type:
-            - string
-            - 'null'
-          format: date-time
-          example: '2022-01-01 11:11:11'
-      required:
-        - primary_skill_id
-        - secondary_skill_id
-      examples:
-        - id: 1
-          primary_skill_id: 1
-          secondary_skill_id: 1
-          created_at: '2022-01-01 11:11:11'
-          updated_at: '2022-01-01 11:11:11'
-          deleted_at: null
     Recruit:
       type: object
       x-examples:

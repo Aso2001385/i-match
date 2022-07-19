@@ -2,14 +2,16 @@
 
 namespace App\Models\Recruits;
 
+use App\Models\Skills\Skill;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Response;
 use Exception;
 
 class RecruitSkill extends Model
 {
-    use HasFactory;
+    use HasFactory,softDeletes;
 
     protected $fillable = [
         'recruit_id',
@@ -19,15 +21,23 @@ class RecruitSkill extends Model
 
     protected $table = "recruit_skill";
 
-    public static function get_skills($recruit){
+    public static function get_recruit_skill($recruit_skill){
+        try{
+            $recruit_skill->name=Skill::find($recruit_skill->skill_id)->name;
+            $status=Response::HTTP_OK;
+        }catch(Exception $e){
 
-        $recruit['skills'] = RecruitSkill::Join('skills', 'skills.id', '=', 'recruit_skill.skill_id')
-        ->select('recruit_skill.*','skills.name')
-        ->where('recruit_skill.recruit_id',$recruit['id'])
-        ->get()->toArray();
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
 
-        return $recruit;
+        }
 
+        return [
+            'result' => $recruit_skill,
+            'status' => $status
+        ];
     }
 
     public static function create_rec_skill($request,$recruit){
@@ -53,11 +63,42 @@ class RecruitSkill extends Model
         ];
     }
 
-    public static function merge_skills($recruits){
+    public static function update_recruit_skill($recruit_skill,$request){
+        try{
+            $recruit_skill->update($request->all());
 
-        $recruits = array_map('get_skills',$recruits);
-        return $recruits;
+            $status = Response::HTTP_OK;
+        }catch(Exception $e){
 
-    } 
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+        return [
+            'result' => $recruit_skill,
+            'status' => $status
+        ];
+    }
+
+    public static function delete_recruit_skill($recruit_skill) {
+        try{
+            $recruit_skill->delete();
+            $status=Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+
+        return [
+            'result' => [],
+            'status' => $status
+        ];
+    }
 
 }

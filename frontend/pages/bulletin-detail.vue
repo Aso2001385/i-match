@@ -92,7 +92,6 @@ export default {
     getBulletinDetail() {
       this.$axios
         .get(`http://localhost:8080/api/recruits/${this.bulletinDetailId}`)
-        // .get(`https://localhost:8080/api/recruits/${this.bulletinDetailId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.title = response.data.title

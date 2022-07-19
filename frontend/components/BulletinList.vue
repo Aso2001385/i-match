@@ -151,10 +151,10 @@ export default {
       this.boxSkill = this.boxSkill + 1
       return this.bulletinSkillId[this.boxSkill]
     },
+
     async getBulletin() {
       await this.$axios
         .get('http://localhost:8080/api/recruits')
-        // .get('https://localhost:8080/api/recruits')
         .then(response => {
           console.log('ちゃんと通っている')
           for (let i = 0; i < response.data.length; i++) {

@@ -21,6 +21,7 @@ class CreateUserSkillTable extends Migration
             $table->boolean('learning_flag');
             $table->integer('level');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

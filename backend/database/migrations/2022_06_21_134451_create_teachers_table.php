@@ -19,6 +19,7 @@ class CreateTeachersTable extends Migration
             $table->string('email',25)->unique();
             $table->string('password');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

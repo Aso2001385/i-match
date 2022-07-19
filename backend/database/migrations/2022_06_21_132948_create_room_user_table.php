@@ -19,6 +19,7 @@ class CreateRoomUserTable extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('name',30);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
