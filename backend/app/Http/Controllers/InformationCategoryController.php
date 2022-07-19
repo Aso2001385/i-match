@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Informations\InformationCategory;
 use Illuminate\Http\Request;
-use App\Models\Teachers\Event;
-use App\Http\Requests\Teachers\CreateEventRequest;
-use App\Http\Requests\Teachers\UpdateEventRequest;
 use Illuminate\Http\Response;
 
-class EventController extends Controller
+class InformationCategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +16,10 @@ class EventController extends Controller
     public function index()
     {
         $response=[
-            'result' => Event::all()->toArray(),
-            'status'=>Response::HTTP_OK
+            'result' =>InformationCategory::all()->toArray(),
+            'status' => Response::HTTP_OK
         ];
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -30,9 +29,9 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateEventRequest $request)
+    public function store(Request $request)
     {
-        $response=Event::create_event($request);
+        $response=InformationCategory::create_information_category($request);
 
         return response()->json($response['result'],$response['status']);
     }
@@ -43,10 +42,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show($id)
     {
-        $response=Event::get_events($event);
-        return response()->json($response['result'],$response['status']);
+        //
     }
 
     /**
@@ -56,9 +54,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEventRequest $request,Event $event)
+    public function update(Request $request,InformationCategory $information_category)
     {
-        $response=Event::update_event($event,$request);
+        $response=InformationCategory::update_information_category($information_category,$request);
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -68,9 +67,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(InformationCategory $information_category)
     {
-        $response=Event::delete_event($event);
+        $response=InformationCategory::delete_information_category($information_category);
 
         return response()->json($response['result'],$response['status']);
     }

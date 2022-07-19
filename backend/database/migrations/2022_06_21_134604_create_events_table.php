@@ -20,6 +20,7 @@ class CreateEventsTable extends Migration
             $table->text('contents');
             $table->dateTime('due');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

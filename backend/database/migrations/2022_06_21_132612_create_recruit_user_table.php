@@ -18,6 +18,7 @@ class CreateRecruitUserTable extends Migration
             $table->foreignId('recruit_id')->constrained('recruits');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -11,7 +11,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - i-Match',
+
     title: 'i-Match',
     htmlAttrs: {
       lang: 'ja',
@@ -28,7 +28,7 @@ export default {
       // { name: 'apple-mobile-web-app-title', content: 'APP_TITLE' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/png', href: '/CE32.png' },
       // 追加
       // {
       //   rel: 'apple-touch-startup-image',
@@ -81,7 +81,6 @@ export default {
       //   href: 'PATH/splashscreens/splashscreens_ipadpro2_splash.png',
       // },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.icon' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -128,15 +127,22 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
+    // baseURL: 'http://localhost:8080/api/',
     baseURL: 'http://localhost:8080/api/',
-    // baseURL: 'https://localhost:8080/api/',
   },
 
-  // 練習
+  // proxy: {
+  //   '/api/': {
+  //     // target: 'http://localhost:8080',
+  //     target: 'http://localhost:8080',
+  //   },
+  // },
   proxy: {
-    '/api/': {
-      target: 'http://localhost:8080',
-      // target: 'https://localhost:8080',
+    '/api': {
+      target: 'http://localhost:8080/',
+      pathRewrite: {
+        '^/api': '/',
+      },
     },
   },
   // 本番

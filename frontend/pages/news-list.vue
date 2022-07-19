@@ -7,10 +7,10 @@
       <v-col cols="12" style="overflow: hidden !important; height: 84vh; overflow-y: auto" class="pa-0 pb-1">
         <v-row style="width: 100%">
           <v-card v-for="value in newsListCount" :key="value" style="width: 100%">
-            <div @click="sendDetail(newsId[value], titleList[value], newsContent[value])">
+            <div>
               <NuxtLink to="/news-detail" class="white--text" style="text-decoration: none">
                 <v-row class="ml-5 mt-3 mb-5">
-                  <v-col cols="6" md="4"
+                  <v-col cols="6" md="4" @click="sendDetail(newsId[value], titleList[value], newsContent[value])"
                     ><span class="black--text ml-5">{{ categoryList[value] }}</span></v-col
                   >
                   <v-col cols="6" md="8"><span class="black--text">3/6 12:10</span></v-col>
@@ -49,15 +49,15 @@ export default {
     sendChat() {
       this.chat = ''
     },
-    sendDetail(id, tit, con) {
-      sessionStorage.setItem('id', id)
-      sessionStorage.setItem('tit', tit)
-      sessionStorage.setItem('con', con)
+    sendDetail(newsId, newstTitle, newsContent) {
+      sessionStorage.setItem('newsId', newsId)
+      sessionStorage.setItem('newstTitle', newstTitle)
+      sessionStorage.setItem('newsContent', newsContent)
     },
-    getNews() {
-      this.$axios
+    async getNews() {
+      await this.$axios
+        // .get('http://localhost:8080/api/informations')
         .get('http://localhost:8080/api/informations')
-        // .get('https://localhost:8080/api/informations')
         .then(response => {
           console.log('ちゃんと通っている')
           this.newsCount = response.data.length
@@ -72,12 +72,12 @@ export default {
           this.newsListCount = this.newsId.length
         })
         .catch(err => {
-          console.log('通ってないよー')
+          console.log(err)
           return err.response
         })
-      this.$axios
+      await this.$axios
+        // .get('http://localhost:8080/api/informations')
         .get('http://localhost:8080/api/informations')
-        // .get('https://localhost:8080/api/informations')
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
           this.titleList.unshift(this.titleList[0])
@@ -85,8 +85,7 @@ export default {
           console.log(response.data)
         })
         .catch(err => {
-          console.log('通ってないよー')
-          console.log(err)
+            console.log(err)
           return err.response
         })
     },

@@ -32,6 +32,22 @@ class RecruitController extends Controller
         return response()->json($response['result'],$response['status']);
     }
 
+
+
+    public function otherIndex(Request $request,$id)
+    {
+        $response=Recruit::get_other_recruits($request,$id);
+        return response()->json($response['result'],$response['status']);
+    }
+
+
+    public function user_index(Request $request)
+    {
+        $response=Recruit::get_user_recruits($request);
+
+        return response()->json($response['result'],$response['status']);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -59,14 +75,8 @@ class RecruitController extends Controller
      */
     public function show(Recruit $recruit)
     {
-        $response=Recruit::get_user_recruits($recruit);
+        $response=Recruit::get_recruit($recruit);
 
-        return response()->json($response['result'],$response['status']);
-    }
-
-    public function otherIndex(Request $request)
-    {
-        $response=Recruit::get_other_recruits($request);
         return response()->json($response['result'],$response['status']);
     }
 

@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
             RecruitsTableSeeder::class,
             SkillsTableSeeder::class,
             UserSkillTableSeeder::class,
-            SkillRelationsTableSeeder::class,
             RecruitSkillTableSeeder::class,
             RecruitUserTableSeeder::class,
             RoomsTableSeeder::class,

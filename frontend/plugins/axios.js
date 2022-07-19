@@ -1,26 +1,33 @@
-export default ({ $axios, redirect }) => {
+export default ({ $axios, store , redirect }) => {
   // X-Aothを付けないルートを追記していく(条件式を増やしていくよりこの方が管理しやすくてスマートだよね)
   const EXIT_ROUTES = {
     // 練習用に
     request: ['post:auth', 'post:users', 'get:ac'],
-    response: ['get:ac', 'get:recruits', `get:users/1`, 'get:recruits/2'],
+    response: [
+      'get:ac',
+      'get:recruits',
+      'get:users',
+      `get:users/1`,
+      `get:recruits/1`,
+      `get:recruits/2`,
+      'get:informations',
+      `get:informations/3`,
+    ],
+    responseAuth :['post:auth','get:auth']
   }
 
   // リクエスト処理
   $axios.onRequest(
     config => {
+
       // アクセス先がEXIT_ROUTESに含まれていたらヘッダ作成はスルー
-      if (EXIT_ROUTES.request.includes(config.method + ':' + config.url.split('/api/')[1])) {
-        console.log('aaa')
-        return config
-      }
+      if (EXIT_ROUTES.request.includes(config.method + ':' + config.url.split('/api/')[1])) return config
+
       // セッションからトークン取得
-      // 一旦コメントアウト中。ログインする前にどんな感じか知るため
-      // const TOKENS = JSON.parse(sessionStorage.getItem('token'))
+      const TOKENS = JSON.parse(sessionStorage.getItem('token'))
 
       // ヘッダにX-Authフィールドを作成し、トークンを元のフォーマットで付与
-      // 一旦コメントアウト中。ログインする前にどんな感じか知るため
-      // config.headers['X-Auth'] = '' + TOKENS.id + '|' + TOKENS.content + '|' + TOKENS.update + ''
+      config.headers['X-Auth'] = '' + TOKENS.id + '|' + TOKENS.content + '|' + TOKENS.update + ''
 
       return config
     },
@@ -32,7 +39,9 @@ export default ({ $axios, redirect }) => {
   // レスポンス処理
   $axios.onResponse(
     response => {
+
       const config = response.config
+
       if (EXIT_ROUTES.response.includes(config.method + ':' + config.url.split('/api/')[1])) return response
       // レスポンスヘッダのX-Authフィールドからトークン取得し配列化
 
@@ -49,11 +58,15 @@ export default ({ $axios, redirect }) => {
       // セッションにJSON形式で保存
       sessionStorage.setItem('token', JSON.stringify(COOL))
 
+
       return response
     },
-    err => {
+    async err => {
       // 何らかのエラー処理
-      return Promise.reject(err)
+      console.log(await err)
+      sessionStorage.clear()
+
+      return err
     }
   )
 }

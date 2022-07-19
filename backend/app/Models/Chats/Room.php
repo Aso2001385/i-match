@@ -6,13 +6,14 @@ use App\Models\Chats\RoomUser;
 use App\Models\Chats\Chat;
 use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Exception;
 
 class Room extends Model
 {
-    use HasFactory;
+    use HasFactory,SoftDeletes;
 
     public function room_users(){
         return $this->hasMany(RoomUser::class);
@@ -44,7 +45,7 @@ class Room extends Model
             }
 
             foreach($room->chats as $chat) {
-                $chat->user_name=User::find($chat->user_id)->name;
+                $chat->user_name=User::where('id',$chat->user_id)->whereNull('deleted_at')->get()->first()->name;
             }
             $status= Response::HTTP_OK;
         }catch(Exception $e){
@@ -64,19 +65,27 @@ class Room extends Model
 
     public static function delete_room($room){
         try{
+            $room_users=RoomUser::where('room_id',$room->id)->whereNull('deleted_at')->get();
+            foreach($room_users as $user){
+                RoomUser::delete_room_user($user);
+            }
+            $chats=Chat::where('room_id',$room->id)->whereNull('deleted_at')->get();
+            foreach($chats as $chat){
+                Chat::delete_chat($chat);
+            }
             $room->delete();
             $status=Response::HTTP_OK;
         }catch(Exception $e){
-    
+
             return [
                 'result' => [],
                 'status' => Response::HTTP_BAD_REQUEST
             ];
-    
+
         }
-    
+
         return [
-            'result' => $room,
+            'result' => [],
             'status' => $status
         ];
 

@@ -2,8 +2,10 @@
 
 namespace App\Models\Users;
 
+use App\Models\Recruits\Recruit;
 use App\Models\Users\UserSkill;
 use App\Models\Skills\Skill;
+use App\Models\Chats\RoomUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -26,6 +28,7 @@ class User extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'password',
         'name',
         'email',
         'password',
@@ -37,7 +40,6 @@ class User extends Model
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
@@ -58,18 +60,15 @@ class User extends Model
 
     public static function create_user($request){
         try{
-            // $password = Hash::make($request->password);
-            // unset($request->password);
-            // $request['password'] = $password;
-            $request['password']=Hash::make($request->password);
+
+            $request['password'] = Hash::make($request->password);
             $result =  User::create($request->all());
             $status = Response::HTTP_OK;
-            
-            session(['user_id'=>$result->id]);
 
+            session(['user_id'=>$result->id]);
         }catch(Exception $e){
 
-            $result = '';
+            $result = $e;
             $status = Response::HTTP_BAD_REQUEST;
 
         }
@@ -103,8 +102,6 @@ class User extends Model
             ];
 
         }
-
-
 
         return [
             'result' => $user,
@@ -157,8 +154,22 @@ class User extends Model
 
     public static function delete_user($user){
         try{
+            $recruits= Recruit::where('user_id',$user->id)->whereNull('deleted_at')->get();
+            date_default_timezone_set("Asia/Tokyo");
+            $today=date("Y-m-d H:i:s");
+            foreach($recruits as $recruit){
+                if($today<=$recruit->due){
+                    Recruit::delete_recruit($recruit);
+
+                }
+            }
+            $room_users=RoomUser::where('user_id',$user->id)->whereNull('deleted_at')->get();
+            foreach($room_users as $user){
+                RoomUser::delete_room_user($user);
+            }
             $user->delete();
             $status= Response::HTTP_OK;
+
         }catch(Exception $e){
 
             return [

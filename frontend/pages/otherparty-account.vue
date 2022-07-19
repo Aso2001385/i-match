@@ -69,7 +69,9 @@ export default {
   methods: {
     getSession() {
       // クリックされた相手の情報
-      this.userId = sessionStorage.getItem('userInfo')
+      // this.userId = sessionStorage.getItem('userInfo')
+      // とりあえず1の人の情報取得
+      this.userId = 1
     },
     sortSection(sort) {
       if (sort === 0) {
@@ -80,8 +82,8 @@ export default {
         this.sortId = 0
       }
     },
-    otherpartyAccount() {
-      this.$axios
+    async otherpartyAccount() {
+      await this.$axios
         .get(`http://localhost:8080/api/users/${this.userId}`)
         // .get(`https://localhost:8080/api/users/${this.userId}`)
         .then(response => {
@@ -95,7 +97,7 @@ export default {
           console.log(err)
           return err.response
         })
-      alert('通ったっす！')
+      // alert('通ったっす！')
     },
   },
   components: {

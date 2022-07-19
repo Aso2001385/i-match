@@ -22,6 +22,7 @@ class CreateInformationsTable extends Migration
             $table->foreignId('category_id')->constrained('information_categories');
             $table->string('url',255);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

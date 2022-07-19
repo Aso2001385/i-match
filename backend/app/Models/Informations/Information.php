@@ -5,6 +5,7 @@ namespace App\Models\Informations;
 use App\Models\Users\User;
 use App\Models\Informations\InformationCategory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
@@ -12,7 +13,7 @@ use Exception;
 
 class Information extends Model
 {
-    use HasFactory;
+    use HasFactory,softDeletes;
 
     protected $table = "informations";
 

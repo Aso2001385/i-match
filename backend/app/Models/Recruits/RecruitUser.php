@@ -2,12 +2,16 @@
 
 namespace App\Models\Recruits;
 
+use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
+use Exception;
 
 class RecruitUser extends Model
 {
-    use HasFactory;
+    use HasFactory,softDeletes;
 
     protected $fillable = [
         'recruit_id',
@@ -16,19 +20,63 @@ class RecruitUser extends Model
 
     protected $table = "recruit_user";
 
-    public static function get_users($recruit){
 
-        $recruit['user_count'] = RecruitUser::where('recruit_id',$recruit['id'])->count();
+    public static function create_recruit_user($request){
+        try{
+            RecruitUser::create($request->all());
 
-        return $recruit;
+            $result = 'success!';
+            $status = Response::HTTP_OK;
+        }catch(Exception $e){
 
+            $result = [];
+            $status = Response::HTTP_BAD_REQUEST;
+
+        }
+
+        return [
+            'result' => $result,
+            'status' => $status,
+        ];
     }
 
-    
-    public static function merge_user_count($recruits){
+    public static function get_recruit_user($recruit_user){
+        try{
+            $recruit_user->name=User::find($recruit_user->user_id)->name;
 
-        $recruits = array_map('get_users',$recruits);
-        return $recruits;
+            $status=Response::HTTP_OK;
+        }catch(Exception $e){
 
-    } 
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+
+        return [
+            'result' => $recruit_user,
+            'status' => $status
+        ];
+    }
+
+
+    public static function delete_recruit_user($recruit_user){
+        try{
+            $recruit_user->delete();
+            $status=Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+
+        return [
+            'result' => [],
+            'status' => $status
+        ];
+    }
 }

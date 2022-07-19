@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recruits\RecruitSkill;
 use Illuminate\Http\Request;
-use App\Models\Teachers\Event;
-use App\Http\Requests\Teachers\CreateEventRequest;
-use App\Http\Requests\Teachers\UpdateEventRequest;
 use Illuminate\Http\Response;
 
-class EventController extends Controller
+class RecruitSkillController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,21 +16,9 @@ class EventController extends Controller
     public function index()
     {
         $response=[
-            'result' => Event::all()->toArray(),
-            'status'=>Response::HTTP_OK
+            'result' =>RecruitSkill::all()->toArray(),
+            'status' => Response::HTTP_OK
         ];
-        return response()->json($response['result'],$response['status']);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(CreateEventRequest $request)
-    {
-        $response=Event::create_event($request);
 
         return response()->json($response['result'],$response['status']);
     }
@@ -43,9 +29,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show(RecruitSkill $recruit_skill)
     {
-        $response=Event::get_events($event);
+        $response = RecruitSkill::get_recruit_skill($recruit_skill);
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -56,9 +43,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEventRequest $request,Event $event)
+    public function update(Request $request,RecruitSkill $recruit_skill)
     {
-        $response=Event::update_event($event,$request);
+        $response=RecruitSkill::update_recruit_skill($recruit_skill,$request);
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -68,9 +56,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(RecruitSkill $recruit_skill)
     {
-        $response=Event::delete_event($event);
+        $response=RecruitSkill::delete_recruit_skill($recruit_skill);
 
         return response()->json($response['result'],$response['status']);
     }

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Teachers\Event;
-use App\Http\Requests\Teachers\CreateEventRequest;
-use App\Http\Requests\Teachers\UpdateEventRequest;
+use App\Models\Skills\SkillReuestTeacher;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
-class EventController extends Controller
+class SKillsRequestTeacherController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,9 +16,10 @@ class EventController extends Controller
     public function index()
     {
         $response=[
-            'result' => Event::all()->toArray(),
-            'status'=>Response::HTTP_OK
+            'result' =>SkillReuestTeacher::all()->toArray(),
+            'status' => Response::HTTP_OK
         ];
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -30,9 +29,9 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateEventRequest $request)
+    public function store(Request $request)
     {
-        $response=Event::create_event($request);
+        $response=SkillReuestTeacher::create_skill_request_teacher($request);
 
         return response()->json($response['result'],$response['status']);
     }
@@ -43,9 +42,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event)
+    public function show(SkillReuestTeacher $skill_request_teacher)
     {
-        $response=Event::get_events($event);
+        $response=SkillReuestTeacher::get_skill_request_teacher($skill_request_teacher);
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -56,9 +56,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEventRequest $request,Event $event)
+    public function update(Request $request,SkillReuestTeacher $skill_request_teacher)
     {
-        $response=Event::update_event($event,$request);
+        $response=SkillReuestTeacher::update_skill_request_teacher($skill_request_teacher,$request);
+
         return response()->json($response['result'],$response['status']);
     }
 
@@ -68,9 +69,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(SkillRequestTeacher $skill_request_teacher)
     {
-        $response=Event::delete_event($event);
+        $response=SkillReuestTeacher::delete_skill_request_teacher($skill_request_teacher);
 
         return response()->json($response['result'],$response['status']);
     }
