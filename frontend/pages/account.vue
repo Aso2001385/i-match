@@ -69,8 +69,8 @@ export default {
         this.sortId = 0
       }
     },
-    getAccount() {
-      this.$axios
+    async getAccount() {
+      await this.$axios
         // .get(`http://localhost:8080/api/users/${this.userId}`)
         .get(`http://localhost:8080/api/users/${this.userId}`)
         .then(response => {
