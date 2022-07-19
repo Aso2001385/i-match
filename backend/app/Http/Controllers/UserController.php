@@ -56,6 +56,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $response = User::get_user($user);
+        
         return response()->json($response['result'],$response['status']);
     }
 

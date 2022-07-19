@@ -19,6 +19,7 @@ class CreateRecruitSkillTable extends Migration
             $table->foreignId('skill_id')->constrained('skills');
             $table->integer('level');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

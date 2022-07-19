@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Teachers\Event;
 use App\Http\Requests\Teachers\CreateEventRequest;
 use App\Http\Requests\Teachers\UpdateEventRequest;
+use Illuminate\Http\Response;
 
 class EventController extends Controller
 {
@@ -67,8 +68,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
-        //
+        $response=Event::delete_event($event);
+
+        return response()->json($response['result'],$response['status']);
     }
 }

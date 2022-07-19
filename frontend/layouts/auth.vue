@@ -10,7 +10,9 @@
 </template>
 
 <script>
+import restore from '~/middleware/restore'
 export default {
+  middleware:restore,
   data() {
     return {
       nav_lists: [

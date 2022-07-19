@@ -6,12 +6,13 @@ use App\Models\Users\User;
 use App\Models\Chats\Room;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Response;
 use Exception;
 
 class RoomUser extends Model
 {
-    use HasFactory;
+    use HasFactory,softDeletes;
     protected $table = "room_user";
 
     protected $fillable = [
@@ -67,9 +68,9 @@ class RoomUser extends Model
         ];
     }
 
-    public static function update_room_user($roomUser,$request){
+    public static function update_room_user($room_user,$request){
         try{
-            $roomUser->update($request->all());
+            $room_user->update($request->all());
 
             $status = Response::HTTP_OK;
         }catch(Exception $e){
@@ -81,7 +82,25 @@ class RoomUser extends Model
 
         }
         return [
-            'result' => $roomUser,
+            'result' => $room_user,
+            'status' => $status
+        ];
+    }
+
+    public static function delete_room_user($room_user){
+        try{
+            $room_user->delete();
+            $status=Response::HTTP_OK;
+        }catch(Exception $e){
+
+            return [
+                'result' => [],
+                'status' => Response::HTTP_BAD_REQUEST
+            ];
+
+        }
+        return [
+            'result' => [],
             'status' => $status
         ];
     }

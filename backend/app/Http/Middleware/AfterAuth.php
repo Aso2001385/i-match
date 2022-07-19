@@ -22,17 +22,14 @@ class AfterAuth
         $response = $next($request);
 
         $exit_route = [
-            'GET/ac'
+            'GET/ac',
+            'GET/recruits/history/1'
         ];
 
         if(in_array(session('request_route'),$exit_route)) return $response;
 
         // ユーザーIDをもとにトークンをリジェネ
         $token = Token::regeneration(session('user_id'));
-
-        // 念のためセッションの変数を削除
-
-        // session_destroy();
 
         $response->header('x-auth',$token);
 

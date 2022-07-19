@@ -44,8 +44,7 @@ export default {
         password: this.password,
       }
       this.$axios
-        // .put('http://localhost:8080/api/user/password', password)
-        .put('http://3.113.81.143/api/user/password', password)
+        .put('http://localhost:8080/api/user/password', password)
         .then(response => {
           console.log('ちゃんと通っている')
           //   console.log(response.data[0])

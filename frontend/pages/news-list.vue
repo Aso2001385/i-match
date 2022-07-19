@@ -54,10 +54,10 @@ export default {
       sessionStorage.setItem('tit', tit)
       sessionStorage.setItem('con', con)
     },
-    getNews() {
-      this.$axios
+    async getNews() {
+      await this.$axios
         // .get('http://localhost:8080/api/informations')
-        .get('http://3.113.81.143/api/informations')
+        .get('http://localhost:8080/api/informations')
         .then(response => {
           console.log('ちゃんと通っている')
           this.newsCount = response.data.length
@@ -72,12 +72,12 @@ export default {
           this.newsListCount = this.newsId.length
         })
         .catch(err => {
-          console.log('通ってないよー')
+          console.log(err)
           return err.response
         })
-      this.$axios
+      await this.$axios
         // .get('http://localhost:8080/api/informations')
-        .get('http://3.113.81.143/api/informations')
+        .get('http://localhost:8080/api/informations')
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
           this.titleList.unshift(this.titleList[0])
@@ -85,8 +85,7 @@ export default {
           console.log(response.data)
         })
         .catch(err => {
-          console.log('通ってないよー')
-          console.log(err)
+            console.log(err)
           return err.response
         })
     },

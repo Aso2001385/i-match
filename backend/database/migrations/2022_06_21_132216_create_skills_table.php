@@ -18,6 +18,7 @@ class CreateSkillsTable extends Migration
             $table->string('name',100);
             $table->foreignId('category_id')->constrained('skill_categories');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

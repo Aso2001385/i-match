@@ -113,8 +113,7 @@ export default {
   methods: {
     submit() {
       this.$axios
-        // .get('http://localhost:8080/api/recruits')
-        .get('http://3.113.81.143/api/recruits')
+        .get('http://localhost:8080/api/recruits')
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)
