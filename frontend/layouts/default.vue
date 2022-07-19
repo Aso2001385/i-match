@@ -74,37 +74,38 @@ export default {
     this.getAccount()
   },
   methods: {
-    // getAccount1() {
-    //   this.$axios
-    //     .get('https://i-match.click/api/users?id=1')
+    getAccount() {
+      this.$axios
+        // .get('https://localhost:8080/api/users?id=1')
+        .get(`http://localhost:8080/api/users/${this.userId}`)
+        .then(response => {
+          console.log('ちゃんと通っている')
+          this.name = response.data.name
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log('通ってないよー!!!')
+          console.log(err)
+          return err.response
+        })
+      alert('通ったっす！')
+    },
+    // async getAccount() {
+    //   await this.$axios
+    //     .get('https://localhost:8080/api/ac')
     //     .then(response => {
-    //       console.log('ちゃんと通っている')
-    //       this.name = response.data[0].name
-    //       console.log(response.data[0])
+    //       //   console.log('ちゃんと通っている')
+    //       //   this.name = response.data.name
+    //       //   this.email = response.data.email
+    //       console.log(response.data)
     //     })
     //     .catch(err => {
     //       console.log('通ってないよー')
     //       console.log(err)
     //       return err.response
     //     })
-    //   alert('通ったっす！')
+    //   // alert('通ったっす！')
     // },
-    async getAccount() {
-      await this.$axios
-        .get('https://i-match.click/api/ac')
-        .then(response => {
-          //   console.log('ちゃんと通っている')
-          //   this.name = response.data.name
-          //   this.email = response.data.email
-          console.log(response.data)
-        })
-        .catch(err => {
-          console.log('通ってないよー')
-          console.log(err)
-          return err.response
-        })
-      // alert('通ったっす！')
-    },
   },
 }
 </script>

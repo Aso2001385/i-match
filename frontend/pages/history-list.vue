@@ -56,7 +56,7 @@ export default {
     },
     getHistory() {
       this.$axios
-        .get('https://i-match.click/api/')
+        .get('https://localhost:8080/api/')
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)

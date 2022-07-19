@@ -330,7 +330,7 @@ export default {
       }
       console.log(sendBulletin)
       this.$axios
-        .post('https://i-match.click/api/recruits', sendBulletin)
+        .post('https://localhost:8080/api/recruits', sendBulletin)
         // .post('http://localhost:8080/api/recruits', sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')

@@ -56,8 +56,8 @@ export default {
     },
     getNews() {
       this.$axios
-        // .get('http://localhost:8080/api/informations')
-        .get('https://i-match.click/api/informations')
+        .get('http://localhost:8080/api/informations')
+        // .get('https://localhost:8080/api/informations')
         .then(response => {
           console.log('ちゃんと通っている')
           this.newsCount = response.data.length
@@ -76,8 +76,8 @@ export default {
           return err.response
         })
       this.$axios
-        // .get('http://localhost:8080/api/informations')
-        .get('https://i-match.click/api/informations')
+        .get('http://localhost:8080/api/informations')
+        // .get('https://localhost:8080/api/informations')
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
           this.titleList.unshift(this.titleList[0])

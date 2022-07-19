@@ -142,8 +142,8 @@ export default {
     },
     getBulletin() {
       this.$axios
-        // .get('http://localhost:8080/api/recruits')
-        .get('https://i-match.click/api/recruits')
+        .get('http://localhost:8080/api/recruits')
+        // .get('https://localhost:8080/api/recruits')
         .then(response => {
           console.log('ちゃんと通っている')
           console.log(response.data)
