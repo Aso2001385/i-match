@@ -117,4 +117,17 @@ class RecruitController extends Controller
         return response()->json($response['result'],200);
     }
 
+
+    public function skillSearch(Request $request)
+    {
+
+        $res = $request->all();
+        try{
+            $response = Recruit::skillSearch($res);
+        }catch(Exception $e){
+            return response()->json($e,400);
+        }
+        return response()->json($response['result'],200);
+    }
+
 }

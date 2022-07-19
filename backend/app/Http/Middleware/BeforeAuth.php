@@ -31,7 +31,8 @@ class BeforeAuth
             'POST/users',
             'POST/auth',
             'GET/ac',
-            'GET/recruits/history/1'
+            'GET/recruits/history/1',
+            'POST/search/skill'
         ];
 
         // exit_routeに登録されたルートであればスルー

@@ -55,6 +55,9 @@ Route::apiResource('recruits', RecruitController::class);
 Route::get('recruits/other/{id}', [RecruitController::class,'otherIndex']);
 Route::get('recruits/history/{id}',[RecruitController::class,'history']);
 
+Route::get('search/skill',[RecruitController::class,'search']);
+Route::post('search/skill',[RecruitController::class,'skillSearch']);
+
 Route::apiResource('recruit-skill',RecruitSkillController::class);
 
 Route::apiResource('recruit-user',RecruitUserController::class);
