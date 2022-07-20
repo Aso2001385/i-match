@@ -17,8 +17,6 @@ class CreateUserSkillTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('skill_id')->constrained('skills');
-            $table->boolean('practical_flag');
-            $table->boolean('learning_flag');
             $table->integer('level');
             $table->timestamps();
             $table->softDeletes();

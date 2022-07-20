@@ -95,7 +95,7 @@ export default {
           console.log(err)
           return err.response
         })
-      alert('通ったっす！')
+      // alert('通ったっす！')
     },
   },
   components: {
