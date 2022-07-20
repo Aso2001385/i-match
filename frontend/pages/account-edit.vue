@@ -213,7 +213,6 @@ export default {
           console.log(err)
           return err.response
         })
-      alert('通ったっす！')
     },
   },
 }
