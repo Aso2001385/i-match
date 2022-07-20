@@ -126,7 +126,6 @@ export default {
   methods: {
     submit() {
       this.$v.$touch()
-      console.log(this.$store.state.user.name)
       if (this.confirmPassword !== this.password) return
 
       this.user = {
@@ -134,6 +133,7 @@ export default {
         email: this.email,
         password: this.password,
       }
+
 
       this.$axios.post('https://i-match.click/api/users', this.user).then(response => {
         this.$store.commit('restoreLogin', response.data)
