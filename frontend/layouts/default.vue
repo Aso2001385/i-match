@@ -34,7 +34,8 @@
               </v-list-item>
               <v-list-item class="pl-1 pb-0 pa-4">
                 <NuxtLink to="/account" class="white--text text-h7" style="text-decoration: none"
-                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-account</v-icon>{{ name }}</NuxtLink
+                  ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-account</v-icon
+                  >{{ this.user.name }}</NuxtLink
                 >
               </v-list-item>
             </v-list>
@@ -64,22 +65,36 @@
 import auth from '~/middleware/auth'
 
 export default {
-  middleware:auth,
+  middleware: auth,
   data() {
     return {
       drawer: true,
       // ログインしてデータを取得するまで代わりに入れておく
-      user:{}
+      name: '',
     }
+  },
+  computed: {
+    user() {
+      return this.$store.state.user
+    },
+    skills() {
+      return this.$store.state.skills
+    },
   },
   mounted() {
-    this.user = this.$store.state.user
-    this.conuser()
+    this.userInfo()
   },
   methods: {
-    conuser(){
+    conuser() {
       console.log(this.user)
-    }
+      console.log(this.skills.user_skills[0].name)
+      // console.log(this.user.name)
+    },
+    userInfo() {
+      console.log('トークンに保存してあるユーザー情報')
+      console.log(this.$store.state.skills)
+      console.log(this.$store.state.user)
+    },
   },
 }
 </script>

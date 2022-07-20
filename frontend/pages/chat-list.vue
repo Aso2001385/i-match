@@ -8,14 +8,14 @@
     <v-row>
       <v-col cols="12" style="overflow: hidden !important; height: 83vh; overflow-y: auto" class="pa-0 pb-1">
         <v-row style="width: 100%">
-          <v-card v-for="chatList in 25" :key="chatList" style="width: 100%">
-            <NuxtLink to="/chat-room" class="white--text" style="text-decoration: none">
+          <v-card v-for="room in rooms" :key="room.id" style="width: 100%">
+            <NuxtLink to="/chat-room" class="white--text green" style="text-decoration: none">
               <v-row class="ml-5 mt-3 mb-5">
-                <v-col cols="12" md="4"
-                  ><span class="black--text ml-5" style="width: 80%">相手のニックネーム</span></v-col
-                >
-                <v-col cols="12" md="8"><span class="black--text">3/6 12:10</span></v-col>
-                <v-col cols="12" class="ml-10"><h2 class="black--text" style="width: 80%">最終メッセージ</h2></v-col>
+                <v-col cols="12" md="8" class="black--text ml-5 font-weight-bold" style="width: 80%">
+                  相手のニックネーム
+                </v-col>
+                <v-col cols="12" md="3" class="black--text font-weight-bold">3/6 12:10</v-col>
+                <v-col cols="12" class="ml-5 grey--text darken-4" style="width: 80%">最終メッセージ</v-col>
               </v-row>
             </NuxtLink>
           </v-card>
