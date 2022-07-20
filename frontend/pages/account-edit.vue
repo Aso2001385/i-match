@@ -198,8 +198,8 @@ export default {
     },
     getAccount() {
       this.$axios
-        // .get('http://localhost:8080/api/users?id=this.userId')
-        .get(`http://localhost:8080/api/users/${this.userId}`)
+        // .get('https://i-match.click/api/users?id=this.userId')
+        .get(`https://i-match.click/api/users/${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           console.log(response.data[0])
@@ -213,7 +213,6 @@ export default {
           console.log(err)
           return err.response
         })
-      alert('通ったっす！')
     },
   },
 }

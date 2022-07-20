@@ -80,9 +80,9 @@ export default {
         this.sortId = 0
       }
     },
-    async otherpartyAccount() {
-      await this.$axios
-        .get(`http://localhost:8080/api/users/${this.userId}`)
+    otherpartyAccount() {
+      this.$axios
+        .get(`https://i-match.click/api/users/${this.userId}`)
         // .get(`https://localhost:8080/api/users/${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている')

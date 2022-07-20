@@ -88,7 +88,6 @@ export default {
     confirmPassword: '',
     user: {},
   }),
-
   computed: {
     nameErrors() {
       const errors = []
@@ -137,7 +136,7 @@ export default {
         password: this.password,
       }
 
-      this.$axios.post('http://localhost:8080/api/users', this.user).then(response => {
+      this.$axios.post('https://i-match.click/api/users', this.user).then(response => {
         this.$store.commit('restoreLogin', response.data)
       })
     },

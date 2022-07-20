@@ -11,7 +11,6 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-
     title: 'i-Match',
     htmlAttrs: {
       lang: 'ja',
@@ -132,13 +131,13 @@ export default {
 
   // proxy: {
   //   '/api/': {
-  //     // target: 'http://localhost:8080',
-  //     target: 'http://localhost:8080',
+  //     // target: 'https://i-match.click',
+  //     target: 'https://i-match.click',
   //   },
   // },
   proxy: {
     '/api': {
-      target: 'http://localhost:8080/',
+      target: 'https://i-match.click/',
       pathRewrite: {
         '^/api': '/',
       },

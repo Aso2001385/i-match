@@ -113,7 +113,7 @@ export default {
   methods: {
     submit() {
       this.$axios
-        .get('http://localhost:8080/api/recruits')
+        .get('https://i-match.click/api/recruits')
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)

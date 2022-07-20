@@ -59,7 +59,6 @@ export default {
     password: '',
     user: {},
   }),
-
   computed: {
     emailErrors() {
       const errors = []
@@ -86,7 +85,7 @@ export default {
         password: this.password,
       }
 
-      await this.$axios.post('http://localhost:8080/api/auth', this.user).then(async response => {
+      await this.$axios.post('https://i-match.click/api/auth', this.user).then(async response => {
         await this.$store.commit('restoreLogin', response.data)
       })
     },
