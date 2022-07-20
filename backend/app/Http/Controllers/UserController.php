@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Users\User;
 use App\Http\Requests\Users\CreateUserRequest;
+use App\Models\Skills\Skill;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\PasswordUpdateUserRequest;
 use Illuminate\Http\Request;
@@ -40,9 +41,15 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $response = User::create_user($request);
+        $user= User::create_user($request)['result'];
+        $user = User::get_user($user)['result'];
+        $skills = Skill::get_skills()['result'];
+        $response = [
+            'user' => $user,
+            'skills' => $skills
+        ];
 
-        return response()->json($response['result'],$response['status']);
+        return response()->json($response,200);
 
     }
 
@@ -56,7 +63,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $response = User::get_user($user);
-        
+
         return response()->json($response['result'],$response['status']);
     }
 
