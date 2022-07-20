@@ -6,6 +6,8 @@ use App\Models\Recruits\RecruitUser;
 use App\Models\Recruits\RecruitSkill;
 use App\Models\Skills\Skill;
 use App\Models\Users\User;
+use App\Models\Chats\Room;
+use App\Models\Chats\RoomUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -40,7 +42,10 @@ class Recruit extends Model
     public static function create_recruits($request){
         try{
 
-            $recruit = Recruit::create($request->all());
+            $room = Room::create();
+            $recruit = Recruit::create($request->all()->concat(['room_id'=>$room->id]));
+            RoomUser::add_user($room->id,$recruit['user_id'],$recruit->title);
+
             $result = 'success!';
 
             $status = Response::HTTP_OK;
@@ -53,7 +58,7 @@ class Recruit extends Model
         }
 
         return [
-            'recruit'=>$recruit,
+            'recruit'=> $recruit,
             'result' => $result,
             'status' => $status,
         ];
@@ -181,10 +186,12 @@ class Recruit extends Model
                     $query->select('recruit_user.*','users.name')->join('users', 'user_id', '=', 'users.id');
                 },
             ])->whereIn('id',RecruitUser::select('recruit_id as id')->where('user_id',$user_id)->get())->get();
+
             return [
                 'result' => $recruit,
                 'status' => 200
             ];
+
         }catch(Exception $e){
             return [
                 'result' => $e,
