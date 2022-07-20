@@ -5,7 +5,7 @@
         <v-card>
           <v-row class="pt-5 pl-15 ml-2">
             <v-col cols="4" class="ml-2"
-              >募集締め切り：<span>{{ dueList[value] }}</span></v-col
+              >締め切り：<span>{{ dueList[value] }}</span></v-col
             >
             <v-col cols="4"
               >募集人数：<span>3</span>/<span>{{ personsList[value] }}</span
@@ -20,8 +20,8 @@
           <v-row class="pl-12">
             <v-col cols="8" class="ml-10" justify="center">
               <div style="width: 70%" id="bulletin_skill">
-                <span v-for="skill in allSkill" :key="skill">
-                  <v-chip :class="colors(skill)" class="mr-2 white--text" small>{{ skill }}</v-chip>
+                <span v-for="skllValue in skillCount(value)" :key="skllValue">
+                  <v-chip :class="colors(skllValue)" class="mr-2 white--text" small>{{ getSkillId() }}</v-chip>
                 </span>
               </div>
             </v-col>
@@ -41,12 +41,15 @@ export default {
   data() {
     return {
       bulletinCount: 0,
-      recruitsIdList: [],
+      bulletinIdList: [],
       bulletinList: [],
-      userId: 0,
+      // userId: 0,
       dueList: [],
       personsList: [],
       allSkill: ['Java', 'Python', 'Spring', 'C', 'AWS', 'figma', 'Kotlin', 'C#', 'Qt', 'Flask'],
+      bulletinSkillId: [],
+      bulletinSkillCount: [],
+      boxSkill: -1,
       langs: [
         { id: 0, skillCategory: 0, skillName: 'Java' },
         { id: 1, skillCategory: 0, skillName: 'PHP' },
@@ -122,8 +125,9 @@ export default {
     },
     getSession() {
       // クリックされた相手の情報
-      this.userId = sessionStorage.getItem('userInfo')
-      console.log(this.userId + 'どんな値か確認')
+      // this.userId = sessionStorage.getItem('userInfo')
+      // とりあえず2の情報を取得
+      this.userId = 2
     },
     colors(name) {
       for (let i = 0; i < this.langs.length; i++) {
@@ -148,28 +152,40 @@ export default {
       }
       return 'indigo darken-3'
     },
-    getBulletin() {
-      this.$axios
+    skillCount(cnt) {
+      return this.bulletinSkillCount[cnt - 1]
+    },
+    getSkillId() {
+      this.boxSkill = this.boxSkill + 1
+      return this.bulletinSkillId[this.boxSkill]
+    },
+    async getBulletin() {
+      await this.$axios
         // .get('https://localhost:8080/api/recruits')
-        .get(`http://localhost:8080/api/recruits${this.userId}`)
+        .get(`http://localhost:8080/api/recruits`)
         .then(response => {
           console.log('ちゃんと通っている相手の情報')
-
+          this.bulletinCount = response.data.length
           for (let i = 0; i < response.data.length; i++) {
-            // const user_id = Number(response.data[i].user_id)
-            // const userId = Number(this.userId)
-            console.log(response.data[i].user_id)
-            console.log(this.userId)
-            this.recruitsIdList.push(response.data[i].id)
-            this.bulletinList.push(response.data[i].title)
-            this.dueList.push(response.data[i].due)
-            this.personsList.push(response.data[i].persons)
+            if (this.userId === response.data[i].user_id) {
+              this.bulletinList.push(response.data[i].title)
+              this.dueList.push(response.data[i].due)
+              this.personsList.push(response.data[i].persons)
+              this.bulletinIdList.push(response.data[i].id)
+              this.bulletinSkillCount.push(response.data[i].skills.length)
+              for (let j = 0; j < response.data[i].skills.length; j++) {
+                this.bulletinSkillId.push(response.data[i].skills[j].skill_id)
+              }
+            } else {
+              console.log('別の人の情報')
+            }
           }
-          this.bulletinCount = this.bulletinList.length
-          this.recruitsIdList.push(this.recruitsIdList[0])
+          this.bulletinCount = this.bulletinIdList.length
+          this.bulletinIdList.push(this.bulletinIdList[0])
           this.bulletinList.push(this.bulletinList[0])
           this.dueList.push(this.dueList[0])
           this.personsList.push(this.personsList[0])
+          this.bulletinIdList.unshift(this.bulletinIdList[0])
         })
         .catch(err => {
           console.log('通ってないよー')
