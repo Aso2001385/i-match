@@ -86,7 +86,6 @@ export default {
     addMessage: 'Add',
     user: {},
   }),
-
   computed: {
     nameErrors() {
       const errors = []
