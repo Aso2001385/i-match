@@ -79,14 +79,13 @@ export default {
   data: () => ({
     show1: false,
     show2: false,
-    name: '麻生花太郎',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
     addMessage: 'Add',
     user: {},
   }),
-
   computed: {
     nameErrors() {
       const errors = []
