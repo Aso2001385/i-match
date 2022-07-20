@@ -52,8 +52,8 @@ export default {
 
   data: () => ({
     show1: false,
-    email: '2001385@s.asojuku.ac.jp',
-    password: 'ultra-1966M78',
+    email: '',
+    password: '',
     addMessage: 'Add',
     user: {},
   }),
