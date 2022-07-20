@@ -16,11 +16,12 @@ class CreateRecruitsTable extends Migration
         Schema::create('recruits', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('room_id')->constrained('rooms');
             $table->string('title',30);
             $table->text('contents');
             $table->string('purpose');
             $table->integer('persons');
-            $table->dateTime('due');       
+            $table->dateTime('due');
             $table->timestamps();
         });
     }

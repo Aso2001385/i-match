@@ -943,6 +943,54 @@ paths:
                 - recruit_id
                 - user_id
       description: recruit user の作成
+  /rooms:
+    get:
+      summary: ''
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+      operationId: ''
+      description: ''
+    post:
+      summary: ルーム作成
+      operationId: post-rooms
+      responses:
+        '200':
+          description: OK
+      description: いけた
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sender:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      minimum: 1
+                      maximum: 10
+                    room_name:
+                      type: string
+                receiver:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      minimum: 1
+                      maximum: 10
+                    room_name:
+                      type: string
   '/recruit-user/{id}':
     parameters:
       - schema:
@@ -997,28 +1045,11 @@ paths:
                 properties: {}
       operationId: delete-recruit-user-id
       description: 指定されたIDのrecruit user情報を論理削除
-  /rooms:
-    get:
-      summary: Room 一覧
-      tags:
-        - EndPoint
-        - index
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Room'
-      operationId: get-rooms
-      description: room の一覧
-  '/rooms/{id}':
+  '/rooms/{user_id}':
     parameters:
       - schema:
-          type: integer
-        name: id
+          type: string
+        name: user_id
         in: path
         required: true
     delete:
@@ -1030,14 +1061,23 @@ paths:
         - EndPoint
         - delete
     get:
-      summary: Room 詳細
+      summary: 参加Room一覧
       operationId: get-rooms-id
       responses:
         '200':
           description: OK
-  /room-user:
+      description: いけた
+      parameters:
+        - schema:
+            type: number
+            minimum: 1
+            maximum: 10
+            default: 1
+          in: query
+          name: user_id
+  '/chats/{room_id}/{user_id}':
     get:
-      summary: Room user 一覧
+      summary: ルーム詳細
       tags:
         - EndPoint
         - index
@@ -1051,7 +1091,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/RoomUser'
       operationId: get-room-user
-      description: room user の一覧
+      description: できた
     post:
       summary: Room user 作成
       operationId: post-room-user
@@ -1098,6 +1138,17 @@ paths:
       tags:
         - EndPoint
         - store
+    parameters:
+      - schema:
+          type: string
+        name: room_id
+        in: path
+        required: true
+      - schema:
+          type: string
+        name: user_id
+        in: path
+        required: true
   '/room-user/{id}':
     parameters:
       - schema:
@@ -1191,8 +1242,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Chat'
-      operationId: get-chats
-      description: chat の一覧
+      operationId: ''
+      description: ''
     post:
       summary: Chat 作成
       tags:
@@ -1258,8 +1309,44 @@ paths:
                 - message
                 - read
             examples: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                room_id:
+                  type: number
+                user_id:
+                  type: number
+                message:
+                  type: string
         description: ''
-      description: chatの作成
+      description: できた
+    parameters: []
+    put:
+      summary: ''
+      operationId: put-chats
+      responses:
+        '200':
+          description: OK
+          headers:
+            header-0:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                message:
+                  type: string
   '/chats/{id}':
     parameters:
       - schema:
@@ -2108,6 +2195,65 @@ paths:
       tags: []
       responses: {}
       operationId: get-recruit-history-user_id
+  /search/skill:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-recruits-search
+    post:
+      summary: ''
+      operationId: post-recruits-search
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              minItems: 4
+              maxItems: 5
+              items:
+                type: object
+                minProperties: 1
+                maxProperties: 1
+                properties:
+                  id:
+                    type: integer
+                    format: int32
+                    minimum: 1
+                    maximum: 10
+                    multipleOf: 1
+                    deprecated: true
+                  name:
+                    type: string
+        description: ''
+    parameters: []
+  chats:
+    get:
+      summary: チャット更新
+    parameters: []
+    post:
+      summary: チャット送信
+      operationId: postchats
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '':
+                  type: string
+    put:
+      summary: チャット更新
+      operationId: putchats
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     User:

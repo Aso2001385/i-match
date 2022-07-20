@@ -21,17 +21,18 @@ class AfterAuth
 
         $response = $next($request);
 
-        $exit_route = [
-            'GET/ac',
-            'GET/recruits/history/1'
-        ];
+        // $exit_route = [
+        //     'GET/ac',
+        //     'GET/recruits/history/1',
+        //     'POST/search/skill'
+        // ];
 
-        if(in_array(session('request_route'),$exit_route)) return $response;
+        // if(in_array(session('request_route'),$exit_route)) return $response;
 
-        // ユーザーIDをもとにトークンをリジェネ
-        $token = Token::regeneration(session('user_id'));
+        // // ユーザーIDをもとにトークンをリジェネ
+        // $token = Token::regeneration(session('user_id'));
 
-        $response->header('x-auth',$token);
+        // $response->header('x-auth',$token);
 
         return $response;
     }

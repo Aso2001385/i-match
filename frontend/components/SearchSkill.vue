@@ -5,7 +5,7 @@
         <v-col>
           <v-row>
             <v-col cols="6">
-              <p style="text-align: center"><v-btn color="green">検索</v-btn></p>
+              <p style="text-align: center"><v-btn color="green" @click="searchSkills">検索</v-btn></p>
             </v-col>
             <v-col cols="6">
               <v-btn color="orange" @click="deleteSkillChips()">Clear<v-icon dark right>mdi-minus-circle</v-icon></v-btn>
@@ -72,6 +72,9 @@ export default {
     deleteSkillChips() {
       this.skillChips = []
     },
+    searchSkill(){
+
+    }
   },
 
 }

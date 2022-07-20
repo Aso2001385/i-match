@@ -31,6 +31,9 @@
               <div class="pt-5 position: relative">
                 <v-btn class="mr-0" @click="submit">{{ addMessage }}</v-btn>
               </div>
+              <v-row class="mt-10" justify="center">
+                <NuxtLink to="/sign-up">sign up</NuxtLink>
+              </v-row>
             </div>
           </v-form>
         </v-card>
@@ -43,7 +46,6 @@ import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'
 
 export default {
-
   mixins: [validationMixin],
   layout: 'auth',
   validations: {
@@ -53,8 +55,8 @@ export default {
 
   data: () => ({
     show1: false,
-    email: '2001385@s.asojuku.ac.jp',
-    password: 'ultra-1966M78',
+    email: '',
+    password: '',
     addMessage: 'Add',
     user: {},
   }),
@@ -85,14 +87,9 @@ export default {
         password: this.password,
       }
 
-
-      await this.$axios.post('http://localhost:8080/api/auth', this.user)
-      .then(async response => {
-
+      await this.$axios.post('https://i-match.click/api/auth', this.user).then(async response => {
         await this.$store.commit('restoreLogin', response.data)
-
       })
-
     },
 
     clear() {

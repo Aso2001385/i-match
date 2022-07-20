@@ -21,18 +21,16 @@ class RoomUser extends Model
         'name',
     ];
 
-    public static function create_room_user($request){
+    public static function add_user($room_id,$user_id,$room_name){
         try{
-            $room=Room::create_room();
-            $name[0]=User::find($request->users[1])->name;
-            $name[1]=User::find($request->users[0])->name;
 
-            for($i = 0; $i <2;$i++){ 
-                RoomUser::create(['user_id'=>$request->users[$i],'room_id'=>$room->id,'name'=>$name[$i]]);
-            }
+            RoomUser::create([
+                'room_id' => $room_id,
+                'user_id' => $user_id,
+                'room_name' => $room_name
+            ]);
 
-            $result = 'success!';
-
+            $result = '';
             $status = Response::HTTP_OK;
 
         }catch(Exception $e){

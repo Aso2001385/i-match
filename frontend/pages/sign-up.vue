@@ -79,10 +79,10 @@ export default {
   data: () => ({
     show1: false,
     show2: false,
-    name: 'オルカさん',
-    email: '2001385@s.asojuku.ac.jp',
-    password: 'ultra-1966M78',
-    confirmPassword: 'ultra-1966M78',
+    name: '麻生花太郎',
+    email: '',
+    password: '',
+    confirmPassword: '',
     addMessage: 'Add',
     user: {},
   }),
@@ -127,7 +127,6 @@ export default {
   methods: {
     submit() {
       this.$v.$touch()
-      console.log(this.$store.state.user.name)
       if (this.confirmPassword !== this.password) return
 
       this.user = {
@@ -136,10 +135,9 @@ export default {
         password: this.password,
       }
 
-      this.$axios.post('http://localhost:8080/api/users', this.user).then(response => {
 
+      this.$axios.post('https://i-match.click/api/users', this.user).then(response => {
         this.$store.commit('restoreLogin', response.data)
-
       })
     },
 

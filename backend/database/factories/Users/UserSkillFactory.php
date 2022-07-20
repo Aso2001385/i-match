@@ -16,8 +16,6 @@ class UserSkillFactory extends Factory
         return [
             'user_id' =>rand(1,10),
             'skill_id' =>rand(1,30),
-            'practical_flag'=>$this->faker->boolean(50),
-            'learning_flag'=>$this->faker->boolean(50),
             'level'=>rand(1,5),
         ];
     }
