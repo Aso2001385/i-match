@@ -134,7 +134,6 @@ export default {
         password: this.password,
       }
 
-
       this.$axios.post('https://i-match.click/api/users', this.user).then(response => {
         this.$store.commit('restoreLogin', response.data)
       })
