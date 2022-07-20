@@ -20,8 +20,6 @@ class UserSkill extends Model
     protected $fillable = [
         'user_id',
         'skill_id',
-        'practical_flag',
-        'learning_flag',
         'level',
     ];
 

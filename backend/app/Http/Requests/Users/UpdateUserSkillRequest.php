@@ -27,18 +27,12 @@ class UpdateUserSkillRequest extends FormRequest
     public function rules()
     {
         return [
-            'practical_flag'=>'required|boolean',
-            'learning_flag'=>'required|boolean',
             'level'=>'required|integer',
         ];
     }
     public function messages()
     {
         return [
-            'practical_flag.required'=>'実務フラグが入力されていません',
-            'practical_flag.boolean'=>'boolean型になっていません',
-            'learning_flag.required'=>'学習フラグが入力されていません',
-            'learning_flag.boolean'=>'boolean型になっていません',
             'level.required'=>'レベルが入力されていません',
             'level.integer'=>'レベルが整数になっていません',
         ];
