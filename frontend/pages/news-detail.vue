@@ -60,7 +60,7 @@ export default {
     },
     getDetail() {
       this.$axios
-        .get(`http://localhost:8080/api/informations/${this.id}`)
+        .get(`https://i-match.click/api/informations/${this.id}`)
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
           this.category.push(response.data[0].category_name)
