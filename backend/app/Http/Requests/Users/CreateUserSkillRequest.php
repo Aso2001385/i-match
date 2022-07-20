@@ -29,8 +29,6 @@ class CreateUserSkillRequest extends FormRequest
         return [
             'user_id'=>'required|integer',
             'skill_id'=>'required|integer',
-            'practical_flag'=>'required|boolean',
-            'learning_flag'=>'required|boolean',
             'level'=>'required|integer',
         ];
     }
@@ -41,10 +39,6 @@ class CreateUserSkillRequest extends FormRequest
             'user_id.integer'=>'user_idが整数になっていません',
             'skill_id.required'=>'skill_idが入力されていません',
             'skill_id.integer'=>'skill_idが整数になっていません',
-            'practical_flag.required'=>'実務フラグが入力されていません',
-            'practical_flag.boolean'=>'boolean型になっていません',
-            'learning_flag.required'=>'学習フラグが入力されていません',
-            'learning_flag.boolean'=>'boolean型になっていません',
             'level.required'=>'レベルが入力されていません',
             'level.integer'=>'レベルが整数になっていません',
         ];

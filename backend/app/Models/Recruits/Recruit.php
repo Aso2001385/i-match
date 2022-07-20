@@ -41,6 +41,14 @@ class Recruit extends Model
         try{
 
             $recruit = Recruit::create($request->all());
+
+            $recruit_user=[
+                'recruit_id'=>$recruit->id,
+                'user_id'=>$recruit->user_id
+            ];
+
+            RecruitUser::create_recruit_user($recruit_user);
+
             $result = 'success!';
 
             $status = Response::HTTP_OK;

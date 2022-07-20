@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserSkillController;
 use App\Http\Controllers\SkillController;
 use App\Http\Controllers\RecruitController;
 use App\Http\Controllers\RecruitSkillController;
@@ -39,6 +40,8 @@ Route::get('/ac',[UserController::class,'access']); //T
 //ユーザー機能
 Route::apiResource('users', UserController::class);
 Route::put('/user/password',[UserController::class, 'passUpdate']); // U
+
+Route::apiResource('user-skill', UserSkillController::class);
 
 //スキル機能
 Route::apiResource('skills', SkillController::class);
