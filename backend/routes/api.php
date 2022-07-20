@@ -16,6 +16,8 @@ use App\Http\Controllers\InformationCategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomUserController;
+use App\Models\Chats\Chat;
+use App\Models\Chats\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -74,11 +76,13 @@ Route::put('/teacher/password',[TeacherController::class,'passUpdate']);
 Route::apiResource('events', EventController::class);
 
 //チャット機能
-Route::apiResource('chats',ChatController::class);
 
-Route::apiResource('rooms',RoomController::class);
-
-Route::apiResource('room-user',RoomUserController::class);
+Route::get('rooms/{user_id}',[ChatController::class,'index']); //ルーム一覧
+Route::post('rooms',[ChatController::class,'store']); //ルーム作成
+Route::put('rooms',[ChatController::class,'rename']); //ルーム名変更
+Route::get('chats/{room_id}/{user_id}',[ChatController::class,'show']); // ルーム詳細
+Route::post('chats',[ChatController::class,'send']); //チャット送信
+Route::put('chats',[ChatController::class,'update']); //チャット更新
 
 Route::post('/auth', [AuthController::class, 'login']);
 Route::get('/auth', [AuthController::class, 'restore']);
