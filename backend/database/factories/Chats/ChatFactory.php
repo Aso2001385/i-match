@@ -17,7 +17,6 @@ class ChatFactory extends Factory
             'room_id'=>rand(1,20),
             'user_id'=>rand(1,10),
             'message'=>$this->faker->realText(255,1),
-            'read' =>$this->faker->boolean(50),
         ];
     }
 }
