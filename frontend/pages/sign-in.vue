@@ -60,7 +60,6 @@ export default {
     addMessage: 'Add',
     user: {},
   }),
-
   computed: {
     emailErrors() {
       const errors = []
