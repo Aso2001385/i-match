@@ -1,31 +1,34 @@
 <template>
   <v-container>
-    <v-row v-for="value in bulletinCount" :key="value">
+    <v-row v-for="bulletin in bulletins" :key="bulletin.id">
       <v-col cols="12" class="ma-0">
         <v-card>
           <v-row class="pt-5 pl-15">
             <v-col cols="4" class="ml-8"
-              >募集締め切り：<span>{{ dueList[value] }}</span></v-col
+              >募集締め切り：<span>{{ bulletin.due }}</span></v-col
             >
             <v-col cols="4"
-              >募集人数：<span>3</span>/<span>{{ personsList[value] }}</span
+              >募集人数：<span>3</span>/<span>{{ bulletin.persons }}</span
               >人</v-col
             >
             <v-col cols="12"
-              ><h2 class="ml-8">{{ bulletinList[value] }}</h2></v-col
+              ><h2 class="ml-8">{{ bulletin.title }}</h2></v-col
             >
           </v-row>
           <v-row class="pl-12">
             <v-col cols="8" class="ml-10" justify="center">
               <div style="width: 70%" id="bulletin_skill">
-                <span v-for="skill in allSkill" :key="skill">
-                  <v-chip :class="colors(skill)" class="mr-2 white--text" small>{{ skill }}</v-chip>
+                <!-- 何個スキルを表示するか -->
+                <span v-for="skill in bulletin.skills" :key="skill.id">
+                  <v-chip :class="categoryColor[skill.category_name] + ' mr-2 white--text'" small>
+                    {{ skill.name }}
+                  </v-chip>
                 </span>
               </div>
             </v-col>
             <NuxtLink to="/bulletin-detail" class="white--text" style="text-decoration: none">
               <v-col cols="12" md="12" class="ml-10">
-                <span class="black--text" @click="getSession(bulletinIdList[value])">Read More </span>
+                <span class="black--text" @click="getSession(bulletin.id)">Read More </span>
               </v-col>
             </NuxtLink>
           </v-row>
@@ -38,12 +41,23 @@
 export default {
   data() {
     return {
+      bulletins: [],
       bulletinCount: 0,
       bulletinList: [],
       bulletinIdList: [],
       dueList: [],
       personsList: [],
-      allSkill: ['Java', 'Python', 'Spring', 'C', 'AWS', 'figma', 'Kotlin', 'C#', 'Qt', 'Flask'],
+      // allSkill: ['Java', 'Python', 'Spring', 'C', 'AWS', 'figma', 'Kotlin', 'C#', 'Qt', 'Flask'],
+      bulletinSkillId: [],
+      bulletinSkillCount: [],
+      boxSkill: -1,
+      categoryColor: {
+        language: 'red',
+        framework: 'blue',
+        database: 'green',
+        infrastructure: 'purple',
+        other: 'indigo darken -3',
+      },
       langs: [
         { id: 0, skillCategory: 0, skillName: 'Java' },
         { id: 1, skillCategory: 0, skillName: 'PHP' },
@@ -110,7 +124,7 @@ export default {
     }
   },
   mounted() {
-    this.getBulletin()
+    this.bulletins = this.getBulletin()
   },
   methods: {
     getSession(value) {
@@ -144,15 +158,41 @@ export default {
       await this.$axios
         .get('https://i-match.click/api/recruits')
         .then(response => {
-          console.log('ちゃんと通っている')
           console.log(response.data)
-          this.bulletinCount = response.data.length
-          for (let i = 0; i < response.data.length; i++) {
-            this.bulletinList.push(response.data[i].title)
-            this.dueList.push(response.data[i].due)
-            this.personsList.push(response.data[i].persons)
-            this.bulletinIdList.push(response.data[i].id)
-          }
+          this.bulletins = response.data
+          return response.data
+          // console.log('ちゃんと通っている111111')
+          // console.log(response.data[0].title)
+          // console.log(this.bulletinList.length)
+          // this.bulletinCount = response.data.length
+          // console.log(response.data)
+          // for (let i = 0; i < this.bulletinCount; i++) {
+          //   console.log(this.bulletinList.length)
+
+          //   await this.bulletinList.push(response.data[i].title)
+          //   await this.dueList.push(response.data[i].due)
+          //   await this.personsList.push(response.data[i].persons)
+          //   await this.bulletinIdList.push(response.data[i].id)
+          //   await this.bulletinSkillCount.push(response.data[i].skills)
+          //   console.log('セクション 1')
+          //   console.log(this.bulletinList.length)
+
+          //   for (let j = 0; j < response.data[i].skills.length; j++) {
+          //     console.log(this.bulletinList.length)
+          //     await this.bulletinSkillId.push(response.data[i].skills[j].skill_id)
+          //   }
+          //   console.log('セクション 2')
+          //   console.log(response.data[i].title)
+          // }
+
+          // this.bulletinCount = this.bulletinList.length
+
+          // await this.bulletinList.unshift(this.bulletinList[0])
+          // await this.dueList.unshift(this.dueList[0])
+          // await this.personsList.unshift(this.personsList[0])
+          // await this.bulletinIdList.unshift(this.bulletinIdList[0])
+          // console.log('セクション 3')
+          // console.log(this.bulletinCount)
         })
         .catch(err => {
           console.log('通ってないよー')
@@ -160,6 +200,7 @@ export default {
           return err.response
         })
     },
+    sendData() {},
   },
 }
 </script>

@@ -80,9 +80,15 @@ export default {
         this.sortId = 0
       }
     },
+<<<<<<< HEAD
     otherpartyAccount() {
       this.$axios
         .get(`https://i-match.click/api/users/${this.userId}`)
+=======
+    async otherpartyAccount() {
+      await this.$axios
+        .get(`http://localhost:8080/api/users/${this.userId}`)
+>>>>>>> origin/develop
         // .get(`https://localhost:8080/api/users/${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている')
@@ -95,7 +101,7 @@ export default {
           console.log(err)
           return err.response
         })
-      alert('通ったっす！')
+      // alert('通ったっす！')
     },
   },
   components: {

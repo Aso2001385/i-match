@@ -127,7 +127,6 @@ export default {
   methods: {
     submit() {
       this.$v.$touch()
-      console.log(this.$store.state.user.name)
       if (this.confirmPassword !== this.password) return
 
       this.user = {

@@ -31,6 +31,9 @@
               <div class="pt-5 position: relative">
                 <v-btn class="mr-0" @click="submit">{{ addMessage }}</v-btn>
               </div>
+              <v-row class="mt-10" justify="center">
+                <NuxtLink to="/sign-up">sign up</NuxtLink>
+              </v-row>
             </div>
           </v-form>
         </v-card>
