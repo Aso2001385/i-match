@@ -27,7 +27,7 @@
             </v-row>
             <v-row class="mt-0 pa-0">
                 <v-col cols="4" class="d-flex">
-                    
+
                 </v-col>
             </v-row>
             <v-row class="mt-0 pa-0">
@@ -72,7 +72,7 @@ export default {
         },
         // getAccount() {
         // this.$axios
-        // .get('https://i-match.click/api/', getAccount)
+        // .get('http://localhost:8080/api/', getAccount)
         // .then(response => {
         //     console.log('ちゃんと通っている１')
         //     console.log(response.data)

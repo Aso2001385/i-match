@@ -131,13 +131,13 @@ export default {
 
   // proxy: {
   //   '/api/': {
-  //     // target: 'https://i-match.click',
-  //     target: 'https://i-match.click',
+  //     // target: 'http://localhost:8080',
+  //     target: 'http://localhost:8080',
   //   },
   // },
   proxy: {
     '/api': {
-      target: 'https://i-match.click/',
+      target: 'http://localhost:8080/',
       pathRewrite: {
         '^/api': '/',
       },
