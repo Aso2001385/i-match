@@ -12,10 +12,10 @@
             <NuxtLink to="/chat-room" class="white--text green" style="text-decoration: none">
               <v-row class="ml-5 mt-3 mb-5">
                 <v-col cols="12" md="8" class="black--text ml-5 font-weight-bold" style="width: 80%">
-                  相手のニックネーム
+                  {{ room.name }}
                 </v-col>
-                <v-col cols="12" md="3" class="black--text font-weight-bold">3/6 12:10</v-col>
-                <v-col cols="12" class="ml-5 grey--text darken-4" style="width: 80%">最終メッセージ</v-col>
+                <v-col cols="12" md="3" class="black--text font-weight-bold">{{ room.created_at }}</v-col>
+                <v-col cols="12" class="ml-5 grey--text darken-4" style="width: 80%">{{ room.new_message }}</v-col>
               </v-row>
             </NuxtLink>
           </v-card>
@@ -28,7 +28,7 @@
 export default {
   data() {
     return {
-      userId: 1,
+      rooms:[],
     }
   },
   mounted() {
@@ -37,24 +37,15 @@ export default {
   methods: {
     getChatList() {
       this.$axios
-        // .get('http://localhost:8080/api/chats')
-        .get('http://localhost:8080/api/chats')
+        .get(`http://localhost:8080/api/rooms/${this.$store.state.user.id}`)
         .then(response => {
-          console.log('ちゃんと通っている')
-          this.bulletinCount = response.data.length
-          for (let i = 0; i < response.data.length; i++) {
-            this.bulletinList.push(response.data[i].title)
-            // this.skillIdList[response.data[0].skill]
-            this.dueList.push(response.data[i].due)
-            this.personsList.push(response.data[i].persons)
-          }
-          console.log(response.data)
+          if(!response.data) return
+          this.rooms = response.data
         })
         .catch(err => {
           console.log('通ってないよー')
           return err.response
         })
-      alert('通ったっす！')
     },
   },
 }

@@ -22,7 +22,6 @@ class BeforeAuth
     public function handle(Request $request, Closure $next)
     {
 
-
         $route = $request->method().explode("/api",$request->url())[1];
         session(['request_route'=>$route]);
 
@@ -38,11 +37,11 @@ class BeforeAuth
         // exit_routeに登録されたルートであればスルー
         if(in_array($route,$exit_route)) return $next($request);
 
-        // 認可に失敗したら401エラーでレスポンス
+        // 認可に失敗したら403エラーでレスポンス
         $x_auth = $request->headers->get('X-Auth');
-        if(!isset($x_auth)) return response()->json('TOKEN IS NOT FOUND',401)->header('Access-Control-Allow-Origin','*');
+        if(!isset($x_auth)) return response()->json('TOKEN IS NOT FOUND',403)->header('Access-Control-Allow-Origin','*');
 
-        if(!Token::authorization($request)) return response()->json('TOKEN IS INAPPROPRIATE',Response::HTTP_UNAUTHORIZED);
+        if(!Token::authorization($request)) return response()->json('TOKEN IS INAPPROPRIATE',403);
 
         session([ 'user_id' => explode("|",$request->headers->get('X-Auth'))[0] ]);
 

@@ -102,12 +102,12 @@
                     >{{ value }}<v-icon dark right small @click="deleteSkill(value)">mdi-minus-circle</v-icon></v-chip
                   ></span
                 ><span style="float: left"
-                  ><v-col
+                  ><v-btn
                     id="addSkill"
                     class="black--text"
-                    style="background-color: white; border: 1px solid white"
-                    @click="openModal"
-                    >追加</v-col
+                    @click.prevent="openModal"
+
+                    >追加</v-btn
                   ></span
                 >
               </v-col>
