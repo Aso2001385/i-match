@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height>
     <v-row justify="center">
-      <v-col cols="12" md="5">
+      <v-col cols="12" lg="6" md="9" sm="10" xs="10">
         <v-card class="pb-10 mx-auto fill-width">
           <v-card-title class="d-flex justify-center pa-4 grey darken-4">
             <h3 class="text-center white--text">SIGN IN</h3>
@@ -29,10 +29,10 @@
                 @click:append="show1 = !show1"
               ></v-text-field>
               <div class="pt-5 position: relative">
-                <v-btn class="mr-0" @click="submit" onclick="this.disabled = true;">{{ addMessage }}</v-btn>
+                <v-btn class="mr-0" @click="submit">NEXT</v-btn>
               </div>
               <v-row class="mt-10" justify="center">
-                <NuxtLink to="/sign-up">sign up</NuxtLink>
+                アカウントをお持ちではありませんか？<NuxtLink to="/sign-up">こちらから新規登録</NuxtLink>
               </v-row>
             </div>
           </v-form>
@@ -57,7 +57,6 @@ export default {
     show1: false,
     email: '',
     password: '',
-    addMessage: 'Add',
     user: {},
   }),
   computed: {
