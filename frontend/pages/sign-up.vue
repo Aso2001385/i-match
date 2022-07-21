@@ -50,7 +50,13 @@
                 @click:append="show2 = !show2"
               ></v-text-field>
               <div class="pt-5 position: relative">
-                <v-btn class="mr-0" @click="submit">NEXT</v-btn>
+                <v-row justify="center">
+                  <v-col cols="4">
+                    <api-event-button class="mr-0" color="grey darken-4" :clickCallback="submit">
+                      Next
+                    </api-event-button>
+                  </v-col>
+                </v-row>
               </div>
               <v-row class="mt-10" justify="center">
                 アカウントをお持ちですか？<NuxtLink to="/sign-in">こちらからログイン</NuxtLink>
@@ -66,7 +72,12 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'
 
+import ApiEventButton from '~/components/ui/ApiEventButton.vue'
+
 export default {
+  components: {
+    ApiEventButton,
+  },
   mixins: [validationMixin],
   layout: 'auth',
   validations: {
