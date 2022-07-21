@@ -11,9 +11,6 @@
             <v-card-title style="border-bottom: 2px solid lightgrey; width: 90%">内容</v-card-title>
             <v-row class="mt-0 pa-0">
               <v-col cols="10">
-                <!-- <v-text-field label="タイトル" @change="informationBull(1, tit)">{{
-                  sessionStorage.getItem('infoContent')
-                }}</v-text-field> -->
                 <v-text-field v-model="tit" label="タイトル" @change="informationBull"></v-text-field>
               </v-col>
             </v-row>
@@ -169,11 +166,6 @@ export default {
   },
   addSkillChip() {
     this.skillChips.push(this.selectSkill)
-    // this.skillChips = Common.orderBy(this.skillChips, 'category_id', 'num', true, {
-    //   keys: ['id'],
-    //   mode: 'num',
-    //   asc: true,
-    // })
     this.skillChips = this.skillChips.filter((ele, index, self) => self.findIndex(e => e.id === ele.id) === index)
   },
   methods: {
@@ -219,47 +211,9 @@ export default {
         skills: [],
       }
       console.log(sendBulletin.due)
-      // const levelBox = sessionStorage.getItem('levels')
-      // const levs = levelBox.replace(',', '').split(',')
-
-      // for (let i = 0; i < this.chipSkills.length; i++) {
-      //   for (let j = 0; j < this.langs.length; j++) {
-      //     if (this.chipSkills[i] === this.langs[j].skillName) {
-      //       sendBulletin.skills.push({ skill_id: this.langs[j].id, level: Number(levs[i]) })
-      //     }
-      //   }
-      // }
-      // for (let i = 0; i < this.chipSkills.length; i++) {
-      //   for (let j = 0; j < this.frameworks.length; j++) {
-      //     if (this.chipSkills[i] === this.frameworks[j].skillName) {
-      //       sendBulletin.skills.push({ skill_id: this.frameworks[j].id, level: Number(levs[i]) })
-      //     }
-      //   }
-      // }
-      // for (let i = 0; i < this.chipSkills.length; i++) {
-      //   for (let j = 0; j < this.dbs.length; j++) {
-      //     if (this.chipSkills[i] === this.dbs[j].skillName) {
-      //       sendBulletin.skills.push({ skill_id: this.dbs[j].id, level: Number(levs[i]) })
-      //     }
-      //   }
-      // }
-      // for (let i = 0; i < this.chipSkills.length; i++) {
-      //   for (let j = 0; j < this.infs.length; j++) {
-      //     if (this.chipSkills[i] === this.infs[j].skillName) {
-      //       sendBulletin.skills.push({ skill_id: this.infs[j].id, level: Number(levs[i]) })
-      //     }
-      //   }
-      // }
-      // for (let i = 0; i < this.chipSkills.length; i++) {
-      //   for (let j = 0; j < this.oths.length; j++) {
-      //     if (this.chipSkills[i] === this.oths[j].skillName) {
-      //       sendBulletin.skills.push({ skill_id: this.oths[j].id, level: Number(levs[i]) })
-      //     }
-      //   }
-      // }
       console.log(sendBulletin)
       this.$axios
-        .post('https://i-match.click/api/recruits', sendBulletin)
+        .post(`https://i-match.click/api/recruits`, sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)
@@ -331,7 +285,6 @@ export default {
       sessionStorage.setItem('chip', chipBox)
       sessionStorage.setItem('levels', levelBox)
       sessionStorage.setItem('skills', chipBox)
-      // console.log(this.chipSkills)
       return this.chipSkills.splice(this.chipSkills.indexOf(value), 1)
     },
   },

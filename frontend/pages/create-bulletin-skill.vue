@@ -49,25 +49,6 @@
                 </v-row>
               </v-col>
             </v-row>
-            <!-- <v-row>
-              <v-col class="ml-15" cols="2"><v-icon color="transparent">mdi-alpha-v-box</v-icon></v-col>
-              <v-col>
-                <v-row
-                  ><v-col>
-                    <v-select
-                      style="width: 50%"
-                      v-model="exp"
-                      item-text="exps"
-                      item-value="value"
-                      :items="devExp"
-                      attach
-                      label="開発経験"
-                      class="mb-0"
-                    ></v-select>
-                  </v-col>
-                </v-row>
-              </v-col>
-            </v-row> -->
           </div>
         </v-row>
 
@@ -82,15 +63,6 @@
 <script defer>
 export default {
   computed: {
-    // level: {
-    //   get() {
-    //     console.log('get')
-    //     return ''
-    //   },
-    //   set(val) {
-    //     console.log('set')
-    //   },
-    // },
   },
   data() {
     return {
@@ -164,7 +136,6 @@ export default {
       },
       skills: [],
       levels: [],
-      // exps: [],
       bulletinSkills: [],
     }
   },
