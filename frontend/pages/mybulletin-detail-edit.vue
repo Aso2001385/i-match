@@ -154,7 +154,6 @@ export default {
         'Azure',
         'iOS',
       ],
-      //   skills: [],
 
       //  ログインしている自分のidを利用して掲示板の更新をしていく
       userId: 1,
@@ -267,8 +266,7 @@ export default {
     },
     getBulletinDetail() {
       this.$axios
-        // .get(`https://localhost:8080/api/recruits/${this.bulletinDetailId}`)
-        .get(`https://i-match.click/api/recruits/${this.bulletinDetailId}`)
+        .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.title = response.data.title
@@ -303,14 +301,9 @@ export default {
         skills: this.skills,
       }
       this.$axios
-        .put(`https://localhost:8080/api/recruits/${this.userId}`, updateBulletin)
+        .put(`${this.$urls.API}/recruits/${this.userId}`, updateBulletin)
         .then(response => {
           console.log('ちゃんと通っている')
-          //   this.title = response.data.title
-          //   this.contents = response.data.contents
-          //   this.purpose = response.data.purpose
-          //   this.due = response.data.due
-          //   this.persons = response.data.persons
 
           console.log(response.data)
         })

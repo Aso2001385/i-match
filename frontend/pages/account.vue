@@ -35,26 +35,9 @@
           <v-card style="width: 40vh" class="pa-5">
             <v-card-title class="pl-5 pr-10 pt-1">スキル一覧</v-card-title>
             <v-col style="overflow: hidden !important; height: 25vh; overflow-y: auto">
-              <!-- <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%">言語</p> -->
-              <!-- <span v-for="skill in this.skills" :key="skill.id"> -->
-              <!-- <v-chip color="red" class="ml-1 mr-1 mb-1 white--text">{{ this.skill.name }}</v-chip> -->
-              <!-- </span> -->
-
-              <!-- <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">
-                フレームワーク
-              </p> -->
-              <!-- <div v-for="cnt in 4" :key="cnt">-->
               <span v-for="skill in skillName" :key="skill">
                 <v-chip :class="color(skill)">{{ skill }}</v-chip>
               </span>
-              <!-- </div> -->
-              <!-- <v-chip v-for="n in 5" :key="n" color="blue" class="ml-1 mr-1 mb-1 white--text">Laravel</v-chip> -->
-              <!-- <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">DB</p> -->
-              <!-- <v-chip v-for="n in 5" :key="n" color="green" class="ml-1 mr-1 mb-1 white--text">MySQL</v-chip> -->
-              <!-- <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">インフラ</p> -->
-              <!-- <v-chip v-for="n in 5" :key="n" color="purple" class="ml-1 mr-1 mb-1 white--text">AWS</v-chip> -->
-              <!-- <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">その他</p> -->
-              <!-- <v-chip v-for="n in 5" :key="n" color="grey" class="ml-1 mr-1 mb-1 white--text">figma</v-chip> -->
             </v-col>
           </v-card>
         </v-row>
@@ -182,18 +165,13 @@ export default {
       return 'indigo darken-3'
     },
     getAccount() {
-      // this.userId = this.user.id
       this.$axios
-        // .get(`https://i-match.click/api/users/${this.userId}`)
-        .get(`https://i-match.click/api/users/${this.userId}`)
+        .get(`${this.$urls.API}/users/${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.name = response.data.name
           this.email = response.data.email
-          // console.log(this.email)
           this.skills = response.data.user_skills
-          // console.log(this.skills)
-          // console.log(response.data)
           // 使えるスキルのid
           for (let i = 0; i < response.data.user_skills.length; i++) {
             this.skillIds.push(response.data.user_skills[i].skill_id)

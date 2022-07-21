@@ -131,7 +131,7 @@ export default {
     },
     async getUser() {
       await this.$axios
-        .get('https://i-match.click/api/users')
+        .get(`${this.$urls.API}/users`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.userCount = response.data.length
@@ -140,7 +140,6 @@ export default {
             this.nameList.push(response.data[i].name)
             this.nameTitle.push(response.data[i].name)
           }
-          // this.userIdList.shift()
           this.nameTitle.shift()
 
           console.log(this.nameTitle[0])
