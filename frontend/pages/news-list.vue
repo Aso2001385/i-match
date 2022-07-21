@@ -76,8 +76,7 @@ export default {
           return err.response
         })
       await this.$axios
-        // .get('http://localhost:8080/api/informations')
-        .get('http://localhost:8080/api/informations')
+        .get('https://i-match.click/api/informations')
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
           this.titleList.unshift(this.titleList[0])

@@ -94,14 +94,22 @@
                 <BulletinContent />
               </v-col>
             </v-row>
-
-            <v-row class="mt-0 pa-0">
-              <v-col cols="12">
-                <span v-for="value in chipSkills" :key="value" style="float: left" class="mt-2">
-                  <v-chip :class="colors(value)" class="mr-2 mb-1 white--text" deletable-chips
-                    >{{ value }}<v-icon dark right small @click="deleteSkill(value)">mdi-minus-circle</v-icon></v-chip
-                  >
-                </span>
+            <v-row style="overflow: hidden !important; height: 60vh; overflow-y: auto; padding-bottom: 80%">
+              <v-col v-for="skillUnit in skillUnits" :key="skillUnit.category" cols="12" sm="11">
+                <v-select
+                  v-model="selectSkill"
+                  item-text="name"
+                  item-value="id"
+                  :items="skillUnit.skills"
+                  attach
+                  :color="skillUnit.color"
+                  :item-color="skillUnit.color"
+                  :label="skillUnit.jp_name"
+                  class="mb-0 ml-10"
+                  style="width: 80%"
+                  return-object
+                  @change="addSkillChip"
+                ></v-select>
               </v-col>
             </v-row>
             <v-row class="pb-5 ml-10">
@@ -145,11 +153,28 @@ export default {
       chipSkills: [],
       levelSkills: [],
       skillId: [],
+      skillChips: [],
+      selectSkill: {},
     }
   },
+  computed: {
+    skillUnits() {
+      return this.$store.state.skills
+    },
+  },
+
   mounted() {
     this.getDelFlg()
     this.getSession()
+  },
+  addSkillChip() {
+    this.skillChips.push(this.selectSkill)
+    this.skillChips = Common.orderBy(this.skillChips, 'category_id', 'num', true, {
+      keys: ['id'],
+      mode: 'num',
+      asc: true,
+    })
+    this.skillChips = this.skillChips.filter((ele, index, self) => self.findIndex(e => e.id === ele.id) === index)
   },
   methods: {
     informationBull() {
@@ -175,30 +200,7 @@ export default {
       sessionStorage.removeItem('infoDate')
       sessionStorage.removeItem('infoTime')
     },
-    colors(name) {
-      console.log(this.chipSkills)
-      for (let i = 0; i < this.langs.length; i++) {
-        if (this.langs[i].skillName.includes(name)) {
-          return 'red'
-        }
-      }
-      for (let i = 0; i < this.frameworks.length; i++) {
-        if (this.frameworks[i].skillName.includes(name)) {
-          return 'blue'
-        }
-      }
-      for (let i = 0; i < this.dbs.length; i++) {
-        if (this.dbs[i].skillName.includes(name)) {
-          return 'green'
-        }
-      }
-      for (let i = 0; i < this.infs.length; i++) {
-        if (this.infs[i].skillName.includes(name)) {
-          return 'purple'
-        }
-      }
-      return 'indigo darken-3'
-    },
+
     createBulletin() {
       this.sendBulletin()
     },
@@ -220,45 +222,44 @@ export default {
       const levelBox = sessionStorage.getItem('levels')
       const levs = levelBox.replace(',', '').split(',')
 
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.langs.length; j++) {
-          if (this.chipSkills[i] === this.langs[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.langs[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.frameworks.length; j++) {
-          if (this.chipSkills[i] === this.frameworks[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.frameworks[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.dbs.length; j++) {
-          if (this.chipSkills[i] === this.dbs[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.dbs[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.infs.length; j++) {
-          if (this.chipSkills[i] === this.infs[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.infs[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.oths.length; j++) {
-          if (this.chipSkills[i] === this.oths[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.oths[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.langs.length; j++) {
+      //     if (this.chipSkills[i] === this.langs[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.langs[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.frameworks.length; j++) {
+      //     if (this.chipSkills[i] === this.frameworks[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.frameworks[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.dbs.length; j++) {
+      //     if (this.chipSkills[i] === this.dbs[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.dbs[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.infs.length; j++) {
+      //     if (this.chipSkills[i] === this.infs[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.infs[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.oths.length; j++) {
+      //     if (this.chipSkills[i] === this.oths[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.oths[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
       console.log(sendBulletin)
       this.$axios
-        .post('http://localhost:8080/api/recruits', sendBulletin)
-        // .post('http://localhost:8080/api/recruits', sendBulletin)
+        .post('https://i-match.click/api/recruits', sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)
