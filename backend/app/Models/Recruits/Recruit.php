@@ -9,7 +9,6 @@ use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use Exception;
@@ -55,9 +54,10 @@ class Recruit extends Model
 
         }catch(Exception $e){
 
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -76,10 +76,12 @@ class Recruit extends Model
             }
             $status = Response::HTTP_OK;
 
-        }catch(Example $e){
+        }catch(Exception $e){
 
-            $result = [];
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
 
         }
 
@@ -117,10 +119,12 @@ class Recruit extends Model
 
             $status = Response::HTTP_OK;
 
-        }catch(Example $e){
+        }catch(Exception $e){
 
-            $result = [];
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
 
         }
 
@@ -139,8 +143,8 @@ class Recruit extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -166,8 +170,8 @@ class Recruit extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -196,7 +200,7 @@ class Recruit extends Model
         }catch(Exception $e){
             return [
                 'result' => $e,
-                'status' => 400
+                'status' => $e->getCode()
             ];
 
         }
@@ -227,7 +231,7 @@ class Recruit extends Model
         }catch(Exception $e){
             return [
                 'result' => $e,
-                'status' => 400
+                'status' => $e->getCode()
             ];
 
         }

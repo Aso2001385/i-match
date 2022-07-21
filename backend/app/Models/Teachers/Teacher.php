@@ -37,10 +37,6 @@ class Teacher extends Authenticatable
 
     public static function create_teacher($request){
         try{
-
-            // $password = Hash::make($request->password);
-            // unset($request->password);
-            // $request['password'] = $password;
             $request['password']=Hash::make($request->password);
             Teacher::create($request->all());
             $result = 'success!';
@@ -49,9 +45,10 @@ class Teacher extends Authenticatable
 
         }catch(Exception $e){
 
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -66,9 +63,10 @@ class Teacher extends Authenticatable
 
             $status= Response::HTTP_OK;
         }catch(Exception $e){
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -84,10 +82,9 @@ class Teacher extends Authenticatable
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
-
         }
         return [
             'result' => $teacher,
@@ -111,8 +108,8 @@ class Teacher extends Authenticatable
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_UNAUTHORIZED
+                'result' => $e,
+                'status' => $e->getCode()
             ];
         }
 
@@ -133,8 +130,8 @@ class Teacher extends Authenticatable
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

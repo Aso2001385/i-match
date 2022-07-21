@@ -28,9 +28,10 @@ class Event extends Model
 
             $status = Response::HTTP_OK;
         }catch(Exception $e){
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -45,9 +46,10 @@ class Event extends Model
             $event->name=$teacher->name;
             $status = Response::HTTP_OK;
         }catch(Exception $e){
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -64,8 +66,8 @@ class Event extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -84,8 +86,8 @@ class Event extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

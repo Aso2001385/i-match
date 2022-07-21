@@ -60,7 +60,6 @@ class User extends Model
 
     public static function create_user($request){
         try{
-
             $request['password'] = Hash::make($request->password);
             $result =  User::create($request->all());
             $status = Response::HTTP_OK;
@@ -68,8 +67,10 @@ class User extends Model
             session(['user_id'=>$result->id]);
         }catch(Exception $e){
 
-            $result = $e;
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
 
         }
 
@@ -97,8 +98,8 @@ class User extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -117,8 +118,8 @@ class User extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -141,8 +142,8 @@ class User extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_UNAUTHORIZED
+                'result' => $e,
+                'status' => $e->getCode()
             ];
         }
 
@@ -173,8 +174,8 @@ class User extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
