@@ -52,7 +52,7 @@
               <div class="pt-5 position: relative">
                 <v-row justify="center">
                   <v-col cols="4">
-                    <api-event-button class="mr-0" color="grey darken-4" :clickCallback="submit">
+                    <api-event-button class="mr-0" color="grey darken-4" :click-callback="submit">
                       Next
                     </api-event-button>
                   </v-col>
