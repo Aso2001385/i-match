@@ -91,7 +91,7 @@ export default {
     },
     getBulletinDetail() {
       this.$axios
-        .get(`https://i-match.click/api/recruits/${this.bulletinDetailId}`)
+        .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.title = response.data.title

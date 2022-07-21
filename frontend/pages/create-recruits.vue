@@ -213,7 +213,7 @@ export default {
       console.log(sendBulletin.due)
       console.log(sendBulletin)
       this.$axios
-        .post(`https://i-match.click/api/recruits`, sendBulletin)
+        .post(`${this.$urls.API}/recruits`, sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)

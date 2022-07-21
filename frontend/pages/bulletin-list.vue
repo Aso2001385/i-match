@@ -104,7 +104,7 @@ export default {
   methods: {
     submit() {
       this.$axios
-        .get('https://i-match.click/api/recruits`)
+        .get(`${this.$urls.API}/recruits`)
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)

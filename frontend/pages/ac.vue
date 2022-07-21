@@ -21,7 +21,7 @@ export default {
   methods: {
     getAccount() {
       this.$axios
-        .get(`https://i-match.click/api/ac`)
+        .get(`${this.$urls.API}/ac`)
         .then(response => {
           console.log(response.data)
         })

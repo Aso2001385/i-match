@@ -82,7 +82,7 @@ export default {
     },
     otherpartyAccount() {
       this.$axios
-        .get(`https://i-match.click/api/users/${this.userId}`)
+        .get(`${this.$urls.API}/users/${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.name = response.data.name

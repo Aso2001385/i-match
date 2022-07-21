@@ -56,7 +56,7 @@ export default {
     },
     async getNews() {
       await this.$axios
-        .get('https://i-match.click/api/informations')
+        .get(`${this.$urls.API}/informations`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.newsCount = response.data.length
@@ -75,7 +75,7 @@ export default {
           return err.response
         })
       await this.$axios
-        .get(`https://i-match.click/api/informations`)
+        .get(`${this.$urls.API}/informations`)
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
           this.titleList.unshift(this.titleList[0])
