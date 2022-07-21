@@ -126,18 +126,19 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
+    // baseURL: 'https://i-match.click/api/',
     baseURL: 'https://i-match.click/api/',
   },
 
   // proxy: {
   //   '/api/': {
-  //     // target: 'http://localhost:8080',
-  //     target: 'http://localhost:8080',
+  //     // target: 'https://i-match.click',
+  //     target: 'https://i-match.click',
   //   },
   // },
   proxy: {
     '/api': {
-      target: 'http://localhost:8080/',
+      target: 'https://i-match.click/',
       pathRewrite: {
         '^/api': '/',
       },

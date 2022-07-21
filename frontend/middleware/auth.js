@@ -15,7 +15,7 @@ export default async function ({ redirect, $axios, store, route }) {
 
         console.log('aaa')
         await $axios
-          .get('http://localhost:8080/api/auth')
+          .get('https://i-match.click/api/auth')
           .then(response => {
             console.log(response.data)
             store.commit('restoreLogin', response.data)

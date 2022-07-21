@@ -7,7 +7,7 @@ info:
   summary: i-Match のAPI
   description: i-MatchのOpen APIです。
 servers:
-  - url: "http://localhost:8080/api"
+  - url: "https://i-match.click/api"
     description: localhost
   - description: mock
     url: "http://127.0.0.1:4010"
@@ -1519,7 +1519,7 @@ paths:
                     maximum: 255
                   url:
                     type: string
-                    example: "http://localhost:8080/index"
+                    example: "https://i-match.click/index"
                     maxLength: 255
       operationId: get-informations-id
       description: 指定されたIDのinformation情報を表示
@@ -2877,7 +2877,7 @@ components:
           contents: ○○さんから■■の参加希望が届きました
           read: true
           category_id: 1
-          url: "http://localhost:8080/index"
+          url: "https://i-match.click/index"
           created_at: "2022-01-01 11:11:11"
           updated_at: "2022-01-01 11:11:11"
           deleted_at: null
@@ -2911,7 +2911,7 @@ components:
           example: 1
         url:
           type: string
-          example: "http://localhost:8080/index"
+          example: "https://i-match.click/index"
           maxLength: 255
         created_at:
           type: string

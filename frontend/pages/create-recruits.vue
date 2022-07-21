@@ -169,11 +169,11 @@ export default {
   },
   addSkillChip() {
     this.skillChips.push(this.selectSkill)
-    this.skillChips = Common.orderBy(this.skillChips, 'category_id', 'num', true, {
-      keys: ['id'],
-      mode: 'num',
-      asc: true,
-    })
+    // this.skillChips = Common.orderBy(this.skillChips, 'category_id', 'num', true, {
+    //   keys: ['id'],
+    //   mode: 'num',
+    //   asc: true,
+    // })
     this.skillChips = this.skillChips.filter((ele, index, self) => self.findIndex(e => e.id === ele.id) === index)
   },
   methods: {
@@ -219,8 +219,8 @@ export default {
         skills: [],
       }
       console.log(sendBulletin.due)
-      const levelBox = sessionStorage.getItem('levels')
-      const levs = levelBox.replace(',', '').split(',')
+      // const levelBox = sessionStorage.getItem('levels')
+      // const levs = levelBox.replace(',', '').split(',')
 
       // for (let i = 0; i < this.chipSkills.length; i++) {
       //   for (let j = 0; j < this.langs.length; j++) {
