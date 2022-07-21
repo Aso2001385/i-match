@@ -16,11 +16,14 @@ class RecruitUserTableSeeder extends Seeder
      */
     public function run()
     {
+        //$persons_array=[2, 3, 4, 5, 3];
+        $recruit_ids=[1,1, 2,2,2, 3,3,3,3, 4,4,4,4,4, 5];
+        $user_ids=   [1,2, 2,1,3, 3,1,2,4, 4,1,2,3,5, 5];
         Schema::disableForeignKeyConstraints();
-        for($i=0;$i<100;$i++){
+        for($i=0; $i<count($recruit_ids);$i++){
             $recruit_user=[
-                'recruit_id'=>rand(1,30),
-                'user_id'=>rand(1,10),
+                'recruit_id'=>$recruit_ids[$i],
+                'user_id'=>$user_ids[$i]
             ];
             RecruitUser::create($recruit_user);
         }
