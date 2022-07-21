@@ -75,7 +75,7 @@ class Room extends Model
         }catch(Throwable $e){
             return [
                 'result' => $e,
-                'status' => 400
+                'status' => $e->getCode()
             ];
         }
     }
@@ -110,7 +110,7 @@ class Room extends Model
 
             return [
                 'result' => $e,
-                'status' => 400
+                'status' => $e->getCode()
             ];
         }
 
@@ -131,8 +131,8 @@ class Room extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
