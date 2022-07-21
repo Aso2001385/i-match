@@ -76,7 +76,6 @@ export default {
           return err.response
         })
       await this.$axios
-        // .get('https://i-match.click/api/informations')
         .get('https://i-match.click/api/informations')
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
