@@ -17,6 +17,11 @@ class SkillCategory extends Model
         'name',
     ];
 
+    public function skills()
+    {
+        return $this->hasMany('App\Models\Skills\Skill');
+    }
+
 
     public static function create_skill_category($request){
         try{
