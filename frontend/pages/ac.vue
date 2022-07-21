@@ -70,7 +70,7 @@ export default {
     //   }
     getAccount() {
       this.$axios
-        .get('https://i-match.click/api/ac')
+        .get('http://localhost:8080/api/ac')
         .then(response => {
           //   console.log('ちゃんと通っている')
           //   this.name = response.data.name
