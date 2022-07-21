@@ -52,9 +52,7 @@
               <div class="pt-5 position: relative">
                 <v-row justify="center">
                   <v-col cols="4">
-                    <api-event-button class="mr-0" color="grey darken-4" :click-callback="submit">
-                      Next
-                    </api-event-button>
+                    <ApiEventButton color="grey darken-4" :click-callback="submit"> Next </ApiEventButton>
                   </v-col>
                 </v-row>
               </div>
@@ -72,12 +70,7 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'
 
-import ApiEventButton from '~/components/ui/ApiEventButton.vue'
-
 export default {
-  components: {
-    ApiEventButton,
-  },
   mixins: [validationMixin],
   layout: 'auth',
   validations: {
@@ -137,7 +130,7 @@ export default {
   },
 
   methods: {
-    submit() {
+    async submit() {
       this.$v.$touch()
       if (this.confirmPassword !== this.password) return
 
@@ -147,8 +140,8 @@ export default {
         password: this.password,
       }
 
-      this.$axios.post('https://i-match.click/api/users', this.user).then(response => {
-        this.$store.commit('restoreLogin', response.data)
+      await this.$axios.post(`${this.$urls.API}/users`, this.user).then(async response => {
+        await this.$store.commit('restoreLogin', response.data)
       })
     },
 
