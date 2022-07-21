@@ -81,7 +81,7 @@ export default {
     // chatRoom() {
     //   //this.chat = ''
     //   this.$axios
-    //   .get('https://i-match.click/api/chats', getAccount)
+    //   .get('http://localhost:8080/api/chats', getAccount)
     //   .then(response => {
     //     console.log('ちゃんと通っている１')
     //     console.log(response.data)

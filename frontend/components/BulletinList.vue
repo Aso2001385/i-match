@@ -163,7 +163,7 @@ export default {
     },
     getBulletin() {
       this.$axios
-        .get('https://i-match.click/api/recruits')
+        .get('http://localhost:8080/api/recruits')
         .then(response => {
           console.log(response.data)
           this.bulletins = response.data

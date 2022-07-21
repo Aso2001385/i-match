@@ -56,8 +56,8 @@ export default {
     },
     async getNews() {
       await this.$axios
-        // .get('https://i-match.click/api/informations')
-        .get('https://i-match.click/api/informations')
+        // .get('http://localhost:8080/api/informations')
+        .get('http://localhost:8080/api/informations')
         .then(response => {
           console.log('ちゃんと通っている')
           this.newsCount = response.data.length
