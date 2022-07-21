@@ -29,7 +29,13 @@
                 @click:append="show1 = !show1"
               ></v-text-field>
               <div class="pt-5 position: relative">
-                <v-btn class="mr-0" @click="submit">NEXT</v-btn>
+                <v-row justify="center">
+                  <v-col cols="4">
+                    <api-event-button class="mr-0" color="grey darken-4" :clickCallback="submit">
+                      Next
+                    </api-event-button>
+                  </v-col>
+                </v-row>
               </div>
               <v-row class="mt-10" justify="center">
                 アカウントをお持ちではありませんか？<NuxtLink to="/sign-up">こちらから新規登録</NuxtLink>
@@ -45,7 +51,12 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'
 
+import ApiEventButton from '~/components/ui/ApiEventButton.vue'
+
 export default {
+  components: {
+    ApiEventButton,
+  },
   mixins: [validationMixin],
   layout: 'auth',
   validations: {
@@ -59,7 +70,6 @@ export default {
     password: 'test-2022Aso',
     user: {},
   }),
-
   computed: {
     emailErrors() {
       const errors = []
@@ -78,7 +88,7 @@ export default {
   },
 
   methods: {
-    async submit({ redirect }) {
+    async submit() {
       this.$v.$touch()
 
       this.user = {

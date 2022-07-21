@@ -34,6 +34,10 @@
 </template>
 <script defer>
 export default {
+  components: {
+    BulletinList: () => import('../components/BulletinList.vue'),
+    SearchSkill: () => import('../components/SearchSkill.vue'),
+  },
   data() {
     return {
       langSea: [],
@@ -126,10 +130,6 @@ export default {
         })
       alert('通ったっす！')
     },
-  },
-  components: {
-    BulletinList: () => import('../components/BulletinList.vue'),
-    SearchSkill: () => import('../components/SearchSkill.vue'),
   },
 }
 </script>
