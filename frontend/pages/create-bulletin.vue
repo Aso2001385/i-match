@@ -102,13 +102,7 @@
                     >{{ value }}<v-icon dark right small @click="deleteSkill(value)">mdi-minus-circle</v-icon></v-chip
                   ></span
                 ><span style="float: left"
-                  ><v-btn
-                    id="addSkill"
-                    class="black--text"
-                    @click.prevent="openModal"
-
-                    >追加</v-btn
-                  ></span
+                  ><v-btn id="addSkill" class="black--text" @click.prevent="openModal">追加</v-btn></span
                 >
               </v-col>
             </v-row>
@@ -330,8 +324,8 @@ export default {
       }
       console.log(sendBulletin)
       this.$axios
-        .post('http://localhost:8080/api/recruits', sendBulletin)
-        // .post('http://localhost:8080/api/recruits', sendBulletin)
+        .post('https://i-match.click/api/recruits', sendBulletin)
+        // .post('https://i-match.click/api/recruits', sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)
