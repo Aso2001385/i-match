@@ -22,10 +22,10 @@ class RecruitsTableSeeder extends Seeder
         $mindate=strtotime(date('Y-m-d H:i:s', strtotime('+7 day')));
         $maxdate=strtotime(date('Y-m-d H:i:s', strtotime('+14 day')));
         Schema::disableForeignKeyConstraints();
-        $persons_array=[2, 3, 4, 5, 3];
+        $persons_array=[2, 3, 4, 5, 3, 11];
 
         
-        for($i=0; $i<5; $i++){
+        for($i=0; $i<count($persons_array); $i++){
             $user_id=$i+1;
             $room_id=$i+1;
             $title="title".$i;

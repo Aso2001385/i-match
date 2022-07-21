@@ -17,9 +17,10 @@ class RoomUserTableSeeder extends Seeder
     {
         ////$persons_array=[2, 3, 4, 5, 3];
         Schema::disableForeignKeyConstraints();
-        $room_ids=[1,1, 2,2,2, 3,3,3,3, 4,4,4,4,4, 5];
-        $user_ids=[1,2, 2,1,3, 3,1,2,4, 4,1,2,3,5, 5];
-        $name=    ["room1","room1",  "room2","room2","room2",  "room3","room3","room3","room3",  "room4","room4","room4","room4","room4",  "room5"];
+        $room_ids=[1,1, 2,2,2, 3,3,3,3, 4,4,4,4,4, 5, 6,6,6,6,6,6,6,6,6,6];
+        $user_ids=[1,2, 2,1,3, 3,1,2,4, 4,1,2,3,5, 5, 6,1,2,3,4,5,7,8,9,10];
+        $name=    ["room1","room1",  "room2","room2","room2",  "room3","room3","room3","room3",  "room4","room4","room4","room4","room4",  "room5",
+                "room6","room6","room6","room6","room6","room6","room6","room6","room6","room6",];
         Schema::disableForeignKeyConstraints();
         for($i=0; $i<count($room_ids);$i++){
             $room_user=[
