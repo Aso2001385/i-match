@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Exception;
+use Throwable;
 
 class Room extends Model
 {
@@ -37,6 +38,14 @@ class Room extends Model
                 },
             ])->whereIn('id',RoomUser::select('room_id as id')->where('user_id',$user_id)->get())->get()->toArray();
 
+            if (is_array($room) && empty($room)) {
+
+                return [
+                    'result' => false,
+                    'status' => 200
+                ];
+
+            }
             $room = array_map(function($v)use($user_id){
 
                 // ルーム名取得
@@ -50,15 +59,20 @@ class Room extends Model
                     return $e;
                 },$v['users']);
 
+                $v['new_message'] = Chat::select('message','created_at')->where('room_id',$v['id'])->orderBy('id','desc')->first()->message;
+
                 return $v;
 
             },$room);
+
+
 
             return [
                 'result' => $room,
                 'status' => 200
             ];
-        }catch(Exception $e){
+
+        }catch(Throwable $e){
             return [
                 'result' => $e,
                 'status' => $e->getCode()

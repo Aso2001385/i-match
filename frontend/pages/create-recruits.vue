@@ -94,22 +94,22 @@
                 <BulletinContent />
               </v-col>
             </v-row>
-
-            <v-row class="mt-0 pa-0">
-              <v-col cols="12">
-                <span v-for="value in chipSkills" :key="value" style="float: left" class="mt-2">
-                  <v-chip :class="colors(value)" class="mr-2 mb-1 white--text" deletable-chips
-                    >{{ value }}<v-icon dark right small @click="deleteSkill(value)">mdi-minus-circle</v-icon></v-chip
-                  ></span
-                ><span style="float: left"
-                  ><v-btn
-                    id="addSkill"
-                    class="black--text"
-                    @click.prevent="openModal"
-
-                    >追加</v-btn
-                  ></span
-                >
+            <v-row style="overflow: hidden !important; height: 60vh; overflow-y: auto; padding-bottom: 80%">
+              <v-col v-for="skillUnit in skillUnits" :key="skillUnit.category" cols="12" sm="11">
+                <v-select
+                  v-model="selectSkill"
+                  item-text="name"
+                  item-value="id"
+                  :items="skillUnit.skills"
+                  attach
+                  :color="skillUnit.color"
+                  :item-color="skillUnit.color"
+                  :label="skillUnit.jp_name"
+                  class="mb-0 ml-10"
+                  style="width: 80%"
+                  return-object
+                  @change="addSkillChip"
+                ></v-select>
               </v-col>
             </v-row>
             <v-row class="pb-5 ml-10">
@@ -150,79 +150,31 @@ export default {
       levels: [],
       exps: [],
       skill: '',
-      // level: 99,
       chipSkills: [],
       levelSkills: [],
       skillId: [],
-      // skillLevel: [],
-      langs: [
-        { id: 1, skillCategory: 0, skillName: 'Java' },
-        { id: 2, skillCategory: 0, skillName: 'PHP' },
-        { id: 3, skillCategory: 0, skillName: 'JavaScript' },
-        { id: 4, skillCategory: 0, skillName: 'Python' },
-        { id: 5, skillCategory: 0, skillName: 'C' },
-        { id: 6, skillCategory: 0, skillName: 'C++' },
-        { id: 7, skillCategory: 0, skillName: 'C#' },
-        { id: 8, skillCategory: 0, skillName: 'GO' },
-        { id: 9, skillCategory: 0, skillName: 'Kotlin' },
-        { id: 10, skillCategory: 0, skillName: 'Swift' },
-        { id: 11, skillCategory: 0, skillName: 'Ruby' },
-        { id: 12, skillCategory: 0, skillName: 'HTML' },
-        { id: 13, skillCategory: 0, skillName: 'CSS' },
-        { id: 14, skillCategory: 0, skillName: 'SQL' },
-        { id: 15, skillCategory: 0, skillName: 'mark down' },
-      ],
-      frameworks: [
-        { id: 16, skillCategory: 1, skillName: 'Spring' },
-        { id: 17, skillCategory: 1, skillName: 'Laravel' },
-        { id: 18, skillCategory: 1, skillName: 'CakePHP' },
-        { id: 19, skillCategory: 1, skillName: 'Symfony' },
-        { id: 20, skillCategory: 1, skillName: 'React' },
-        { id: 21, skillCategory: 1, skillName: 'Angular' },
-        { id: 22, skillCategory: 1, skillName: 'Vue.js' },
-        { id: 23, skillCategory: 1, skillName: 'Next.js' },
-        { id: 24, skillCategory: 1, skillName: 'Nuxt.js' },
-        { id: 25, skillCategory: 1, skillName: 'Django' },
-        { id: 26, skillCategory: 1, skillName: 'Flask' },
-        { id: 27, skillCategory: 1, skillName: 'Qt' },
-        { id: 28, skillCategory: 1, skillName: 'Sinatra' },
-        { id: 29, skillCategory: 1, skillName: 'Tailwind CSS' },
-        { id: 30, skillCategory: 1, skillName: 'Bulma' },
-      ],
-      dbs: [
-        { id: 31, skillCategory: 2, skillName: 'PostgreSQL' },
-        { id: 32, skillCategory: 2, skillName: 'Oracle Database' },
-        { id: 33, skillCategory: 2, skillName: 'MongoDB' },
-        { id: 34, skillCategory: 2, skillName: 'MySQL' },
-        { id: 35, skillCategory: 2, skillName: 'SQLite' },
-        { id: 36, skillCategory: 2, skillName: 'MariaDB' },
-      ],
-      infs: [
-        { id: 37, skillCategory: 3, skillName: 'Linux' },
-        { id: 38, skillCategory: 3, skillName: 'Windows' },
-        { id: 39, skillCategory: 3, skillName: 'iOS' },
-        { id: 40, skillCategory: 3, skillName: 'Andoroid' },
-        { id: 41, skillCategory: 3, skillName: 'AWS' },
-        { id: 42, skillCategory: 3, skillName: 'Azure' },
-        { id: 43, skillCategory: 3, skillName: 'Google Cloud' },
-        { id: 44, skillCategory: 3, skillName: 'Firebase' },
-        { id: 45, skillCategory: 3, skillName: 'Salesforce' },
-        { id: 46, skillCategory: 3, skillName: 'Docker' },
-        { id: 47, skillCategory: 3, skillName: 'xampp' },
-      ],
-      oths: [
-        { id: 48, skillCategory: 4, skillName: 'figma' },
-        { id: 49, skillCategory: 4, skillName: 'GitHub' },
-        { id: 50, skillCategory: 4, skillName: 'git' },
-        { id: 51, skillCategory: 4, skillName: 'Swagger' },
-        { id: 52, skillCategory: 4, skillName: 'Postman' },
-        { id: 53, skillCategory: 4, skillName: 'Node.js' },
-      ],
+      skillChips: [],
+      selectSkill: {},
     }
   },
+  computed: {
+    skillUnits() {
+      return this.$store.state.skills
+    },
+  },
+
   mounted() {
     this.getDelFlg()
     this.getSession()
+  },
+  addSkillChip() {
+    this.skillChips.push(this.selectSkill)
+    this.skillChips = Common.orderBy(this.skillChips, 'category_id', 'num', true, {
+      keys: ['id'],
+      mode: 'num',
+      asc: true,
+    })
+    this.skillChips = this.skillChips.filter((ele, index, self) => self.findIndex(e => e.id === ele.id) === index)
   },
   methods: {
     informationBull() {
@@ -248,30 +200,7 @@ export default {
       sessionStorage.removeItem('infoDate')
       sessionStorage.removeItem('infoTime')
     },
-    colors(name) {
-      console.log(this.chipSkills)
-      for (let i = 0; i < this.langs.length; i++) {
-        if (this.langs[i].skillName.includes(name)) {
-          return 'red'
-        }
-      }
-      for (let i = 0; i < this.frameworks.length; i++) {
-        if (this.frameworks[i].skillName.includes(name)) {
-          return 'blue'
-        }
-      }
-      for (let i = 0; i < this.dbs.length; i++) {
-        if (this.dbs[i].skillName.includes(name)) {
-          return 'green'
-        }
-      }
-      for (let i = 0; i < this.infs.length; i++) {
-        if (this.infs[i].skillName.includes(name)) {
-          return 'purple'
-        }
-      }
-      return 'indigo darken-3'
-    },
+
     createBulletin() {
       this.sendBulletin()
     },
@@ -293,45 +222,44 @@ export default {
       const levelBox = sessionStorage.getItem('levels')
       const levs = levelBox.replace(',', '').split(',')
 
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.langs.length; j++) {
-          if (this.chipSkills[i] === this.langs[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.langs[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.frameworks.length; j++) {
-          if (this.chipSkills[i] === this.frameworks[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.frameworks[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.dbs.length; j++) {
-          if (this.chipSkills[i] === this.dbs[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.dbs[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.infs.length; j++) {
-          if (this.chipSkills[i] === this.infs[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.infs[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
-      for (let i = 0; i < this.chipSkills.length; i++) {
-        for (let j = 0; j < this.oths.length; j++) {
-          if (this.chipSkills[i] === this.oths[j].skillName) {
-            sendBulletin.skills.push({ skill_id: this.oths[j].id, level: Number(levs[i]) })
-          }
-        }
-      }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.langs.length; j++) {
+      //     if (this.chipSkills[i] === this.langs[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.langs[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.frameworks.length; j++) {
+      //     if (this.chipSkills[i] === this.frameworks[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.frameworks[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.dbs.length; j++) {
+      //     if (this.chipSkills[i] === this.dbs[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.dbs[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.infs.length; j++) {
+      //     if (this.chipSkills[i] === this.infs[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.infs[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
+      // for (let i = 0; i < this.chipSkills.length; i++) {
+      //   for (let j = 0; j < this.oths.length; j++) {
+      //     if (this.chipSkills[i] === this.oths[j].skillName) {
+      //       sendBulletin.skills.push({ skill_id: this.oths[j].id, level: Number(levs[i]) })
+      //     }
+      //   }
+      // }
       console.log(sendBulletin)
       this.$axios
-        .post('http://localhost:8080/api/recruits', sendBulletin)
-        // .post('http://localhost:8080/api/recruits', sendBulletin)
+        .post('https://i-match.click/api/recruits', sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)
@@ -341,7 +269,6 @@ export default {
           console.log('通ってないよー')
           return err.response
         })
-      alert('通ったっす！')
       this.sessionClear()
     },
 

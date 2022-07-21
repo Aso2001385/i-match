@@ -16,7 +16,6 @@ class Chat extends Model
         'room_id',
         'user_id',
         'message',
-        'read',
     ];
 
     public static function create_chat($request){
@@ -45,14 +44,14 @@ class Chat extends Model
             $chat->update($request->all());
             $status = Response::HTTP_OK;
         }catch(Exception $e){
-    
+
             return [
                 'result' => $e,
                 'status' => $e->getCode()
             ];
-    
+
         }
-    
+
         return [
             'result' => $chat,
             'status' => $status

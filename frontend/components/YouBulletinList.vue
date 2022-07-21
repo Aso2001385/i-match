@@ -161,8 +161,7 @@ export default {
     },
     async getBulletin() {
       await this.$axios
-        // .get('https://localhost:8080/api/recruits')
-        .get(`http://localhost:8080/api/recruits`)
+        .get(`https://i-match.click/api/recruits${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている相手の情報')
           this.bulletinCount = response.data.length

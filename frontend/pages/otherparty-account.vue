@@ -80,8 +80,8 @@ export default {
         this.sortId = 0
       }
     },
-    async otherpartyAccount() {
-      await this.$axios
+    otherpartyAccount() {
+      this.$axios
         .get(`http://localhost:8080/api/users/${this.userId}`)
         // .get(`https://localhost:8080/api/users/${this.userId}`)
         .then(response => {

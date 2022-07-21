@@ -27,7 +27,7 @@
             </v-row>
             <v-row class="mt-0 pa-0">
                 <v-col cols="4" class="d-flex">
-                    
+
                 </v-col>
             </v-row>
             <v-row class="mt-0 pa-0">

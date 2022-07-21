@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height>
     <v-row justify="center">
-      <v-col cols="12" md="5">
+      <v-col cols="12" lg="6" md="9" sm="10" xs="10">
         <v-card class="pb-10 mx-auto fill-width">
           <v-card-title class="d-flex justify-center pa-4 grey darken-4">
             <h3 class="text-center white--text">Sign Up</h3>
@@ -50,8 +50,17 @@
                 @click:append="show2 = !show2"
               ></v-text-field>
               <div class="pt-5 position: relative">
-                <v-btn class="mr-0" @click="submit">{{ addMessage }}</v-btn>
+                <v-row justify="center">
+                  <v-col cols="4">
+                    <api-event-button class="mr-0" color="grey darken-4" :clickCallback="submit">
+                      Next
+                    </api-event-button>
+                  </v-col>
+                </v-row>
               </div>
+              <v-row class="mt-10" justify="center">
+                アカウントをお持ちですか？<NuxtLink to="/sign-in">こちらからログイン</NuxtLink>
+              </v-row>
             </div>
           </v-form>
         </v-card>
@@ -63,7 +72,12 @@
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'
 
+import ApiEventButton from '~/components/ui/ApiEventButton.vue'
+
 export default {
+  components: {
+    ApiEventButton,
+  },
   mixins: [validationMixin],
   layout: 'auth',
   validations: {
@@ -79,14 +93,12 @@ export default {
   data: () => ({
     show1: false,
     show2: false,
-    name: '麻生花太郎',
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    addMessage: 'Add',
     user: {},
   }),
-
   computed: {
     nameErrors() {
       const errors = []
