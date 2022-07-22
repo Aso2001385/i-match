@@ -43,7 +43,7 @@ class Event extends Model
     public static function get_events($event){
         try{
             $teacher=Teacher::find($event->teacher_id);
-            $event->name=$teacher->name;
+            $event->teacher_name=$teacher->name;
             $status = Response::HTTP_OK;
         }catch(Exception $e){
             return [

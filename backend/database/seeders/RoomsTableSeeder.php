@@ -14,7 +14,7 @@ class RoomsTableSeeder extends Seeder
      */
     public function run()
     {
-        for($i = 0; $i < 20;$i++){
+        for($i = 0; $i < 6;$i++){
             $rooms=[
                 'created_at'=>now(),
                 'updated_at'=>now(),

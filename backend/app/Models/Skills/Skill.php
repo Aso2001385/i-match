@@ -105,8 +105,17 @@ class Skill extends Model
     public static function delete_skill($skill){
         try{
             $user_skills=UserSkill::where('skill_id',$skill->id)->whereNull('deleted_at')->get();
-            foreach($user_skills as $user_skill){
-                UserSkill::delete($user_skill);
+            if(isset($user_skills)){
+                foreach($user_skills as $user_skill){
+                    UserSkill::delete_skill($user_skill);
+                }
+            }
+
+            $recruit_skills=RecruitSkill::where('skill_id',$skill->id)->whereNull('deleted_at')->get();
+            if(isset($recruit_skills)){
+                foreach($recruit_skills as $recruit_skill){
+                    RecruitSkill::delete_recruit_skill($recruit_skill);
+                }
             }
             $skill->delete();
             $status= Response::HTTP_OK;

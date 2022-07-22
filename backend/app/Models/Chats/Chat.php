@@ -63,6 +63,8 @@ class Chat extends Model
             $chat->delete();
 
             $status=Response::HTTP_OK;
+
+            $result='success';
         }catch(Exception $e){
     
             return [
