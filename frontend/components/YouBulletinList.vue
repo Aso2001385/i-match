@@ -124,8 +124,6 @@ export default {
       sessionStorage.setItem('bulletinDetail', value)
     },
     getSession() {
-      // クリックされた相手の情報
-      // this.userId = sessionStorage.getItem('userInfo')
       // とりあえず2の情報を取得
       this.userId = 2
     },
@@ -161,7 +159,7 @@ export default {
     },
     async getBulletin() {
       await this.$axios
-        .get(`https://i-match.click/api/recruits${this.userId}`)
+        .get(`${this.$urls.API}/recruits${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている相手の情報')
           this.bulletinCount = response.data.length
@@ -187,7 +185,6 @@ export default {
           this.bulletinIdList.unshift(this.bulletinIdList[0])
         })
         .catch(err => {
-          console.log('通ってないよー')
           console.log(err)
           return err.response
         })

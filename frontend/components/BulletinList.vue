@@ -47,7 +47,6 @@ export default {
       bulletinIdList: [],
       dueList: [],
       personsList: [],
-      // allSkill: ['Java', 'Python', 'Spring', 'C', 'AWS', 'figma', 'Kotlin', 'C#', 'Qt', 'Flask'],
       bulletinSkillId: [],
       bulletinSkillCount: [],
       boxSkill: -1,
@@ -163,46 +162,12 @@ export default {
     },
     getBulletin() {
       this.$axios
-        .get('https://i-match.click/api/recruits')
+        .get(`${this.$urls.API}/recruits`)
         .then(response => {
-          console.log(response.data)
           this.bulletins = response.data
           return response.data
-          // console.log('ちゃんと通っている111111')
-          // console.log(response.data[0].title)
-          // console.log(this.bulletinList.length)
-          // this.bulletinCount = response.data.length
-          // console.log(response.data)
-          // for (let i = 0; i < this.bulletinCount; i++) {
-          //   console.log(this.bulletinList.length)
-
-          //   await this.bulletinList.push(response.data[i].title)
-          //   await this.dueList.push(response.data[i].due)
-          //   await this.personsList.push(response.data[i].persons)
-          //   await this.bulletinIdList.push(response.data[i].id)
-          //   await this.bulletinSkillCount.push(response.data[i].skills)
-          //   console.log('セクション 1')
-          //   console.log(this.bulletinList.length)
-
-          //   for (let j = 0; j < response.data[i].skills.length; j++) {
-          //     console.log(this.bulletinList.length)
-          //     await this.bulletinSkillId.push(response.data[i].skills[j].skill_id)
-          //   }
-          //   console.log('セクション 2')
-          //   console.log(response.data[i].title)
-          // }
-
-          // this.bulletinCount = this.bulletinList.length
-
-          // await this.bulletinList.unshift(this.bulletinList[0])
-          // await this.dueList.unshift(this.dueList[0])
-          // await this.personsList.unshift(this.personsList[0])
-          // await this.bulletinIdList.unshift(this.bulletinIdList[0])
-          // console.log('セクション 3')
-          // console.log(this.bulletinCount)
         })
         .catch(err => {
-          console.log('通ってないよー')
           console.log(err)
           return err.response
         })
