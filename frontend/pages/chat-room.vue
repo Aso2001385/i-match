@@ -75,36 +75,8 @@ export default {
     }
   },
   mounted() {
-    // this.chatRoom()
   },
   methods: {
-    // chatRoom() {
-    //   //this.chat = ''
-    //   this.$axios
-    //   .get('http://localhost:8080/api/chats', getAccount)
-    //   .then(response => {
-    //     console.log('ちゃんと通っている１')
-    //     console.log(response.data)
-    //     this.$router.push('/bulletin-list')
-    //   })
-    //   .catch(err => {
-    //     console.log('通ってないよー')
-    //     return err.response
-    //   })
-    // alert('通ったっす！')
-    // },
   },
-  // mounted() {
-  //   axios
-  //     // .get('http://18.183.25.12/api/user') awsのURL
-  //     .get('http://localhost:8000/api/user')
-  //     .then(res => {
-  //       console.log(res.data)
-  //       this.message = res.data
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
 }
 </script>

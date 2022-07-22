@@ -116,7 +116,7 @@ export default {
     },
     async getBulletinDetail() {
       await this.$axios
-        .get(`http://localhost:8080/api/recruits/${this.bulletinDetailId}`)
+        .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
         .then(response => {
           console.log('通ってるよー')
           console.log(response.data)

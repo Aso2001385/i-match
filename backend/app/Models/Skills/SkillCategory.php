@@ -17,6 +17,11 @@ class SkillCategory extends Model
         'name',
     ];
 
+    public function skills()
+    {
+        return $this->hasMany('App\Models\Skills\Skill');
+    }
+
 
     public static function create_skill_category($request){
         try{
@@ -26,8 +31,8 @@ class SkillCategory extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -45,8 +50,8 @@ class SkillCategory extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -58,7 +63,7 @@ class SkillCategory extends Model
 
     public static function delete_skill_category($skill_category){
         try{
-            $skills=Skill::where('category_id',$skill_category->id)->get();
+            $skills=Skill::where('category_id',$skill_category->id)->whereNull('deleted_at')->get();
             foreach($skills as $skill){
                 Skill::delete_skill($skill);
             }
@@ -68,8 +73,8 @@ class SkillCategory extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

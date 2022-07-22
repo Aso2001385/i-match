@@ -27,9 +27,10 @@ class Chat extends Model
 
         }catch(Exception $e){
 
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -45,8 +46,8 @@ class Chat extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -57,23 +58,25 @@ class Chat extends Model
         ];
     }
 
-    // public static function delete_chat($chat){
-    //     try{
-    //         $chat->delete();
+    public static function delete_chat($chat){
+        try{
+            $chat->delete();
 
-    //         $status=Response::HTTP_OK;
-    //     }catch(Exception $e){
+            $status=Response::HTTP_OK;
 
-    //         return [
-    //             'result' => [],
-    //             'status' => Response::HTTP_BAD_REQUEST
-    //         ];
-
-    //     }
-
-    //     return [
-    //         'result' => $result,
-    //         'status' => $status
-    //     ];
-    // }
+            $result='success';
+        }catch(Exception $e){
+    
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
+    
+        }
+    
+        return [
+            'result' => $result,
+            'status' => $status
+        ];
+    }
 }

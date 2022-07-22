@@ -90,6 +90,7 @@ export default {
     { src: './plugins/vuejs-datepicker.js', mode: 'client', ssr: false },
     { src: './plugins/main.js' },
     '~/plugins/axios',
+    '~/plugins/urls',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

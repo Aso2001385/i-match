@@ -2,13 +2,6 @@
   <v-flex>
     <v-row class="mt-5 pa-0 justify-center">
       <v-card style="width: 80%" class="mt-0 pl-10 pb-10">
-        <!-- <v-row class="mt-2 pa-0">
-          <v-col cols="4"><v-card-title class="text-h1">〇</v-card-title></v-col>
-          <NuxtLink to="/bulletin-detail" style="text-decoration: none">
-             <v-col>画像変更</v-col>
-            </NuxtLink>
-          <v-col cols="7" class="mt-10"><v-btn>画像変更</v-btn></v-col>
-        </v-row> -->
         <v-card style="width: 90%" class="ml-10 mt-5">
           <v-row class="mt-5 ml-5 pt-5">
             <v-col cols="4"><h2>基本情報</h2></v-col>
@@ -83,9 +76,6 @@
             </v-col>
           </v-row>
         </v-card>
-        <!-- <v-row style="text-align: center">
-          <v-col><v-btn class="mb-5" href="account">更新</v-btn></v-col>
-        </v-row> -->
       </v-card>
     </v-row>
   </v-flex>
@@ -198,8 +188,7 @@ export default {
     },
     getAccount() {
       this.$axios
-        // .get('http://localhost:8080/api/users?id=this.userId')
-        .get(`http://localhost:8080/api/users/${this.userId}`)
+        .get(`${this.$urls.API}/users/${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           console.log(response.data[0])

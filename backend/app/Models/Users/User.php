@@ -60,16 +60,20 @@ class User extends Model
 
     public static function create_user($request){
         try{
-
             $request['password'] = Hash::make($request->password);
             $result =  User::create($request->all());
             $status = Response::HTTP_OK;
-
-            session(['user_id'=>$result->id]);
+            if(isset($result->id)){
+                session(['user_id'=>$result->id]);
+            }else{
+                abort(403);
+            }
         }catch(Exception $e){
 
-            $result = $e;
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
 
         }
 
@@ -97,8 +101,8 @@ class User extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -117,8 +121,8 @@ class User extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -132,7 +136,7 @@ class User extends Model
         try{
             $user=User::find($request->id);
             if(!Hash::check($request->old_password,$user->password)){
-                throw new Exception();
+                abort(401);
             }
             $user->password=Hash::make($request->password);;
             $user->save();
@@ -141,8 +145,8 @@ class User extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_UNAUTHORIZED
+                'result' => $e,
+                'status' => $e->getCode()
             ];
         }
 
@@ -173,8 +177,8 @@ class User extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

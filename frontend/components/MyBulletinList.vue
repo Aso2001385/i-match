@@ -150,14 +150,10 @@ export default {
     },
     getBulletin() {
       this.$axios
-        // .get('https://localhost:8080/api/recruits')
-        .get(`http://localhost:8080/api/recruits/${this.userId}`)
+        .get(`${this.$urls.API}/recruits/${this.userId}`)
         .then(response => {
-          console.log('ちゃんと通っている相手の情報')
 
           for (let i = 0; i < response.data.length; i++) {
-            console.log(response.data[i].user_id)
-            console.log(this.userId)
             this.recruitsIdList.push(response.data[i].id)
             this.bulletinList.push(response.data[i].title)
             this.dueList.push(response.data[i].due)
@@ -170,7 +166,6 @@ export default {
           this.personsList.push(this.personsList[0])
         })
         .catch(err => {
-          console.log('通ってないよー')
           console.log(err)
           return err.response
         })

@@ -6,7 +6,6 @@
         <v-row class="mt-0 pa-0">
           <v-col cols="2"><v-card-title>●タイトル：</v-card-title></v-col>
           <v-col cols="8" class="text-h6">
-            <!-- <v-card-title>{{ title }}</v-card-title> -->
             <v-text-field v-model="title" label="タイトル" readonly></v-text-field>
           </v-col>
           <v-col cols="2"
@@ -18,22 +17,16 @@
         </v-row>
         <v-row class="mt-0 pa-0" style="width: 95%; overflow: hidden !important; height: 20vh; overflow-y: auto">
           <v-col cols="12">
-            <!-- {{ contents }} -->
             <v-text-field v-model="contets" label="概要" readonly></v-text-field>
           </v-col>
         </v-row>
         <v-row class="mt-0 pa-0">
-          <!-- <v-col cols="2"><v-card-title>●募集人数：</v-card-title></v-col> -->
           <v-col cols="2" class="mt-5">
-            <!-- 3/<span>{{ persons }}</span
-            >人 -->
             <v-text-field v-model="persons" label="募集人数" readonly></v-text-field>
           </v-col>
         </v-row>
         <v-row class="mt-0 pa-0">
-          <!-- <v-col cols="2"><v-card-title>●募集期間：</v-card-title></v-col> -->
           <v-col cols="2" class="mt-5">
-            <!-- {{ due }} -->
             <v-text-field v-model="due" label="募集期間" readonly></v-text-field>
           </v-col>
         </v-row>
@@ -92,7 +85,6 @@ export default {
         'Azure',
         'iOS',
       ],
-      //   skills:[],
       langs: [
         { id: 1, skillCategory: 0, skillName: 'Java' },
         { id: 2, skillCategory: 0, skillName: 'PHP' },
@@ -202,8 +194,7 @@ export default {
     },
     getBulletinDetail() {
       this.$axios
-        // .get(`http://i-matcj.click/api/recruits/${this.bulletinDetailId}`)
-        .get(`http://localhost:8080/api/recruits/${this.bulletinDetailId}`)
+        .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.title = response.data.title
