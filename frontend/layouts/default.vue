@@ -70,7 +70,7 @@ export default {
     return {
       drawer: true,
       // ログインしてデータを取得するまで代わりに入れておく
-      name: '',
+      // name: '',
     }
   },
   computed: {
@@ -91,9 +91,9 @@ export default {
       // console.log(this.user.name)
     },
     userInfo() {
-      console.log('トークンに保存してあるユーザー情報')
-      console.log(this.$store.state.skills)
-      console.log(this.$store.state.user)
+      // console.log('トークンに保存してあるユーザー情報')
+      // console.log(this.$store.state.skills)
+      // console.log(this.$store.state.user)
     },
   },
 }

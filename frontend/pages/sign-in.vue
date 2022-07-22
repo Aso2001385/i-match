@@ -58,10 +58,12 @@ export default {
 
   data: () => ({
     show1: false,
-    email: '1001999@s.asojuku.ac.jp',
-    password: 'test-2022Aso',
+    email: '',
+    password: '',
     user: {},
   }),
+  // email: '1001999@s..ac.jp',
+  // password: 'test-2022Aso',
   computed: {
     emailErrors() {
       const errors = []
