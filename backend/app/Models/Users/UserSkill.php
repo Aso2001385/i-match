@@ -31,7 +31,7 @@ class UserSkill extends Model
     public static function store_skills($request){
 
         try{
-            UserSkill::create($request->all());
+            $user_skills=UserSkill::create($request->all());
             $result = 'success!';
             $status = Response::HTTP_OK;
         }catch(Exception $e){
@@ -40,7 +40,7 @@ class UserSkill extends Model
                 'status' => $e->getCode()
             ];
         }
-   
+
         return [
             'result' => $user_skills,
             'status' => $status,
@@ -58,7 +58,7 @@ class UserSkill extends Model
                 'status' => $e->getCode()
             ];
         }
-   
+
         return [
             'result' => $user_skills,
             'status' => $status,

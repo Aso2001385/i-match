@@ -63,7 +63,7 @@ class SkillCategory extends Model
 
     public static function delete_skill_category($skill_category){
         try{
-            $skills=Skill::where('category_id',$skill_category->id)->get();
+            $skills=Skill::where('category_id',$skill_category->id)->whereNull('deleted_at')->get();
             foreach($skills as $skill){
                 Skill::delete_skill($skill);
             }

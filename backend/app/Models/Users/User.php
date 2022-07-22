@@ -63,8 +63,11 @@ class User extends Model
             $request['password'] = Hash::make($request->password);
             $result =  User::create($request->all());
             $status = Response::HTTP_OK;
-
-            session(['user_id'=>$result->id]);
+            if(isset($result->id)){
+                session(['user_id'=>$result->id]);
+            }else{
+                abort(403);
+            }
         }catch(Exception $e){
 
             return [
@@ -133,7 +136,7 @@ class User extends Model
         try{
             $user=User::find($request->id);
             if(!Hash::check($request->old_password,$user->password)){
-                throw new Exception();
+                abort(401);
             }
             $user->password=Hash::make($request->password);;
             $user->save();

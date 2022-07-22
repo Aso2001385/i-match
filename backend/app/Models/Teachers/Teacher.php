@@ -41,7 +41,7 @@ class Teacher extends Authenticatable
             Teacher::create($request->all());
             $result = 'success!';
 
-             $status = Response::HTTP_OK;
+            $status = Response::HTTP_OK;
 
         }catch(Exception $e){
 
@@ -97,7 +97,7 @@ class Teacher extends Authenticatable
             $teacher=Teacher::find($request->id);
 
             if(!Hash::check($request->old_password,$teacher->password)){
-                throw new Exception();
+                abort(401);
             }
 
             $teacher->password=Hash::make($request->password);
