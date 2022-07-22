@@ -37,7 +37,7 @@ export default {
   methods: {
     getChatList() {
       this.$axios
-        .get(`https://i-match.click/api/rooms/${this.$store.state.user.id}`)
+        .get(`http://localhost:8080/api/rooms/${this.$store.state.user.id}`)
         .then(response => {
           if (!response.data) return
           this.rooms = response.data
