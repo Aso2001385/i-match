@@ -120,7 +120,7 @@ class RecruitController extends Controller
 
         }catch(\Exception $e){
 
-            return response()->json($e,400);
+            return response()->json($e,$e->getCode());
 
         }
 
@@ -135,7 +135,7 @@ class RecruitController extends Controller
         try{
             $response = Recruit::skillSearch($res);
         }catch(Exception $e){
-            return response()->json($e,400);
+            return response()->json($e,$e->getCode());
         }
         return response()->json($response['result'],200);
     }

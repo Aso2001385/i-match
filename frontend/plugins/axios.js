@@ -30,7 +30,6 @@ export default ({ $axios, store, redirect }) => {
   $axios.onResponse(
     response => {
       const config = response.config
-
       if (EXIT_ROUTES.response.includes(config.method + ':' + config.url.split('/api/')[1])) return response
       // レスポンスヘッダのX-Authフィールドからトークン取得し配列化
 

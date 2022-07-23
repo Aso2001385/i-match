@@ -41,6 +41,7 @@ class User extends Model
      */
     protected $hidden = [
         'remember_token',
+        'password'
     ];
 
     /**
@@ -55,6 +56,33 @@ class User extends Model
     public function user_skills()
     {
         return $this->hasMany(UserSkill::class);
+    }
+
+    public function skills()
+    {
+        return $this->hasMany(UserSkill::class);
+    }
+
+    public static function index_user(){
+        try{
+            $users=User::all()->toArray();
+
+            foreach($users as $user){
+                $user->skills=UserSkill::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
+            }
+        }catch(Exception $e){
+
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
+
+        }
+
+        return [
+            'result' => $users,
+            'status' => $status,
+        ];
     }
 
 
@@ -188,4 +216,38 @@ class User extends Model
         ];
     }
 
+    public static function skillSearch($users)
+    {
+
+        try{
+            $array = $users;
+            $user = User::with([
+                'skills'=> function ($query){
+                    $query->select('user_skill.*','skills.name','skills.category_id')->join('skills', 'skill_id', '=', 'skills.id');
+                },
+            ])->whereIn('id',UserSkill::select('user_id')
+                ->whereIn('skill_id',array_map(function($v){
+                    return $v['id'];
+                },$array))->get()
+            )->get()->toArray();
+
+            if(count($user)==0){
+                return[
+                    'result' => '見つかりませんでした',
+                    'status' =>200
+                ];
+            }
+
+            return [
+                'result' => $user,
+                'status' => 200
+            ];
+        }catch(Exception $e){
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
+
+        }
+    }
 }
