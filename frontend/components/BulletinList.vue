@@ -51,39 +51,23 @@ export default {
         infrastructure: 'purple',
         other: 'indigo darken -3',
       },
+      sendSearch: [],
+      searchFlg: 0,
+      searchIds: [],
     }
   },
   mounted() {
-    this.bulletins = this.getBulletin()
+    this.sendSearch = JSON.parse(sessionStorage.getItem('sendSearch'))
+    this.searchFlg = sessionStorage.getItem('searchFlg')
+    this.searchId()
+    this.getBulletin()
+    // this.bulletins = this.getBulletin()
   },
   methods: {
     getSession(value) {
       // どの掲示板の詳細を表示するか
       sessionStorage.setItem('bulletinDetail', value)
     },
-    // colors(name) {
-    //   for (let i = 0; i < this.langs.length; i++) {
-    //     if (this.langs[i].skillName.includes(name)) {
-    //       return 'red'
-    //     }
-    //   }
-    //   for (let i = 0; i < this.frameworks.length; i++) {
-    //     if (this.frameworks[i].skillName.includes(name)) {
-    //       return 'blue'
-    //     }
-    //   }
-    //   for (let i = 0; i < this.dbs.length; i++) {
-    //     if (this.dbs[i].skillName.includes(name)) {
-    //       return 'green'
-    //     }
-    //   }
-    //   for (let i = 0; i < this.infs.length; i++) {
-    //     if (this.infs[i].skillName.includes(name)) {
-    //       return 'purple'
-    //     }
-    //   }
-    //   return 'indigo darken-3'
-    // },
     skillCount(cnt) {
       return this.bulletinSkillCount[cnt - 1]
     },
@@ -91,11 +75,45 @@ export default {
       this.boxSkill = this.boxSkill + 1
       return this.bulletinSkillId[this.boxSkill]
     },
+    searchId() {
+      for (let i = 0; i < this.sendSearch.length; i++) {
+        this.searchIds.push(this.sendSearch[i].id)
+      }
+    },
     getBulletin() {
       this.$axios
         .get(`${this.$urls.API}/recruits`)
         .then(response => {
-          this.bulletins = response.data
+          if (Number(this.searchFlg) === 0) {
+            // 検索なし
+            this.bulletins = response.data
+            // console.log('yesを通る')
+          } else {
+            // 検索あり
+            // 60件
+            const searchBulletin = response.data
+            // console.log('Noを通る')
+            // console.log(searchBulletin)
+            // console.log(searchBulletin[0].skills)
+            // console.log('存在するか')
+            // console.log(this.sendSearch.length)
+
+            for (let a = 0; a < searchBulletin.length; a++) {
+              console.log(1)
+              for (let i = 0; i < searchBulletin[a].skills.length; i++) {
+                for (let j = 0; j < this.sendSearch.length; j++) {
+                  if (searchBulletin[a].skills[i].skill_id === this.sendSearch[j].id) {
+                    this.bulletins.push(searchBulletin[a])
+                  }
+                }
+              }
+            }
+            const sendSearch = []
+            sessionStorage.setItem('sendSearch', JSON.stringify(sendSearch))
+            sessionStorage.setItem('searchFlg', 0)
+            // console.log(this.bulletins)
+          }
+
           return response.data
         })
         .catch(err => {

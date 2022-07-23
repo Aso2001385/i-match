@@ -24,26 +24,20 @@
             <p class="mt-2 text-h1 pl-10 pr-10 pt-5">
               <v-icon class="text-h1 ma-3" aria-hidden="false">mdi-account</v-icon>
             </p>
-            <strong style="font-size: 2rem">{{ name }}</strong>
-            <p class="grey--text" style="font-size: 1rem">{{ email }}</p>
+            <strong style="font-size: 2rem">{{ account.name }}</strong>
+            <!-- <p class="grey--text" style="font-size: 1rem">{{ account.email }}</p> -->
           </v-card>
         </v-row>
         <v-row class="justify-center">
           <v-card style="width: 40vh" class="pa-5">
             <v-card-title class="pl-5 pr-10 pt-1">スキル一覧</v-card-title>
             <v-col style="overflow: hidden !important; height: 25vh; overflow-y: auto">
-              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%">言語</p>
-              <v-chip v-for="n in 5" :key="n" color="red" class="ml-1 mr-1 mb-1 white--text">PHP</v-chip>
-              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">
-                フレームワーク
-              </p>
-              <v-chip v-for="n in 5" :key="n" color="blue" class="ml-1 mr-1 mb-1 white--text">Laravel</v-chip>
-              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">DB</p>
-              <v-chip v-for="n in 5" :key="n" color="green" class="ml-1 mr-1 mb-1 white--text">MySQL</v-chip>
-              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">インフラ</p>
-              <v-chip v-for="n in 5" :key="n" color="purple" class="ml-1 mr-1 mb-1 white--text">AWS</v-chip>
-              <p style="border-bottom: 1px solid lightgrey; width: 95%; margin-left: 1.5%" class="mt-3">その他</p>
-              <v-chip v-for="n in 5" :key="n" color="grey" class="ml-1 mr-1 mb-1 white--text">figma</v-chip>
+              <span v-if="skillName.length !== 0">
+                <span v-for="skill in skillName" :key="skill" class="mr-1">
+                  <v-chip :class="color(skill.categoryId)" class="white--text mb-1">{{ skill.name }}</v-chip>
+                </span>
+              </span>
+              <span v-else><v-chip :class="color(6)" class="white--text mb-1">登録しているスキルなし</v-chip></span>
             </v-col>
           </v-card>
         </v-row>
@@ -52,14 +46,19 @@
   </v-flex>
 </template>
 <script defer>
+import SkillInfo from '~/assets/skillinfo.json'
+
 export default {
+  components: {
+    YouBulletinList: () => import('../components/YouBulletinList.vue'),
+  },
   data() {
     return {
       sortName: ['新着順', '投稿順', '締切が近い順'],
       sortId: 0,
-      userId: 0,
-      name: '',
-      email: '',
+      userId: '',
+      account: [],
+      skillName: [],
     }
   },
   mounted() {
@@ -80,14 +79,35 @@ export default {
         this.sortId = 0
       }
     },
+    color(value) {
+      console.log(value)
+      if (value === 1) {
+        return 'red'
+      } else if (value === 2) {
+        return 'blue'
+      } else if (value === 3) {
+        return 'green'
+      } else if (value === 4) {
+        return 'purple'
+      } else if (value === 5) {
+        return 'indigo darken-3'
+      } else {
+        return 'black'
+      }
+    },
     otherpartyAccount() {
       this.$axios
         .get(`${this.$urls.API}/users/${this.userId}`)
         .then(response => {
-          console.log('ちゃんと通っている')
-          this.name = response.data.name
-          this.email = response.data.email
-          console.log(response.data)
+          console.log('通っている')
+          console.log(SkillInfo)
+          this.account = response.data
+          for (let i = 0; i < this.account.user_skills.length; i++) {
+            this.skillName.push({
+              name: SkillInfo[this.account.user_skills[i].id - 1].skillName,
+              categoryId: SkillInfo[this.account.user_skills[i].id - 1].skillCategory,
+            })
+          }
         })
         .catch(err => {
           console.log('通ってないよー')
@@ -95,9 +115,6 @@ export default {
           return err.response
         })
     },
-  },
-  components: {
-    YouBulletinList: () => import('../components/YouBulletinList.vue'),
   },
 }
 </script>
