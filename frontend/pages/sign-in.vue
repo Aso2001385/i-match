@@ -84,6 +84,9 @@ export default {
   methods: {
     async submit() {
       this.$v.$touch()
+      const sendSearch = []
+      sessionStorage.setItem('sendSearch', JSON.stringify(sendSearch))
+      sessionStorage.setItem('searchFlg', 0)
 
       this.user = {
         email: this.email,

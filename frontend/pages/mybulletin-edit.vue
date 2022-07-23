@@ -49,10 +49,10 @@
           </v-row>
           <v-row class="mt-0 pa-0 pb-15 ml-15">
             <v-col>
-              <NuxtLink to="/mybulletin-edit" style="text-decoration: none">
+              <NuxtLink to="/account" style="text-decoration: none">
                 <v-row class="mt-5 ml-15" justify="center" style="width: 70%">
                   <v-col cols="12">
-                    <api-event-button color="grey darken-4"> 編集 </api-event-button>
+                    <api-event-button color="grey darken-4"> 更新 </api-event-button>
                   </v-col>
                 </v-row>
               </NuxtLink>
