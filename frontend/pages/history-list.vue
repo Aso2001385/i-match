@@ -9,7 +9,7 @@
       <v-col cols="12" style="overflow: hidden !important; height: 83vh; overflow-y: auto" class="pa-0 pb-1">
         <v-row>
           <v-col cols="12" class="ma-0">
-            <v-card v-for="bulletinList in 51" :key="bulletinList">
+            <v-card v-for="recruitList in 51" :key="recruitList">
               <v-row class="pt-5 pl-10">
                 <v-col cols="12" md="6" class="ml-7"><span>募集締め切り：1月1日</span></v-col>
                 <v-col cols="12" md="4" class="ml-10"><span>募集人数：3/6人</span></v-col>
@@ -24,7 +24,7 @@
                   <span v-for="skillList in 10" :key="skillList" class="text-h4 ml-0 pa-0">◯</span>
                 </v-col>
                 <v-col cols="12" md="2" class="mr-0">
-                  <NuxtLink to="/history-bulletin-detail" class="white--text" style="text-decoration: none">
+                  <NuxtLink to="/history-recruit-detail" class="white--text" style="text-decoration: none">
                     <v-col cols="12" md="8"><span class="black--text">Read More </span></v-col></NuxtLink
                   >
                 </v-col>
@@ -60,7 +60,7 @@ export default {
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)
-          this.$router.push('/bulletin-list')
+          this.$router.push('/recruit-list')
         })
         .catch(err => {
           console.log('通ってないよー')

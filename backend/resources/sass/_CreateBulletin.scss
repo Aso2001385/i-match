@@ -1,67 +1,83 @@
-.create-bulletin{
-    width: 50%;
-    margin-left: 35%;
-    padding-top: 8rem;
+.create-recruit {
+  width: 50%;
+  margin-left: 35%;
+  padding-top: 8rem;
 }
-.create-bulletin-container{
-    background-color: #c4c4c4;
-    border: 1px solid transparent;
+.create-recruit-container {
+  background-color: #c4c4c4;
+  border: 1px solid transparent;
 }
-#content-title{
-    border-bottom: 2px solid #000;
+#content-title {
+  border-bottom: 2px solid #000;
 }
-#content-title{
-    font-size: 1.5rem;
-    margin-top: 2.5%;
-    padding-left: 4.5%;
+#content-title {
+  font-size: 1.5rem;
+  margin-top: 2.5%;
+  padding-left: 4.5%;
 }
-#createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#createbulletin-day,#cratebulletin-skill{
-    font-size: 1.5rem;
-    margin-top: 2.5%;
-    padding-left: 2.5%;
+#createrecruit-title,
+#createrecruit-over,
+#createrecruit-rec,
+#createrecruit-cate,
+#createrecruit-day,
+#craterecruit-skill {
+  font-size: 1.5rem;
+  margin-top: 2.5%;
+  padding-left: 2.5%;
 }
-#createbulletin-title,#createbulletin-over,#createbulletin-rec,#createbulletin-cate,#createbulletin-day,#cratebulletin-skill{
-    border-bottom: 2px solid #a3a3a3;
+#createrecruit-title,
+#createrecruit-over,
+#createrecruit-rec,
+#createrecruit-cate,
+#createrecruit-day,
+#craterecruit-skill {
+  border-bottom: 2px solid #a3a3a3;
 }
-#createbulletin-title-text,.category,.rec-number{
-    margin-left: 2.5%;
-    height: 2.2rem;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-    border: 1px solid transparent;
+#createrecruit-title-text,
+.category,
+.rec-number {
+  margin-left: 2.5%;
+  height: 2.2rem;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border: 1px solid transparent;
 }
-#createbulletin-title-textarea{
-    margin-left: 2.5%;
-    background-color: #f8f9fa;
-    border-radius: 5px;
-    border: 1px solid transparent;
+#createrecruit-title-textarea {
+  margin-left: 2.5%;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  border: 1px solid transparent;
 }
-#createbulletin-day-con,#add-url{
-    margin-left: 2.5%;
+#createrecruit-day-con,
+#add-url {
+  margin-left: 2.5%;
 }
-#createbulletin-title-text,#createbulletin-title-textarea{
-    width: 90%;
+#createrecruit-title-text,
+#createrecruit-title-textarea {
+  width: 90%;
 }
-#add-url,#create-bulletin-url{
-    color: #000;
-    border: 1px solid #000;
-    border-radius: 5px;
-    background-color: #ffffff;
-    padding: 10px 20px;
+#add-url,
+#create-recruit-url {
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 10px 20px;
 }
-#add-url:hover,#create-bulletin-url:hover{
-    background-color: #db9006;
-    color: #ffffff;
+#add-url:hover,
+#create-recruit-url:hover {
+  background-color: #db9006;
+  color: #ffffff;
 }
-#cratebulletin-skill{
-    margin-bottom: 2.5%;
+#craterecruit-skill {
+  margin-bottom: 2.5%;
 }
-.add-skills{
-    margin-top: 2.5%;
-    margin-left: 2.5%;
+.add-skills {
+  margin-top: 2.5%;
+  margin-left: 2.5%;
 }
-.create-bulletin-url-con{
-    text-align: center;
-    margin-top: 2.5%;
-    margin-bottom: 5%;
+.create-recruit-url-con {
+  text-align: center;
+  margin-top: 2.5%;
+  margin-bottom: 5%;
 }

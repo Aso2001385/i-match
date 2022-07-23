@@ -1,4 +1,4 @@
-export default async function ({ redirect, $axios, store, route }) {
+export default async function ({ redirect, $axios, store, route, $urls }) {
   // sessionからユーザー情報を取得
   const TOKEN = await JSON.parse(sessionStorage.getItem('token'))
 
@@ -15,7 +15,7 @@ export default async function ({ redirect, $axios, store, route }) {
 
         console.log('aaa')
         await $axios
-          .get('https://i-match.click/api/auth')
+          .get('http://localhost:8080/api/auth')
           .then(response => {
             console.log(response.data)
             store.commit('restoreLogin', response.data)

@@ -52,7 +52,7 @@ class User extends Model
         'email_verified_at' => 'datetime',
     ];
 
-    public function user_skills()
+    public function skills()
     {
         return $this->hasMany(UserSkill::class);
     }
@@ -86,17 +86,13 @@ class User extends Model
     public static function get_user($user){
 
         try{
-            $user=User::with('user_skills')->find($user->id);
-            $status=Response::HTTP_OK;
 
-            if(isset($user->user_skills)){
-                foreach($user->user_skills as $user_skill){
-                    $skill=Skill::where("id",$user_skill->skill_id)->select("name","category_id")->first();
-                    $user_skill->name=$skill->name;
-                    $user_skill->category_id=$skill->category_id;
-                }
-                unset($skill_id);
-            }
+            $user=User::with(['skills' => function($query){
+                $query->select('user_skill.*','skills.name','skills.category_id','skill_categories.name as category_name')
+                ->join('skills','skills.id','=','user_skill.skill_id')
+                ->join('skill_categories','skill_categories.id','=','skills.category_id');
+            }])->find($user->id);
+            $status=Response::HTTP_OK;
 
         }catch(Exception $e){
 

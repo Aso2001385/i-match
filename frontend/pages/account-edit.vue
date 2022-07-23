@@ -33,35 +33,35 @@
             <v-col cols="4"><h2>スキル情報</h2></v-col>
           </v-row>
           <v-row style="width: 100%" class="ml-5">
-            <v-col cols="12" id="user_bulletin_skill"
+            <v-col cols="12" id="user_recruit_skill"
               ><span v-for="value in langList" :key="value">
                 <v-chip :class="colors(value)" class="mr-2 white--text" small>{{ value }}</v-chip>
               </span>
             </v-col>
           </v-row>
           <v-row style="width: 100%" class="ml-5">
-            <v-col cols="12" id="user_bulletin_skill"
+            <v-col cols="12" id="user_recruit_skill"
               ><span v-for="value in frameList" :key="value">
                 <v-chip :class="colors(value)" class="mr-2 white--text" small>{{ value }}</v-chip>
               </span>
             </v-col>
           </v-row>
           <v-row style="width: 100%" class="ml-5">
-            <v-col cols="12" id="user_bulletin_skill"
+            <v-col cols="12" id="user_recruit_skill"
               ><span v-for="value in dbList" :key="value">
                 <v-chip :class="colors(value)" class="mr-2 white--text" small>{{ value }}</v-chip>
               </span>
             </v-col>
           </v-row>
           <v-row style="width: 100%" class="ml-5">
-            <v-col cols="12" id="user_bulletin_skill"
+            <v-col cols="12" id="user_recruit_skill"
               ><span v-for="value in infrList" :key="value">
                 <v-chip :class="colors(value)" class="mr-2 white--text" small>{{ value }}</v-chip>
               </span>
             </v-col>
           </v-row>
           <v-row style="width: 100%" class="ml-5">
-            <v-col cols="12" id="user_bulletin_skill"
+            <v-col cols="12" id="user_recruit_skill"
               ><span v-for="value in othList" :key="value">
                 <v-chip :class="colors(value)" class="mr-2 white--text" small>{{ value }}</v-chip>
               </span>
@@ -218,7 +218,7 @@ export default {
   color: orange;
   border: 1px solid orange;
 }
-#user_bulletin_skill {
+#user_recruit_skill {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

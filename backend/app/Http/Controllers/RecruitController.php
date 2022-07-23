@@ -9,6 +9,7 @@ use App\Http\Requests\Recruits\UpdateRecruitRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use App\Models\Chats\Room;
 use Exception;
 
 class RecruitController extends Controller
@@ -59,17 +60,13 @@ class RecruitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateRecruitRequest $request)
+    public function store(Request $request)
     {
-        $request1=collect(
-            ['user_id' => $request->user_id, 'title' =>$request->title, 'contents' => $request->contents, 'purpose'=>$request->purpose, 'persons'=>$request->persons, 'due'=>$request->due]
-        );
-        $response=Recruit::create_recruits($request1);
 
-        if($response['result']=='success!'){
-            $response=RecruitSkill::create_rec_skill($request,$response['recruit']);
-        }
+        $response = Recruit::create_recruits($request);
+
         return response()->json($response['result'],$response['status']);
+
     }
 
     /**

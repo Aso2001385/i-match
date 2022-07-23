@@ -1,21 +1,24 @@
-.bulletin-upd-btn-con,.bulletin-del-btn-con{
-    float: right;
+.recruit-upd-btn-con,
+.recruit-del-btn-con {
+  float: right;
 }
-.bulletin-upd-btn-con{
-    margin-right: 35%;
+.recruit-upd-btn-con {
+  margin-right: 35%;
 }
-.bulletin-del-btn-con{
-    margin-right: 30%;
+.recruit-del-btn-con {
+  margin-right: 30%;
 }
-.bulletin-update-button,.bulletin-delete-button{
-    background-color: #ffffff;
-    border: 1px solid #000;
-    border-radius: 5px;
-    padding: 10px 20px;
+.recruit-update-button,
+.recruit-delete-button {
+  background-color: #ffffff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px 20px;
 }
-.bulletin-update-button:hover,.bulletin-delete-button:hover{
-    background-color: #db9006;
-    color: #ffffff;
+.recruit-update-button:hover,
+.recruit-delete-button:hover {
+  background-color: #db9006;
+  color: #ffffff;
 }
 // inputテキストのデザイン
 // height: 2.2rem;// 場合によって変わる

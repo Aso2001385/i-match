@@ -53,8 +53,8 @@
         </v-row>
 
         <v-row class="justify-center mt-5 pa-1">
-          <v-btn id="addSkill" href="create-bulletin" class="mr-15" >戻る</v-btn>
-          <v-btn id="addSkill" href="create-bulletin" class="ml-15" @click.prevent="sessionSet">追加</v-btn>
+          <v-btn id="addSkill" href="create-recruit" class="mr-15">戻る</v-btn>
+          <v-btn id="addSkill" href="create-recruit" class="ml-15" @click.prevent="sessionSet">追加</v-btn>
         </v-row>
       </v-card>
     </v-col>
@@ -62,8 +62,7 @@
 </template>
 <script defer>
 export default {
-  computed: {
-  },
+  computed: {},
   data() {
     return {
       EXP: '',
@@ -136,7 +135,7 @@ export default {
       },
       skills: [],
       levels: [],
-      bulletinSkills: [],
+      recruitSkills: [],
     }
   },
   mounted() {
