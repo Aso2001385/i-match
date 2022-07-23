@@ -100,12 +100,12 @@ class UserController extends Controller
 
     }
 
-    public function skillSearch(Request $request)
+    public function userSkillSearch(Request $request)
     {
 
         $users = $request->all();
         try{
-            $response = Recruit::skillSearch($users);
+            $response = User::userSkillSearch($request->users,$request->user_id);
         }catch(Exception $e){
             return response()->json($e,$e->getCode());
         }

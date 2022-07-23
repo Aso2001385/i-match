@@ -79,13 +79,12 @@ export default {
       return this.userId
     },
     async getBulletin() {
-      // テストでidが6の人のリストを出していた
-      const userId = 6
       await this.$axios
         .get(`${this.$urls.API}/recruits`)
         .then(response => {
           this.bulletins = response.data
           for (let i = 0; i < this.bulletins.length; i++) {
+            //if (Number(this.$store.state.user) === this.bulletins[i].user_id) {
             if (Number(userId) === this.bulletins[i].user_id) {
               this.myBulletins.push(this.bulletins[i])
             }

@@ -43,7 +43,7 @@ Route::get('/ac',[UserController::class,'access']); //T
 Route::apiResource('users', UserController::class);
 Route::put('/user/password',[UserController::class, 'passUpdate']); // U
 
-Route::post('search/user-skill',[UserController::class,'skillSearch']);
+Route::post('search/user-skill',[UserController::class,'userSkillSearch']);
 
 Route::apiResource('user-skill', UserSkillController::class);
 

@@ -186,18 +186,30 @@ class User extends Model
 
     public static function delete_user($user){
         try{
-            $recruits= Recruit::where('user_id',$user->id)->whereNull('deleted_at')->get();
+            $recruits= Recruit::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
             date_default_timezone_set("Asia/Tokyo");
             $today=date("Y-m-d H:i:s");
-            foreach($recruits as $recruit){
-                if($today<=$recruit->due){
-                    Recruit::delete_recruit($recruit);
+            if(count($recruits)>0){
+                foreach($recruits as $recruit){
+                    if($today<=$recruit->due){
+                        Recruit::delete_recruit($recruit);
 
+                    }
                 }
             }
-            $room_users=RoomUser::where('user_id',$user->id)->whereNull('deleted_at')->get();
-            foreach($room_users as $user){
-                RoomUser::delete_room_user($user);
+            
+            $room_users=RoomUser::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
+            if(count($room_users)>0){
+                foreach($room_users as $user){
+                    RoomUser::delete_room_user($user);
+                }
+            }
+
+            $user_skills=UserSkill::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
+            if(count($user_skills)>0){
+                foreach($user_skills as $user_skill){
+                    UserSkill::delete_skill($user_skill);
+                }
             }
             $user->delete();
             $status= Response::HTTP_OK;
@@ -216,11 +228,10 @@ class User extends Model
         ];
     }
 
-    public static function skillSearch($users)
+    public static function userSkillSearch($users,$user_id)
     {
 
         try{
-            $array = $users;
             $user = User::with([
                 'skills'=> function ($query){
                     $query->select('user_skill.*','skills.name','skills.category_id')->join('skills', 'skill_id', '=', 'skills.id');
@@ -228,8 +239,8 @@ class User extends Model
             ])->whereIn('id',UserSkill::select('user_id')
                 ->whereIn('skill_id',array_map(function($v){
                     return $v['id'];
-                },$array))->get()
-            )->get()->toArray();
+                },$users))->get()
+            )->where('user_id','<>',$user_id)->get()->toArray();
 
             if(count($user)==0){
                 return[
