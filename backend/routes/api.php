@@ -43,6 +43,8 @@ Route::get('/ac',[UserController::class,'access']); //T
 Route::apiResource('users', UserController::class);
 Route::put('/user/password',[UserController::class, 'passUpdate']); // U
 
+Route::post('search/user-skill',[UserController::class,'skillSearch']);
+
 Route::apiResource('user-skill', UserSkillController::class);
 
 //スキル機能
@@ -60,7 +62,7 @@ Route::apiResource('recruits', RecruitController::class);
 Route::get('recruits/other/{id}', [RecruitController::class,'otherIndex']);
 Route::get('recruits/history/{id}',[RecruitController::class,'history']);
 
-Route::get('search/skill',[RecruitController::class,'search']);
+//Route::get('search/skill',[RecruitController::class,'search']);
 Route::post('search/skill',[RecruitController::class,'skillSearch']);
 
 Route::apiResource('recruit-skill',RecruitSkillController::class);
