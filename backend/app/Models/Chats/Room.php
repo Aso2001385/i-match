@@ -89,6 +89,9 @@ class Room extends Model
                 'users'=> function ($query){
                     $query->select('room_user.*','users.name as user_name')->join('users', 'user_id', '=', 'users.id');
                 },
+                'chats' =>function ($query){
+                    $query->select('chats.*')->orderBy('created_at','desc');
+                },
             ])->where('id',$room_id)->first()->toArray();
 
             $room['name'] = $room['users'][array_search($user_id,array_map(function($e){
@@ -118,13 +121,18 @@ class Room extends Model
 
     public static function delete_room($room){
         try{
-            $room_users=RoomUser::where('room_id',$room->id)->whereNull('deleted_at')->get();
-            foreach($room_users as $user){
-                RoomUser::delete_room_user($user);
+            $room_users=RoomUser::where('room_id',$room->id)->whereNull('deleted_at')->get()->toArray();
+
+            if(xouser($room_users)>0){
+                foreach($room_users as $user){
+                    RoomUser::delete_room_user($user);
+                }
             }
-            $chats=Chat::where('room_id',$room->id)->whereNull('deleted_at')->get();
-            foreach($chats as $chat){
-                Chat::delete_chat($chat);
+            $chats=Chat::where('room_id',$room->id)->whereNull('deleted_at')->get()->toArray();
+            if(count($chats)>0){
+                foreach($chats as $chat){
+                    Chat::delete_chat($chat);
+                }
             }
             $room->delete();
             $status=Response::HTTP_OK;

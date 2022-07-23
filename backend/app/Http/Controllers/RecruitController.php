@@ -130,10 +130,8 @@ class RecruitController extends Controller
 
     public function skillSearch(Request $request)
     {
-
-        $res = $request->all();
         try{
-            $response = Recruit::skillSearch($res);
+            $response = Recruit::skillSearch($request->skills,$request->user_id);
         }catch(Exception $e){
             return response()->json($e,$e->getCode());
         }
