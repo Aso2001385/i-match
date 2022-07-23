@@ -206,11 +206,11 @@ class Recruit extends Model
         }
     }
 
-    public static function skillSearch($request)
+    public static function skillSearch($res)
     {
 
         try{
-            $array = $request;
+            $array = $res;
             $recruit = Recruit::with([
                 'skills'=> function ($query){
                     $query->select('recruit_skill.*','skills.name','skills.category_id')->join('skills', 'skill_id', '=', 'skills.id');
@@ -222,7 +222,14 @@ class Recruit extends Model
                 ->whereIn('skill_id',array_map(function($v){
                     return $v['id'];
                 },$array))->get()
-            )->get();
+            )->get()->toArray();
+
+            if(count($recruit)==0){
+                return[
+                    'result' => '見つかりませんでした',
+                    'status' =>200
+                ];
+            }
 
             return [
                 'result' => $recruit,

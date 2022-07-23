@@ -23,10 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-            $response=[
-                'result' =>User::all()->toArray(),
-                'status' => Response::HTTP_OK
-            ];
+            $response=User::index_user();
 
             return response()->json($response['result'],$response['status']);
 
@@ -101,5 +98,17 @@ class UserController extends Controller
 
         return response()->json($response['result'],$response['status']);
 
+    }
+
+    public function skillSearch(Request $request)
+    {
+
+        $users = $request->all();
+        try{
+            $response = Recruit::skillSearch($users);
+        }catch(Exception $e){
+            return response()->json($e,$e->getCode());
+        }
+        return response()->json($response['result'],200);
     }
 }
