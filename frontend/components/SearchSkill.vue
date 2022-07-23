@@ -5,7 +5,9 @@
         <v-col>
           <v-row>
             <v-col cols="6">
-              <p style="text-align: center"><v-btn color="green" @click="searchSkills">検索</v-btn></p>
+              <p style="text-align: center">
+                <v-btn href="/bulletin-list" color="green" @click="searchSkills()">検索</v-btn>
+              </p>
             </v-col>
             <v-col cols="6">
               <v-btn color="orange" @click="deleteSkillChips()"
@@ -78,7 +80,34 @@ export default {
     deleteSkillChips() {
       this.skillChips = []
     },
-    searchSkill() {},
+
+    searchSkills() {
+      console.log(this.skillChips)
+      const sendSearch = []
+      for (let i = 0; i < this.skillChips.length; i++) {
+        sendSearch.push({ id: this.skillChips[i].id, name: this.skillChips[i].name })
+      }
+      console.log('配列の中身確認')
+      console.log(sendSearch)
+
+      // 検索ボタンが押されたらセッションにそのデータを格納する。あと検索をしたというフラグもおく(1)
+      sessionStorage.setItem('sendSearch', JSON.stringify(sendSearch))
+      sessionStorage.setItem('searchFlg', 1)
+
+      // this.$axios
+      //   .post(`${this.$urls.API}/search/skill`, sendSearch)
+      //   // .get(`${this.$urls.API}/search/skill`)
+      //   .then(response => {
+      //     console.log('通っている')
+      //     console.log(response.data)
+      //   })
+      //   .catch(err => {
+      //     console.log('通ってないよー')
+      //     console.log(err)
+      //     return err.response
+      //   })
+    },
+    // searchSkill() {},
   },
 }
 </script>
