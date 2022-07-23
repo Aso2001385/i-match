@@ -16,7 +16,7 @@
     </v-row>
     <v-row>
       <v-col cols="8" class="ma-0 pa-0 pb-1" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
-        <BulletinList :bulletinFlg="2" />
+        <RecruitList :recruitFlg="2" />
       </v-col>
       <v-col cols="4" class="pl-3 mt-2" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
         <v-row class="justify-center mb-1">
@@ -214,7 +214,7 @@ export default {
     },
   },
   components: {
-    BulletinList: () => import('../components/BulletinList.vue'),
+    RecruitList: () => import('../components/RecruitList.vue'),
   },
 }
 </script>

@@ -39,7 +39,7 @@ class BeforeAuth
 
         // 認可に失敗したら403エラーでレスポンス
         $x_auth = $request->headers->get('X-Auth');
-        if(!isset($x_auth)) return response()->json('TOKEN IS NOT FOUND',403)->header('Access-Control-Allow-Origin','*');
+        if(!isset($x_auth)) return response()->json('TOKEN IS NOT FOUND',403);
 
         if(!Token::authorization($request)) return response()->json('TOKEN IS INAPPROPRIATE',403);
 

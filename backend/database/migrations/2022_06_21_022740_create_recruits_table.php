@@ -21,7 +21,7 @@ class CreateRecruitsTable extends Migration
             $table->text('contents');
             $table->string('purpose');
             $table->integer('persons');
-            $table->dateTime('due');
+            $table->date('due');
             $table->timestamps();
         });
     }

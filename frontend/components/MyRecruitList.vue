@@ -1,37 +1,52 @@
 <template>
-  <v-flex>
-    <v-row class="grey darken-2">
-
-      <v-col cols="12" class="mt-5 ml-10 pb-5">
-        <NuxtLink to="/create-bulletin" class="white--text" style="text-decoration: none">
-          <strong><v-icon color="orange">mdi-plus-box</v-icon>掲示板作成</strong>
-        </NuxtLink>
+  <v-container>
+    <v-row v-for="value in recruitCount" :key="value">
+      <v-col cols="12" class="ma-0">
+        <v-card>
+          <v-row class="pt-5 pl-15 ml-2">
+            <v-col cols="4" class="ml-2"
+              >募集締め切り：<span>{{ dueList[value] }}</span></v-col
+            >
+            <v-col cols="4"
+              >募集人数：<span>3</span>/<span>{{ personsList[value] }}</span
+              >人</v-col
+            ></v-row
+          >
+          <v-row class="pl-15 ml-2">
+            <v-col cols="12" class="ml-2"
+              ><h2>{{ recruitList[value] }}</h2></v-col
+            >
+          </v-row>
+          <v-row class="pl-12">
+            <v-col cols="8" class="ml-10" justify="center">
+              <div style="width: 70%" id="recruit_skill">
+                <span v-for="skill in allSkill" :key="skill">
+                  <v-chip :class="colors(skill)" class="mr-2 white--text" small>{{ skill }}</v-chip>
+                </span>
+              </div>
+            </v-col>
+            <NuxtLink to="/myrecruit-detail" class="white--text" style="text-decoration: none">
+              <v-col cols="12" md="12" class="ml-8">
+                <span class="black--text" @click="getRecruitDetail(recruitIdList[value])">Read More </span>
+              </v-col>
+            </NuxtLink>
+          </v-row>
+        </v-card>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="8" class="ma-0 pa-0" style="overflow: hidden !important; height: 84vh; overflow-y: auto">
-        <BulletinList />
-      </v-col>
-
-      <v-col cols="4">
-        <SearchSkill />
-      </v-col>
-    </v-row>
-  </v-flex>
+  </v-container>
 </template>
 <script defer>
 export default {
-  components: {
-    BulletinList: () => import('../components/BulletinList.vue'),
-    SearchSkill: () => import('../components/SearchSkill.vue'),
-  },
   data() {
     return {
-      langSea: [],
-      frameSea: [],
-      dbSea: [],
-      infSea: [],
-      othSea: [],
+      recruitCount: 0,
+      recruitsIdList: [],
+      recruitList: [],
+      userId: 0,
+      dueList: [],
+      personsList: [],
+      allSkill: ['Java', 'Python', 'Spring', 'C', 'AWS', 'figma', 'Kotlin', 'C#', 'Qt', 'Flask'],
       langs: [
         { id: 0, skillCategory: 0, skillName: 'Java' },
         { id: 1, skillCategory: 0, skillName: 'PHP' },
@@ -98,24 +113,71 @@ export default {
     }
   },
   mounted() {
-    // this.getBulletin()
-    // this.submit()
+    this.getSession()
+    this.getRecruit()
   },
   methods: {
-    submit() {
+    getRecruitDetail(value) {
+      sessionStorage.setItem('recruitDetail', value)
+    },
+    getSession() {
+      // 自分の情報
+      this.userId = sessionStorage.getItem('userInfo')
+      console.log(this.userId + 'どんな値か確認')
+    },
+    colors(name) {
+      for (let i = 0; i < this.langs.length; i++) {
+        if (this.langs[i].skillName.includes(name)) {
+          return 'red'
+        }
+      }
+      for (let i = 0; i < this.frameworks.length; i++) {
+        if (this.frameworks[i].skillName.includes(name)) {
+          return 'blue'
+        }
+      }
+      for (let i = 0; i < this.dbs.length; i++) {
+        if (this.dbs[i].skillName.includes(name)) {
+          return 'green'
+        }
+      }
+      for (let i = 0; i < this.infs.length; i++) {
+        if (this.infs[i].skillName.includes(name)) {
+          return 'purple'
+        }
+      }
+      return 'indigo darken-3'
+    },
+    getRecruit() {
       this.$axios
-        .get(`${this.$urls.API}/recruits`)
+        .get(`${this.$urls.API}/recruits/${this.userId}`)
         .then(response => {
-          console.log('ちゃんと通っている１')
-          console.log(response.data)
+          for (let i = 0; i < response.data.length; i++) {
+            this.recruitsIdList.push(response.data[i].id)
+            this.recruitList.push(response.data[i].title)
+            this.dueList.push(response.data[i].due)
+            this.personsList.push(response.data[i].persons)
+          }
+          this.recruitCount = this.recruitList.length
+          this.recruitsIdList.push(this.recruitsIdList[0])
+          this.recruitList.push(this.recruitList[0])
+          this.dueList.push(this.dueList[0])
+          this.personsList.push(this.personsList[0])
         })
         .catch(err => {
-          console.log('通ってないよー')
           console.log(err)
           return err.response
         })
-      alert('通ったっす！')
     },
   },
 }
 </script>
+<style lang="scss">
+#recruit_skill {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
+</style>

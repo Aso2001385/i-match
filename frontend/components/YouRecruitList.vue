@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row v-for="value in bulletinCount" :key="value">
+    <v-row v-for="value in recruitCount" :key="value">
       <v-col cols="12" class="ma-0">
         <v-card>
           <v-row class="pt-5 pl-15 ml-2">
@@ -14,20 +14,20 @@
           >
           <v-row class="pl-15 ml-2">
             <v-col cols="12" class="ml-2"
-              ><h2>{{ bulletinList[value] }}</h2></v-col
+              ><h2>{{ recruitList[value] }}</h2></v-col
             >
           </v-row>
           <v-row class="pl-12">
             <v-col cols="8" class="ml-10" justify="center">
-              <div style="width: 70%" id="bulletin_skill">
+              <div style="width: 70%" id="recruit_skill">
                 <span v-for="skllValue in skillCount(value)" :key="skllValue">
                   <v-chip :class="colors(skllValue)" class="mr-2 white--text" small>{{ getSkillId() }}</v-chip>
                 </span>
               </div>
             </v-col>
-            <NuxtLink to="/bulletin-detail" class="white--text" style="text-decoration: none">
+            <NuxtLink to="/recruit-detail" class="white--text" style="text-decoration: none">
               <v-col cols="12" md="12" class="ml-8">
-                <span class="black--text" @click="getBulletinDetail(bulletinIdList[value])">Read More </span>
+                <span class="black--text" @click="getRecruitDetail(recruitIdList[value])">Read More </span>
               </v-col>
             </NuxtLink>
           </v-row>
@@ -40,15 +40,15 @@
 export default {
   data() {
     return {
-      bulletinCount: 0,
-      bulletinIdList: [],
-      bulletinList: [],
+      recruitCount: 0,
+      recruitIdList: [],
+      recruitList: [],
       // userId: 0,
       dueList: [],
       personsList: [],
       allSkill: ['Java', 'Python', 'Spring', 'C', 'AWS', 'figma', 'Kotlin', 'C#', 'Qt', 'Flask'],
-      bulletinSkillId: [],
-      bulletinSkillCount: [],
+      recruitSkillId: [],
+      recruitSkillCount: [],
       boxSkill: -1,
       langs: [
         { id: 0, skillCategory: 0, skillName: 'Java' },
@@ -117,15 +117,13 @@ export default {
   },
   mounted() {
     this.getSession()
-    this.getBulletin()
+    this.getRecruit()
   },
   methods: {
-    getBulletinDetail(value) {
-      sessionStorage.setItem('bulletinDetail', value)
+    getRecruitDetail(value) {
+      sessionStorage.setItem('recruitDetail', value)
     },
     getSession() {
-      // クリックされた相手の情報
-      // this.userId = sessionStorage.getItem('userInfo')
       // とりあえず2の情報を取得
       this.userId = 2
     },
@@ -153,41 +151,40 @@ export default {
       return 'indigo darken-3'
     },
     skillCount(cnt) {
-      return this.bulletinSkillCount[cnt - 1]
+      return this.recruitSkillCount[cnt - 1]
     },
     getSkillId() {
       this.boxSkill = this.boxSkill + 1
-      return this.bulletinSkillId[this.boxSkill]
+      return this.recruitSkillId[this.boxSkill]
     },
-    async getBulletin() {
+    async getRecruit() {
       await this.$axios
-        .get(`https://i-match.click/api/recruits${this.userId}`)
+        .get(`${this.$urls.API}/recruits${this.userId}`)
         .then(response => {
           console.log('ちゃんと通っている相手の情報')
-          this.bulletinCount = response.data.length
+          this.recruitCount = response.data.length
           for (let i = 0; i < response.data.length; i++) {
             if (this.userId === response.data[i].user_id) {
-              this.bulletinList.push(response.data[i].title)
+              this.recruitList.push(response.data[i].title)
               this.dueList.push(response.data[i].due)
               this.personsList.push(response.data[i].persons)
-              this.bulletinIdList.push(response.data[i].id)
-              this.bulletinSkillCount.push(response.data[i].skills.length)
+              this.recruitIdList.push(response.data[i].id)
+              this.recruitSkillCount.push(response.data[i].skills.length)
               for (let j = 0; j < response.data[i].skills.length; j++) {
-                this.bulletinSkillId.push(response.data[i].skills[j].skill_id)
+                this.recruitSkillId.push(response.data[i].skills[j].skill_id)
               }
             } else {
               console.log('別の人の情報')
             }
           }
-          this.bulletinCount = this.bulletinIdList.length
-          this.bulletinIdList.push(this.bulletinIdList[0])
-          this.bulletinList.push(this.bulletinList[0])
+          this.recruitCount = this.recruitIdList.length
+          this.recruitIdList.push(this.recruitIdList[0])
+          this.recruitList.push(this.recruitList[0])
           this.dueList.push(this.dueList[0])
           this.personsList.push(this.personsList[0])
-          this.bulletinIdList.unshift(this.bulletinIdList[0])
+          this.recruitIdList.unshift(this.recruitIdList[0])
         })
         .catch(err => {
-          console.log('通ってないよー')
           console.log(err)
           return err.response
         })
@@ -196,7 +193,7 @@ export default {
 }
 </script>
 <style lang="scss">
-#bulletin_skill {
+#recruit_skill {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

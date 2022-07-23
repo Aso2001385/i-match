@@ -22,7 +22,7 @@ class RecruitFactory extends Factory
             'contents'=>$this->faker->realText(200,1),
             'purpose' =>Arr::random($purpose),
             'persons'=>rand(1,20),
-            'due' =>$this->faker->dateTimeBetween('+1 week', '+2 week')
+            'due' =>$this->faker->dateBetween('+1 week', '+2 week')
         ];
     }
 }

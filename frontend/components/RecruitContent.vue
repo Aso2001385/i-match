@@ -44,7 +44,6 @@ export default {
     getSession() {
       this.category = sessionStorage.getItem('category')
       this.parson = sessionStorage.getItem('parson')
-      console.log(isNaN(this.parson))
     },
   },
   mounted() {

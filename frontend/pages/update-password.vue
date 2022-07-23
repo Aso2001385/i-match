@@ -69,7 +69,7 @@ export default {
   color: orange;
   border: 1px solid orange;
 }
-#user_bulletin_skill {
+#user_recruit_skill {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

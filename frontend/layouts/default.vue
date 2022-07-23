@@ -11,7 +11,7 @@
                 >
               </v-list-item>
               <v-list-item class="pl-1 pb-0 pa-4">
-                <NuxtLink to="/bulletin-list" class="white--text text-h7" style="text-decoration: none"
+                <NuxtLink to="/recruit-list" class="white--text text-h7" style="text-decoration: none"
                   ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-bulletin-board</v-icon>掲示板</NuxtLink
                 >
               </v-list-item>

@@ -1,60 +1,69 @@
-.bulletin-detail{
-    position: absolute;
-    top: 7rem;
-    width: 50%;
-    margin-left: 35%;
+.recruit-detail {
+  position: absolute;
+  top: 7rem;
+  width: 50%;
+  margin-left: 35%;
 }
-.bulletin-detail-your-container{
-    border: 1px solid transparent;
-    background-color: #ffffff;
-    padding-left: 20px;
-    padding-right: 20px;
+.recruit-detail-your-container {
+  border: 1px solid transparent;
+  background-color: #ffffff;
+  padding-left: 20px;
+  padding-right: 20px;
 }
-.bulletin-title{
-    margin-top: 5%;
+.recruit-title {
+  margin-top: 5%;
 }
-.bulletin-title,.bulletin-over,.bulletin-skill-title,.now-number,#bulletin-day{
-    margin-bottom: 2.5%;
-    margin-left: 1.5%;
-    border-bottom: 2px solid #a3a3a3;
+.recruit-title,
+.recruit-over,
+.recruit-skill-title,
+.now-number,
+#recruit-day {
+  margin-bottom: 2.5%;
+  margin-left: 1.5%;
+  border-bottom: 2px solid #a3a3a3;
 }
-.bulletin-title-con,.bulletin-over-con,.bulletin-skill-con,.now-number-count,#bulletin-day-con{
-    margin-left: 2.5%;
+.recruit-title-con,
+.recruit-over-con,
+.recruit-skill-con,
+.now-number-count,
+#recruit-day-con {
+  margin-left: 2.5%;
 }
-.bulletin-title-con{
-    font-size: 1.5rem;
+.recruit-title-con {
+  font-size: 1.5rem;
 }
-.bulletin-cate{
-    margin-left: 40%;
+.recruit-cate {
+  margin-left: 40%;
 }
-.bulletin-detail-btn-con{
-    text-align: center;
+.recruit-detail-btn-con {
+  text-align: center;
 }
-.bulletin-detail-button{
-    background-color: #ffffff;
-    border: 1px solid #000;
-    border-radius: 5px;
-    margin-bottom: 1%;
-    padding: 10px 20px;
+.recruit-detail-button {
+  background-color: #ffffff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-bottom: 1%;
+  padding: 10px 20px;
 }
-.bulletin-detail-button:hover{
-    background-color: #db9006;
-    color: #ffffff;
+.recruit-detail-button:hover {
+  background-color: #db9006;
+  color: #ffffff;
 }
-.bulletin-over-con,.now-number-count,.bulletin-skill-con{
-    font-size: 1.2rem;
+.recruit-over-con,
+.now-number-count,
+.recruit-skill-con {
+  font-size: 1.2rem;
 }
-.bulletin-over-con-box{
-    height:15rem;
-  }
-  .scroll{
-    overflow:auto;
-  }
-  .scrolly{
-    overflow:hidden;
-    overflow-y:scroll;
-  }
-  .menu-list{
-   white-space:nowrap; 
-  }
-
+.recruit-over-con-box {
+  height: 15rem;
+}
+.scroll {
+  overflow: auto;
+}
+.scrolly {
+  overflow: hidden;
+  overflow-y: scroll;
+}
+.menu-list {
+  white-space: nowrap;
+}

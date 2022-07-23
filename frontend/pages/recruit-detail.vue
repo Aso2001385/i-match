@@ -42,7 +42,7 @@
         </v-row>
         <v-row>
           <v-col>
-            <NuxtLink to="/bulletin-detail" style="text-decoration: none">
+            <NuxtLink to="/recruit-detail" style="text-decoration: none">
               <v-row class="justify-center ml-10" style="width: 90%">
                 <v-col
                   id="addSkill"
@@ -63,7 +63,7 @@
 export default {
   data() {
     return {
-      bulletinDetailId: 0,
+      recruitDetailId: 0,
       title: '',
       contents: '',
       purpose: '',
@@ -73,12 +73,12 @@ export default {
   },
   mounted() {
     this.getSession()
-    this.getBulletinDetail()
+    this.getRecruitDetail()
   },
   methods: {
     getSession() {
       // クリックされた掲示板の詳細を受け取るためのid
-      this.bulletinDetailId = sessionStorage.getItem('bulletinDetail')
+      this.recruitDetailId = sessionStorage.getItem('recruitDetail')
     },
     sortSection(sort) {
       if (sort === 0) {
@@ -89,9 +89,9 @@ export default {
         this.sortId = 0
       }
     },
-    getBulletinDetail() {
+    getRecruitDetail() {
       this.$axios
-        .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
+        .get(`${this.$urls.API}/recruits/${this.recruitDetailId}`)
         .then(response => {
           console.log('ちゃんと通っている')
           this.title = response.data.title
