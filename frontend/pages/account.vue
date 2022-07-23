@@ -98,8 +98,6 @@ export default {
       }
     },
     getAccount() {
-      // console.log('ユーザーの情報を持ってこれてるか確認')
-      // console.log(this.$store.state.user)
       console.log(SkillInfo)
       const userId = this.$store.state.user.id
       // とりあえずid1の人の情報を出す時に利用

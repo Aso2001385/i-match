@@ -27,7 +27,7 @@
                 </span>
               </div>
             </v-col>
-            <NuxtLink to="/bulletin-detail" class="white--text" style="text-decoration: none">
+            <NuxtLink to="/mybulletin-detail" class="white--text" style="text-decoration: none">
               <v-col cols="12" md="12" class="ml-10">
                 <span class="black--text" @click="sendSession(bulletin.id)">Read More </span>
               </v-col>
@@ -79,14 +79,13 @@ export default {
       return this.userId
     },
     async getBulletin() {
-      // テストでidが6の人のリストを出していた
-      // const userId = 6
       await this.$axios
         .get(`${this.$urls.API}/recruits`)
         .then(response => {
           this.bulletins = response.data
           for (let i = 0; i < this.bulletins.length; i++) {
-            if (Number(this.$store.state.user) === this.bulletins[i].user_id) {
+            //if (Number(this.$store.state.user) === this.bulletins[i].user_id) {
+            if (Number(userId) === this.bulletins[i].user_id) {
               this.myBulletins.push(this.bulletins[i])
             }
           }
