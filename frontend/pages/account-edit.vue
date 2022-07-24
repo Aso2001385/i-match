@@ -13,8 +13,11 @@
             <v-col cols="10"><v-text-field v-model="email" label="メールアドレス" readonly></v-text-field></v-col>
           </v-row>
           <v-row style="float: right; margin-right: 15%">
-            <api-event-button color="grey darken-4" class="mb-5" @click="saveAccount()"> 保存 </api-event-button>
-            <!-- <v-col><v-btn @click="saveAccount()">保存</v-btn></v-col> -->
+            <v-col
+              ><v-btn style="width: 10vh" color="grey darken-4" class="mb-5 white--text" @click="saveAccount()"
+                >保存</v-btn
+              ></v-col
+            >
           </v-row>
           <v-row class="ml-5 pb-10 mr-10">
             <NuxtLink to="/update-password" class="blue--text">
@@ -43,15 +46,10 @@
           </v-row>
           <v-row>
             <v-col style="margin-left: 55%">
-              <NuxtLink to="/skill-signup" style="text-decoration: none">
-                <v-btn color="grey darken-4" class="white--text">登録</v-btn>
-              </NuxtLink>
+              <ApiEventButton color="grey darken-4" class="mb-5" :click-callback="signupMove">登録</ApiEventButton>
             </v-col>
             <v-col style="margin-right: 2%">
-              <NuxtLink to="/skill-update" style="text-decoration: none">
-                <!-- <api-event-button color="grey darken-4" class="mb-5 pr-5"> 更新 </api-event-button> -->
-                <v-btn class="mb-5 white--text" color="grey darken-4">更新</v-btn>
-              </NuxtLink>
+              <ApiEventButton color="grey darken-4" class="mb-5" :click-callback="updateMove">更新</ApiEventButton>
             </v-col>
           </v-row>
         </v-card>
@@ -60,13 +58,9 @@
   </v-flex>
 </template>
 <script defer>
-import ApiEventButton from '~/components/ui/ApiEventButton.vue'
-import SkillInfo from '~/assets/skillinfo.json'
+import Common from '~/plugins/common'
 
 export default {
-  components: {
-    ApiEventButton,
-  },
   data() {
     return {
       name: '',
@@ -78,6 +72,9 @@ export default {
   computed: {
     user() {
       return this.$store.state.user
+    },
+    primitiveSkills() {
+      return this.$store.state.primitiveSkills
     },
   },
   mounted() {
@@ -94,17 +91,20 @@ export default {
         return 'green'
       } else if (value === 4) {
         return 'purple'
-      } else {
+      } else if (value === 5) {
         return 'indigo darken-3'
+      } else {
+        return 'black'
       }
     },
     async getAccount() {
       this.name = this.$store.state.user.name
       this.email = this.$store.state.user.email
-      console.log(this.$store.state.user)
-      // const userId = this.$store.state.user.id
+      let priSkill = JSON.parse(JSON.stringify(this.$store.state.primitiveSkills))
+      priSkill = Common.orderBy(priSkill, 'id', 'num', true)
+      const userId = this.$store.state.user.id
       // とりあえずid1の人の情報を出す時に利用
-      const userId = 1
+      // const userId = 1
       await this.$axios
         .get(`${this.$urls.API}/users/${userId}`)
         .then(response => {
@@ -113,8 +113,8 @@ export default {
           this.account = response.data
           for (let i = 0; i < this.account.user_skills.length; i++) {
             this.skillName.push({
-              name: SkillInfo[this.account.user_skills[i].skill_id - 1].skillName,
-              categoryId: SkillInfo[this.account.user_skills[i].skill_id - 1].skillCategory,
+              name: priSkill[this.account.user_skills[i].skill_id - 1].name,
+              categoryId: priSkill[this.account.user_skills[i].skill_id - 1].category_id,
             })
           }
           this.skillName.sort(function (first, second) {
@@ -133,37 +133,38 @@ export default {
           return err.response
         })
     },
-    saveAccount() {
-      console.log(SkillInfo)
-      // const userId = this.$store.state.user.id
+    async saveAccount() {
+      const userId = this.$store.state.user.id
+      const sendName = {
+        name: this.name,
+      }
       // とりあえずid1の人の情報を出す時に利用
       // const userId = 1
-      // this.$axios
-      //   .pose(`${this.$urls.API}/users/${userId}`)
-      //   .then(response => {
-      //     console.log(response.data)
-      //     console.log('ちゃんと通っている')
-      //     console.log(response.data)
-      //     this.account = response.data
-      //     for (let i = 0; i < this.account.user_skills.length; i++) {
-      //       this.skillName.push({
-      //         name: SkillInfo[this.account.user_skills[i].skill_id - 1].skillName,
-      //         categoryId: SkillInfo[this.account.user_skills[i].skill_id - 1].skillCategory,
-      //       })
-      //     }
-      //     console.log('表示されてる？')
-      //     console.log(this.skillName)
-      //   })
-      //   .catch(err => {
-      //     console.log('通ってないよー')
-      //     console.log(err)
-      //     return err.response
-      //   })
+      await this.$axios
+        .put(`${this.$urls.API}/users/${userId}`, sendName)
+        .then(response => {
+          console.log(response.data)
+          console.log('ちゃんと通っている')
+          this.$store.commit('setUserName', this.name)
+          alert('ニックネームを変更しました。')
+          console.log(response.data)
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          console.log(err)
+          return err.response
+        })
+    },
+    signupMove() {
+      this.$router.push(`/skill-signup`)
+    },
+    updateMove() {
+      this.$router.push(`/skill-update`)
     },
   },
 }
 </script>
-<style lang="scss">
+<!-- <style lang="scss">
 #addSkill {
   border: 1px solid grey;
   border-radius: 5px;
@@ -182,4 +183,4 @@ export default {
   -webkit-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
 }
-</style>
+</style> -->

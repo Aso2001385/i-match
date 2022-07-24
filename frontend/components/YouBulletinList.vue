@@ -1,12 +1,11 @@
 <template>
   <v-container>
     <v-row v-for="bulletin in youBulletins" :key="bulletin.id">
-      <!-- <span v-if="bulletin.user_id === setUserId()"> -->
       <v-col cols="12" class="ma-0">
         <v-card>
           <v-row class="pt-5 pl-15">
             <v-col cols="4" class="ml-8"
-              >募集締め切り：<span>{{ bulletin.due }}</span></v-col
+              >締め切り：<span>{{ bulletin.due }}</span></v-col
             >
             <v-col cols="4"
               >募集人数：<span>3</span>/<span>{{ bulletin.persons }}</span
@@ -81,8 +80,6 @@ export default {
     //   return this.bulletinSkillId[this.boxSkill]
     // },
     async getBulletin() {
-      console.log('相手のゆーざーidが何かを確かめる')
-      console.log(this.userId)
       const userId = this.userId
       console.log(userId)
       await this.$axios
@@ -90,19 +87,10 @@ export default {
         .then(response => {
           this.bulletins = response.data
           for (let i = 0; i < this.bulletins.length; i++) {
-            console.log('行われているかの確認')
-            console.log(this.bulletins[i].user_id)
-            console.log(this.userId)
-            console.log(Number(this.userId) === this.bulletins[i].user_id)
             if (Number(this.userId) === this.bulletins[i].user_id) {
               this.youBulletins.push(this.bulletins[i])
             }
           }
-          console.log(response.data)
-          console.log('どんな値かの確認')
-          console.log(this.youBulletins)
-          console.log(this.bulletins[0].user_id)
-          // return response.data
         })
         .catch(err => {
           console.log(err)
@@ -113,12 +101,3 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-#bulletin_skill {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-}
-</style>

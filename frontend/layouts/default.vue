@@ -45,7 +45,9 @@
           </v-row>
 
           <v-row class="justify-center mt-10" cols="1">
-            <NuxtLink to="/account" class="white--text">ログアウト</NuxtLink>
+            <NuxtLink to="/account" class="white--text">
+              <span @click="logout">ログアウト</span>
+            </NuxtLink>
           </v-row>
         </v-container>
       </v-navigation-drawer>
@@ -94,6 +96,11 @@ export default {
       // console.log('トークンに保存してあるユーザー情報')
       // console.log(this.$store.state.skills)
       // console.log(this.$store.state.user)
+    },
+    logout() {
+      window.sessionStorage.clear()
+      alert('ログアウトしました。')
+      this.$router.push(`/`)
     },
   },
 }

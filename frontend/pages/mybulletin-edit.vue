@@ -1,29 +1,13 @@
 <template>
   <v-container>
-    <v-row class="mt-15 pa-0" justify="center">
+    <v-row class="pa-0" justify="center">
       <v-col cols="12" lg="12" md="12" sm="12" sx="12">
         <v-card style="width: 80%" class="pb-0 mx-auto px-10">
-          <v-row>
-            <v-col cols="4" class="mt-1"><span style="color: grey">募集人数</span></v-col
-            ><v-col cols="4" class="mt-1"><span style="color: grey">募集期間</span></v-col>
-            <!-- <v-col cols="4"> -->
-
-            <!-- <v-chip>{{ detail.purpose }}</v-chip> -->
-            <!-- </v-col> -->
-          </v-row>
-          <v-row>
-            <v-col cols="4"
-              >1/<span>{{ detail.persons }}</span
-              >人</v-col
-            >
-            <v-col cols="4">{{ detail.due }}</v-col>
-          </v-row>
-          <v-card-title style="border-bottom: 2px solid lightgrey; width: 100%"></v-card-title>
-          <v-row class="mt-10">
-            <v-col cols="10"><v-text-field v-model="detail.title" label="タイトル"></v-text-field></v-col>
+          <v-row class="mt-5">
+            <v-col cols="11"><v-text-field v-model="detail.title" label="タイトル"></v-text-field></v-col>
           </v-row>
           <v-row class="mt-5">
-            <v-col cols="10">
+            <v-col cols="11">
               <v-textarea
                 v-model="detail.contents"
                 name="input-7-1"
@@ -31,28 +15,80 @@
                 value="概要"
                 hint="Hint text"
               ></v-textarea>
-              <!-- <v-text-field v-model="detail.contents" label="概要"></v-text-field> -->
             </v-col>
           </v-row>
-          <!-- <v-row class="mt-0 ml-2" style="width: 95%; overflow: hidden !important; height: 20vh; overflow-y: auto">
-            <v-col cols="12">
-              {{ detail.contents }}
+          <v-row class="mt-0 pa-0">
+            <v-col cols="11" class="mt-5"
+              ><div>
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="date"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field v-model="date" label="募集期限日" readonly v-bind="attrs" v-on="on"></v-text-field>
+                  </template>
+                  <v-date-picker v-model="date" no-title scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="menu = false"> Cancel </v-btn>
+                    <v-btn text color="primary" @click="$refs.menu.save(date)"> OK </v-btn>
+                  </v-date-picker>
+                </v-menu>
+
+                <v-menu
+                  ref="menu2"
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  :return-value.sync="time"
+                  transition="scale-transition"
+                  offset-y
+                  max-width="290px"
+                  min-width="290px"
+                  class="pt-5"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field v-model="time" label="募集期限時刻" readonly v-bind="attrs" v-on="on"></v-text-field>
+                  </template>
+                  <v-time-picker
+                    v-if="menu2"
+                    v-model="time"
+                    full-width
+                    @click:minute="$refs.menu2.save(time)"
+                  ></v-time-picker>
+                </v-menu>
+              </div>
             </v-col>
-          </v-row> -->
-          <v-row>
-            <v-col cols="10">
+          </v-row>
+          <v-row class="mt-0">
+            <v-col cols="11">
               <v-select
-                v-model="selectLevel"
+                v-model="purpose"
                 item-text="purpose"
                 item-value="id"
                 :items="purposes"
                 attach
                 color="grey darken-4"
                 :item-color="white"
-                label="ジャンル"
+                label="カテゴリ"
                 class="mb-0"
                 style="width: 100%"
                 return-object
+              ></v-select>
+            </v-col>
+          </v-row>
+          <v-row class="mt-0 pa-0">
+            <v-col cols="11">
+              <v-select
+                :items="numbersPeople"
+                label="募集人数"
+                item-text="parson"
+                item-color="orange"
+                v-model="person"
               ></v-select>
             </v-col>
           </v-row>
@@ -60,8 +96,7 @@
             <v-col cols="4" class="mt-1 mb-5"><span style="color: grey">スキル</span></v-col>
             <v-col cols="10" class="ml-10">
               <span v-for="skill in skillName" :key="skill" class="mr-1">
-                <v-chip :color="color(skill.categoryId)" class="white--text"
-                  ><p>lev:{{ skill.level }}</p>
+                <v-chip :color="color(skill.categoryId)" class="white--text">
                   {{ skill.name }}
                 </v-chip>
               </span>
@@ -69,16 +104,11 @@
           </v-row>
           <v-row class="mt-0 pa-0 pb-15">
             <v-col>
-              <!-- <NuxtLink to="/account" style="text-decoration: none"> -->
               <v-row class="mt-5" justify="center">
-                <v-col cols="6">
-                  <v-btn color="grey darken-4" class="white--text" style="width: 100%" @click="bulletinUpdate()"
-                    >更新</v-btn
-                  >
-                  <!-- <api-event-button color="grey darken-4"> 更新 </api-event-button> -->
+                <v-col cols="12">
+                  <api-event-button color="grey darken-4" :click-callback="updateBulletin"> 更新 </api-event-button>
                 </v-col>
               </v-row>
-              <!-- </NuxtLink> -->
             </v-col>
           </v-row>
         </v-card>
@@ -87,26 +117,31 @@
   </v-container>
 </template>
 <script defer>
-// import ApiEventButton from '~/components/ui/ApiEventButton.vue'
-import SkillInfo from '~/assets/skillinfo.json'
+import Common from '~/plugins/common'
 
 export default {
-  // components: {
-  //   ApiEventButton,
-  // },
   data() {
     return {
+      menu: false,
+      menu2: false,
+      time: '',
+      date: '',
+      numbersPeople: ['2', '3', '4', '5', '6', '7', '8', '9', '10'],
       bulletinDetailId: 0,
       detail: [],
       allSkill: [],
       skillName: [],
       purposes: [],
       purpose: '',
+      person: '',
     }
   },
   computed: {
     skillUnits() {
       return this.$store.state.skills
+    },
+    primitiveSkills() {
+      return this.$store.state.primitiveSkills
     },
   },
   mounted() {
@@ -143,18 +178,20 @@ export default {
       }
     },
     async getBulletinDetail() {
+      let priSkill = JSON.parse(JSON.stringify(this.$store.state.primitiveSkills))
+      priSkill = Common.orderBy(priSkill, 'id', 'num', true)
       await this.$axios
         .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
         .then(response => {
           console.log('通ってるよー')
           console.log(response.data)
           this.detail = response.data
+          console.log(this.detail.skills)
           console.log(this.detail.skills[0].skill_id - 1)
           for (let i = 0; i < this.detail.skills.length; i++) {
             this.skillName.push({
-              name: SkillInfo[this.detail.skills[i].skill_id - 1].skillName,
-              categoryId: SkillInfo[this.detail.skills[i].skill_id - 1].skillCategory,
-              level: this.detail.skills[i].level,
+              name: priSkill[this.detail.skills[i].skill_id - 1].name,
+              categoryId: priSkill[this.detail.skills[i].skill_id - 1].category_id,
             })
           }
           this.purposes.push(this.detail.purpose)
@@ -178,25 +215,24 @@ export default {
         })
     },
     // 更新処理
-    async bulletinUpdate() {
-      // しっかりと全て入力されているか確認する
-      if (this.purpose === '' || this.detail.title === '' || this.detail.contents === '') {
-        return alert('入力されていない欄があります。')
+    async updateBulletin() {
+      const skillList = []
+      for (let i = 0; i < this.detail.skills.length; i++) {
+        skillList.push({ skil_id: this.detail.skills[i].skill_id, level: this.detail.skills[i].level })
       }
+      const sendBulletin = {
+        title: this.detail.title,
+        contents: this.detail.contents,
+        purpose: this.purpose,
+        persons: Number(this.person),
+        due: this.date + ' ' + this.time + ':' + 0 + 0,
+      }
+      console.log(sendBulletin)
       await this.$axios
-        .put(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
+        .put(`${this.$urls.API}/recruits/${this.bulletinDetailId}`, sendBulletin)
         .then(response => {
           console.log('通ってるよー')
           console.log(response.data)
-          this.detail = response.data
-          console.log(this.detail.skills[0].skill_id - 1)
-          for (let i = 0; i < this.detail.skills.length; i++) {
-            this.skillName.push({
-              name: SkillInfo[this.detail.skills[i].skill_id - 1].skillName,
-              categoryId: SkillInfo[this.detail.skills[i].skill_id - 1].skillCategory,
-              level: this.detail.skills[i].level,
-            })
-          }
           // 更新に成功したらページの遷移をする
           alert('更新成功しました。')
           this.$router.push(`/account`)
@@ -210,16 +246,3 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-#addSkill {
-  border: 1px solid grey;
-  border-radius: 5px;
-  background-color: grey;
-  color: white;
-}
-#addSkill:hover {
-  background-color: white;
-  color: orange;
-  border: 1px solid orange;
-}
-</style>

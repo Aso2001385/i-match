@@ -81,23 +81,3 @@ export default {
   },
 }
 </script>
-<style lang="scss">
-#addSkill {
-  border: 1px solid grey;
-  border-radius: 5px;
-  background-color: grey;
-  color: white;
-}
-#addSkill:hover {
-  background-color: white;
-  color: orange;
-  border: 1px solid orange;
-}
-#user_bulletin_skill {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-}
-</style>
