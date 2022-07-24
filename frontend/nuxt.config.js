@@ -91,6 +91,7 @@ export default {
     { src: './plugins/main.js' },
     '~/plugins/axios',
     '~/plugins/urls',
+    '~/plugins/common',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

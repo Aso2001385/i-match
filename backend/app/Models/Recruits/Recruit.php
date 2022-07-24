@@ -2,6 +2,8 @@
 
 namespace App\Models\Recruits;
 
+use App\Models\Chats\Room;
+use App\Models\Chats\RoomUser;
 use App\Models\Recruits\RecruitUser;
 use App\Models\Recruits\RecruitSkill;
 use App\Models\Skills\Skill;
@@ -19,13 +21,13 @@ class Recruit extends Model
 
     protected $fillable = [
         'user_id',
+        'room_id',
         'title',
         'contents',
         'purpose',
         'persons',
         'due',
     ];
-
     public function users()
     {
         return $this->hasMany(RecruitUser::class);
@@ -37,18 +39,36 @@ class Recruit extends Model
     }
 
     public static function create_recruits($request){
+
         try{
 
-            $recruit = Recruit::create($request->all());
+            $room = Room::create();
 
-            $recruit_user=[
-                'recruit_id'=>$recruit->id,
-                'user_id'=>$recruit->user_id
+            $recruit = Recruit::create([
+                'user_id' => $request->user_id,
+                'room_id' => $room->id,
+                'title' =>$request->title,
+                'contents' => $request->contents,
+                'purpose'=>$request->purpose,
+                'persons'=>$request->persons,
+                'due'=>$request->due
+            ]);
+
+            RoomUser::create([
+                'room_id' => $room->id,
+                'user_id' => $request->user_id,
+                'name' => $request->title
+            ]);
+
+            $insert_check = RecruitSkill::bulk_insert_skills($request->skills,$recruit->id);
+
+            if(!$insert_check['result']) throw new Exception($insert_check['result']);
+
+            $result = [
+                'room_id' => $room->id,
+                'recruit_id' => $recruit->id,
+                'name' => $request['title']
             ];
-
-            RecruitUser::create_recruit_user($recruit_user);
-
-            $result = 'success!';
 
             $status = Response::HTTP_OK;
 
@@ -61,9 +81,8 @@ class Recruit extends Model
         }
 
         return [
-            'recruit'=>$recruit,
             'result' => $result,
-            'status' => $status,
+            'status' => $status
         ];
     }
 

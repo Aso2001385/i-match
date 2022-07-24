@@ -40,27 +40,24 @@ class RecruitSkill extends Model
         ];
     }
 
-    public static function create_rec_skill($request,$recruit){
+    public static function bulk_insert_skills($skills,$recruit_id){
+
         try{
-            foreach($request->skills as $skill){
-                $request2=collect(
-                    ['recruit_id'=>$recruit->id,'skill_id'=>$skill['skill_id'],'level'=>$skill['level']]
-                );
-            $result='success!';
-            RecruitSkill::create($request2->all());
-            $status=Response::HTTP_OK;
-            }
+
+            $result = array_map( function ($skill) use ($recruit_id){
+                return ['recruit_id' => $recruit_id,'skill_id' => $skill['id'],'level' => 3];
+            },$skills);
+
+            RecruitSkill::upsert($result,['recruit_id','skill_id']);
+
         }catch(Exception $e){
-            return [
-                'result' => $e,
-                'status' => $e->getCode()
-            ];
+
+            return ['result'=>$e,'status'=>$e->getCode()];
+
         }
 
-        return [
-            'result' => $result,
-            'status' => $status
-        ];
+        return ['result' => true,'status' => 200];
+
     }
 
     public static function update_recruit_skill($recruit_skill,$request){
