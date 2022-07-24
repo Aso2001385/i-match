@@ -70,7 +70,7 @@ class ChatController extends Controller
 
         try{
 
-            Chat::create($request->all());
+            Chat::upsert($request->all(),['id']);
             $room = Room::get_room($request);
 
             return response()->json($room['result'],200);

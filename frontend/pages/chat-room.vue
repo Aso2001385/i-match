@@ -9,7 +9,7 @@
           <v-card>
             <v-row class="pl-2 pr-5 pt-0">
               <v-col cols="4" class="my-0 pt-0">
-                <v-btn class="mt-0 pa-0 font-weight-bold" text @click.prevent="next(chat.user_id)">
+                <v-btn class="mt-0 pa-0 font-weight-bold" text>
                   {{ chat.user_name }}
                 </v-btn>
                 <span style="font-size: 0.7em; color: gray">
@@ -17,7 +17,7 @@
                 </span>
               </v-col>
               <v-col cols="2" class="ml-auto text-right my-0 pt-0">
-                <v-btn class="mt-0 pa-0" text @click.prevent="edit">編集する</v-btn>
+                <v-btn class="mt-0 pa-0" text @click.prevent="edit(chat.id, chat.message)">編集する</v-btn>
               </v-col>
             </v-row>
             <v-divider />
@@ -30,7 +30,7 @@
           <v-textarea v-model="message" solo no-resize rows="4" class="mb-0"></v-textarea>
         </v-col>
         <v-col cols="2" class="px-5 py-0 mt-0">
-          <ApiEventButton color="grey darken-4" :click-callback="submit">送信</ApiEventButton>
+          <ApiEventButton color="grey darken-4" :click-callback="submit">{{ sendBtn }}</ApiEventButton>
         </v-col>
       </v-row>
     </v-col>
@@ -42,8 +42,11 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col v-for="user in users" :key="user.id" cols="12"></v-col>
+      <v-row class="px-3">
+        <v-col v-for="user in users" :key="user.id" cols="12">
+          <v-icon>mdi-account</v-icon> {{ user.name }}
+          <v-divider />
+        </v-col>
       </v-row>
     </v-col>
   </v-row>
@@ -55,6 +58,8 @@ export default {
       chats: [],
       users: [],
       message: '',
+      chat_id: 0,
+      sendBtn: '送信',
     }
   },
   mounted() {
@@ -93,7 +98,7 @@ export default {
         message: this.message,
       }
 
-      console.log(SEND)
+      if (this.chat_id > 0) SEND.id = this.chat_id
 
       await this.$axios
         .post(`${this.$urls.API}/chats`, SEND)
@@ -101,8 +106,13 @@ export default {
           if (!response.data) return
           this.chats = response.data.chats
           this.users = response.data.users
+          this.message = ''
+          this.chat_id = 0
+          this.sendBtn = '送信'
         })
         .catch(err => {
+          this.message = ''
+          this.chat_id = 0
           console.log('通ってないよー')
           console.log(err)
           return err.response
@@ -112,6 +122,11 @@ export default {
       const chatLog = this.$refs.chatBox
       if (!chatLog) return
       chatLog.scrollTop = chatLog.scrollHeight
+    },
+    edit(chat_id, message) {
+      this.chat_id = chat_id
+      this.message = message
+      this.sendBtn = '更新'
     },
   },
 }

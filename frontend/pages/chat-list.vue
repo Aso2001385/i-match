@@ -13,7 +13,7 @@
               <v-col cols="12" md="8" class="black--text ml-5 font-weight-bold" style="width: 80%">
                 {{ room.name }}
               </v-col>
-              <v-col cols="12" md="3" class="black--text font-weight-bold">{{ room.created_at }}</v-col>
+              <v-col cols="12" md="3" class="black--text font-weight-bold">{{ dateFormater(room.created_at) }}</v-col>
               <v-col cols="12" class="ml-5 grey--text darken-4" style="width: 80%">
                 {{ room.message }}
               </v-col>
@@ -57,6 +57,13 @@ export default {
     },
     next(room_id, room_name) {
       this.$router.push({ path: 'chat-room', query: { id: room_id, name: room_name } })
+    },
+    dateFormater(material) {
+      const dateTime = new Date(material)
+
+      let format = dateTime.getFullYear() + '/' + dateTime.getMonth() + '/' + dateTime.getDate() + ' '
+      format += dateTime.getHours() + ':' + dateTime.getMinutes()
+      return format
     },
   },
 }
