@@ -33,7 +33,7 @@ class RecruitUserController extends Controller
     {
         $response= RecruitUser::create_recruit_user($request);
 
-        return response()->json($response['result'],$response['status']);
+        return response()->json($response['result'],200);
     }
 
     /**

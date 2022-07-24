@@ -28,13 +28,11 @@ class RecruitUser extends Model
         try{
 
             $recruit_user = RecruitUser::create($request->all());
-            $room_id = Recruit::select('room_id')->where('id',$recruit_user->recruit->id)->get();
+            $room_id = Recruit::select('room_id')->where('id',$recruit_user->recruit_id)->get();
             RoomUser::create([
                 'room_id' => $room_id,
                 'user_id' => $request->user_id
             ]);
-            $result = 'success!';
-            $status = Response::HTTP_OK;
 
         }catch(Exception $e){
 
@@ -46,8 +44,8 @@ class RecruitUser extends Model
         }
 
         return [
-            'result' => $result,
-            'status' => $status,
+            'result' => $recruit_user,
+            'status' => 200,
         ];
     }
 
