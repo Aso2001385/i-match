@@ -6,7 +6,7 @@
         <v-card>
           <v-row class="pt-5 pl-15">
             <v-col cols="4" class="ml-8"
-              >募集締め切り：<span>{{ bulletin.due }}</span></v-col
+              >締め切り：<span>{{ bulletin.due }}</span></v-col
             >
             <v-col cols="4"
               >募集人数：<span>3</span>/<span>{{ bulletin.persons }}</span
@@ -80,13 +80,13 @@ export default {
     },
     async getBulletin() {
       // テストでidが6の人のリストを出していた
-      const userId = 6
+      // const userId = this.$store.state.user.id
+      const userId = 1
       await this.$axios
         .get(`${this.$urls.API}/recruits`)
         .then(response => {
           this.bulletins = response.data
           for (let i = 0; i < this.bulletins.length; i++) {
-            //if (Number(this.$store.state.user) === this.bulletins[i].user_id) {
             if (Number(userId) === this.bulletins[i].user_id) {
               this.myBulletins.push(this.bulletins[i])
             }

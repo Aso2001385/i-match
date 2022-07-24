@@ -25,33 +25,7 @@ export default {
     SearchSkill: () => import('../components/SearchSkill.vue'),
   },
   data() {
-    return {
-      langSea: [],
-      frameSea: [],
-      dbSea: [],
-      infSea: [],
-      othSea: [],
-    }
-  },
-  mounted() {
-    // this.getBulletin()
-    // this.submit()
-  },
-  methods: {
-    submit() {
-      this.$axios
-        .get(`${this.$urls.API}/recruits`)
-        .then(response => {
-          console.log('ちゃんと通っている１')
-          console.log(response.data)
-        })
-        .catch(err => {
-          console.log('通ってないよー')
-          console.log(err)
-          return err.response
-        })
-      alert('通ったっす！')
-    },
+    return {}
   },
 }
 </script>

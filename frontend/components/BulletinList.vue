@@ -5,7 +5,7 @@
         <v-card>
           <v-row class="pt-5 pl-15">
             <v-col cols="4" class="ml-8"
-              >募集締め切り：<span>{{ bulletin.due }}</span></v-col
+              >締め切り：<span>{{ bulletin.due }}</span></v-col
             >
             <v-col cols="4"
               >募集人数：<span>3</span>/<span>{{ bulletin.persons }}</span
@@ -39,7 +39,7 @@
   </v-container>
 </template>
 <script defer>
-import SkillInfo from '~/assets/skillinfo.json'
+// import SkillInfo from '~/assets/skillinfo.json'
 
 export default {
   data() {
@@ -70,7 +70,7 @@ export default {
     getSession(value) {
       // どの掲示板の詳細を表示するか
       sessionStorage.setItem('bulletinDetail', value)
-      console.log(SkillInfo)
+      // console.log(SkillInfo)
     },
     color(value) {
       console.log(value)

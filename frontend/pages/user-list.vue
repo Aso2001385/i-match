@@ -18,7 +18,13 @@
               <p>
                 <strong>{{ user.name }}</strong>
               </p>
-              <p style="float: left" class="mt-10">スキルの名前を出したい</p>
+              <div style="width: 70%" id="bulletin_skill">
+                <span v-for="skill in user.skills" :key="skill">
+                  <v-chip :class="categoryColor[skill.category_name] + ' mr-2 white--text mt-5'" small>{{
+                    skill.name
+                  }}</v-chip>
+                </span>
+              </div>
             </v-card>
           </v-col>
         </v-row>
@@ -30,7 +36,7 @@
   </v-flex>
 </template>
 <script defer>
-import SkillInfo from '~/assets/skillinfo.json'
+// import SkillInfo from '~/assets/skillinfo.json'
 
 export default {
   components: {
@@ -39,6 +45,13 @@ export default {
   data() {
     return {
       userList: [],
+      categoryColor: {
+        language: 'red',
+        framework: 'blue',
+        database: 'green',
+        infrastructure: 'purple',
+        other: 'indigo darken -3',
+      },
     }
   },
   computed: {
@@ -61,8 +74,9 @@ export default {
         .get(`${this.$urls.API}/users`)
         .then(response => {
           console.log('ちゃんと通っているよ！！')
-          console.log(SkillInfo)
           console.log(response.data)
+          console.log('ユーサーのストアの中身を見る')
+          console.log(this.$store.state.user)
           const cnt = this.$store.state.user.id - 1
           this.userList = response.data
           this.userList.splice(cnt, 1)
@@ -75,3 +89,12 @@ export default {
   },
 }
 </script>
+<style lang="scss">
+#bulletin_skill {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+}
+</style>

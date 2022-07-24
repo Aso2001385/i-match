@@ -53,8 +53,8 @@
   </v-flex>
 </template>
 <script defer>
-import ApiEventButton from '~/components/ui/ApiEventButton.vue'
-import SkillInfo from '~/assets/skillinfo.json'
+import ApiEventButton from '~/components/ApiEventButton.vue'
+// import SkillInfo from '~/assets/skillinfo.json'
 
 export default {
   components: {
@@ -94,7 +94,7 @@ export default {
   methods: {
     getSession() {
       console.log(this.$store.state.user)
-      console.log(SkillInfo)
+      // console.log(SkillInfo)
     },
     sortSection(sort) {
       if (sort === 0) {
@@ -154,21 +154,24 @@ export default {
     async sendSkill() {
       // ユーザーのスキルidが配列で格納してある
       // const userId = this.$store.state.user.id
-      let id = 0
-      for (let i = 0; i < this.unselSkill.length; i++) {
-        if (this.unselSkill[i].name === this.selectSkill) {
-          id = this.unselSkill[i].categoryId
-          break
-        }
-      }
-      //   型が違う
+      // let id = 0
+      // for (let i = 0; i < this.unselSkill.length; i++) {
+      //   if (this.unselSkill[i].name === this.selectSkill) {
+      //     id = this.unselSkill[i].categoryId
+      //     break
+      //   }
+      // }
+      const id = 1
+      // this.selectName,
+
       const skill = {
-        category_id: id,
-        name: this.selectSkill,
+        user_id: this.$store.state.user.id,
+        skill_id: id,
+        level: this.selectLevel,
       }
       console.log(this.$store.state.user.user_skills)
       await this.$axios
-        .post(`${this.$urls.API}/skills`, skill)
+        .put(`${this.$urls.API}/user-skill`, skill)
         .then(response => {
           console.log('ちゃんと通っている')
           console.log(response.data)

@@ -5,10 +5,9 @@
         <h3 class="white--text">ユーザー投稿</h3>
       </v-col>
       <v-col class="d-flex mr-5 white--text" cols="2">
-        <v-btn @click="sortSection(sortId)" class="mt-3"
-          >{{ sortName[sortId] }}
-          <v-icon aria-hidden="false">mdi-sync</v-icon>
-        </v-btn>
+        <p class="mt-3">
+          <v-icon aria-hidden="false" style="color: transparent">mdi-sync</v-icon>
+        </p>
       </v-col>
       <v-col cols="2" class="mt-4 pb-3">
         <h3 class="white--text">ユーザー情報</h3>
@@ -25,7 +24,6 @@
               <v-icon class="text-h1 ma-3" aria-hidden="false">mdi-account</v-icon>
             </p>
             <strong style="font-size: 2rem">{{ account.name }}</strong>
-            <!-- <p class="grey--text" style="font-size: 1rem">{{ account.email }}</p> -->
           </v-card>
         </v-row>
         <v-row class="justify-center">
@@ -46,7 +44,7 @@
   </v-flex>
 </template>
 <script defer>
-import SkillInfo from '~/assets/skillinfo.json'
+import Common from '~/plugins/common'
 
 export default {
   components: {
@@ -54,12 +52,17 @@ export default {
   },
   data() {
     return {
-      sortName: ['新着順', '投稿順', '締切が近い順'],
+      sortName: ['新着順', '投稿順'],
       sortId: 0,
       userId: '',
       account: [],
       skillName: [],
     }
+  },
+  computed: {
+    primitiveSkills() {
+      return this.$store.state.primitiveSkills
+    },
   },
   mounted() {
     this.getSession()
@@ -70,15 +73,15 @@ export default {
       // クリックされた相手の情報
       this.userId = sessionStorage.getItem('userInfo')
     },
-    sortSection(sort) {
-      if (sort === 0) {
-        this.sortId = 1
-      } else if (sort === 1) {
-        this.sortId = 2
-      } else {
-        this.sortId = 0
-      }
-    },
+    // sortSection(sort) {
+    //   if (sort === 0) {
+    //     this.sortId = 1
+    //   } else if (sort === 1) {
+    //     this.sortId = 2
+    //   } else {
+    //     this.sortId = 0
+    //   }
+    // },
     color(value) {
       console.log(value)
       if (value === 1) {
@@ -96,16 +99,17 @@ export default {
       }
     },
     otherpartyAccount() {
+      let priSkill = JSON.parse(JSON.stringify(this.$store.state.primitiveSkills))
+      priSkill = Common.orderBy(priSkill, 'id', 'num', true)
       this.$axios
         .get(`${this.$urls.API}/users/${this.userId}`)
         .then(response => {
           console.log('通っている')
-          console.log(SkillInfo)
           this.account = response.data
           for (let i = 0; i < this.account.user_skills.length; i++) {
             this.skillName.push({
-              name: SkillInfo[this.account.user_skills[i].id - 1].skillName,
-              categoryId: SkillInfo[this.account.user_skills[i].id - 1].skillCategory,
+              name: priSkill[this.account.user_skills[i].skill_id - 1].name,
+              categoryId: priSkill[this.account.user_skills[i].skill_id - 1].category_id,
             })
           }
         })

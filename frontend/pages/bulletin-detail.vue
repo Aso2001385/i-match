@@ -40,22 +40,21 @@
             <v-col cols="4" class="mt-1 mb-5"><span style="color: grey">スキル</span></v-col>
             <v-col cols="10" class="ml-10">
               <span v-for="skill in skillName" :key="skill" class="mr-1">
-                <v-chip :color="color(skill.categoryId)" class="white--text"
-                  ><p>lev:{{ skill.level }}</p>
+                <v-chip :color="color(skill.categoryId)" class="white--text">
                   {{ skill.name }}
                 </v-chip>
               </span>
             </v-col>
           </v-row>
-          <v-row class="mt-0 pa-0 pb-15 ml-15">
+          <v-row class="mt-0 pa-0 pb-15">
             <v-col>
-              <NuxtLink to="/bulletin-detail" style="text-decoration: none">
-                <v-row class="mt-5 ml-15" justify="center" style="width: 70%">
-                  <v-col cols="12">
-                    <api-event-button color="grey darken-4" :click-callback="submit"> 申し込み </api-event-button>
-                  </v-col>
-                </v-row>
-              </NuxtLink>
+              <!-- <NuxtLink to="/bulletin-detail" style="text-decoration: none"> -->
+              <v-row class="mt-5" justify="center">
+                <v-col cols="12">
+                  <ApiEventButton color="grey darken-4" :click-callback="submit"> 申し込み </ApiEventButton>
+                </v-col>
+              </v-row>
+              <!-- </NuxtLink> -->
             </v-col>
           </v-row>
         </v-card>
@@ -64,13 +63,9 @@
   </v-container>
 </template>
 <script defer>
-import ApiEventButton from '~/components/ui/ApiEventButton.vue'
-import SkillInfo from '~/assets/skillinfo.json'
+import Common from '~/plugins/common'
 
 export default {
-  components: {
-    ApiEventButton,
-  },
   data() {
     return {
       bulletinDetailId: 0,
@@ -82,6 +77,9 @@ export default {
   computed: {
     skillUnits() {
       return this.$store.state.skills
+    },
+    primitiveSkills() {
+      return this.$store.state.primitiveSkills
     },
   },
   mounted() {
@@ -117,6 +115,8 @@ export default {
       }
     },
     async getBulletinDetail() {
+      let priSkill = JSON.parse(JSON.stringify(this.$store.state.primitiveSkills))
+      priSkill = Common.orderBy(priSkill, 'id', 'num', true)
       await this.$axios
         .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
         .then(response => {
@@ -126,9 +126,8 @@ export default {
           console.log(this.detail.skills[0].skill_id - 1)
           for (let i = 0; i < this.detail.skills.length; i++) {
             this.skillName.push({
-              name: SkillInfo[this.detail.skills[i].skill_id - 1].skillName,
-              categoryId: SkillInfo[this.detail.skills[i].skill_id - 1].skillCategory,
-              level: this.detail.skills[i].level,
+              name: priSkill[this.detail.skills[i].skill_id - 1].name,
+              categoryId: priSkill[this.detail.skills[i].skill_id - 1].category_id,
             })
           }
         })
@@ -137,19 +136,26 @@ export default {
           return err.response
         })
     },
+    async submit() {
+      const application = {
+        recruit_id: this.detail.id,
+        user_id: this.$store.state.user.id,
+      }
+      console.log(application)
+      await this.$axios
+        .post(`${this.$urls.API}/recruit-user`, application)
+        .then(response => {
+          console.log('通ってるよー')
+          alert('申し込み完了')
+          this.$router.push(`/bulletin-list`)
+        })
+        .catch(err => {
+          console.log('通ってないよー!')
+          console.log(err)
+          alert('申し込み未完了')
+          return err.response
+        })
+    },
   },
 }
 </script>
-<style lang="scss">
-#addSkill {
-  border: 1px solid grey;
-  border-radius: 5px;
-  background-color: grey;
-  color: white;
-}
-#addSkill:hover {
-  background-color: white;
-  color: orange;
-  border: 1px solid orange;
-}
-</style>

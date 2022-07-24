@@ -5,10 +5,9 @@
         <h3 class="white--text">ユーザー投稿</h3>
       </v-col>
       <v-col class="d-flex mr-5 white--text" cols="2">
-        <v-btn @click="sortSection(sortId)" class="mt-3"
-          >{{ sortName[sortId] }}
-          <v-icon aria-hidden="false">mdi-sync</v-icon>
-        </v-btn>
+        <p class="mt-3">
+          <v-icon aria-hidden="false" style="color: transparent">mdi-sync</v-icon>
+        </p>
       </v-col>
       <v-col cols="2" class="mt-4 pb-3">
         <h3 class="white--text">ユーザー情報</h3>
@@ -49,12 +48,12 @@
   </v-flex>
 </template>
 <script defer>
-import SkillInfo from '~/assets/skillinfo.json'
+import Common from '~/plugins/common'
 
 export default {
   data() {
     return {
-      sortName: ['新着順', '投稿順', '締切が近い順'],
+      sortName: ['新着順', '投稿順'],
       sortId: 0,
       skillName: [],
       account: [],
@@ -70,17 +69,11 @@ export default {
     skills() {
       return this.$store.state.skills
     },
+    primitiveSkills() {
+      return this.$store.state.primitiveSkills
+    },
   },
   methods: {
-    sortSection(sort) {
-      if (sort === 0) {
-        this.sortId = 1
-      } else if (sort === 1) {
-        this.sortId = 2
-      } else {
-        this.sortId = 0
-      }
-    },
     color(value) {
       console.log(value)
       if (value === 1) {
@@ -97,21 +90,22 @@ export default {
         return 'black'
       }
     },
-    getAccount() {
-      console.log(SkillInfo)
-      // const userId = this.$store.state.user.id
+    async getAccount() {
+      const userId = this.$store.state.user.id
       // とりあえずid1の人の情報を出す時に利用
-      const userId = 1
-      this.$axios
+      // const userId = 1
+      let priSkill = JSON.parse(JSON.stringify(this.$store.state.primitiveSkills))
+      priSkill = Common.orderBy(priSkill, 'id', 'num', true)
+      await this.$axios
         .get(`${this.$urls.API}/users/${userId}`)
         .then(response => {
-          console.log('ちゃんと通っている')
+          console.log('ちゃんと通っている!!!!!!')
           console.log(response.data)
           this.account = response.data
           for (let i = 0; i < this.account.user_skills.length; i++) {
             this.skillName.push({
-              name: SkillInfo[this.account.user_skills[i].skill_id - 1].skillName,
-              categoryId: SkillInfo[this.account.user_skills[i].skill_id - 1].skillCategory,
+              name: priSkill[this.account.user_skills[i].skill_id - 1].name,
+              categoryId: priSkill[this.account.user_skills[i].skill_id - 1].category_id,
             })
           }
           this.skillName.sort(function (first, second) {
