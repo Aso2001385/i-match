@@ -87,7 +87,7 @@ class User extends Model
 
         return [
             'result' => $users,
-            'status' => $status,
+            'status' => 200,
         ];
     }
 
