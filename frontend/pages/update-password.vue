@@ -17,7 +17,8 @@
           </v-row>
           <v-row class="mt-5 pb-5" style="width: 80%; margin-left: 10%">
             <v-col cols="12">
-              <api-event-button color="grey darken-4" @click="updatePass">更新</api-event-button>
+              <!-- <v-btn @click="updatePass">更新</v-btn> -->
+              <!-- <api-event-button color="grey darken-4" @click="updatePass">更新</api-event-button> -->
             </v-col>
           </v-row>
         </v-card>
@@ -26,7 +27,12 @@
   </v-flex>
 </template>
 <script defer>
+import ApiEventButton from '~/components/ApiEventButton.vue'
+
 export default {
+  componets: {
+    ApiEventButton,
+  },
   data() {
     return {
       // userId: 1,
@@ -46,33 +52,32 @@ export default {
         return alert('入力されていない欄があります。')
       }
       if (this.password === this.confPassword) {
-        this.putPassword()
+        // this.putPassword()
+        const passwordSet = {
+          id: this.$store.state.user.id,
+          old_password: this.oldPassword,
+          password: this.password,
+        }
+        console.log(passwordSet)
+        this.$axios
+          .put(`${this.$urls.API}/user/password`, passwordSet)
+          .then(response => {
+            // console.log('ちゃんと通っている')
+            console.log(response.data)
+            alert('パスワード変更成功')
+            this.$router.push(`/account`)
+          })
+          .catch(err => {
+            // console.log('通ってないよー')
+            console.log(err)
+            alert('パスワード変更失敗')
+            return err.response
+          })
       } else {
         return alert('新しいパスワードと確認用のパスワードが違います。')
       }
     },
-    putPassword() {
-      const password = {
-        id: this.$store.state.user.id,
-        old_password: this.oldPassword,
-        password: this.password,
-      }
-      console.log(password)
-      this.$axios
-        .put(`${this.$urls.API}/user/password`, password)
-        .then(response => {
-          // console.log('ちゃんと通っている')
-          console.log(response.data)
-          alert('パスワード変更成功')
-          this.$router.push(`/account`)
-        })
-        .catch(err => {
-          // console.log('通ってないよー')
-          console.log(err)
-          alert('パスワード変更失敗')
-          return err.response
-        })
-    },
+    putPassword() {},
   },
 }
 </script>

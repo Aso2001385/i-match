@@ -45,9 +45,9 @@ export default {
     user() {
       return this.$store.state.user
     },
-    // skills() {
-    //   return this.$store.state.skills
-    // },
+    skills() {
+      return this.$store.state.skills
+    },
   },
   mounted() {
     this.getUser()
