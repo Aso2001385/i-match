@@ -3,23 +3,25 @@ x-stoplight:
   id: dsrp4ol3j3ihk
 info:
   title: i-Match API
-  version: "1.0"
+  version: '1.0'
   summary: i-Match のAPI
   description: i-MatchのOpen APIです。
 servers:
-  - url: "https://i-match.click/api"
+  - url: 'http://localhost:8080/api'
     description: localhost
   - description: mock
-    url: "http://127.0.0.1:4010"
+    url: 'http://127.0.0.1:4010'
+  - url: 'https://localhost:8080/api'
+    description: ec2
 paths:
   /ac:
     get:
       summary: アクセス確認
       tags:
-        - Models
         - Access
+        - EndPoint
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -28,11 +30,11 @@ paths:
                 properties:
                   result:
                     type: string
-                    example: "true"
+                    example: 'true'
               examples:
-                example-1:
+                example:
                   value:
-                    result: "true"
+                    result: 'true'
       operationId: get-ac
       description: アクセスを確認できます。
   /users:
@@ -42,37 +44,45 @@ paths:
         - index
         - EndPoint
       responses:
-        "200":
-          description: HTTP_OK
+        '200':
+          description: OK
           headers: {}
           content:
             application/json:
               schema:
                 type: array
-                uniqueItems: true
                 items:
-                  $ref: "#/components/schemas/User"
+                  type: object
+                  properties:
+                    users:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/User'
+                    user_skill:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/UserSkill'
               examples:
                 example:
                   value:
-                    - id: 1
-                      class: SD3D
-                      name: 翔
-                      email: 2001195@s.asojuku.ac.jp
-                      password: Aso-2001195
-                      created_at: "2022-06-29 10:29:50"
-                      updated_at: "2022-06-29 10:29:50"
-                      deleted_at: null
-                    - id: 2
-                      class: SD3C
-                      name: はじめ
-                      email: 2001191@s.asojuku.ac.jp
-                      password: Aso-2001195
-                      created_at: "2022-06-29 10:29:50"
-                      updated_at: "2022-06-29 10:29:50"
-                      deleted_at: "2022-06-29 10:29:50"
+                    - users:
+                        - id: 1
+                          name: 翔
+                          email: 2001195@s.asojuku.ac.jp
+                          password: Aso-2001195
+                          created_at: '2022-06-29 10:29:50'
+                          updated_at: '2022-06-29 10:29:50'
+                          deleted_at: null
+                      user_skill:
+                        - id: 1
+                          user_id: 1
+                          skill_id: 1
+                          level: 1
+                          created_at: '2022-01-01 11:11:11'
+                          updated_at: '2022-01-01 11:11:11'
+                          deleted_at: null
       operationId: get-users
-      description: userの一覧を表示
+      description: userの一覧とユーザースキルを表示
     post:
       summary: User 作成
       operationId: post-users
@@ -119,17 +129,32 @@ paths:
                   password: Aso-2001195
           application/xml:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/User'
         description: ユーザー作成
       responses:
-        "200":
-          description: OK
+        '200':
+          description: HTTP_OK
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/User'
+        '403':
+          description: 'Forbidden  '
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: Forbidden
+                    pattern: Forbidden
+              examples: {}
     parameters: []
-  "/users/{id}":
+  '/users/{id}':
     parameters:
       - schema:
           type: string
@@ -139,109 +164,37 @@ paths:
     get:
       summary: User 詳細
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: integer
-                    example: 1
-                    minimum: 1
-                    maximum: 255
-                    format: int64
-                  name:
-                    type: string
-                    example: 翔
-                    maxLength: 30
-                  email:
-                    type: string
-                    format: email
-                    pattern: '^[0-9]{7}@s\.asojuku\.ac\.jp'
-                    minLength: 23
-                    maxLength: 23
-                    example: 2001195@s.asojuku.ac.jp
-                  created_at:
-                    type: string
-                    format: date-time
-                    example: "2022-07-13T05:26:54.000000Z"
-                  updated_at:
-                    type: string
-                    example: "2022-07-13T05:26:54.000000Z"
-                    format: date-time
-                  deleted_at:
-                    type:
-                      - string
-                      - "null"
-                    example: "null"
-                  user_skills:
+                  users:
+                    $ref: '#/components/schemas/User'
+                  user_skils:
                     type: array
                     items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                          format: int64
-                          minimum: 1
-                          maximum: 255
-                        user_id:
-                          type: integer
-                          format: int64
-                          minimum: 1
-                          maximum: 255
-                          example: 1
-                        pratical_flag:
-                          type: boolean
-                        learning_flag:
-                          type: boolean
-                        level:
-                          type: integer
-                          example: 1
-                          format: int32
-                          minimum: 1
-                          maximum: 5
-                        created_at:
-                          type: string
-                          format: date-time
-                          example: "2022-07-13T05:26:55.000000Z"
-                        updated_at:
-                          type: string
-                          example: "2022-07-13T05:26:55.000000Z"
-                          format: date-time
-                        deleted_at:
-                          type: string
-                          format: date-time
-                          example: "2022-07-13T05:26:55.000000Z"
-                        name:
-                          type: string
-                          example: skill1
-                        category_id:
-                          type: integer
-                          format: int64
-                          example: 1
-                          minimum: 1
-                          maximum: 255
+                      $ref: '#/components/schemas/UserSkill'
               examples:
                 example:
                   value:
                     id: 1
                     name: 翔
                     email: 2001195@s.asojuku.ac.jp
-                    created_at: "2022-07-13T05:26:54.000000Z"
-                    updated_at: "2022-07-13T05:26:54.000000Z"
-                    deleted_at: "null"
+                    created_at: '2022-07-13T05:26:54.000000Z'
+                    updated_at: '2022-07-13T05:26:54.000000Z'
+                    deleted_at: 'null'
                     user_skills:
                       - id: 1
                         user_id: 1
                         pratical_flag: true
                         learning_flag: true
                         level: 1
-                        created_at: "2022-07-13T05:26:55.000000Z"
-                        updated_at: "2022-07-13T05:26:55.000000Z"
-                        deleted_at: "2022-07-13T05:26:55.000000Z"
+                        created_at: '2022-07-13T05:26:55.000000Z'
+                        updated_at: '2022-07-13T05:26:55.000000Z'
+                        deleted_at: '2022-07-13T05:26:55.000000Z'
                         name: skill1
                         category_id: 1
       operationId: get-users-id
@@ -253,12 +206,26 @@ paths:
     put:
       summary: User 更新
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/User'
+              examples:
+                example:
+                  value:
+                    result:
+                      id: 1
+                      name: 翔
+                      email: 2001195@s.asojuku.ac.jp
+                      password: Aso-2001195
+                      created_at: '2022-06-29 10:29:50'
+                      updated_at: '2022-06-29 10:29:50'
+                      deleted_at: null
       operationId: put-users-id
       tags:
         - update
@@ -283,7 +250,7 @@ paths:
     delete:
       summary: User 削除
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -294,7 +261,7 @@ paths:
       tags:
         - delete
         - EndPoint
-      description: 指定されたIDのuserを論理削除
+      description: '指定されたIDのuser,期限を過ぎていない募集、登録されているスキルを論理削除'
   /user/password:
     put:
       summary: User パスワード更新
@@ -302,13 +269,34 @@ paths:
         - EndPoint
         - passUpdate
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  result:
+                    type: string
+                    example: success!
+              examples:
+                example:
+                  value:
+                    result: success!
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: Unauthorized
+              examples:
+                example:
+                  value:
+                    result: Unauthorized
       operationId: put-user-password
       description: userのpasswordを変更
       requestBody:
@@ -337,6 +325,12 @@ paths:
                 - id
                 - old_password
                 - password
+            examples:
+              example-1:
+                value:
+                  id: 11
+                  old_password: Aso-2001195
+                  password: Aso-2001195
     parameters: []
   /skills:
     post:
@@ -345,13 +339,20 @@ paths:
         - EndPoint
         - store
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  result:
+                    type: string
+                    example: success!
+              examples:
+                example:
+                  value:
+                    result: success!
       operationId: post-skills
       description: skillの作成
       requestBody:
@@ -369,6 +370,7 @@ paths:
                 name:
                   type: string
                   example: skill1
+                  maxLength: 100
               required:
                 - category_id
                 - name
@@ -383,17 +385,26 @@ paths:
         - EndPoint
         - index
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Skill"
+                  $ref: '#/components/schemas/Skill'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      category_id: 1
+                      name: skill1
+                      created_at: '2022-01-01 11:11:11'
+                      updated_at: '2022-01-01 11:11:11'
+                      deleted_at: null
       operationId: get-skills
       description: skillの一覧を表示
-  "/skills/{id}":
+  '/skills/{id}':
     parameters:
       - schema:
           type: integer
@@ -406,7 +417,53 @@ paths:
         - EndPoint
         - show
       responses:
-        "200":
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  skill:
+                    $ref: '#/components/schemas/Skill'
+                  category_name:
+                    type: string
+                    example: language
+              examples:
+                example:
+                  value:
+                    skill:
+                      id: 1
+                      category_id: 1
+                      name: skill1
+                      created_at: '2022-01-01 11:11:11'
+                      updated_at: '2022-01-01 11:11:11'
+                      deleted_at: null
+                    category_name: language
+      operationId: get-skills-id
+      description: 指定されたIDのskillとスキルカテゴリ情報を表示
+    delete:
+      summary: Skill 削除
+      tags:
+        - EndPoint
+        - delete
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+      operationId: delete-skills-id
+      description: '指定されたIDのskill,ユーザーskill,募集skill 情報を論理削除'
+    put:
+      summary: Skill 更新
+      tags:
+        - EndPoint
+        - update
+      responses:
+        '200':
           description: OK
           content:
             application/json:
@@ -421,50 +478,13 @@ paths:
                     maximum: 255
                   name:
                     type: string
-                    maxLength: 100
                     example: skill1
-                  depth:
-                    type: integer
-                    format: int32
-                    minimum: 1
-                    maximum: 5
-                    example: 1
+                    maxLength: 100
               examples:
                 example:
                   value:
                     category_id: 1
                     name: skill1
-                    depth: 1
-      operationId: get-skills-id
-      description: 指定されたIDのskill情報を表示
-    delete:
-      summary: Skill 削除
-      tags:
-        - EndPoint
-        - delete
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: delete-skills-id
-      description: 指定されたIDのskill情報を論理削除
-    put:
-      summary: Skill 更新
-      tags:
-        - EndPoint
-        - update
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
       operationId: put-skills-id
       requestBody:
         content:
@@ -484,23 +504,53 @@ paths:
               required:
                 - category_id
                 - name
+            examples:
+              example-1:
+                value:
+                  category_id: 1
+                  name: skill1
       description: 指定されたIDのskill情報を変更
   /skill-category:
     get:
       summary: Skill category一覧
       tags: []
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SkillCategory"
+                type: array
+                items:
+                  $ref: '#/components/schemas/SkillCategory'
+              examples:
+                example-1:
+                  value:
+                    - id: 1
+                      name: 言語
+                      created_at: '2022-01-01 11:11:11'
+                      updated_at: '2022-01-01 11:11:11'
+                      deleted_at: null
       operationId: get-skill-category
+      description: スキルcategoryの一覧表示
     post:
       summary: Skill category作成
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: success!
+              examples:
+                example-1:
+                  value:
+                    result: success!
       operationId: post-skill-category
       requestBody:
         content:
@@ -512,7 +562,10 @@ paths:
                   type: string
                   example: category1
                   maxLength: 100
-  "/skill-category/{id}":
+              required:
+                - name
+      description: スキルカテゴリ作成
+  '/skill-category/{id}':
     parameters:
       - schema:
           type: integer
@@ -522,12 +575,29 @@ paths:
     delete:
       summary: Skill category削除
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
       operationId: delete-skill-category-id
+      description: 指定されたIDののスキルcategory.スキル削除
     put:
       summary: Skill category更新
       tags: []
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    $ref: '#/components/schemas/SkillCategory'
       operationId: put-skill-category-id
       requestBody:
         content:
@@ -541,6 +611,11 @@ paths:
                   maxLength: 100
               required:
                 - name
+            examples:
+              example:
+                value:
+                  name: category1
+      description: 指定されたIDのスキルcategory情報を変更
   /recruits:
     get:
       summary: Recruit 一覧
@@ -548,14 +623,27 @@ paths:
         - EndPoint
         - index
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Recruit"
+                  $ref: '#/components/schemas/Recruit'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      user_id: 1
+                      title: Flaskの勉強しませんか
+                      contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                      purpose: 開発
+                      persons: 5
+                      due: '2022-01-01 11:11:11'
+                      created_at: '2022-01-01 11:11:11'
+                      updated_at: '2022-01-01 11:11:11'
+                      deleted_at: null
       operationId: get-recruits
       description: recruit の一覧
     post:
@@ -564,7 +652,7 @@ paths:
         - EndPoint
         - store
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -606,7 +694,7 @@ paths:
                 due:
                   type: string
                   format: date-time
-                  example: "2023-07-13 19:12:31"
+                  example: '2023-07-13 19:12:31'
                 skills:
                   type: array
                   items:
@@ -628,9 +716,7 @@ paths:
                       - skill_id
                       - level
               required:
-                - user_id
                 - title
-                - contents
                 - purpose
                 - persons
                 - due
@@ -642,11 +728,11 @@ paths:
                   contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
                   purpose: 開発
                   persons: 5
-                  due: "2023-07-13 19:12:31"
+                  due: '2023-07-13 19:12:31'
                   skills:
                     - skill_id: 1
                       level: 1
-  "/recruits/{id}":
+  '/recruits/{id}':
     parameters:
       - schema:
           type: integer
@@ -659,7 +745,7 @@ paths:
         - EndPoint
         - show
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -692,7 +778,7 @@ paths:
                     example: 5
                   due:
                     type: string
-                    example: "2019-06-13T15:00:00.0Z"
+                    example: '2019-06-13T15:00:00.0Z'
                     format: date-time
               examples:
                 example:
@@ -702,7 +788,7 @@ paths:
                     contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
                     purpose: 開発
                     persons: 5
-                    due: "2019-06-13T15:00:00.0Z"
+                    due: '2019-06-13T15:00:00.0Z'
       operationId: get-recruits-id
       description: 指定されたIDのrecruit情報を表示
     put:
@@ -711,7 +797,7 @@ paths:
         - EndPoint
         - update
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -747,14 +833,14 @@ paths:
                 due:
                   type: string
                   format: date-time
-                  example: "2023-07-13 19:12:31"
+                  example: '2023-07-13 19:12:31'
     delete:
       summary: Recruit 削除
       tags:
         - EndPoint
         - delete
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -762,7 +848,7 @@ paths:
                 type: object
       operationId: delete-recruits-id
       description: 指定されたIDのrecruit情報を論理削除
-  "/recruits/other/{id}":
+  '/recruits/other/{id}':
     parameters:
       - schema:
           type: integer
@@ -770,12 +856,37 @@ paths:
         in: path
         required: true
     get:
-      summary: Recruit 自分以外の項目
+      summary: Recruit　その他一覧
       tags:
         - EndPoint
-        - otherIndex
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Recruit'
+              examples:
+                example-1:
+                  value:
+                    result:
+                      - id: 1
+                        user_id: 1
+                        title: Flaskの勉強しませんか
+                        contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+                        purpose: 開発
+                        persons: 5
+                        due: '2022-01-01 11:11:11'
+                        created_at: '2022-01-01 11:11:11'
+                        updated_at: '2022-01-01 11:11:11'
+                        deleted_at: '2022-01-01 11:11:11'
       operationId: get-recruits-other-id
+      description: Recruitで自分のユーザー以外の情報を取得
   /recruit-skill:
     get:
       summary: Recruit skill 一覧
@@ -783,17 +894,17 @@ paths:
         - EndPoint
         - index
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RecruitSkill"
+                  $ref: '#/components/schemas/RecruitSkill'
       operationId: get-recruit-skill
       description: recruit skill の一覧
-  "/recruit-skill/{id}":
+  '/recruit-skill/{id}':
     parameters:
       - schema:
           type: integer
@@ -806,7 +917,7 @@ paths:
         - Endpoint
         - show
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -845,7 +956,7 @@ paths:
         - Endpoint
         - update
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -881,7 +992,7 @@ paths:
         - Endpoint
         - delete
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -897,14 +1008,14 @@ paths:
         - EndPoint
         - index
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RecruitUser"
+                  $ref: '#/components/schemas/RecruitUser'
       operationId: get-recruit-user
       description: recruit user の一覧
     post:
@@ -913,7 +1024,7 @@ paths:
         - EndPoint
         - store
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -943,55 +1054,7 @@ paths:
                 - recruit_id
                 - user_id
       description: recruit user の作成
-  /rooms:
-    get:
-      summary: ""
-      tags:
-        - EndPoint
-        - index
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Room"
-      operationId: ""
-      description: ""
-    post:
-      summary: ルーム作成
-      operationId: post-rooms
-      responses:
-        "200":
-          description: OK
-      description: いけた
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                sender:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                      minimum: 1
-                      maximum: 10
-                    room_name:
-                      type: string
-                receiver:
-                  type: object
-                  properties:
-                    id:
-                      type: number
-                      minimum: 1
-                      maximum: 10
-                    room_name:
-                      type: string
-  "/recruit-user/{id}":
+  '/recruit-user/{id}':
     parameters:
       - schema:
           type: integer
@@ -1004,7 +1067,7 @@ paths:
         - EndPoint
         - show
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1036,7 +1099,7 @@ paths:
         - EndPoint
         - delete
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1045,64 +1108,140 @@ paths:
                 properties: {}
       operationId: delete-recruit-user-id
       description: 指定されたIDのrecruit user情報を論理削除
-  "/rooms/{user_id}":
-    parameters:
-      - schema:
-          type: string
-        name: user_id
-        in: path
-        required: true
-    delete:
-      summary: Room 削除
-      responses: {}
-      operationId: delete-rooms-id
-      description: 指定されたIDのroom情報を論理削除
-      tags:
-        - EndPoint
-        - delete
+  /rooms:
     get:
-      summary: 参加Room一覧
-      operationId: get-rooms-id
-      responses:
-        "200":
-          description: OK
-      description: いけた
-      parameters:
-        - schema:
-            type: number
-            minimum: 1
-            maximum: 10
-            default: 1
-          in: query
-          name: user_id
-  "/chats/{room_id}/{user_id}":
-    get:
-      summary: ルーム詳細
+      summary: Room 一覧
       tags:
         - EndPoint
         - index
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/RoomUser"
-      operationId: get-room-user
-      description: できた
-    post:
-      summary: Room user 作成
-      operationId: post-room-user
+                  $ref: '#/components/schemas/Room'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      created_at: '2022-01-01 11:11:11'
+                      updated_at: '2022-01-01 11:11:11'
+                      deleted_at: null
+      operationId: get-rooms
+      description: room の一覧
+  '/rooms/{id}':
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: Room 削除
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
+      operationId: delete-rooms-id
+      description: 指定されたIDのroom　room参加者　chat情報を論理削除
+      tags:
+        - EndPoint
+        - delete
+    get:
+      summary: Room 詳細
+      operationId: get-rooms-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  room:
+                    $ref: '#/components/schemas/Room'
+                  room user:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/RoomUser'
+                  chat:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Chat'
+              examples:
+                example:
+                  value:
+                    room:
+                      id: 1
+                      created_at: '2022-01-01 11:11:11'
+                      updated_at: '2022-01-01 11:11:11'
+                      deleted_at: null
+                    room user:
+                      - id: 1
+                        room_id: 1
+                        user_id: 1
+                        name: チャットルーム1
+                        created_at: '2022-01-01 11:11:11'
+                        updated_at: '2022-01-01 11:11:11'
+                        deleted_at: null
+                    chat:
+                      - id: 1
+                        room_id: 1
+                        user_id: 1
+                        message: おはようございます
+                        read: true
+                        created_at: '2022-01-01 11:11:11'
+                        updated_at: '2022-01-01 11:11:11'
+                        deleted_at: null
+      description: roomの参加者とルームのチャット表示
+  /room-user:
+    get:
+      summary: Room user 一覧
+      tags:
+        - EndPoint
+        - index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoomUser'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      room_id: 1
+                      user_id: 1
+                      name: チャットルーム1
+                      created_at: '2022-01-01 11:11:11'
+                      updated_at: '2022-01-01 11:11:11'
+                      deleted_at: null
+      operationId: get-room-user
+      description: room user の一覧
+    post:
+      summary: Room user 作成
+      operationId: post-room-user
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    example: success!
             application/xml:
               schema:
                 type: object
@@ -1125,6 +1264,8 @@ paths:
                   items:
                     type: integer
                     format: int64
+              required:
+                - users
             examples:
               example:
                 value:
@@ -1138,68 +1279,28 @@ paths:
       tags:
         - EndPoint
         - store
-    parameters:
-      - schema:
-          type: string
-        name: room_id
-        in: path
-        required: true
-      - schema:
-          type: string
-        name: user_id
-        in: path
-        required: true
-  "/room-user/{id}":
+  '/room-user/{id}':
     parameters:
       - schema:
           type: integer
         name: id
         in: path
         required: true
-    get:
-      summary: Room user 詳細
-      tags:
-        - EndPoint
-        - show
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  room_id:
-                    type: integer
-                    example: 1
-                    minimum: 1
-                    maximum: 255
-                    format: int64
-                  user_id:
-                    type: integer
-                    format: int64
-                    example: 1
-                    minimum: 1
-                    maximum: 255
-                  name:
-                    type: string
-                    example: room1
-                    maxLength: 30
-      operationId: get-room-user-id
-      description: 指定されたIDのroom user情報を表示
     put:
       summary: Room user 更新
       tags:
         - EndPoint
         - update
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  room_user:
+                    $ref: '#/components/schemas/RoomUser'
       operationId: put-room-user-id
       description: 指定されたIDのroom user情報を更新
       requestBody:
@@ -1212,13 +1313,17 @@ paths:
                   type: string
                   example: room1
                   maxLength: 30
+            examples:
+              example:
+                value:
+                  name: room1
     delete:
       summary: Room 削除
       tags:
         - EndPoint
         - delete
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -1234,29 +1339,47 @@ paths:
         - EndPoint
         - index
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Chat"
-      operationId: ""
-      description: ""
+                  $ref: '#/components/schemas/Chat'
+              examples:
+                example:
+                  value:
+                    - id: 1
+                      room_id: 1
+                      user_id: 1
+                      message: おはようございます
+                      read: true
+                      created_at: '2022-01-01 11:11:11'
+                      updated_at: '2022-01-01 11:11:11'
+                      deleted_at: null
+      operationId: get-chats
+      description: chat の一覧
     post:
       summary: Chat 作成
       tags:
         - EndPoint
         - store
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  rusult:
+                    type: string
+                    example: success!
+              examples:
+                example:
+                  value:
+                    rusult: success!
       operationId: post-chats
       requestBody:
         content:
@@ -1281,6 +1404,12 @@ paths:
                 - room_id
                 - user_id
                 - message
+            examples:
+              example:
+                value:
+                  room_id: 1
+                  user_id: 1
+                  message: おはようございます
           application/xml:
             schema:
               type: object
@@ -1309,45 +1438,9 @@ paths:
                 - message
                 - read
             examples: {}
-          multipart/form-data:
-            schema:
-              type: object
-              properties:
-                room_id:
-                  type: number
-                user_id:
-                  type: number
-                message:
-                  type: string
-        description: ""
-      description: できた
-    parameters: []
-    put:
-      summary: ""
-      operationId: put-chats
-      responses:
-        "200":
-          description: OK
-          headers:
-            header-0:
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: number
-                message:
-                  type: string
-  "/chats/{id}":
+        description: ''
+      description: chatの作成
+  '/chats/{id}':
     parameters:
       - schema:
           type: integer
@@ -1360,13 +1453,23 @@ paths:
         - EndPoint
         - update
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties: {}
+                $ref: '#/components/schemas/Chat'
+              examples:
+                example-1:
+                  value:
+                    id: 1
+                    room_id: 1
+                    user_id: 1
+                    message: おはようございます
+                    read: true
+                    created_at: '2022-01-01 11:11:11'
+                    updated_at: '2022-01-01 11:11:11'
+                    deleted_at: null
       operationId: put-chats-id
       description: 指定されたIDのroom user情報を更新
       requestBody:
@@ -1390,870 +1493,16 @@ paths:
         - EndPoint
         - delete
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
+              examples: {}
       operationId: delete-chats-id
       description: 指定されたIDのroom user情報を論理削除
-  /informations:
-    post:
-      summary: Information 作成
-      tags:
-        - EndPoint
-        - store
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: post-informations
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user_id:
-                  type: integer
-                  format: int64
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                title:
-                  type: string
-                  example: 参加希望が届きました
-                  maxLength: 255
-                contents:
-                  type: string
-                  example: ○○さんから■■の参加希望が届きました
-                  maxLength: 1024
-                read:
-                  type: boolean
-                category_id:
-                  type: integer
-                  format: int64
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                url:
-                  type: string
-                  maxLength: 255
-                  example: "https://github.com/Aso2001385/i-match"
-              required:
-                - user_id
-                - title
-                - contents
-                - read
-                - category_id
-            examples:
-              example-1:
-                value:
-                  user_id: 1
-                  title: 参加希望が届きました
-                  contents: ○○さんから■■の参加希望が届きました
-                  read: true
-                  category_id: 1
-                  url: "https://github.com/Aso2001385/i-match"
-    get:
-      summary: Information 一覧
-      tags:
-        - EndPoint
-        - index
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Information"
-      operationId: get-informations
-      description: information の一覧
-  "/informations/{id}":
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-    get:
-      summary: information 詳細
-      tags:
-        - EndPoint
-        - show
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  user_id:
-                    type: integer
-                    format: int64
-                    minimum: 1
-                    maximum: 255
-                    example: 1
-                  title:
-                    type: string
-                    example: 参加希望が届きました
-                    maxLength: 255
-                  contents:
-                    type: string
-                  read:
-                    type: string
-                  category_id:
-                    type: integer
-                    format: int64
-                    example: 1
-                    minimum: 1
-                    maximum: 255
-                  url:
-                    type: string
-                    example: "https://i-match.click/index"
-                    maxLength: 255
-      operationId: get-informations-id
-      description: 指定されたIDのinformation情報を表示
-    delete:
-      summary: information 削除
-      tags:
-        - EndPoint
-        - delete
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: delete-informations-id
-      description: 指定されたIDのinformation情報を論理削除
-    put:
-      summary: information 更新
-      tags:
-        - EndPoint
-        - update
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: put-informations-id
-      description: 指定されたIDのinformation情報を更新
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                read:
-                  type: boolean
-            examples:
-              example:
-                value:
-                  read: true
-  /information-category:
-    get:
-      summary: Information category 一覧
-      tags: []
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/InformationCategory"
-      operationId: get-information-categories
-      description: information category の一覧
-    post:
-      summary: Information category 作成
-      tags: []
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: post-information-categories
-      description: information category の作成
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: information1
-                  maxLength: 100
-              required:
-                - name
-            examples:
-              example:
-                value:
-                  name: information1
-    parameters: []
-  "/information-category/{id}":
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Informtion category 詳細
-      tags: []
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    maxLength: 100
-                    example: information1
-      operationId: get-information-categoris-id
-      description: 指定されたIDのinformation category情報を表示
-    put:
-      summary: Informtion category 更新
-      tags: []
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: put-information-categoris-id
-      description: 指定されたIDのinformation category情報を更新
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  maxLength: 100
-                  example: information1
-              required:
-                - name
-    delete:
-      summary: Informtion category 削除
-      tags: []
-      responses:
-        "200":
-          description: OK
-      operationId: delete-information-categoris-id
-      description: 指定されたIDのinformation category情報を論理削除
-  /teachers:
-    get:
-      summary: Teacher 一覧
-      tags:
-        - EndPoint
-        - show
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Teacher"
-      operationId: get-teachers
-      description: teacher の一覧
-    post:
-      summary: Teacher 作成
-      tags:
-        - EndPoint
-        - store
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: post-teachers
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: 西野　直幸
-                  maxLength: 30
-                email:
-                  type: string
-                  format: email
-                  maxLength: 25
-                  example: nishino@asojuku.ac.jp
-                  pattern: '^[a-z]{4,7}@asojuku\.ac\.jp'
-                password:
-                  type: string
-                  format: password
-                  example: Aso-2001195
-                  minLength: 8
-                  pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
-              required:
-                - name
-                - email
-                - password
-            examples:
-              example:
-                value:
-                  name: 西野　直幸
-                  email: nishino@asojuku.ac.jp
-                  password: Aso-2001195
-        description: ""
-      description: teacher の作成
-  "/teachers/{id}":
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Teacher 詳細
-      tags:
-        - EndPoint
-        - show
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  email:
-                    type: string
-                    format: email
-                  password:
-                    type: string
-                    pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
-                    format: password
-      operationId: get-teachers-id
-      description: 指定されたIDのteacher情報を表示
-    put:
-      summary: Teacher 更新
-      tags: []
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: put-teachers-id
-      description: 指定されたIDのteacher情報を更新
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: 西野　直幸
-              required:
-                - name
-            examples:
-              example:
-                value:
-                  name: 西野　直幸
-    delete:
-      summary: Teacher 削除
-      tags:
-        - EndPoint
-        - delete
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: delete-teachers-id
-      description: 指定されたIDのteacher情報を削除
-  /teacher/password:
-    put:
-      summary: Teacher パスワード更新
-      tags: []
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: put-teacher-password
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  example: 1
-                  format: int64
-                  minimum: 1
-                  maximum: 255
-                old_password:
-                  type: string
-                  format: password
-                  example: Aso-2001195
-                password:
-                  type: string
-                  example: Aso-2001195
-                  format: password
-              required:
-                - id
-                - old_password
-                - password
-            examples:
-              example:
-                value:
-                  id: 1
-                  old_password: Aso-2001195
-                  password: Aso-2001195
-  /events:
-    get:
-      summary: Event 一覧
-      tags:
-        - EndPoint
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Event"
-      operationId: get-events
-      description: event の一覧
-    post:
-      summary: Event 作成
-      tags:
-        - EndPoint
-        - store
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: post-events
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                teacher_id:
-                  type: integer
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                  format: int64
-                title:
-                  type: string
-                  example: コーディング大会
-                  maxLength: 30
-                contents:
-                  type: string
-                  maxLength: 1024
-                  example: "6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします"
-                due:
-                  type: string
-                  format: date-time
-                  example: "2023-06-13 15:00:00"
-              required:
-                - teacher_id
-                - title
-                - contents
-                - due
-            examples:
-              example-1:
-                value:
-                  teacher_id: 1
-                  title: コーディング大会
-                  contents: "6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします"
-                  due: "2023-06-13 15:00:00"
-      description: event の作成
-  "/events/{id}":
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Event 詳細
-      tags:
-        - EndPoint
-        - show
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  teacher_id:
-                    type: integer
-                    example: 1
-                    format: int64
-                    minimum: 1
-                    maximum: 255
-                  title:
-                    type: string
-                    example: コーディング大会
-                    maxLength: 30
-                  contents:
-                    type: string
-                    example: "6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします"
-                    maxLength: 1024
-                  due:
-                    type: string
-                    format: date-time
-                    example: "2019-06-13T15:00:00.0Z"
-      operationId: get-events-id
-      description: 指定されたIDのevent情報を表示
-    put:
-      summary: Event 更新
-      tags:
-        - EndPoint
-        - update
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: put-events-id
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  example: コーディング大会
-                  maxLength: 30
-                contents:
-                  type: string
-                  maxLength: 1024
-                  example: "6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします"
-                due:
-                  type: string
-                  format: date-time
-                  example: "2023-06-13 15:00:00"
-              required:
-                - title
-                - contents
-                - due
-            examples:
-              example-1:
-                value:
-                  title: コーディング大会
-                  contents: "6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします"
-                  due: "2023-06-13 15:00:00"
-      description: 指定されたIDのevent情報を更新
-    delete:
-      summary: Event 削除
-      tags:
-        - EndPoint
-        - delete
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: delete-events-id
-      description: 指定されたIDのevent情報を論理削除
-  /skill-requests:
-    get:
-      summary: Skill request 一覧
-      tags:
-        - EndPoint
-        - index
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/SkillRequest"
-      operationId: get-skill-requests
-      description: skill request の一覧
-    post:
-      summary: Skill request 作成
-      tags:
-        - EndPoint
-        - store
-      responses: {}
-      operationId: post-skill-requests
-      description: skill request の作成
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user_id:
-                  type: integer
-                  format: int64
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                name:
-                  type: string
-                  example: skill1
-                  maxLength: 255
-                message:
-                  type: string
-                  example: 勉強したいから
-                  maxLength: 1024
-              required:
-                - user_id
-                - name
-                - message
-  "/skill-requests/{id}":
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-    delete:
-      summary: Skill request 削除
-      tags:
-        - EndPoint
-        - delete
-      responses: {}
-      operationId: delete-skill-requests-id
-      description: 指定されたIDのskill request情報を表示
-    get:
-      summary: Skill request 詳細
-      operationId: get-skill-requests-id
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      description: ""
-  /skill-request-teacher:
-    get:
-      summary: Skill request teacher 一覧
-      tags:
-        - EndPoint
-        - index
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/SkillRequestTeacher"
-      operationId: get-skill-request-teacher
-      description: skill request teacher の一覧
-    post:
-      summary: Skill request teacher 作成
-      tags:
-        - EndPoint
-        - store
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: post-skill-request-teacher
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                skill_request_id:
-                  type: integer
-                  format: int64
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                skill_id:
-                  type: integer
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-                  format: int64
-                teacher_id:
-                  type: integer
-                  format: int64
-                  example: 1
-                  minimum: 1
-                  maximum: 255
-              required:
-                - skill_request_id
-                - skill_id
-                - teacher_id
-      description: skill request teacher の作成
-  "/skill-request-teacher/{id}":
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
-        required: true
-    delete:
-      summary: Skill request teacher　削除
-      tags:
-        - EndPoint
-        - delete
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-      operationId: delete-skill-request-teacher-id
-      description: 指定されたIDのskill request teacher情報を表示
-    get:
-      summary: ""
-      operationId: get-skill-request-teacher-id
-      responses:
-        "200":
-          description: OK
-  "/recruits/history/{id}":
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-recruit-history-user_id
-  /search/skill:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-recruits-search
-    post:
-      summary: ""
-      operationId: post-recruits-search
-      responses:
-        "200":
-          description: OK
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              minItems: 4
-              maxItems: 5
-              items:
-                type: object
-                minProperties: 1
-                maxProperties: 1
-                properties:
-                  id:
-                    type: integer
-                    format: int32
-                    minimum: 1
-                    maximum: 10
-                    multipleOf: 1
-                    deprecated: true
-                  name:
-                    type: string
-        description: ""
-    parameters: []
-  chats:
-    get:
-      summary: チャット更新
-    parameters: []
-    post:
-      summary: チャット送信
-      operationId: postchats
-      responses:
-        "200":
-          description: OK
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                "":
-                  type: string
-    put:
-      summary: チャット更新
-      operationId: putchats
-      responses:
-        "200":
-          description: OK
 components:
   schemas:
     User:
@@ -2265,17 +1514,24 @@ components:
           name: 翔
           email: 2001195@asojuku.ac.jp
           password: Aso-2001195
-          created_at: "2022-06-29 10:29:50"
-          updated_at: "2022-06-29 10:29:50"
-          deleted_at: "2022-06-29 10:29:50"
+          created_at: '2022-06-29 10:29:50'
+          updated_at: '2022-06-29 10:29:50'
+          deleted_at: '2022-06-29 10:29:50'
       examples:
         - id: 1
           name: 翔
           email: 2001195@s.asojuku.ac.jp
           password: Aso-2001195
-          created_at: "2022-06-29 10:29:50"
-          updated_at: "2022-06-29 10:29:50"
+          created_at: '2022-06-29 10:29:50'
+          updated_at: '2022-06-29 10:29:50'
           deleted_at: null
+        - id: 1
+          name: 翔
+          email: 2001195@s.asojuku.ac.jp
+          password: Aso-2001195
+          created_at: '2022-06-29 10:29:50'
+          updated_at: '2022-06-29 10:29:50'
+          deleted_at: '2022-06-29 10:29:50'
       description: ユーザーModel
       x-tags:
         - Model
@@ -2307,19 +1563,20 @@ components:
           pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
           example: Aso-2001195
           minLength: 8
+          description: Hash & $hidden
         created_at:
           type: string
           format: date-time
-          example: "2022-06-29 10:29:50"
+          example: '2022-06-29 10:29:50'
         updated_at:
           type: string
           format: date-time
-          example: "2022-06-29 10:29:50"
+          example: '2022-06-29 10:29:50'
         deleted_at:
           type:
             - string
-            - "null"
-          example: "2022-06-29 10:29:50"
+            - 'null'
+          example: '2022-06-29 10:29:50'
           format: date-time
       required:
         - name
@@ -2335,15 +1592,30 @@ components:
           practical_flag: true
           learning_flag: true
           level: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       x-tags:
         - Model
         - Users
         - Skill
-      description: ""
-      title: ""
+      description: ''
+      title: ''
+      examples:
+        - id: 1
+          user_id: 1
+          skill_id: 1
+          level: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+        - id: 1
+          user_id: 1
+          skill_id: 1
+          level: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -2360,10 +1632,6 @@ components:
           format: int64
           minimum: 1
           maximum: 255
-        practical_flag:
-          type: boolean
-        learning_flag:
-          type: boolean
         level:
           type: integer
           format: int32
@@ -2373,43 +1641,31 @@ components:
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       required:
         - user_id
         - skill_id
-        - practical_flag
-        - learning_flag
         - level
-      examples:
-        - id: 1
-          user_id: 1
-          skill_id: 1
-          practical_flag: true
-          learning_flag: true
-          level: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: null
     SkillCategory:
       type: object
       x-examples:
         example-1:
           id: 1
           name: name
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
-      title: ""
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
+      title: ''
       properties:
         id:
           type: integer
@@ -2424,25 +1680,30 @@ components:
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       required:
         - name
       examples:
         - id: 1
           name: 言語
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
           deleted_at: null
+        - id: 1
+          name: 言語
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
     Skill:
       type: object
       x-examples:
@@ -2451,17 +1712,22 @@ components:
           category_id: 1
           name: name
           depth: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       examples:
         - id: 1
           category_id: 1
           name: skill1
-          depth: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
           deleted_at: null
+        - id: 1
+          category_id: 1
+          name: skill1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -2479,30 +1745,23 @@ components:
           type: string
           example: skill1
           maxLength: 100
-        depth:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 5
-          example: 1
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       required:
         - category_id
         - name
-        - depth
     Recruit:
       type: object
       x-examples:
@@ -2513,21 +1772,33 @@ components:
           contents: name
           purpose_id: 1
           persons: 1
-          due: "2022-01-01 11:11:11"
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          due: '2022-01-01 11:11:11'
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       examples:
         - id: 1
+          room_id: 1
           user_id: 1
           title: Flaskの勉強しませんか
           contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
           purpose: 開発
           persons: 5
-          due: "2022-01-01 11:11:11"
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          due: '2022-01-01 11:11:11'
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: null
+        - id: 1
+          room_id: 1
+          user_id: 1
+          title: Flaskの勉強しませんか
+          contents: Flaskで機械学習のAPIを作成しましょう。初心者歓迎！
+          purpose: 開発
+          persons: 5
+          due: '2022-01-01 11:11:11'
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -2535,6 +1806,12 @@ components:
           minimum: 1
           maximum: 255
           example: 1
+        room_id:
+          type: integer
+          format: int64
+          example: 1
+          minimum: 1
+          maximum: 255
         user_id:
           type: integer
           format: int64
@@ -2562,21 +1839,21 @@ components:
         due:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       required:
         - user_id
         - title
@@ -2592,9 +1869,9 @@ components:
           recruit_id: 1
           skill_id: 1
           level: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -2622,17 +1899,17 @@ components:
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       required:
         - recruit_id
         - skill_id
@@ -2642,9 +1919,16 @@ components:
           recruit_id: 1
           skill_id: 1
           level: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
           deleted_at: null
+        - id: 1
+          recruit_id: 1
+          skill_id: 1
+          level: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
     RecruitUser:
       type: object
       x-examples:
@@ -2652,9 +1936,9 @@ components:
           id: 1
           recruit_id: 1
           user_id: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -2677,17 +1961,17 @@ components:
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       required:
         - recruit_id
         - user_id
@@ -2695,17 +1979,23 @@ components:
         - id: 1
           recruit_id: 1
           user_id: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
           deleted_at: null
+        - id: 1
+          recruit_id: 1
+          user_id: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
     Room:
       type: object
       x-examples:
         example-1:
           id: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -2716,22 +2006,26 @@ components:
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       examples:
         - id: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
           deleted_at: null
+        - id: 1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
     RoomUser:
       type: object
       x-examples:
@@ -2740,9 +2034,9 @@ components:
           room_id: 1
           user_id: 1
           name: name
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -2769,17 +2063,17 @@ components:
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       required:
         - room_id
         - user_id
@@ -2789,9 +2083,16 @@ components:
           room_id: 1
           user_id: 1
           name: チャットルーム1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
           deleted_at: null
+        - id: 1
+          room_id: 1
+          user_id: 1
+          name: チャットルーム1
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
     Chat:
       type: object
       x-examples:
@@ -2801,9 +2102,9 @@ components:
           user_id: 1
           message: name
           read: true
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
       properties:
         id:
           type: integer
@@ -2831,17 +2132,17 @@ components:
         created_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         updated_at:
           type: string
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
         deleted_at:
           type:
             - string
-            - "null"
+            - 'null'
           format: date-time
-          example: "2022-01-01 11:11:11"
+          example: '2022-01-01 11:11:11'
       required:
         - room_id
         - user_id
@@ -2853,370 +2154,17 @@ components:
           user_id: 1
           message: おはようございます
           read: true
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
           deleted_at: null
-    Information:
-      type: object
-      x-examples:
-        example-1:
-          id: 1
+        - id: 1
+          room_id: 1
           user_id: 1
-          title: string
-          contents: string
+          message: おはようございます
           read: true
-          category_id: 1
-          url: string
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
-      examples:
-        - id: 1
-          user_id: 1
-          title: 参加希望が届きました
-          contents: ○○さんから■■の参加希望が届きました
-          read: true
-          category_id: 1
-          url: "https://i-match.click/index"
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: null
-      properties:
-        id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        user_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-        title:
-          type: string
-          maxLength: 255
-          example: 参加希望が届きました
-        contents:
-          type: string
-          example: ○○さんから■■の参加希望が届きました
-          maxLength: 1024
-        read:
-          type: boolean
-        category_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        url:
-          type: string
-          example: "https://i-match.click/index"
-          maxLength: 255
-        created_at:
-          type: string
-          example: "2022-01-01 11:11:11"
-          format: date-time
-        updated_at:
-          type: string
-          example: "2022-01-01 11:11:11"
-          format: date-time
-        deleted_at:
-          type:
-            - string
-            - "null"
-          example: "2022-01-01 11:11:11"
-          format: date-time
-      required:
-        - user_id
-        - title
-        - contents
-        - read
-        - category_id
-        - url
-    InformationCategory:
-      type: object
-      x-examples:
-        example-1:
-          id: 1
-          name: string
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
-      properties:
-        id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        name:
-          type: string
-          example: 参加希望
-          maxLength: 100
-        created_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        updated_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        deleted_at:
-          type:
-            - string
-            - "null"
-          format: date-time
-          example: "2022-01-01 11:11:11"
-      required:
-        - name
-      examples:
-        - id: 1
-          name: 参加希望
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: null
-    Teacher:
-      type: object
-      x-examples:
-        example-1:
-          id: 1
-          name: string
-          email: string
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
-      examples:
-        - id: 1
-          name: 西野　直幸
-          email: nishino@asojuku.ac.jp
-          password: pa$$word
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
-      properties:
-        id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        name:
-          type: string
-          example: 西野　直幸
-          maxLength: 30
-        email:
-          type: string
-          format: email
-          maxLength: 25
-          example: nishino@asojuku.ac.jp
-        password:
-          type: string
-          format: password
-          minLength: 8
-          pattern: '(?=.*[a-z)(?=.*[A-Z])(?=.*[0-9])(?=.*[\/\-\_ΔΣΩ])[a-zA-Z0-9]'
-        created_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        updated_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        deleted_at:
-          type:
-            - string
-            - "null"
-          format: date-time
-          example: "2022-01-01 11:11:11"
-      required:
-        - name
-        - email
-        - password
-    Event:
-      type: object
-      x-examples:
-        example-1:
-          id: 1
-          teacher_id: 1
-          title: string
-          contents: string
-          due: "2022-01-01 11:11:11"
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
-      examples:
-        - id: 1
-          teacher_id: 1
-          title: コーディング大会
-          contents: "6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします"
-          due: "2022-01-01 11:11:11"
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: null
-      properties:
-        id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        teacher_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        title:
-          type: string
-          maxLength: 30
-          example: コーディング大会
-        contents:
-          type: string
-          example: "6/29(水) 13:30~15:00 133、134教室でJavaのコーディング大会をします"
-          maxLength: 1024
-        due:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        created_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        updated_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        deleted_at:
-          type:
-            - string
-            - "null"
-          format: date-time
-          example: "2022-01-01 11:11:11"
-      required:
-        - teacher_id
-        - title
-        - contents
-        - due
-    SkillRequest:
-      type: object
-      x-examples:
-        example-1:
-          id: 1
-          user_id: 1
-          name: string
-          message: string
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
-      properties:
-        id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        user_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        name:
-          type: string
-          example: skill1
-          maxLength: 255
-        message:
-          type: string
-          example: 勉強したいから
-        created_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        updated_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        deleted_at:
-          type:
-            - string
-            - "null"
-          format: date-time
-          example: "2022-01-01 11:11:11"
-      required:
-        - user_id
-        - name
-        - message
-      examples:
-        - id: 1
-          user_id: 1
-          name: skill1
-          message: 勉強したいから
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: null
-    SkillRequestTeacher:
-      type: object
-      x-examples:
-        example-1:
-          id: 1
-          skill_request_id: 1
-          skill_id: 1
-          teacher_id: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: "2022-01-01 11:11:11"
-      properties:
-        id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        skill_request_id:
-          type: integer
-          minimum: 1
-          maximum: 255
-          format: int64
-          example: 1
-        skill_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        teacher_id:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 255
-          example: 1
-        created_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        updated_at:
-          type: string
-          format: date-time
-          example: "2022-01-01 11:11:11"
-        deleted_at:
-          type:
-            - string
-            - "null"
-          format: date-time
-          example: "2022-01-01 11:11:11"
-      required:
-        - skill_request_id
-        - skill_id
-        - teacher_id
-      examples:
-        - id: 1
-          skill_request_id: 1
-          skill_id: 1
-          teacher_id: 1
-          created_at: "2022-01-01 11:11:11"
-          updated_at: "2022-01-01 11:11:11"
-          deleted_at: null
+          created_at: '2022-01-01 11:11:11'
+          updated_at: '2022-01-01 11:11:11'
+          deleted_at: '2022-01-01 11:11:11'
   securitySchemes: {}
   parameters: {}
 tags:

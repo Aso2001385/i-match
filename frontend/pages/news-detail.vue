@@ -56,11 +56,8 @@ export default {
   },
   methods: {
     getSession() {
-      // お知らせ詳細の情報
-      // 3を許可
-      this.id = 3
-      // this.title = sessionStorage.getItem('newsTitle')
-      // this.content = sessionStorage.getItem('newsContent')
+      // スキルの詳細
+      this.id = sessionStorage.getItem('id')
     },
     sortSection(sort) {
       if (sort === 0) {
@@ -73,7 +70,7 @@ export default {
     },
     getDetail() {
       this.$axios
-        .get(`https://i-match.click/api/informations/${this.id}`)
+        .get(`${this.$urls.API}/informations/${this.id}`)
         .then(response => {
           console.log('ちゃんと通っている詳細取得')
           this.title = response.data.title

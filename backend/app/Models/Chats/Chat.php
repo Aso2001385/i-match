@@ -16,7 +16,6 @@ class Chat extends Model
         'room_id',
         'user_id',
         'message',
-        'read',
     ];
 
     public static function create_chat($request){
@@ -28,9 +27,10 @@ class Chat extends Model
 
         }catch(Exception $e){
 
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -44,14 +44,14 @@ class Chat extends Model
             $chat->update($request->all());
             $status = Response::HTTP_OK;
         }catch(Exception $e){
-    
+
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
-    
+
         }
-    
+
         return [
             'result' => $chat,
             'status' => $status
@@ -63,11 +63,13 @@ class Chat extends Model
             $chat->delete();
 
             $status=Response::HTTP_OK;
+
+            $result='success';
         }catch(Exception $e){
     
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
     
         }

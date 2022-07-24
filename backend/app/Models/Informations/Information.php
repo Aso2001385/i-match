@@ -41,9 +41,10 @@ class Information extends Model
 
         }catch(Exception $e){
 
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -57,10 +58,12 @@ class Information extends Model
             $information->category_name=InformationCategory::find($information->category_id)->name;
             $information->user_name=User::find($information->user_id)->name;
             $status=Response::HTTP_OK;
-        }catch(Example $e){
+        }catch(Exception $e){
 
-            $result = [];
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
 
         }
         
@@ -77,8 +80,8 @@ class Information extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }           
@@ -96,8 +99,8 @@ class Information extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

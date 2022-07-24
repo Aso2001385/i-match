@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Str;
 use App\Models\Users\User;
+use DateTime;
 use Exception;
 class Token extends Model
 {
@@ -46,7 +47,20 @@ class Token extends Model
     // トークン再生成
     public static function regeneration($user_id){
 
-        $token = Token::updateOrCreate(['id'=>$user_id],['content' => Str::random(32)]);
+        $token = Token::find($user_id);
+
+        if(is_null($token)){
+            $token = Token::updateOrCreate(['id'=>$user_id],['content' => Str::random(32)]);
+            return ''.$token->id.'|'.$token->content.'|'.$token->updated_at;
+        }
+
+        $date_before = $token->updated_at;
+        $date_after  = time();
+        $interval = floor(($date_after-strtotime($date_before))/60);
+
+        if($interval > 2){
+            $token = Token::updateOrCreate(['id'=>$user_id],['content' => Str::random(32)]);
+        }
 
         return ''.$token->id.'|'.$token->content.'|'.$token->updated_at;
 

@@ -1,7 +1,7 @@
 <template>
   <v-container fill-height>
     <v-row justify="center">
-      <v-col cols="12" md="5">
+      <v-col cols="12" lg="6" md="9" sm="10" xs="10">
         <v-card class="pb-10 mx-auto fill-width">
           <v-card-title class="d-flex justify-center pa-4 grey darken-4">
             <h3 class="text-center white--text">SIGN IN</h3>
@@ -29,10 +29,14 @@
                 @click:append="show1 = !show1"
               ></v-text-field>
               <div class="pt-5 position: relative">
-                <v-btn class="mr-0" @click="submit">{{ addMessage }}</v-btn>
+                <v-row justify="center">
+                  <v-col cols="4">
+                    <ApiEventButton color="grey darken-4" :click-callback="submit"> Next </ApiEventButton>
+                  </v-col>
+                </v-row>
               </div>
               <v-row class="mt-10" justify="center">
-                <NuxtLink to="/sign-up">sign up</NuxtLink>
+                アカウントをお持ちではありませんか？<NuxtLink to="/sign-up">こちらから新規登録</NuxtLink>
               </v-row>
             </div>
           </v-form>
@@ -44,7 +48,6 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email, minLength } from 'vuelidate/lib/validators'
-
 export default {
   mixins: [validationMixin],
   layout: 'auth',
@@ -57,9 +60,10 @@ export default {
     show1: false,
     email: '',
     password: '',
-    addMessage: 'Add',
     user: {},
   }),
+  // email: '1001999@s..ac.jp',
+  // password: 'test-2022Aso',
   computed: {
     emailErrors() {
       const errors = []
@@ -78,15 +82,18 @@ export default {
   },
 
   methods: {
-    async submit({ redirect }) {
+    async submit() {
       this.$v.$touch()
+      const sendSearch = []
+      sessionStorage.setItem('sendSearch', JSON.stringify(sendSearch))
+      sessionStorage.setItem('searchFlg', 0)
 
       this.user = {
         email: this.email,
         password: this.password,
       }
 
-      await this.$axios.post('https://i-match.click/api/auth', this.user).then(async response => {
+      await this.$axios.post(`${this.$urls.API}/auth`, this.user).then(async response => {
         await this.$store.commit('restoreLogin', response.data)
       })
     },

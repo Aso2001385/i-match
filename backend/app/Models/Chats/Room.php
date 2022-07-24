@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Response;
 use Exception;
+use Nette\Schema\Expect;
+use phpDocumentor\Reflection\DocBlock\Tags\Example;
+use Throwable;
 
 class Room extends Model
 {
@@ -27,21 +30,31 @@ class Room extends Model
         return $this->hasMany(Chat::class);
     }
 
-    public static function get_rooms($request){
+    public static function get_rooms($user_id){
 
         try{
-            $user_id = $request->user_id;
-            $room = Room::with([
+
+            $rooms = Room::with([
                 'users'=> function ($query){
                     $query->select('room_user.*','users.name as user_name')->join('users', 'user_id', '=', 'users.id');
                 },
-            ])->whereIn('id',RoomUser::select('room_id as id')->where('user_id',$user_id)->get())->get()->toArray();
+            ])->whereIn('id',RoomUser::select('room_id as id')->where('user_id','=',$user_id)->get())->get()->toArray();
 
-            $room = array_map(function($v)use($user_id){
+
+            if (is_array($rooms) && empty($rooms)) {
+
+                return [
+                    'result' => false,
+                    'status' => 200
+                ];
+
+            }
+
+            $rooms = array_map(function($v)use($user_id){
 
                 // ルーム名取得
                 $v['name'] = $v['users'][array_search($user_id,array_map(function($e){
-                    return $e['id'];
+                    return $e['user_id'];
                 },$v['users']))]['name'];
 
                 // ルームユーザー内のルーム名削除
@@ -50,18 +63,23 @@ class Room extends Model
                     return $e;
                 },$v['users']);
 
+                $v['new_message'] = Chat::select('chats.*','users.name')
+                    ->join('users','user_id','=','users.id')
+                    ->where('chats.room_id',$v['id'])->orderBy('chats.id','desc')->first();
+
                 return $v;
 
-            },$room);
+            },$rooms);
 
             return [
-                'result' => $room,
+                'result' => $rooms,
                 'status' => 200
             ];
+
         }catch(Exception $e){
             return [
                 'result' => $e,
-                'status' => 400
+                'status' => $e->getCode()
             ];
         }
     }
@@ -71,21 +89,12 @@ class Room extends Model
         try{
             $room_id = $request->room_id;
             $user_id = $request->user_id;
-            $room = Room::with([
-                'users'=> function ($query){
-                    $query->select('room_user.*','users.name as user_name')->join('users', 'user_id', '=', 'users.id');
-                },
-            ])->where('id',$room_id)->first()->toArray();
+            $room = Room::with(['chats' => function ($query){
+                $query->select('chats.*','users.name as user_name')->join('users', 'user_id', '=', 'users.id');
+            }])->where('rooms.id',$room_id)->first();
 
-            $room['name'] = $room['users'][array_search($user_id,array_map(function($e){
-                return $e['id'];
-            },$room['users']))]['name'];
-
-            // ルームユーザー内のルーム名削除
-            $room['users'] = array_map(function($e){
-                unset($e['name']);
-                return $e;
-            },$room['users']);
+            $room['name'] = RoomUser::select('name')->where('room_id',$room_id)->where('user_id',$user_id)->first()['name'];
+            $room['users'] = RoomUser::select('users.id as id','users.name')->where('room_user.room_id',$room_id)->join('users','user_id','users.id')->get();
 
             return [
                 'result' => $room,
@@ -96,7 +105,7 @@ class Room extends Model
 
             return [
                 'result' => $e,
-                'status' => 400
+                'status' => $e->getCode()
             ];
         }
 
@@ -104,21 +113,26 @@ class Room extends Model
 
     public static function delete_room($room){
         try{
-            $room_users=RoomUser::where('room_id',$room->id)->whereNull('deleted_at')->get();
-            foreach($room_users as $user){
-                RoomUser::delete_room_user($user);
+            $room_users=RoomUser::where('room_id',$room->id)->whereNull('deleted_at')->get()->toArray();
+
+            if(count($room_users)>0){
+                foreach($room_users as $user){
+                    RoomUser::delete_room_user($user);
+                }
             }
-            $chats=Chat::where('room_id',$room->id)->whereNull('deleted_at')->get();
-            foreach($chats as $chat){
-                Chat::delete_chat($chat);
+            $chats=Chat::where('room_id',$room->id)->whereNull('deleted_at')->get()->toArray();
+            if(count($chats)>0){
+                foreach($chats as $chat){
+                    Chat::delete_chat($chat);
+                }
             }
             $room->delete();
             $status=Response::HTTP_OK;
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

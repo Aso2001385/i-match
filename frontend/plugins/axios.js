@@ -1,16 +1,15 @@
-export default ({ $axios, store , redirect }) => {
+export default ({ $axios, store, redirect }) => {
   // X-Aothを付けないルートを追記していく(条件式を増やしていくよりこの方が管理しやすくてスマートだよね)
   const EXIT_ROUTES = {
     // 練習用に
     request: ['post:auth', 'post:users', 'get:ac'],
-    response: ['get:ac',],
-    responseAuth :['post:auth','get:auth']
+    response: ['get:ac'],
+    responseAuth: ['post:auth', 'get:auth'],
   }
 
   // リクエスト処理
   $axios.onRequest(
     config => {
-
       // アクセス先がEXIT_ROUTESに含まれていたらヘッダ作成はスルー
       if (EXIT_ROUTES.request.includes(config.method + ':' + config.url.split('/api/')[1])) return config
 
@@ -30,9 +29,7 @@ export default ({ $axios, store , redirect }) => {
   // レスポンス処理
   $axios.onResponse(
     response => {
-
       const config = response.config
-
       if (EXIT_ROUTES.response.includes(config.method + ':' + config.url.split('/api/')[1])) return response
       // レスポンスヘッダのX-Authフィールドからトークン取得し配列化
 
@@ -48,7 +45,6 @@ export default ({ $axios, store , redirect }) => {
 
       // セッションにJSON形式で保存
       sessionStorage.setItem('token', JSON.stringify(COOL))
-
 
       return response
     },

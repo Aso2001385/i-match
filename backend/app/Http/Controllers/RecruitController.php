@@ -61,14 +61,8 @@ class RecruitController extends Controller
      */
     public function store(CreateRecruitRequest $request)
     {
-        $request1=collect(
-            ['user_id' => $request->user_id, 'title' =>$request->title, 'contents' => $request->contents, 'purpose'=>$request->purpose, 'persons'=>$request->persons, 'due'=>$request->due]
-        );
-        $response=Recruit::create_recruits($request1);
+        $response = Recruit::create_recruits($request);
 
-        if($response['result']=='success!'){
-            $response=RecruitSkill::create_rec_skill($request,$response['recruit']);
-        }
         return response()->json($response['result'],$response['status']);
     }
 
@@ -120,7 +114,7 @@ class RecruitController extends Controller
 
         }catch(\Exception $e){
 
-            return response()->json($e,400);
+            return response()->json($e,$e->getCode());
 
         }
 
@@ -130,12 +124,10 @@ class RecruitController extends Controller
 
     public function skillSearch(Request $request)
     {
-
-        $res = $request->all();
         try{
-            $response = Recruit::skillSearch($res);
+            $response = Recruit::skillSearch($request->skills,$request->user_id);
         }catch(Exception $e){
-            return response()->json($e,400);
+            return response()->json($e,$e->getCode());
         }
         return response()->json($response['result'],200);
     }

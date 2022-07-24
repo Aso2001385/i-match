@@ -11,9 +11,6 @@
             <v-card-title style="border-bottom: 2px solid lightgrey; width: 90%">内容</v-card-title>
             <v-row class="mt-0 pa-0">
               <v-col cols="10">
-                <!-- <v-text-field label="タイトル" @change="informationBull(1, tit)">{{
-                  sessionStorage.getItem('infoContent')
-                }}</v-text-field> -->
                 <v-text-field v-model="tit" label="タイトル" @change="informationBull"></v-text-field>
               </v-col>
             </v-row>
@@ -102,13 +99,7 @@
                     >{{ value }}<v-icon dark right small @click="deleteSkill(value)">mdi-minus-circle</v-icon></v-chip
                   ></span
                 ><span style="float: left"
-                  ><v-col
-                    id="addSkill"
-                    class="black--text"
-                    style="background-color: white; border: 1px solid white"
-                    @click="openModal"
-                    >追加</v-col
-                  ></span
+                  ><v-btn id="addSkill" class="black--text" @click.prevent="openModal">追加</v-btn></span
                 >
               </v-col>
             </v-row>
@@ -150,11 +141,9 @@ export default {
       levels: [],
       exps: [],
       skill: '',
-      // level: 99,
       chipSkills: [],
       levelSkills: [],
       skillId: [],
-      // skillLevel: [],
       langs: [
         { id: 1, skillCategory: 0, skillName: 'Java' },
         { id: 2, skillCategory: 0, skillName: 'PHP' },
@@ -330,8 +319,7 @@ export default {
       }
       console.log(sendBulletin)
       this.$axios
-        .post('https://i-match.click/api/recruits', sendBulletin)
-        // .post('https://i-match.click/api/recruits', sendBulletin)
+        .post(`${this.$urls.API}/recruits`, sendBulletin)
         .then(response => {
           console.log('ちゃんと通っている１')
           console.log(response.data)
@@ -404,7 +392,6 @@ export default {
       sessionStorage.setItem('chip', chipBox)
       sessionStorage.setItem('levels', levelBox)
       sessionStorage.setItem('skills', chipBox)
-      // console.log(this.chipSkills)
       return this.chipSkills.splice(this.chipSkills.indexOf(value), 1)
     },
   },

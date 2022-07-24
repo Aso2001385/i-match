@@ -5,11 +5,11 @@
         <v-container>
           <v-row>
             <v-list>
-              <v-list-item class="pl-1 pb-0 pa-5">
+              <!-- <v-list-item class="pl-1 pb-0 pa-5">
                 <NuxtLink to="/news-list" class="white--text text-h7" style="text-decoration: none"
                   ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-bell</v-icon>お知らせ</NuxtLink
                 >
-              </v-list-item>
+              </v-list-item> -->
               <v-list-item class="pl-1 pb-0 pa-4">
                 <NuxtLink to="/bulletin-list" class="white--text text-h7" style="text-decoration: none"
                   ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-bulletin-board</v-icon>掲示板</NuxtLink
@@ -26,12 +26,12 @@
                   >ユーザーリスト</NuxtLink
                 >
               </v-list-item>
-              <v-list-item class="pl-1 pb-0 pa-4">
+              <!-- <v-list-item class="pl-1 pb-0 pa-4">
                 <NuxtLink to="/history-list" class="white--text text-h7" style="text-decoration: none"
                   ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-clipboard-text-clock</v-icon
                   >参加履歴</NuxtLink
                 >
-              </v-list-item>
+              </v-list-item> -->
               <v-list-item class="pl-1 pb-0 pa-4">
                 <NuxtLink to="/account" class="white--text text-h7" style="text-decoration: none"
                   ><v-icon class="white--text ma-4" aria-hidden="false"> mdi-account</v-icon
@@ -45,7 +45,9 @@
           </v-row>
 
           <v-row class="justify-center mt-10" cols="1">
-            <NuxtLink to="/account" class="white--text">ログアウト</NuxtLink>
+            <NuxtLink to="/account" class="white--text">
+              <span @click="logout">ログアウト</span>
+            </NuxtLink>
           </v-row>
         </v-container>
       </v-navigation-drawer>
@@ -69,8 +71,6 @@ export default {
   data() {
     return {
       drawer: true,
-      // ログインしてデータを取得するまで代わりに入れておく
-      name: '',
     }
   },
   computed: {
@@ -85,15 +85,12 @@ export default {
     this.userInfo()
   },
   methods: {
-    conuser() {
-      console.log(this.user)
-      console.log(this.skills.user_skills[0].name)
-      // console.log(this.user.name)
-    },
-    userInfo() {
-      console.log('トークンに保存してあるユーザー情報')
-      console.log(this.$store.state.skills)
-      console.log(this.$store.state.user)
+    conuser() {},
+    userInfo() {},
+    logout() {
+      window.sessionStorage.clear()
+      alert('ログアウトしました。')
+      this.$router.push(`/`)
     },
   },
 }

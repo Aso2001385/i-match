@@ -5,21 +5,25 @@
         <v-col>
           <v-row>
             <v-col cols="6">
-              <p style="text-align: center"><v-btn color="green" @click="searchSkills">検索</v-btn></p>
+              <p style="text-align: center">
+                <v-btn href="/bulletin-list" color="green" @click="searchSkills()">検索</v-btn>
+              </p>
             </v-col>
             <v-col cols="6">
-              <v-btn color="orange" @click="deleteSkillChips()">Clear<v-icon dark right>mdi-minus-circle</v-icon></v-btn>
+              <v-btn color="orange" @click="deleteSkillChips()"
+                >Clear<v-icon dark right>mdi-minus-circle</v-icon></v-btn
+              >
             </v-col>
             <v-col cols="12" style="overflow: hidden !important; height: 15vh; overflow-y: auto">
               <v-chip
-                v-for="(skillChip,index) in skillChips"
+                v-for="(skillChip, index) in skillChips"
                 :key="index"
                 :class="skillChip.color"
                 class="mr-2 mb-1 white--text"
                 small
               >
-              {{ skillChip.name }}
-              <v-icon dark right small @click="deleteSkillChip(index)">mdi-minus-circle</v-icon>
+                {{ skillChip.name }}
+                <v-icon dark right small @click="deleteSkillChip(index)">mdi-minus-circle</v-icon>
               </v-chip>
             </v-col>
           </v-row>
@@ -47,23 +51,27 @@
   </v-row>
 </template>
 <script defer>
-import Common from "~/plugins/common"
+import Common from '~/plugins/common'
 export default {
   data() {
     return {
-      skillChips:[],
+      skillChips: [],
       selectSkill: {},
     }
   },
   computed: {
-    skillUnits(){
+    skillUnits() {
       return this.$store.state.skills
-    }
+    },
   },
   methods: {
-    addSkillChip(){
+    addSkillChip() {
       this.skillChips.push(this.selectSkill)
-      this.skillChips = Common.orderBy(this.skillChips,'category_id','num',true,{keys:['id'],mode:'num',asc:true})
+      this.skillChips = Common.orderBy(this.skillChips, 'category_id', 'num', true, {
+        keys: ['id'],
+        mode: 'num',
+        asc: true,
+      })
       this.skillChips = this.skillChips.filter((ele, index, self) => self.findIndex(e => e.id === ele.id) === index)
     },
     deleteSkillChip(index) {
@@ -72,10 +80,31 @@ export default {
     deleteSkillChips() {
       this.skillChips = []
     },
-    searchSkill(){
 
-    }
+    searchSkills() {
+      const sendSearch = []
+      for (let i = 0; i < this.skillChips.length; i++) {
+        sendSearch.push({ id: this.skillChips[i].id, name: this.skillChips[i].name })
+      }
+
+      // 検索ボタンが押されたらセッションにそのデータを格納する。あと検索をしたというフラグもおく(1)
+      sessionStorage.setItem('sendSearch', JSON.stringify(sendSearch))
+      sessionStorage.setItem('searchFlg', 1)
+
+      // this.$axios
+      //   .post(`${this.$urls.API}/search/skill`, sendSearch)
+      //   // .get(`${this.$urls.API}/search/skill`)
+      //   .then(response => {
+      //     console.log('通っている')
+      //     console.log(response.data)
+      //   })
+      //   .catch(err => {
+      //     console.log('通ってないよー')
+      //     console.log(err)
+      //     return err.response
+      //   })
+    },
+    // searchSkill() {},
   },
-
 }
 </script>

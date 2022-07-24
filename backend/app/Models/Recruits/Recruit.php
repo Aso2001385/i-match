@@ -2,6 +2,8 @@
 
 namespace App\Models\Recruits;
 
+use App\Models\Chats\Room;
+use App\Models\Chats\RoomUser;
 use App\Models\Recruits\RecruitUser;
 use App\Models\Recruits\RecruitSkill;
 use App\Models\Skills\Skill;
@@ -9,7 +11,6 @@ use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Response;
 use Exception;
@@ -20,13 +21,13 @@ class Recruit extends Model
 
     protected $fillable = [
         'user_id',
+        'room_id',
         'title',
         'contents',
         'purpose',
         'persons',
         'due',
     ];
-
     public function users()
     {
         return $this->hasMany(RecruitUser::class);
@@ -38,48 +39,69 @@ class Recruit extends Model
     }
 
     public static function create_recruits($request){
+
         try{
 
-            $recruit = Recruit::create($request->all());
+            $room = Room::create();
 
-            $recruit_user=[
-                'recruit_id'=>$recruit->id,
-                'user_id'=>$recruit->user_id
+            $recruit = Recruit::create([
+                'user_id' => $request->user_id,
+                'room_id' => $room->id,
+                'title' =>$request->title,
+                'contents' => $request->contents,
+                'purpose'=>$request->purpose,
+                'persons'=>$request->persons,
+                'due'=>$request->due
+            ]);
+
+            RoomUser::create([
+                'room_id' => $room->id,
+                'user_id' => $request->user_id,
+                'name' => $request->title
+            ]);
+
+            $insert_check = RecruitSkill::bulk_insert_skills($request->skills,$recruit->id);
+
+            if(!$insert_check['result']) throw new Exception($insert_check['result']);
+
+            $result = [
+                'room_id' => $room->id,
+                'recruit_id' => $recruit->id,
+                'name' => $request['title']
             ];
-
-            RecruitUser::create_recruit_user($recruit_user);
-
-            $result = 'success!';
 
             $status = Response::HTTP_OK;
 
         }catch(Exception $e){
 
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
-            'recruit'=>$recruit,
             'result' => $result,
-            'status' => $status,
+            'status' => $status
         ];
     }
 
     public static function get_other_recruits($request,$id){
 
         try{
-            $recruits=Recruit::where('user_id','<>',$id)->whereNull('deleted_at')->get();
+            $recruits=Recruit::where('user_id','<>',$id)->whereNull('deleted_at')->orderby('created_at','desc')->get();
             foreach($recruits as $rec){
+                $rec->member=RecruitUser::where('recruit_id',$rec->id)->whereNull('deleted_at')->count();
                 $rec->name=User::find($rec->user_id)->name;
             }
             $status = Response::HTTP_OK;
 
-        }catch(Example $e){
+        }catch(Exception $e){
 
-            $result = [];
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
 
         }
 
@@ -117,10 +139,12 @@ class Recruit extends Model
 
             $status = Response::HTTP_OK;
 
-        }catch(Example $e){
+        }catch(Exception $e){
 
-            $result = [];
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
 
         }
 
@@ -139,8 +163,8 @@ class Recruit extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -151,27 +175,44 @@ class Recruit extends Model
         ];
     }
 
-    public static function delete_recruit($recruit){
+    public static function delete_user($user){
         try{
-            $recruit_users=RecruitUser::where('recruit_id',$recruit->id)->whereNull('deleted_at')->get();
-            $recruit_skills=RecruitSkill::where('recruit_id',$recruit->id)->whereNull('deleted_at')->get();
-            foreach($recruit_skills as $skill){
-                RecruitSkill::delete_recruit_skill($skill);
+            $recruits= Recruit::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
+            date_default_timezone_set("Asia/Tokyo");
+            $today=date("Y-m-d H:i:s");
+            if(count($recruits)>0){
+                foreach($recruits as $recruit){
+                    if($today<=$recruit->due){
+                        Recruit::delete_recruit($recruit);
+
+                    }
+                }
             }
-            foreach($recruit_users as $user){
-                RecruitUser::delete_recruit_user($user);
+            
+            $room_users=RoomUser::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
+            if(count($room_users)>0){
+                foreach($room_users as $user){
+                    RoomUser::delete_room_user($user);
+                }
             }
-            $recruit->delete();
+
+            $user_skills=UserSkill::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
+            if(count($user_skills)>0){
+                foreach($user_skills as $user_skill){
+                    UserSkill::delete_skill($user_skill);
+                }
+            }
+            $user->delete();
             $status= Response::HTTP_OK;
+
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
-
         return [
             'result' => [],
             'status' => $status
@@ -196,17 +237,16 @@ class Recruit extends Model
         }catch(Exception $e){
             return [
                 'result' => $e,
-                'status' => 400
+                'status' => $e->getCode()
             ];
 
         }
     }
 
-    public static function skillSearch($request)
+    public static function skillSearch($skills,$user_id)
     {
 
         try{
-            $array = $request;
             $recruit = Recruit::with([
                 'skills'=> function ($query){
                     $query->select('recruit_skill.*','skills.name','skills.category_id')->join('skills', 'skill_id', '=', 'skills.id');
@@ -217,8 +257,15 @@ class Recruit extends Model
             ])->whereIn('id',RecruitSkill::select('recruit_id')
                 ->whereIn('skill_id',array_map(function($v){
                     return $v['id'];
-                },$array))->get()
-            )->get();
+                },$skills))->get()
+            )->where('user_id','<>',$user_id)->get()->toArray();
+
+            if(count($recruit)==0){
+                return[
+                    'result' => '見つかりませんでした',
+                    'status' =>200
+                ];
+            }
 
             return [
                 'result' => $recruit,
@@ -227,7 +274,7 @@ class Recruit extends Model
         }catch(Exception $e){
             return [
                 'result' => $e,
-                'status' => 400
+                'status' => $e->getCode()
             ];
 
         }

@@ -30,46 +30,37 @@ export default {
 
   */
 
-  condAddValues(materials,nestKeys,condKey,condValues,addKey,addValues,defaultvalue){
-
-    materials.map( e =>  {
-
-      if(Array.isArray(nestKeys)){
+  condAddValues(materials, nestKeys, condKey, condValues, addKey, addValues, defaultvalue) {
+    materials.map(e => {
+      if (Array.isArray(nestKeys)) {
         nestKeys.forEach(el => {
           e = e[el]
         })
 
         e.map(elm => {
           elm[addKey] = defaultvalue
-          for(let i=0; i<condValues.length; i++){
-            if(elm[condKey] === condValues[i]){
+          for (let i = 0; i < condValues.length; i++) {
+            if (elm[condKey] === condValues[i]) {
               elm[addKey] = addValues[i]
               break
             }
           }
           return elm
-        },(condKey,condValues,addKey,addValues,defaultvalue))
-
-
-      }else{
-
+        }, (condKey, condValues, addKey, addValues, defaultvalue))
+      } else {
         e[addKey] = defaultvalue
-        for(let i=0; i<condValues.length; i++){
-
-          if(e[condKey] === condValues[i]){
+        for (let i = 0; i < condValues.length; i++) {
+          if (e[condKey] === condValues[i]) {
             e[addKey] = addValues[i]
             break
           }
         }
-
       }
 
       return e
-
-    },(condKey,nestKeys,condValues,addKey,addValues,defaultvalue))
+    }, (condKey, nestKeys, condValues, addKey, addValues, defaultvalue))
 
     return materials
-
   },
 
   orderBy(materials, key = String, mode = Boolean, asc = Boolean, sub = { keys: Array, mode: Boolean, asc: Boolean }) {
@@ -200,18 +191,8 @@ export default {
 
     return materials
   },
+
+  deepCopy(materials) {
+    return JSON.parse(JSON.stringify(materials))
+  },
 }
-
-// export default {
-//   groupBy(materials, key) {
-//     const array = materials.reduce(function (rv, x) {
-//       ;(rv[x[key]] = rv[x[key]] || []).push(x)
-
-//       return rv
-//     }, {})
-
-//     array.forEach(element => {
-
-//     })
-//   },
-// }

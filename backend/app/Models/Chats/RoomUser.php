@@ -30,14 +30,15 @@ class RoomUser extends Model
                 'room_name' => $room_name
             ]);
 
-            $result = '';
+            $result = 'success!';
             $status = Response::HTTP_OK;
 
         }catch(Exception $e){
 
-            $result = $e;
-
-            $status = Response::HTTP_BAD_REQUEST;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
 
         return [
@@ -48,14 +49,20 @@ class RoomUser extends Model
 
     public static function get_room_user($room_user){
         try{
-            $partner_id=RoomUser::where('room_id',$room_user->room_id)->where('user_id','<>',$room_user->user_id)->first()->user_id;
-            $room_user->partner_name=User::find($partner_id)->name;
+            $partner_ids=RoomUser::where('room_id',$room_user->room_id)->where('user_id','<>',$room_user->user_id)->whereNull('deleted_at')->get()->toArray();
+
+            if(count($partner_ids)>0){
+                for($i=0;$i<count($partner_ids);$i++){
+                    $room_user->partner_names[$i]=User::find($partner_ids[$i])->name;
+                }
+            }
+
             $status=Response::HTTP_OK;
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -74,8 +81,8 @@ class RoomUser extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -92,8 +99,8 @@ class RoomUser extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

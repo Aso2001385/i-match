@@ -31,14 +31,16 @@ class UserSkill extends Model
     public static function store_skills($request){
 
         try{
-            UserSkill::create($request->all());
+            $user_skills=UserSkill::create($request->all());
             $result = 'success!';
             $status = Response::HTTP_OK;
         }catch(Exception $e){
-            $user_skills = [];
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
-   
+
         return [
             'result' => $user_skills,
             'status' => $status,
@@ -51,9 +53,12 @@ class UserSkill extends Model
             $user_skill->update($request->all());
             $status = Response::HTTP_OK;
         }catch(Exception $e){
-            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+            return [
+                'result' => $e,
+                'status' => $e->getCode()
+            ];
         }
-   
+
         return [
             'result' => $user_skills,
             'status' => $status,
@@ -70,8 +75,8 @@ class UserSkill extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

@@ -2,6 +2,7 @@
 
 namespace App\Models\Informations;
 
+use App\Models\Informations\Information;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -26,8 +27,8 @@ class InformationCategory extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -45,8 +46,8 @@ class InformationCategory extends Model
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }
@@ -58,14 +59,16 @@ class InformationCategory extends Model
 
     public static function delete_information_category($information_category){
         try{
+            $informations=Information::where('category_id',$information_category->id)->whereNull('deleted_at')->get()->toArray();
+
             $information_category->delete();
             
             $status=Response::HTTP_OK;
         }catch(Exception $e){
 
             return [
-                'result' => [],
-                'status' => Response::HTTP_BAD_REQUEST
+                'result' => $e,
+                'status' => $e->getCode()
             ];
 
         }

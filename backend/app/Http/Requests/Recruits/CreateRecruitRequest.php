@@ -4,7 +4,7 @@ namespace App\Http\Requests\Recruits;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException; 
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Response;
 
 class CreateRecruitRequest extends FormRequest
@@ -28,7 +28,6 @@ class CreateRecruitRequest extends FormRequest
     {
         return [
             'user_id'=>'required|integer',
-            'room_id'=>'required|integer',
             'title'=>'required|string|max:30',
             'contents'=>'required|string|max:1024',
             'purpose'=>'required|string',

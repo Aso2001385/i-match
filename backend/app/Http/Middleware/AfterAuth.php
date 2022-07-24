@@ -32,9 +32,6 @@ class AfterAuth
         // ユーザーIDをもとにトークンをリジェネ
         $token = Token::regeneration(session('user_id'));
 
-
-        $response->header('Access-Control-Allow-Origin','*');
-        $response->header('Access-Control-Allow-Headers','X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, x-auth, X-Auth');
         $response->header('x-auth',$token);
 
         return $response;

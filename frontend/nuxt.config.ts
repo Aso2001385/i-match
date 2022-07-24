@@ -90,8 +90,6 @@ export default {
     { src: './plugins/vuejs-datepicker.js', mode: 'client', ssr: false },
     { src: './plugins/main.js' },
     '~/plugins/axios',
-    '~/plugins/urls',
-    '~/plugins/common',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -128,7 +126,6 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     proxy: true,
-    // baseURL: 'http://localhost:8080/api/',
     baseURL: 'http://localhost:8080/api/',
   },
 
