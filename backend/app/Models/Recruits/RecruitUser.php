@@ -26,13 +26,19 @@ class RecruitUser extends Model
     public static function create_recruit_user($request){
 
         try{
+            $recruit_existence_check=Recruit::where('user_id',$request->user_id)->where('recruit_id',$request->recruit_id)->whereNull('deleted_at')->first()->toArray();
 
-            $recruit_user = RecruitUser::create($request->all());
-            $room_id = Recruit::select('room_id')->where('id',$recruit_user->recruit_id)->get();
-            RoomUser::create([
-                'room_id' => $room_id,
-                'user_id' => $request->user_id
-            ]);
+            if(count($recruit_existence_check)>0){
+                $recruit_user = RecruitUser::create($request->all());
+                $room_id = Recruit::select('room_id')->where('id',$recruit_user->recruit_id)->get();
+
+                RoomUser::create([
+                    'room_id' => $room_id,
+                    'user_id' => $request->user_id
+                ]);
+            }else{
+                abort(403);
+            }
 
         }catch(Exception $e){
 
