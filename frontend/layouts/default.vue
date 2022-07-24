@@ -71,8 +71,6 @@ export default {
   data() {
     return {
       drawer: true,
-      // ログインしてデータを取得するまで代わりに入れておく
-      // name: '',
     }
   },
   computed: {
@@ -87,16 +85,8 @@ export default {
     this.userInfo()
   },
   methods: {
-    conuser() {
-      console.log(this.user)
-      console.log(this.skills.user_skills[0].name)
-      // console.log(this.user.name)
-    },
-    userInfo() {
-      // console.log('トークンに保存してあるユーザー情報')
-      // console.log(this.$store.state.skills)
-      // console.log(this.$store.state.user)
-    },
+    conuser() {},
+    userInfo() {},
     logout() {
       window.sessionStorage.clear()
       alert('ログアウトしました。')

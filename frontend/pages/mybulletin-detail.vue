@@ -118,10 +118,8 @@ export default {
       await this.$axios
         .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
         .then(response => {
-          console.log('通ってるよー')
-          console.log(response.data)
           this.detail = response.data
-          console.log(this.detail.skills[0].skill_id - 1)
+
           for (let i = 0; i < this.detail.skills.length; i++) {
             this.skillName.push({
               name: priSkill[this.detail.skills[i].skill_id - 1].name,
