@@ -44,6 +44,7 @@ export default {
         })
         .catch(err => {
           console.log('通ってないよー')
+          console.log(err)
           return err.response
         })
     },

@@ -16,7 +16,7 @@ class ChatController extends Controller
     // ユーザーから見たルーム一覧
     public function index(Request $request){
 
-        $response = Room::get_rooms($request);
+        $response = Room::get_rooms($request->user_id);
 
         return response()->json($response['result'],$response['status']);
     }
