@@ -16,7 +16,7 @@ class ChatController extends Controller
     // ユーザーから見たルーム一覧
     public function index(Request $request){
 
-        $response = Room::get_rooms($request);
+        $response = Room::get_rooms($request->user_id);
 
         return response()->json($response['result'],$response['status']);
     }
@@ -70,7 +70,7 @@ class ChatController extends Controller
 
         try{
 
-            Chat::create($request->all());
+            Chat::upsert($request->all(),['id']);
             $room = Room::get_room($request);
 
             return response()->json($room['result'],200);
