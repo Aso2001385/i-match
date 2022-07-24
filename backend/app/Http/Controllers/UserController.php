@@ -22,7 +22,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {    
             $response=User::index_user();
 
             return response()->json($response['result'],$response['status']);

@@ -65,11 +65,17 @@ class User extends Model
 
     public static function index_user(){
         try{
-            $users=User::all()->toArray();
+            // $users=User::all()->toArray();
 
-            foreach($users as $user){
-                $user->skills=UserSkill::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
-            }
+            // foreach($users as $user){
+            //     $user->skills=UserSkill::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
+            // }
+            $users = User::with(['skills' => function ($query){
+                $query->select('user_skill.*','skills.name','skills.category_id','skill_categories.name as category_name')
+                    ->join('skills','user_skill.skill_id','=','skills.id')
+                    ->join('skill_categories','skills.category_id','=','skill_categories.id');
+            }])->get();
+            $status = 200;
         }catch(Exception $e){
 
             return [
