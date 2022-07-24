@@ -81,8 +81,17 @@ export default {
         .get(`${this.$urls.API}/chats/${this.$route.query.id}/${this.$store.state.user.id}`)
         .then(response => {
           if (!response.data) return
-          console.log(response.data.chats)
-          this.chats = response.data.chats
+
+          this.chats = response.data.chats =
+            response.data.chats.length > 0
+              ? response.data.chats
+              : [
+                  {
+                    message: 'まだメッセージがありません。投稿してみましょう。',
+                    user_name: '- -',
+                    created_at: '2000/01/01 0:00:00',
+                  },
+                ]
           this.users = response.data.users
         })
         .catch(err => {
