@@ -89,24 +89,12 @@ class Room extends Model
         try{
             $room_id = $request->room_id;
             $user_id = $request->user_id;
-            $room = Room::with([
-                'users'=> function ($query){
-                    $query->select('room_user.*','users.name as user_name')->join('users', 'user_id', '=', 'users.id');
-                },
-                'chats' =>function ($query){
-                    $query->select('chats.*')->orderBy('created_at','desc');
-                },
-            ])->where('id',$room_id)->first()->toArray();
+            $room = Room::with(['chats' => function ($query){
+                $query->select('chats.*','users.name as user_name')->join('users', 'user_id', '=', 'users.id');
+            }])->where('rooms.id',$room_id)->first();
 
-            $room['name'] = $room['users'][array_search($user_id,array_map(function($e){
-                return $e['id'];
-            },$room['users']))]['name'];
-
-            // ルームユーザー内のルーム名削除
-            $room['users'] = array_map(function($e){
-                unset($e['name']);
-                return $e;
-            },$room['users']);
+            $room['name'] = RoomUser::select('name')->where('room_id',$room_id)->where('user_id',$user_id)->first()['name'];
+            $room['users'] = RoomUser::select('users.id as id','users.name')->where('room_user.room_id',$room_id)->join('users','user_id','users.id')->get();
 
             return [
                 'result' => $room,

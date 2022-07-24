@@ -8,18 +8,16 @@
     <v-row>
       <v-col cols="12" style="overflow: hidden !important; height: 83vh; overflow-y: auto" class="pa-0 pb-1">
         <v-row style="width: 100%">
-          <v-card v-for="room in rooms" :key="room.id" style="width: 100%">
-            <NuxtLink to="/chat-room" class="white--text green" style="text-decoration: none">
-              <v-row class="ml-5 mt-3 mb-5">
-                <v-col cols="12" md="8" class="black--text ml-5 font-weight-bold" style="width: 80%">
-                  {{ room.name }}
-                </v-col>
-                <v-col cols="12" md="3" class="black--text font-weight-bold">{{ room.created_at }}</v-col>
-                <v-col cols="12" class="ml-5 grey--text darken-4" style="width: 80%">
-                  {{ room.message }}
-                </v-col>
-              </v-row>
-            </NuxtLink>
+          <v-card v-for="room in rooms" :key="room.id" style="width: 100%" @click.prevent="next(room.id, room.name)">
+            <v-row class="ml-5 mt-3 mb-5">
+              <v-col cols="12" md="8" class="black--text ml-5 font-weight-bold" style="width: 80%">
+                {{ room.name }}
+              </v-col>
+              <v-col cols="12" md="3" class="black--text font-weight-bold">{{ room.created_at }}</v-col>
+              <v-col cols="12" class="ml-5 grey--text darken-4" style="width: 80%">
+                {{ room.message }}
+              </v-col>
+            </v-row>
           </v-card>
         </v-row>
       </v-col>
@@ -56,6 +54,9 @@ export default {
           console.log(err)
           return err.response
         })
+    },
+    next(room_id, room_name) {
+      this.$router.push({ path: 'chat-room', query: { id: room_id, name: room_name } })
     },
   },
 }
