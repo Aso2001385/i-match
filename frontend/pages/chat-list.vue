@@ -15,7 +15,9 @@
                   {{ room.name }}
                 </v-col>
                 <v-col cols="12" md="3" class="black--text font-weight-bold">{{ room.created_at }}</v-col>
-                <v-col cols="12" class="ml-5 grey--text darken-4" style="width: 80%">{{ room.new_message }}</v-col>
+                <v-col cols="12" class="ml-5 grey--text darken-4" style="width: 80%">
+                  {{ room.message }}
+                </v-col>
               </v-row>
             </NuxtLink>
           </v-card>
@@ -40,7 +42,14 @@ export default {
         .get(`${this.$urls.API}/rooms/${this.$store.state.user.id}`)
         .then(response => {
           if (!response.data) return
-          this.rooms = response.data
+          this.rooms = JSON.parse(JSON.stringify(response.data))
+
+          this.rooms = this.rooms.map(v => {
+            v.message = v.new_message.name + ' : ' + v.new_message.message
+            v.message_created_at = v.new_message.created_at
+
+            return v
+          })
         })
         .catch(err => {
           console.log('通ってないよー')
