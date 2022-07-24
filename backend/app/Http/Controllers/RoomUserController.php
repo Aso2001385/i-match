@@ -31,7 +31,7 @@ class RoomUserController extends Controller
      */
     public function store(Request $request)
     {
-        $response=RoomUser::create_room_user($request);
+        $response=RoomUser::add_user($request->room_id, $request->user_id, $request->room_name);
 
         return response()->json($response['result'],$response['status']);
     }
