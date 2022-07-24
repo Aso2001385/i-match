@@ -104,7 +104,7 @@ export default {
         .then(response => {
           if (Number(this.searchFlg) === 0) {
             // 検索なし
-            console.log(response.data)
+
             this.bulletins = response.data
           } else {
             // 検索あり

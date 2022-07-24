@@ -35,9 +35,6 @@ export default ({ $axios, store, redirect }) => {
 
       if (!(response.status >= 200 && response.status < 300)) return response
 
-      console.log(response.headers)
-      console.log(response.data)
-
       const TOKENS = response.headers['x-auth'].split('|')
 
       const COOL = {

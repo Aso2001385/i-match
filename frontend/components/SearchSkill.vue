@@ -82,13 +82,10 @@ export default {
     },
 
     searchSkills() {
-      console.log(this.skillChips)
       const sendSearch = []
       for (let i = 0; i < this.skillChips.length; i++) {
         sendSearch.push({ id: this.skillChips[i].id, name: this.skillChips[i].name })
       }
-      console.log('配列の中身確認')
-      console.log(sendSearch)
 
       // 検索ボタンが押されたらセッションにそのデータを格納する。あと検索をしたというフラグもおく(1)
       sessionStorage.setItem('sendSearch', JSON.stringify(sendSearch))
