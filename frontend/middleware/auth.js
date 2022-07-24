@@ -16,9 +16,9 @@ export default async function ({ redirect, $axios, store, route }) {
         console.log('aaa')
         await $axios
           .get('http://localhost:8080/api/auth')
-          .then(response => {
+          .then(async response => {
             console.log(response.data + '　レスポンス確認')
-            store.commit('restoreLogin', response.data)
+            await store.commit('restoreLogin', response.data)
           })
           .catch(err => {
             console.log(err)

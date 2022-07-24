@@ -79,6 +79,8 @@ export default {
       return this.userId
     },
     async getBulletin() {
+      // テストでidが6の人のリストを出していた
+      const userId = 6
       await this.$axios
         .get(`${this.$urls.API}/recruits`)
         .then(response => {

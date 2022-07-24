@@ -7,17 +7,13 @@
             <v-col cols="4"><h2>基本情報</h2></v-col>
           </v-row>
           <v-row class="ml-5">
-            <v-col cols="10"
-              ><v-text-field v-model="name" label="ニックネーム" @change="informationBull"></v-text-field
-            ></v-col>
+            <v-col cols="10"><v-text-field v-model="name" label="ニックネーム"></v-text-field></v-col>
           </v-row>
           <v-row class="ml-5">
-            <v-col cols="10"
-              ><v-text-field v-model="email" label="メールアドレス" @change="informationBull" readonly></v-text-field
-            ></v-col>
+            <v-col cols="10"><v-text-field v-model="email" label="メールアドレス" readonly></v-text-field></v-col>
           </v-row>
-          <v-row style="float: right; margin-right: 10%">
-            <api-event-button color="grey darken-4" class="mb-5 pr-5" @click="saveAccount()"> 保存 </api-event-button>
+          <v-row style="float: right; margin-right: 15%">
+            <api-event-button color="grey darken-4" class="mb-5" @click="saveAccount()"> 保存 </api-event-button>
             <!-- <v-col><v-btn @click="saveAccount()">保存</v-btn></v-col> -->
           </v-row>
           <v-row class="ml-5 pb-10 mr-10">
@@ -46,16 +42,15 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col style="float: right; margin-left: 70%">
+            <v-col style="margin-left: 55%">
               <NuxtLink to="/skill-signup" style="text-decoration: none">
-                <api-event-button color="grey darken-4" class="mb-5"> 登録 </api-event-button>
-                <!-- <v-btn >登録</v-btn> -->
+                <v-btn color="grey darken-4" class="white--text">登録</v-btn>
               </NuxtLink>
             </v-col>
-            <v-col style="margin-right: 5%">
+            <v-col style="margin-right: 2%">
               <NuxtLink to="/skill-update" style="text-decoration: none">
-                <api-event-button color="grey darken-4" class="mb-5 pr-5"> 更新 </api-event-button>
-                <!-- <v-btn class="mb-5">更新</v-btn> -->
+                <!-- <api-event-button color="grey darken-4" class="mb-5 pr-5"> 更新 </api-event-button> -->
+                <v-btn class="mb-5 white--text" color="grey darken-4">更新</v-btn>
               </NuxtLink>
             </v-col>
           </v-row>
@@ -107,9 +102,9 @@ export default {
       this.name = this.$store.state.user.name
       this.email = this.$store.state.user.email
       console.log(this.$store.state.user)
-      const userId = this.$store.state.user.id
+      // const userId = this.$store.state.user.id
       // とりあえずid1の人の情報を出す時に利用
-      // const userId = 1
+      const userId = 1
       await this.$axios
         .get(`${this.$urls.API}/users/${userId}`)
         .then(response => {
@@ -118,10 +113,19 @@ export default {
           this.account = response.data
           for (let i = 0; i < this.account.user_skills.length; i++) {
             this.skillName.push({
-              name: SkillInfo[this.account.user_skills[i].id - 1].skillName,
-              categoryId: SkillInfo[this.account.user_skills[i].id - 1].skillCategory,
+              name: SkillInfo[this.account.user_skills[i].skill_id - 1].skillName,
+              categoryId: SkillInfo[this.account.user_skills[i].skill_id - 1].skillCategory,
             })
           }
+          this.skillName.sort(function (first, second) {
+            if (first.categoryId > second.categoryId) {
+              return 1
+            } else if (first.categoryId < second.categoryId) {
+              return -1
+            } else {
+              return 0
+            }
+          })
         })
         .catch(err => {
           console.log('通ってないよー')
@@ -133,25 +137,28 @@ export default {
       console.log(SkillInfo)
       // const userId = this.$store.state.user.id
       // とりあえずid1の人の情報を出す時に利用
-      const userId = 1
-      this.$axios
-        .get(`${this.$urls.API}/users/${userId}`)
-        .then(response => {
-          console.log('ちゃんと通っている')
-          console.log(response.data)
-          this.account = response.data
-          for (let i = 0; i < this.account.user_skills.length; i++) {
-            this.skillName.push({
-              name: SkillInfo[this.account.user_skills[i].id - 1].skillName,
-              categoryId: SkillInfo[this.account.user_skills[i].id - 1].skillCategory,
-            })
-          }
-        })
-        .catch(err => {
-          console.log('通ってないよー')
-          console.log(err)
-          return err.response
-        })
+      // const userId = 1
+      // this.$axios
+      //   .pose(`${this.$urls.API}/users/${userId}`)
+      //   .then(response => {
+      //     console.log(response.data)
+      //     console.log('ちゃんと通っている')
+      //     console.log(response.data)
+      //     this.account = response.data
+      //     for (let i = 0; i < this.account.user_skills.length; i++) {
+      //       this.skillName.push({
+      //         name: SkillInfo[this.account.user_skills[i].skill_id - 1].skillName,
+      //         categoryId: SkillInfo[this.account.user_skills[i].skill_id - 1].skillCategory,
+      //       })
+      //     }
+      //     console.log('表示されてる？')
+      //     console.log(this.skillName)
+      //   })
+      //   .catch(err => {
+      //     console.log('通ってないよー')
+      //     console.log(err)
+      //     return err.response
+      //   })
     },
   },
 }

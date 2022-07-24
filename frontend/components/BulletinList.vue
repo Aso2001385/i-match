@@ -11,7 +11,7 @@
               >募集人数：<span>3</span>/<span>{{ bulletin.persons }}</span
               >人</v-col
             >
-            <v-col cols="12"
+            <v-col cols="12" z
               ><h2 class="ml-8">{{ bulletin.title }}</h2></v-col
             >
           </v-row>
@@ -20,6 +20,7 @@
               <div style="width: 70%" id="bulletin_skill">
                 <!-- 何個スキルを表示するか -->
                 <span v-for="skill in bulletin.skills" :key="skill.id">
+                  <!-- <v-chip :class="color(skill.skill_id) + ' mr-2 white--text'" small> -->
                   <v-chip :class="categoryColor[skill.category_name] + ' mr-2 white--text'" small>
                     {{ skill.name }}
                   </v-chip>
@@ -38,6 +39,8 @@
   </v-container>
 </template>
 <script defer>
+import SkillInfo from '~/assets/skillinfo.json'
+
 export default {
   data() {
     return {
@@ -67,6 +70,21 @@ export default {
     getSession(value) {
       // どの掲示板の詳細を表示するか
       sessionStorage.setItem('bulletinDetail', value)
+      console.log(SkillInfo)
+    },
+    color(value) {
+      console.log(value)
+      if (value < 16) {
+        return 'red'
+      } else if (value < 31) {
+        return 'blue'
+      } else if (value < 37) {
+        return 'green'
+      } else if (value < 48) {
+        return 'purple'
+      } else {
+        return 'indigo darken-3'
+      }
     },
     skillCount(cnt) {
       return this.bulletinSkillCount[cnt - 1]
@@ -86,20 +104,13 @@ export default {
         .then(response => {
           if (Number(this.searchFlg) === 0) {
             // 検索なし
+            console.log(response.data)
             this.bulletins = response.data
-            // console.log('yesを通る')
           } else {
             // 検索あり
-            // 60件
             const searchBulletin = response.data
-            // console.log('Noを通る')
-            // console.log(searchBulletin)
-            // console.log(searchBulletin[0].skills)
-            // console.log('存在するか')
-            // console.log(this.sendSearch.length)
 
             for (let a = 0; a < searchBulletin.length; a++) {
-              console.log(1)
               for (let i = 0; i < searchBulletin[a].skills.length; i++) {
                 for (let j = 0; j < this.sendSearch.length; j++) {
                   if (searchBulletin[a].skills[i].skill_id === this.sendSearch[j].id) {

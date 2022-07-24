@@ -47,15 +47,17 @@
               </span>
             </v-col>
           </v-row>
-          <v-row class="mt-0 pa-0 pb-15 ml-15">
+          <v-row class="mt-0 pa-0 pb-15">
             <v-col>
-              <NuxtLink to="/mybulletin-edit" style="text-decoration: none">
-                <v-row class="mt-5 ml-15" justify="center" style="width: 70%">
-                  <v-col cols="12">
-                    <api-event-button color="grey darken-4"> 編集 </api-event-button>
-                  </v-col>
-                </v-row>
-              </NuxtLink>
+              <v-row class="mt-5" justify="center">
+                <v-col cols="6">
+                  <NuxtLink to="/mybulletin-edit" style="text-decoration: none">
+                    <v-btn color="grey darken-4" class="white--text" style="width: 100%">編集</v-btn>
+                  </NuxtLink>
+                  <!-- <api-event-button color="grey darken-4"> 編集 </api-event-button> -->
+                </v-col>
+              </v-row>
+              <!-- </NuxtLink> -->
             </v-col>
           </v-row>
         </v-card>
@@ -64,13 +66,13 @@
   </v-container>
 </template>
 <script defer>
-import ApiEventButton from '~/components/ui/ApiEventButton.vue'
+// import ApiEventButton from '~/components/ui/ApiEventButton.vue'
 import SkillInfo from '~/assets/skillinfo.json'
 
 export default {
-  components: {
-    ApiEventButton,
-  },
+  // components: {
+  //   ApiEventButton,
+  // },
   data() {
     return {
       bulletinDetailId: 0,

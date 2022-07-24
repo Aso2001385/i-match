@@ -6,18 +6,45 @@
           <v-row class="mt-5 pt-5 ml-15">
             <v-col cols="12"><h2>スキル更新</h2></v-col>
           </v-row>
-          <v-row class="ml-15">
-            <v-col cols="11"><v-text-field v-model="oldPassword" label="現在のパスワード"></v-text-field></v-col>
+          <v-row justify="center">
+            <v-col cols="8">
+              <v-select
+                v-model="selectName"
+                item-text="name"
+                item-value="id"
+                :items="skills"
+                attach
+                color="grey darken-4"
+                :item-color="white"
+                label="スキル"
+                class="mb-0"
+                style="width: 100%"
+                return-object
+                @change="levelUp"
+              ></v-select>
+            </v-col>
           </v-row>
-          <v-row class="ml-15">
-            <v-col cols="11"><v-text-field v-model="password" label="新しいパスワード"></v-text-field></v-col>
+          <v-row justify="center">
+            <v-col cols="8">
+              <v-select
+                v-model="selectLevel"
+                item-text="level"
+                item-value="id"
+                :items="levels"
+                attach
+                color="grey darken-4"
+                :item-color="white"
+                label="レベル"
+                class="mb-0"
+                style="width: 100%"
+                return-object
+                @change="levelUp"
+              ></v-select>
+            </v-col>
           </v-row>
-          <v-row class="ml-15">
-            <v-col cols="11"><v-text-field v-model="confPassword" label="新しいパスワード確認"></v-text-field></v-col>
-          </v-row>
-          <v-row class="mt-5 pb-5" style="width: 80%; margin-left: 10%">
-            <v-col cols="12">
-              <api-event-button color="grey darken-4" @click="updatePass">更新</api-event-button>
+          <v-row class="mt-5 pb-5" justify="center">
+            <v-col cols="6">
+              <api-event-button color="grey darken-4" @click="sendSkill">更新</api-event-button>
             </v-col>
           </v-row>
         </v-card>
@@ -36,24 +63,38 @@ export default {
   data() {
     return {
       bulletinDetailId: 0,
-      detail: [],
-      allSkill: [],
-      skillName: [],
+      selectName: '',
+      selectLevel: 99,
+      skillId: [],
+      skillLev: [],
+      // 選択されていないスキル集
+      skills: [],
+      // 選択されたスキルの名前
+      skill: '',
+      levels: [1, 2, 3, 4, 5],
+      // 選択されたレベル値
+      level: 0,
     }
   },
   computed: {
+    user() {
+      return this.$store.state.user
+    },
     skillUnits() {
       return this.$store.state.skills
     },
   },
   mounted() {
     this.getSession()
-    this.getBulletinDetail()
+    this.getSkills()
   },
+
+  // 自分の情報から持っているスキルのidを取得してselectに表示するものを考える。
+
   methods: {
     getSession() {
-      // クリックされた掲示板の詳細を受け取るためのid
-      this.bulletinDetailId = sessionStorage.getItem('bulletinDetail')
+      console.log(this.$store.state.user)
+      console.log(SkillInfo)
     },
     sortSection(sort) {
       if (sort === 0) {
@@ -78,24 +119,66 @@ export default {
         return 'indigo darken-3'
       }
     },
-    async getBulletinDetail() {
+    async getSkills() {
+      const userId = this.$store.state.user.id
+      // テストでid1の人のデータを入れていた
+      // const userId = 1
       await this.$axios
-        .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
+        .get(`${this.$urls.API}/users/${userId}`)
         .then(response => {
-          console.log('通ってるよー')
+          console.log('ちゃんと通っている')
           console.log(response.data)
-          this.detail = response.data
-          console.log(this.detail.skills[0].skill_id - 1)
-          for (let i = 0; i < this.detail.skills.length; i++) {
-            this.skillName.push({
-              name: SkillInfo[this.detail.skills[i].skill_id - 1].skillName,
-              categoryId: SkillInfo[this.detail.skills[i].skill_id - 1].skillCategory,
-              level: this.detail.skills[i].level,
+          const account = response.data
+          for (let i = 0; i < account.user_skills.length; i++) {
+            this.skills.push({
+              id: account.user_skills[i].skill_id,
+              name: account.user_skills[i].name + '　レベル:' + account.user_skills[i].level,
+              level: account.user_skills[i].level,
             })
+            // this.skillId.push(account.user_skills[i].skill_id)
+            // this.skillLev.push(account.user_skills[i].level)
           }
+          // for (let i = 0; i < SkillInfo.length; i++) {
+          //   if (this.skillId.includes(SkillInfo[i].id)) {
+          //     this.skills.push({ categoryId: SkillInfo[i].skillCategory, name: SkillInfo[i].skillName })
+          //   }
+          // }
         })
         .catch(err => {
-          console.log('通ってないよー!')
+          console.log('通ってないよー')
+          console.log(err)
+          return err.response
+        })
+    },
+    levelUp() {},
+    async sendSkill() {
+      // ユーザーのスキルidが配列で格納してある
+      // const userId = this.$store.state.user.id
+      let id = 0
+      for (let i = 0; i < this.unselSkill.length; i++) {
+        if (this.unselSkill[i].name === this.selectSkill) {
+          id = this.unselSkill[i].categoryId
+          break
+        }
+      }
+      //   型が違う
+      const skill = {
+        category_id: id,
+        name: this.selectSkill,
+      }
+      console.log(this.$store.state.user.user_skills)
+      await this.$axios
+        .post(`${this.$urls.API}/skills`, skill)
+        .then(response => {
+          console.log('ちゃんと通っている')
+          console.log(response.data)
+          alert('登録しました。')
+          this.$router.push(`/account-edit`)
+        })
+        .catch(err => {
+          console.log('通ってないよー')
+          alert('登録失敗しました。')
+          console.log(err)
           return err.response
         })
     },

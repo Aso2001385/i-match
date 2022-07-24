@@ -99,9 +99,9 @@ export default {
     },
     getAccount() {
       console.log(SkillInfo)
-      const userId = this.$store.state.user.id
+      // const userId = this.$store.state.user.id
       // とりあえずid1の人の情報を出す時に利用
-      // const userId = 1
+      const userId = 1
       this.$axios
         .get(`${this.$urls.API}/users/${userId}`)
         .then(response => {
@@ -110,10 +110,19 @@ export default {
           this.account = response.data
           for (let i = 0; i < this.account.user_skills.length; i++) {
             this.skillName.push({
-              name: SkillInfo[this.account.user_skills[i].id - 1].skillName,
-              categoryId: SkillInfo[this.account.user_skills[i].id - 1].skillCategory,
+              name: SkillInfo[this.account.user_skills[i].skill_id - 1].skillName,
+              categoryId: SkillInfo[this.account.user_skills[i].skill_id - 1].skillCategory,
             })
           }
+          this.skillName.sort(function (first, second) {
+            if (first.categoryId > second.categoryId) {
+              return 1
+            } else if (first.categoryId < second.categoryId) {
+              return -1
+            } else {
+              return 0
+            }
+          })
         })
         .catch(err => {
           console.log('通ってないよー')
