@@ -12,7 +12,7 @@
           </v-row>
           <v-row>
             <v-col cols="4"
-              >1/<span>{{ detail.persons }}</span
+              ><span>{{ detail.persons }}</span
               >人</v-col
             >
             <v-col cols="4">{{ detail.due }}</v-col>

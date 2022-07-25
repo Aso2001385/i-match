@@ -8,23 +8,27 @@
         <v-row justify="center">
           <v-col cols="5" v-for="user in userList" :key="user">
             <v-card style="height: 15vh" class="pt-5 pl-3">
-              <p style="float: right; width: 12%">
-                <NuxtLink to="/otherparty-account" class="white--text text-h6" style="text-decoration: none"
-                  ><v-icon class="text-h4" aria-hidden="false" @click="setSession(user.id)" small
-                    >mdi-chat-processing-outline</v-icon
-                  ></NuxtLink
-                >
-              </p>
-              <p class="mt-2">
-                <strong>{{ user.name }}</strong>
-              </p>
-              <div style="width: 70%" id="bulletin_skill">
-                <span v-for="skill in user.skills" :key="skill">
-                  <v-chip :class="categoryColor[skill.category_name] + ' mr-2 white--text mt-5'" small>{{
-                    skill.name
-                  }}</v-chip>
-                </span>
-              </div>
+              <v-row>
+                <v-col cols="9">
+                  <strong>{{ user.name }}</strong>
+                </v-col>
+                <v-col cols="1">
+                  <NuxtLink to="/otherparty-account" class="white--text text-h6" style="text-decoration: none">
+                    <v-icon class="text-h4" aria-hidden="false" @click="setSession(user.id)" small
+                      >mdi-account-details</v-icon
+                    >
+                  </NuxtLink>
+                </v-col>
+              </v-row>
+              <v-row class="pl-3">
+                <div style="width: 70%" id="bulletin_skill">
+                  <span v-for="skill in user.skills" :key="skill">
+                    <v-chip :class="categoryColor[skill.category_name] + ' mr-2 white--text'" small>{{
+                      skill.name
+                    }}</v-chip>
+                  </span>
+                </div>
+              </v-row>
             </v-card>
           </v-col>
         </v-row>
@@ -73,10 +77,6 @@ export default {
       await this.$axios
         .get(`${this.$urls.API}/users`)
         .then(response => {
-          console.log('ちゃんと通っているよ！！')
-          console.log(response.data)
-          console.log('ユーサーのストアの中身を見る')
-          console.log(this.$store.state.user)
           const cnt = this.$store.state.user.id - 1
           this.userList = response.data
           this.userList.splice(cnt, 1)

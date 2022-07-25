@@ -15,14 +15,12 @@ export default async function ({ redirect, $axios, store, route }) {
 
         console.log('aaa')
         await $axios
-          .get('http://localhost:8080/api/auth')
+          .get(`https://i-match.click/api/auth`)
           .then(async response => {
-            console.log(response.data + 'レスポンス確認')
             await store.commit('restoreLogin', response.data)
           })
           .catch(err => {
             console.log(err)
-            console.log('エラーでしたauth')
             sessionStorage.clear()
             alert('ユーザーデータが更新されたか、データが破損したためログイン画面に戻ります')
             redirect('/sign-in')
