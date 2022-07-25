@@ -1,17 +1,12 @@
 <template>
   <v-container>
     <v-row v-for="bulletin in bulletins" :key="bulletin.id">
-      <v-col cols="12" class="ma-0">
+      <v-col cols="12" class="ma-0" v-if="bulletin.user_id !== Number(userId)">
         <v-card>
           <v-row class="pt-5 pl-15">
-            <v-col cols="4" class="ml-8"
-              >締め切り：<span>{{ bulletin.due }}</span></v-col
-            >
-            <v-col cols="4"
-              >募集人数：<span>3</span>/<span>{{ bulletin.persons }}</span
-              >人</v-col
-            >
-            <v-col cols="12" z
+            <v-col cols="4" class="ml-8">締め切り：{{ bulletin.due }}</v-col>
+            <v-col cols="4">募集人数：{{ bulletin.persons }}人</v-col>
+            <v-col cols="12"
               ><h2 class="ml-8">{{ bulletin.title }}</h2></v-col
             >
           </v-row>
@@ -44,6 +39,7 @@
 export default {
   data() {
     return {
+      userId: 0,
       bulletins: [],
       bulletinCount: 0,
       boxSkill: -1,
@@ -59,18 +55,21 @@ export default {
       searchIds: [],
     }
   },
+  computed: {
+    user() {
+      return this.$store.state.user
+    },
+  },
   mounted() {
     this.sendSearch = JSON.parse(sessionStorage.getItem('sendSearch'))
     this.searchFlg = sessionStorage.getItem('searchFlg')
     this.searchId()
     this.getBulletin()
-    // this.bulletins = this.getBulletin()
   },
   methods: {
     getSession(value) {
       // どの掲示板の詳細を表示するか
       sessionStorage.setItem('bulletinDetail', value)
-      // console.log(SkillInfo)
     },
     color(value) {
       console.log(value)
@@ -99,22 +98,22 @@ export default {
       }
     },
     getBulletin() {
+      this.userId = this.$store.state.user.id
+      console.log(this.$store.state.user)
+
       this.$axios
         .get(`${this.$urls.API}/recruits/other/${this.$store.state.user.id}`)
         .then(response => {
           if (Number(this.searchFlg) === 0) {
             // 検索なし
-
             this.bulletins = response.data
           } else {
             // 検索あり
-            const searchBulletin = response.data
-
-            for (let a = 0; a < searchBulletin.length; a++) {
-              for (let i = 0; i < searchBulletin[a].skills.length; i++) {
+            for (let a = 0; a < response.data.length; a++) {
+              for (let i = 0; i < response.data[a].skills.length; i++) {
                 for (let j = 0; j < this.sendSearch.length; j++) {
-                  if (searchBulletin[a].skills[i].skill_id === this.sendSearch[j].id) {
-                    this.bulletins.push(searchBulletin[a])
+                  if (response.data[a].skills[i].skill_id === this.sendSearch[j].id) {
+                    this.bulletins.push(response.data[a])
                   }
                 }
               }
@@ -122,7 +121,6 @@ export default {
             const sendSearch = []
             sessionStorage.setItem('sendSearch', JSON.stringify(sendSearch))
             sessionStorage.setItem('searchFlg', 0)
-            // console.log(this.bulletins)
           }
 
           return response.data

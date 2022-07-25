@@ -1,8 +1,8 @@
 <template>
   <v-flex>
     <v-row class="grey darken-2">
-      <v-col>
-        <h3 class="white--text ma-5 pt-2">チャットリスト</h3>
+      <v-col class="ml-5 mt-4 pt-3">
+        <h3 class="white--text">チャットリスト</h3>
       </v-col>
     </v-row>
     <v-row>
