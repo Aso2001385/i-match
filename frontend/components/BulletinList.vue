@@ -72,7 +72,6 @@ export default {
       sessionStorage.setItem('bulletinDetail', value)
     },
     color(value) {
-      console.log(value)
       if (value < 16) {
         return 'red'
       } else if (value < 31) {
@@ -99,7 +98,6 @@ export default {
     },
     getBulletin() {
       this.userId = this.$store.state.user.id
-      console.log(this.$store.state.user)
 
       this.$axios
         .get(`${this.$urls.API}/recruits/other/${this.$store.state.user.id}`)

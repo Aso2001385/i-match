@@ -13,9 +13,9 @@ export default async function ({ redirect, $axios, store, route }) {
       if (!store.state.user.id) {
         // StoreにDataがない
 
-        console.log('aaa')
         await $axios
-          .get(`https://i-match.click/api/auth`)
+          // .get(`https://i-match.click/api/auth`)
+          .get(`http://localhost:8080/api/auth`)
           .then(async response => {
             await store.commit('restoreLogin', response.data)
           })

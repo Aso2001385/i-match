@@ -50,8 +50,10 @@ export default ({ $axios, store, redirect }) => {
     },
     async err => {
       // 何らかのエラー処理
-      console.log(await err)
-      sessionStorage.clear()
+      if (err.status === 403) {
+        sessionStorage.clear()
+        await redirect('sign-in')
+      }
 
       return err
     }
