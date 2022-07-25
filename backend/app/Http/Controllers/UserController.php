@@ -9,6 +9,7 @@ use App\Http\Requests\Users\UpdateUserRequest;
 use App\Http\Requests\Users\PasswordUpdateUserRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Exception;
 
 class UserController extends Controller
 {
@@ -22,7 +23,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {    
+    {
             $response=User::index_user();
 
             return response()->json($response['result'],$response['status']);
@@ -35,7 +36,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
 
         $user= User::create_user($request)['result'];
