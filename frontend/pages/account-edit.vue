@@ -13,19 +13,17 @@
             <v-col cols="10"><v-text-field v-model="email" label="メールアドレス" readonly></v-text-field></v-col>
           </v-row>
           <v-row style="float: right; margin-right: 15%">
-            <v-col
-              ><v-btn style="width: 10vh" color="grey darken-4" class="mb-5 white--text" @click="saveAccount()"
-                >保存</v-btn
-              ></v-col
-            >
+            <v-col>
+              <ApiEventButton color="grey darken-4" class="mb-5" :click-callback="saveAccount">保存</ApiEventButton>
+            </v-col>
           </v-row>
           <v-row class="ml-5 pb-10 mr-10">
             <NuxtLink to="/update-password" class="blue--text">
               <v-col cols="12">
                 <span>パスワード変更</span>
               </v-col>
-            </NuxtLink></v-row
-          >
+            </NuxtLink>
+          </v-row>
         </v-card>
 
         <v-card style="width: 90%" class="ml-10">
@@ -44,13 +42,13 @@
               >
             </v-col>
           </v-row>
-          <v-row>
-            <v-col style="margin-left: 55%">
+          <v-row class="ml-5 mr-10">
+            <v-col cols="12" style="float: left">
               <ApiEventButton color="grey darken-4" class="mb-5" :click-callback="signupMove">登録</ApiEventButton>
             </v-col>
-            <v-col style="margin-right: 2%">
+            <!-- <v-col style="margin-right: 2%">
               <ApiEventButton color="grey darken-4" class="mb-5" :click-callback="updateMove">更新</ApiEventButton>
-            </v-col>
+            </v-col> -->
           </v-row>
         </v-card>
       </v-card>

@@ -20,7 +20,6 @@
                 class="mb-0"
                 style="width: 100%"
                 return-object
-                @change="levelUp"
               ></v-select>
             </v-col>
           </v-row>
@@ -38,13 +37,12 @@
                 class="mb-0"
                 style="width: 100%"
                 return-object
-                @change="levelUp"
               ></v-select>
             </v-col>
           </v-row>
           <v-row class="mt-5 pb-5" justify="center">
             <v-col cols="6">
-              <api-event-button color="grey darken-4" @click="sendSkill">更新</api-event-button>
+              <ApiEventButton color="grey darken-4" :click-callback="sendSkill">更新</ApiEventButton>
             </v-col>
           </v-row>
         </v-card>
@@ -53,13 +51,11 @@
   </v-flex>
 </template>
 <script defer>
-import ApiEventButton from '~/components/ApiEventButton.vue'
+// import ApiEventButton from '~/components/ApiEventButton.vue'
 // import SkillInfo from '~/assets/skillinfo.json'
+// import Common from '~/plugins/common'
 
 export default {
-  components: {
-    ApiEventButton,
-  },
   data() {
     return {
       bulletinDetailId: 0,
@@ -82,6 +78,9 @@ export default {
     },
     skillUnits() {
       return this.$store.state.skills
+    },
+    primitiveSkills() {
+      return this.$store.state.primitiveSkills
     },
   },
   mounted() {
@@ -120,9 +119,12 @@ export default {
       }
     },
     async getSkills() {
-      const userId = this.$store.state.user.id
+      // const userId = this.$store.state.user.id
       // テストでid1の人のデータを入れていた
-      // const userId = 1
+      const userId = 1
+
+      // let priSkill = JSON.parse(JSON.stringify(this.$store.state.primitiveSkills))
+      // priSkill = Common.orderBy(priSkill, 'id', 'num', true)
       await this.$axios
         .get(`${this.$urls.API}/users/${userId}`)
         .then(response => {
@@ -132,12 +134,14 @@ export default {
           for (let i = 0; i < account.user_skills.length; i++) {
             this.skills.push({
               id: account.user_skills[i].skill_id,
-              name: account.user_skills[i].name + '　レベル:' + account.user_skills[i].level,
+              name: account.user_skills[i].name,
               level: account.user_skills[i].level,
             })
-            // this.skillId.push(account.user_skills[i].skill_id)
-            // this.skillLev.push(account.user_skills[i].level)
+            this.skillId.push(account.user_skills[i].skill_id)
+            this.skillLev.push(account.user_skills[i].level)
           }
+          // id入っている
+          console.log(this.skills)
           // for (let i = 0; i < SkillInfo.length; i++) {
           //   if (this.skillId.includes(SkillInfo[i].id)) {
           //     this.skills.push({ categoryId: SkillInfo[i].skillCategory, name: SkillInfo[i].skillName })
@@ -154,22 +158,23 @@ export default {
     async sendSkill() {
       // ユーザーのスキルidが配列で格納してある
       // const userId = this.$store.state.user.id
-      // let id = 0
-      // for (let i = 0; i < this.unselSkill.length; i++) {
-      //   if (this.unselSkill[i].name === this.selectSkill) {
-      //     id = this.unselSkill[i].categoryId
-      //     break
-      //   }
-      // }
-      const id = 1
-      // this.selectName,
-
+      let id = 0
+      for (let i = 0; i < this.skills.length; i++) {
+        console.log(this.skills[i].name)
+        console.log(this.selectName.name)
+        console.log(this.skills[i].name === this.selectName.name)
+        if (this.skills[i].name === this.selectName.name) {
+          id = this.skills[i].id
+          break
+        }
+      }
+      console.log(this.skills)
       const skill = {
-        user_id: this.$store.state.user.id,
+        user_id: 1,
         skill_id: id,
         level: this.selectLevel,
       }
-      console.log(this.$store.state.user.user_skills)
+      console.log(skill)
       await this.$axios
         .put(`${this.$urls.API}/user-skill`, skill)
         .then(response => {
