@@ -74,7 +74,8 @@ class RecruitController extends Controller
      */
     public function show(Recruit $recruit)
     {
-        $response=Recruit::get_recruit($recruit);
+
+        $response = Recruit::get_recruit($recruit);
 
         return response()->json($response['result'],$response['status']);
     }

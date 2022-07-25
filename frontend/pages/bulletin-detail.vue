@@ -51,7 +51,7 @@
               <!-- <NuxtLink to="/bulletin-detail" style="text-decoration: none"> -->
               <v-row class="mt-5" justify="center">
                 <v-col cols="12">
-                  <ApiEventButton color="grey darken-4" :click-callback="submit"> 申し込み </ApiEventButton>
+                  <ApiEventButton color="grey darken-4" :click-callback="submit"> {{ sendBtn }} </ApiEventButton>
                 </v-col>
               </v-row>
               <!-- </NuxtLink> -->
@@ -72,6 +72,8 @@ export default {
       detail: [],
       allSkill: [],
       skillName: [],
+      sendBtn: '申し込み',
+      sendMode: true,
     }
   },
   computed: {
@@ -120,10 +122,14 @@ export default {
       await this.$axios
         .get(`${this.$urls.API}/recruits/${this.bulletinDetailId}`)
         .then(response => {
-          console.log('通ってるよー')
-          console.log(response.data)
           this.detail = response.data
-          console.log(this.detail.skills[0].skill_id - 1)
+
+          this.detail.users.forEach(e => {
+            if (e.user_id === this.$store.state.user.id) {
+              this.sendBtn = '申し込み済み(チャットルームへ)'
+              this.sendMode = false
+            }
+          })
           for (let i = 0; i < this.detail.skills.length; i++) {
             this.skillName.push({
               name: priSkill[this.detail.skills[i].skill_id - 1].name,
@@ -132,11 +138,15 @@ export default {
           }
         })
         .catch(err => {
-          console.log('通ってないよー!')
+          console.log(err)
           return err.response
         })
     },
     async submit() {
+      if (!this.sendMode) {
+        this.$router.push({ path: 'chat-room', query: { id: this.detail.room_id, name: this.detail.title } })
+        return
+      }
       const application = {
         recruit_id: this.detail.id,
         user_id: this.$store.state.user.id,
@@ -145,12 +155,10 @@ export default {
       await this.$axios
         .post(`${this.$urls.API}/recruit-user`, application)
         .then(response => {
-          console.log('通ってるよー')
           alert('申し込み完了')
           this.$router.push(`/bulletin-list`)
         })
         .catch(err => {
-          console.log('通ってないよー!')
           console.log(err)
           alert('申し込み未完了')
           return err.response
