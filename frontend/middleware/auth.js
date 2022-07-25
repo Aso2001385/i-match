@@ -24,7 +24,7 @@ export default async function ({ redirect, $axios, store, route }) {
             console.log(err)
             console.log('エラーでしたauth')
             sessionStorage.clear()
-            alert('ログイン情報が破損したため、ログイン画面に戻ります')
+            alert('ユーザーデータが更新されたか、データが破損したためログイン画面に戻ります')
             redirect('/sign-in')
           })
       }

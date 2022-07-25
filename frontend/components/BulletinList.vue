@@ -17,7 +17,7 @@
           </v-row>
           <v-row class="pl-12">
             <v-col cols="8" class="ml-10" justify="center">
-              <div style="width: 70%" id="bulletin_skill">
+              <div id="bulletin_skill" style="width: 70%">
                 <!-- 何個スキルを表示するか -->
                 <span v-for="skill in bulletin.skills" :key="skill.id">
                   <!-- <v-chip :class="color(skill.skill_id) + ' mr-2 white--text'" small> -->
@@ -100,7 +100,7 @@ export default {
     },
     getBulletin() {
       this.$axios
-        .get(`${this.$urls.API}/recruits`)
+        .get(`${this.$urls.API}/recruits/other/${this.$store.state.user.id}`)
         .then(response => {
           if (Number(this.searchFlg) === 0) {
             // 検索なし

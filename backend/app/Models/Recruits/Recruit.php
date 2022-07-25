@@ -6,6 +6,7 @@ use App\Models\Chats\Room;
 use App\Models\Chats\RoomUser;
 use App\Models\Recruits\RecruitUser;
 use App\Models\Recruits\RecruitSkill;
+use App\Models\Users\UserSkill;
 use App\Models\Skills\Skill;
 use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -112,30 +113,15 @@ class Recruit extends Model
 
     }
 
-    public static function get_recruit($recruit){
+    public static function get_recruit($recruit_model){
 
         try{
 
-            $recruit=Recruit::with('users')->find($recruit->id)->with('skills')->find($recruit->id);
-            $recruit->user_name=User::find($recruit->user_id)->name;
-
-            if(isset($recruit->recruit_users)){
-                $recruit->member=RecruitUser::where('recruit_id',$recruit->id)->whereNull('deleted_at')->count();
-                foreach($recruit->recruit_users as $user){
-                    $users=User::where('id',$user->user_id)->whereNull('deleted_at')->select('name')->first();
-                    $user->name=$users->name;
-                }
-                unset($user);
-            }
-
-            if(isset($recruit->recruit_skills)){
-                foreach($recruit->recruit_skills as $skill){
-                    $skills=Skill::where('id',$skill->skill_id)->whereNull('deleted_at')->select('name','category_id')->first();
-                    $skill->name=$skills->name;
-                    $skill->category_id=$skills->category_id;
-                }
-                unset($skill);
-            }
+            $recruit = Recruit::with(['users','skills'=>function($query){
+                $query->select('recruit_skill.*','skills.name','skills.category_id','skill_categories.name as category_name')
+                    ->join('skills','recruit_skill.skill_id','=','skills.id')
+                    ->join('skill_categories','skills.category_id','=','skill_categories.id');
+            }])->find($recruit_model->id);
 
             $status = Response::HTTP_OK;
 
@@ -188,7 +174,7 @@ class Recruit extends Model
                     }
                 }
             }
-            
+
             $room_users=RoomUser::where('user_id',$user->id)->whereNull('deleted_at')->get()->toArray();
             if(count($room_users)>0){
                 foreach($room_users as $user){
