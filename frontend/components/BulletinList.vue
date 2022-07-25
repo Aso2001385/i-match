@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row v-for="bulletin in bulletins" :key="bulletin.id">
-      <v-col cols="12" class="ma-0" v-if="bulletin.user_id !== Number(userId)">
+      <v-col cols="12" class="ma-0">
         <v-card>
           <v-row class="pt-5 pl-15">
             <v-col cols="4" class="ml-8">締め切り：{{ bulletin.due }}</v-col>
@@ -107,6 +107,7 @@ export default {
           if (Number(this.searchFlg) === 0) {
             // 検索なし
             this.bulletins = response.data
+            console.log(this.bulletins)
           } else {
             // 検索あり
             for (let a = 0; a < response.data.length; a++) {
