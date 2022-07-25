@@ -80,8 +80,8 @@ export default {
     },
     async getBulletin() {
       // テストでidが6の人のリストを出していた
-      // const userId = this.$store.state.user.id
-      const userId = 1
+      const userId = this.$store.state.user.id
+      // const userId = 1
       await this.$axios
         .get(`${this.$urls.API}/recruits`)
         .then(response => {

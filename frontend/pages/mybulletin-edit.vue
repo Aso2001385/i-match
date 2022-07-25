@@ -74,7 +74,7 @@
                 attach
                 color="grey darken-4"
                 :item-color="white"
-                label="カテゴリ"
+                label="募集目的"
                 class="mb-0"
                 style="width: 100%"
                 return-object
@@ -126,7 +126,27 @@ export default {
       menu2: false,
       time: '',
       date: '',
-      numbersPeople: ['2', '3', '4', '5', '6', '7', '8', '9', '10'],
+      numbersPeople: [
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '11',
+        '12',
+        '13',
+        '14',
+        '15',
+        '16',
+        '17',
+        '18',
+        '19',
+        '20',
+      ],
       bulletinDetailId: 0,
       detail: [],
       allSkill: [],

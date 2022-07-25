@@ -151,6 +151,7 @@ export default {
           break
         }
       }
+
       const skill = {
         user_id: this.$store.state.user.id,
         skill_id: id,
