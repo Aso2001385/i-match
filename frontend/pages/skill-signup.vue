@@ -9,7 +9,7 @@
           <v-row justify="center">
             <v-col cols="8">
               <v-select
-                v-model="selectName"
+                v-model="selectSkillId"
                 item-text="name"
                 item-value="id"
                 :items="unselSkill"
@@ -19,25 +19,7 @@
                 label="スキル"
                 class="mb-0"
                 style="width: 100%"
-                return-object
-              ></v-select>
-            </v-col>
-          </v-row>
-          <v-row justify="center">
-            <v-col cols="8">
-              <v-select
-                v-model="selectLevel"
-                item-text="name"
-                item-value="id"
-                :items="levels"
-                attach
-                color="grey darken-4"
-                :item-color="white"
-                label="レベル"
-                class="mb-0"
-                style="width: 100%"
-                return-object
-              ></v-select>
+              />
             </v-col>
           </v-row>
 
@@ -65,6 +47,7 @@ export default {
       // 選択されていないスキル集
       unselSkill: [],
       levels: [1, 2, 3, 4, 5],
+      selectSkillId: '',
     }
   },
   computed: {
@@ -122,18 +105,15 @@ export default {
       await this.$axios
         .get(`${this.$urls.API}/users/${userId}`)
         .then(response => {
-          console.log('ちゃんと通っている')
-          console.log(response.data)
           const account = response.data
+
           for (let i = 0; i < account.user_skills.length; i++) {
             this.skillId.push(account.user_skills[i].skill_id)
           }
+
           for (let i = 0; i < priSkill.length; i++) {
-            if (this.skillId.includes(priSkill[i].id)) {
-              console.log('既に登録されているスキル')
-            } else {
-              this.unselSkill.push({ categoryId: priSkill[i].category_id, name: priSkill[i].name })
-            }
+            if (!this.skillId.includes(priSkill[i].id))
+              this.unselSkill.push({ id: priSkill[i].id, name: priSkill[i].name })
           }
         })
         .catch(err => {
@@ -144,28 +124,21 @@ export default {
     },
     async sendSkill() {
       // ユーザーのスキルidが配列で格納してある
-      let id = 0
-      for (let i = 0; i < this.unselSkill.length; i++) {
-        if (this.unselSkill[i].name === this.selectSkill) {
-          id = this.unselSkill[i].categoryId
-          break
-        }
-      }
-      const skill = {
+
+      const SKILL = {
         user_id: this.$store.state.user.id,
-        skill_id: id,
-        level: this.selectLevel,
+        skill_id: this.selectSkillId,
+        level: 3,
       }
+
+      console.log(SKILL)
       await this.$axios
-        .post(`${this.$urls.API}/user-skill`, skill)
+        .post(`${this.$urls.API}/user-skill`, SKILL)
         .then(response => {
-          console.log('ちゃんと通っている')
-          console.log(response.data)
           alert('登録しました。')
           this.$router.push(`/account-edit`)
         })
         .catch(err => {
-          console.log('通ってないよー')
           alert('登録失敗しました。')
           console.log(err)
           return err.response

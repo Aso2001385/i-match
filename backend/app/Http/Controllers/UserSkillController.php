@@ -12,10 +12,11 @@ class UserSkillController extends Controller
 
     public function store(CreateUserSkillRequest $request)
     {
+
         $response = UserSkill::store_skills($request);
         return response()->json($response['result'],$response['status']);
     }
-    
+
     public function update(UpdateUserSkillRequest $request,UserSkill $user_skill)
     {
         $response = UserSkill::upsert_skills($user_skill,$request);
