@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row v-for="bulletin in bulletins" :key="bulletin.id">
-      <v-col cols="12" class="ma-0" v-if="bulletin.user_id !== Number(userId)">
+      <v-col v-if="bulletin.user_id !== Number(userId)" cols="12" class="ma-0">
         <v-card>
           <v-row class="pt-5 pl-15">
             <v-col cols="4" class="ml-8">締め切り：{{ bulletin.due }}</v-col>
@@ -72,7 +72,6 @@ export default {
       sessionStorage.setItem('bulletinDetail', value)
     },
     color(value) {
-      console.log(value)
       if (value < 16) {
         return 'red'
       } else if (value < 31) {
@@ -99,7 +98,6 @@ export default {
     },
     getBulletin() {
       this.userId = this.$store.state.user.id
-      console.log(this.$store.state.user)
 
       this.$axios
         .get(`${this.$urls.API}/recruits/other/${this.$store.state.user.id}`)

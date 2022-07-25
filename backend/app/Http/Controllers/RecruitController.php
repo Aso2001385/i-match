@@ -39,9 +39,9 @@ class RecruitController extends Controller
 
 
 
-    public function otherIndex(Request $request,$id)
+    public function otherIndex(Request $request)
     {
-        $response=Recruit::get_other_recruits($request,$id);
+        $response=Recruit::get_other_recruits($request->id);
         return response()->json($response['result'],$response['status']);
     }
 
