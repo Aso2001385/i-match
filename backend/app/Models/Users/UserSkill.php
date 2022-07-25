@@ -31,8 +31,7 @@ class UserSkill extends Model
     public static function store_skills($request){
 
         try{
-            $user_skills=UserSkill::create($request->all());
-            $result = 'success!';
+            $user_skills = UserSkill::create($request->all());
             $status = Response::HTTP_OK;
         }catch(Exception $e){
             return [
@@ -47,10 +46,10 @@ class UserSkill extends Model
         ];
     }
 
-    public static function upsert_skills($user_skill,$request){
+    public static function upsert_skills($request){
 
         try{
-            $user_skill->update($request->all());
+            $user_skills = UserSkill::upsert($request->all());
             $status = Response::HTTP_OK;
         }catch(Exception $e){
             return [
@@ -65,10 +64,10 @@ class UserSkill extends Model
         ];
 
     }
-    
+
     public static function delete_skill($user_skill){
 
-        try{       
+        try{
             $user_skill->delete();
 
             $status= Response::HTTP_OK;
