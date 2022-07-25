@@ -87,15 +87,22 @@ class Recruit extends Model
         ];
     }
 
-    public static function get_other_recruits($request,$id){
+    public static function get_other_recruits($id){
 
         try{
-            $recruits=Recruit::where('user_id','<>',$id)->whereNull('deleted_at')->orderby('created_at','desc')->get();
-            foreach($recruits as $rec){
-                $rec->member=RecruitUser::where('recruit_id',$rec->id)->whereNull('deleted_at')->count();
-                $rec->name=User::find($rec->user_id)->name;
-            }
-            $status = Response::HTTP_OK;
+
+            $recruits = Recruit::with([
+                'users' => function ($query) {
+                    $query->select('recruit_user.*','users.name')
+                    ->join('users','recruit_user.user_id','users.id');
+                },
+                'skills' => function ($query) {
+                    $query->select('recruit_skill.*','skills.category_id','skills.name','skill_categories.name as category_name')
+                    ->join('skills','recruit_skill.skill_id','skills.id')
+                    ->join('skill_categories','skills.category_id','skill_categories.id');
+                }
+            ])->where('user_id','<>',$id)->orderby('created_at','desc')->get();
+
 
         }catch(Exception $e){
 
@@ -108,7 +115,7 @@ class Recruit extends Model
 
         return [
             'result' => $recruits,
-            'status' => $status,
+            'status' => 200,
         ];
 
     }
