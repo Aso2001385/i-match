@@ -1,17 +1,11 @@
 <template>
   <v-container>
     <v-row v-for="bulletin in myBulletins" :key="bulletin.id">
-      <!-- <span v-if="bulletin.user_id === setUserId()"> -->
       <v-col cols="12" class="ma-0">
         <v-card>
           <v-row class="pt-5 pl-15">
-            <v-col cols="4" class="ml-8"
-              >締め切り：<span>{{ bulletin.due }}</span></v-col
-            >
-            <v-col cols="4"
-              >募集人数：<span>3</span>/<span>{{ bulletin.persons }}</span
-              >人</v-col
-            >
+            <v-col cols="4" class="ml-8">締め切り：{{ bulletin.due }}</v-col>
+            <v-col cols="4">募集人数：{{ bulletin.persons }}人</v-col>
             <v-col cols="12"
               ><h2 class="ml-8">{{ bulletin.title }}</h2></v-col
             >
@@ -19,7 +13,6 @@
           <v-row class="pl-12">
             <v-col cols="8" class="ml-10" justify="center">
               <div style="width: 70%" id="bulletin_skill">
-                <!-- 何個スキルを表示するか -->
                 <span v-for="skill in bulletin.skills" :key="skill.id">
                   <v-chip :class="categoryColor[skill.category_name] + ' mr-2 white--text'" small>
                     {{ skill.name }}
@@ -35,7 +28,6 @@
           </v-row>
         </v-card>
       </v-col>
-      <!-- </span> -->
     </v-row>
   </v-container>
 </template>
@@ -97,7 +89,6 @@ export default {
           return err.response
         })
     },
-    // sendData() {},
   },
 }
 </script>

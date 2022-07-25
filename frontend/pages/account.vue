@@ -5,7 +5,7 @@
         <h3 class="white--text">ユーザー投稿</h3>
       </v-col>
       <v-col class="d-flex mr-5 white--text" cols="2">
-        <p class="mt-3">
+        <p>
           <v-icon aria-hidden="false" style="color: transparent">mdi-sync</v-icon>
         </p>
       </v-col>

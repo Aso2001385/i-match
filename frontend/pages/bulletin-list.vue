@@ -1,7 +1,7 @@
 <template>
   <v-flex>
     <v-row class="grey darken-2">
-      <v-col cols="12" class="mt-5 ml-10 pb-5">
+      <v-col cols="12" class="mt-3 ml-10">
         <NuxtLink to="/create-recruit" class="white--text" style="text-decoration: none">
           <strong><v-icon color="orange">mdi-plus-box</v-icon>掲示板作成</strong>
         </NuxtLink>
