@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row v-for="bulletin in bulletins" :key="bulletin.id">
-      <v-col cols="12" class="ma-0">
+      <v-col v-if="bulletin.user_id !== Number(userId)" cols="12" class="ma-0">
         <v-card>
           <v-row class="pt-5 pl-15">
             <v-col cols="4" class="ml-8">締め切り：{{ bulletin.due }}</v-col>
@@ -100,7 +100,7 @@ export default {
       this.userId = this.$store.state.user.id
 
       this.$axios
-        .get(`${this.$urls.API}/recruits/other/${this.$store.state.user.id}`)
+        .get(`${this.$urls.API}/recruits`)
         .then(response => {
           if (Number(this.searchFlg) === 0) {
             // 検索なし
