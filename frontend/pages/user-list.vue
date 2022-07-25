@@ -8,14 +8,14 @@
         <v-row justify="center">
           <v-col cols="5" v-for="user in userList" :key="user">
             <v-card style="height: 15vh" class="pt-5 pl-3">
-              <p style="float: right">
+              <p style="float: right; width: 12%">
                 <NuxtLink to="/otherparty-account" class="white--text text-h6" style="text-decoration: none"
-                  ><v-icon class="text-h3" aria-hidden="false" @click="setSession(user.id)"
+                  ><v-icon class="text-h4" aria-hidden="false" @click="setSession(user.id)" small
                     >mdi-chat-processing-outline</v-icon
                   ></NuxtLink
                 >
               </p>
-              <p>
+              <p class="mt-2">
                 <strong>{{ user.name }}</strong>
               </p>
               <div style="width: 70%" id="bulletin_skill">
@@ -89,7 +89,7 @@ export default {
   },
 }
 </script>
-<style lang="scss">
+<!-- <style lang="scss">
 #bulletin_skill {
   white-space: nowrap;
   overflow: hidden;
@@ -97,4 +97,4 @@ export default {
   -webkit-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
 }
-</style>
+</style> -->

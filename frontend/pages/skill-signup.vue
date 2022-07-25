@@ -123,8 +123,6 @@ export default {
         })
     },
     async sendSkill() {
-      // ユーザーのスキルidが配列で格納してある
-
       const SKILL = {
         user_id: this.$store.state.user.id,
         skill_id: this.selectSkillId,

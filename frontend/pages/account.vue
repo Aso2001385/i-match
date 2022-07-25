@@ -53,8 +53,6 @@ import Common from '~/plugins/common'
 export default {
   data() {
     return {
-      sortName: ['新着順', '投稿順'],
-      sortId: 0,
       skillName: [],
       account: [],
     }

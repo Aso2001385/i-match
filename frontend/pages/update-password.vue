@@ -18,7 +18,7 @@
           <v-row class="mt-5 pb-5" style="width: 80%; margin-left: 10%">
             <v-col cols="12">
               <!-- <v-btn @click="updatePass">更新</v-btn> -->
-              <!-- <api-event-button color="grey darken-4" @click="updatePass">更新</api-event-button> -->
+              <ApiEventButton color="grey darken-4" :click-callback="updatePass">更新</ApiEventButton>
             </v-col>
           </v-row>
         </v-card>
